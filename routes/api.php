@@ -17,3 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
+
+
+$api = app('Dingo\Api\Routing\Router');
+
+$api->version('v1', function ($api) {
+  $api->get('/', ['uses' => 'App\Http\Controllers\HomeController@index']);
+  // $api->get('/authcon', ['uses' => 'App\Api\V1\Controllers\LdapAuthController@authcon']);
+}
