@@ -20,6 +20,15 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->rememberToken();
+            $table->string('staff_no', 10);
+            $table->integer('role');
+            $table->integer('curr_reserve');
+            $table->integer('curr_checkin');
+            $table->integer('last_checkin');
+            $table->string('mobile_no', 15);
+            $table->string('photo_url', 255);
+            $table->string('allowed_building', 255);
+            $table->integer('status');
         });
     }
 

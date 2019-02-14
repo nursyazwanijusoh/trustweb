@@ -22,6 +22,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
-  $api->get('/', ['uses' => 'App\Http\Controllers\HomeController@index']);
-  // $api->get('/authcon', ['uses' => 'App\Api\V1\Controllers\LdapAuthController@authcon']);
-}
+  $api->get('/',          ['as' => 'api.home',   'uses' => 'App\Api\V1\Controllers\Controller@home']);
+  $api->post('/doLogin',  ['as' => 'ldap.login', 'uses' => 'App\Api\V1\Controllers\LoginController@doLogin']);
+});

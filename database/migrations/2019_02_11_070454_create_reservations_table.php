@@ -18,7 +18,7 @@ class CreateReservationsTable extends Migration
             $table->timestamps();
 
             $table->integer('place_id');
-            $table->integer('staff_id');
+            $table->integer('user_id');
             $table->dateTime('expire_time');
             $table->integer('status');
         });

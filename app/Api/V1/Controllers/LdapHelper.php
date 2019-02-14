@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 
-class LdapController extends Controller
+class LdapHelper extends Controller
 {
   function doLogin($username, $password){
 
@@ -28,10 +28,10 @@ class LdapController extends Controller
           $errm = 'success';
 
           // insert into login access table
-          $loginacc = new LoginAccess;
-          $loginacc->STAFF_ID = $username;
-          $loginacc->FROM_IP = request()->ip();
-          $loginacc->save();
+          // $loginacc = new LoginAccess;
+          // $loginacc->STAFF_ID = $username;
+          // $loginacc->FROM_IP = request()->ip();
+          // $loginacc->save();
 
         } else {
           $errorcode = 401;
@@ -55,7 +55,7 @@ class LdapController extends Controller
     }
 
     if($errorcode == 200){
-      $this->logs($username, 'Login', []);
+      // $this->logs($username, 'Login', []);
       return $this->fetchUser($username, 'id');
     }
 
@@ -108,8 +108,8 @@ class LdapController extends Controller
           } else {
             $costcenter = $ldapdata['0']['ppcostcenter']['0'];
             $stid = $ldapdata['0']['cn']['0'];
-            $bcname = $this->findBC($costcenter);
-            $role = $this->getRole($stid);
+            // $bcname = $this->findBC($costcenter);
+            // $role = $this->getRole($stid);
 
 
             $retdata = [
@@ -117,9 +117,9 @@ class LdapController extends Controller
               'NAME' => $ldapdata['0']['fullname']['0'],
               'UNIT' => $ldapdata['0']['pporgunitdesc']['0'],
               'DEPARTMENT' => $ldapdata['0']['departmentnumber']['0'],
-              'COST_CENTER' => $costcenter,
-              'BC_NAME' => $bcname,
-              'ROLE' => $role,
+              // 'COST_CENTER' => $costcenter,
+              // 'BC_NAME' => $bcname,
+              // 'ROLE' => $role,
               'NIRC' => $ldapdata['0']['ppnewic']['0'],
               'EMAIL' => $ldapdata['0']['mail']['0'],
               'MOBILE_NO' => $ldapdata['0']['mobile']['0']
@@ -152,36 +152,5 @@ class LdapController extends Controller
     return $this->respond_json($errorcode, $errm, $retdata);
   }
 
-  // to be called by API
-  function getUserInfo(Request $req){
-    // first, validate the input
-    $input = app('request')->all();
-    $rules = [
-      'key' => ['required'],
-      'type' => ['required']
-    ];
 
-    $validator = app('validator')->make($input, $rules);
-    if($validator->fails()){
-      return $this->respond_json(412, 'Invalid input', $input);
-    }
-
-    return $this->fetchUser($req->key, $req->type);
-  }
-
-
-  function authcon(Request $req){
-
-    $pendingorder = DB::table('euct_orders')
-      ->select('euct_orders.*')
-      ->join('euct_users', 'euct_orders.REQ_STAFF_ID', '=', 'euct_users.STAFF_ID')
-      ->join('euct_bcs', 'euct_users.COST_CENTER', '=', 'euct_bcs.COST_CENTER')
-      ->where([
-        ['euct_bcs.BC_STAFF_ID', '=', 'TM12345'],
-        ['euct_orders.STATUS', '=', 'AB']
-      ])->get();
-
-      return $pendingorder;
-
-  }
 }

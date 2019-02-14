@@ -25,4 +25,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    function playground(){
+      return version('v1')->route('api.home');
+    }
+
+    function welcome(){
+      return view('welcome');
+    }
 }
