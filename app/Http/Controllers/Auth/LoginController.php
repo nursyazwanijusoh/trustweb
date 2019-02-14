@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Api\V1\Controllers\LdapHelper;
 
-// use App\staff;
 use App\User;
 
 class LoginController extends Controller
