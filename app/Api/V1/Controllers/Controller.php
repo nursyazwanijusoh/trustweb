@@ -28,6 +28,7 @@ class Controller extends BaseController
 
 	}
 
+
   function sendEmail(){
     set_error_handler(array($this, 'errorHandler'));
     mail('mohdamer.ahmad@tm.com.my', 'send from laravel', 'hai world!');

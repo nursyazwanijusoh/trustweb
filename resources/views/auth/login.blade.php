@@ -12,10 +12,10 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="staffid" class="col-md-4 col-form-label text-md-right">{{ __('Staff ID') }}</label>
+                            <label for="staff_id" class="col-md-4 col-form-label text-md-right">{{ __('Staff ID') }}</label>
 
                             <div class="col-md-6">
-                                <input id="staffid" type="text" class="form-control{{ $errors->has('staffid') ? ' is-invalid' : '' }}" name="staffid" value="{{ old('staffid') }}" required autofocus>
+                                <input id="staff_id" type="text" class="form-control{{ $errors->has('staff_id') ? ' is-invalid' : '' }}" name="staff_id" value="{{ old('staff_id') }}" required autofocus>
                             </div>
                         </div>
 

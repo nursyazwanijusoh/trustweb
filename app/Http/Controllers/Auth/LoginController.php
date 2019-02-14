@@ -47,7 +47,7 @@ class LoginController extends Controller
     public function login(Request $req)
     {
       $this->validate($req, [
-            'staffid' => 'required', 'password' => 'required',
+            'staff_id' => 'required', 'password' => 'required',
       ]);
 
       // first authenticate using ldap
@@ -62,33 +62,26 @@ class LoginController extends Controller
       // get the username
       $ldapstaffid = $resp['data']['STAFF_ID'];
 
-      // find from staff table
-      $staffdata = staff::where('staff_no', $ldapstaffid)->first();
+      // find from User table
+      $staffdata = User::where('staff_id', $ldapstaffid)->first();
+
       if($staffdata){
-        // get the user table
-        // $userdata = User::find($staffdata->)
-
-
       } else {
         // new data. create it
-
+        $staffdata = new User;
+        $staffdata->staff_id = $ldapstaffid;
       }
 
+      // overwrite with ldap data
+      $staffdata->email = $resp['data']['EMAIL'];
+      $staffdata->mobile_no = $resp['data']['MOBILE_NO'];
+      $staffdata->name = $resp['data']['NAME'];
+      $staffdata->save();
 
+      // then 'auth' it
+      Auth::loginUsingId($staffdata->id, $req->filled('remember'));
 
-
-      Auth::loginUsingId(0, $req->filled('remember'));
-
-      if(Auth::check()){
-        return $this->sendLoginResponse($req);
-      } else {
-        // return "lala";
-        return $this->sendFailedLoginResponse($req);
-      }
-      // redirect(route('pg'));
-      // Auth::loginUsingId(1);
-      // return redirect()->intended('pg');
-      // return route('api.home');
+      return redirect()->intended('home');
 
     }
 

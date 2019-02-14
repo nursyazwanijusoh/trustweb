@@ -22,6 +22,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
-  $api->get('/',          ['as' => 'api.home',   'uses' => 'App\Api\V1\Controllers\Controller@home']);
-  $api->post('/doLogin',  ['as' => 'ldap.login', 'uses' => 'App\Api\V1\Controllers\LoginController@doLogin']);
+  $api->get('/',            ['as' => 'api.home',   'uses' => 'App\Api\V1\Controllers\Controller@home']);
+  $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\LoginController@doLogin']);
+
+
+  $api->post('/buildingCreate',  ['as' => 'build.c', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingCreate']);
+  $api->post('/buildingSearch',  ['as' => 'build.r', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingSearch']);
+  $api->post('/buildingEdit',    ['as' => 'build.u', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingEdit']);
+  $api->post('/buildingDelete',  ['as' => 'build.d', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingDelete']);
+
+  $api->post('/seatCreate',  ['as' => 'build.c', 'uses' => 'App\Api\V1\Controllers\InfraController@seatCreate']);
+  $api->post('/seatSearch',  ['as' => 'build.r', 'uses' => 'App\Api\V1\Controllers\InfraController@seatSearch']);
+  $api->post('/seatEdit',    ['as' => 'build.u', 'uses' => 'App\Api\V1\Controllers\InfraController@seatEdit']);
+  $api->post('/seatDelete',  ['as' => 'build.d', 'uses' => 'App\Api\V1\Controllers\InfraController@seatDelete']);
+
+
 });
