@@ -18,7 +18,7 @@ class CreateBuildingsTable extends Migration
             $table->timestamps();
             $table->string('building_name', 50);
             $table->string('floor_name', 50);
-            $table->string('remark', 255);
+            $table->string('remark', 255)->nullable();
             $table->integer('status');
         });
     }

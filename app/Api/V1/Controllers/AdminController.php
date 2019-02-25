@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Api\V1\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+
+class AdminController extends Controller
+{
+    function adminAddStaff(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_no' => ['required'],
+        'lob' => ['required'],
+        'allowed_building' => ['required']
+  		];
+
+  		$validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $staff = User::where('staff_no', $req->staff_no)->first();
+      if($staff){
+        // staff exist
+      } else {
+        // new staff. create
+        $staff = new User;
+        $staff->staff_no = $req->staff_no;
+        $staff->name = ' ';
+        $staff->email = ' ';
+        $staff->role = 3; // default to staff
+      }
+
+      $staff->lob = $req->lob;
+      $staff->allowed_building = $req->allowed_building;
+      $staff->status = 1; // set to active
+      $staff->save();
+
+      return $this->respond_json(200, 'Staff updated', $staff);
+
+    }
+}

@@ -20,7 +20,7 @@ class CreateReservationsTable extends Migration
             $table->integer('place_id');
             $table->integer('user_id');
             $table->dateTime('expire_time');
-            $table->integer('status');
+            $table->integer('status')->nullable();
         });
     }
 

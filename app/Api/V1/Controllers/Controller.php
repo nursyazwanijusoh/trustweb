@@ -3,6 +3,7 @@ namespace App\Api\V1\Controllers;
 
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
+use \DateTime;
 
 /**
  * Shared functions will be placed here
@@ -14,6 +15,23 @@ class Controller extends BaseController
   function errorHandler($errno, $errstr) {
 		return $this->respond_json($errno, $errstr);
 	}
+
+  function getLOV(){
+    return [
+      'role' => [
+        '0' => 'Super Admin',
+        '1' => 'Floor Admin',
+        '2' => 'VIP',
+        '3' => 'Staff'
+      ],
+      'status' => [
+        '0' => 'Inactive',
+        '1' => 'Active/Free',
+        '2' => 'Reserved',
+        '3' => 'Occupied'
+      ]
+    ];
+  }
 
 	function respond_json($retCode, $message, $data_arr = []){
 		$curtime = date("Y-m-d h:i:sa");
@@ -37,6 +55,14 @@ class Controller extends BaseController
 
   function home(){
     return 'Rumah Api';
+  }
+
+  function playground(){
+
+    $nom = new BookingHelper;
+
+    return $nom->getReserveInfo(5);
+
   }
 
 

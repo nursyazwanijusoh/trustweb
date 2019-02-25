@@ -21,7 +21,7 @@ class CreateCheckinsTable extends Migration
             $table->integer('user_id');
             $table->dateTime('checkin_time');
             $table->dateTime('checkout_time');
-            $table->string('remark', 255);
+            $table->string('remark', 255)->nullable();
         });
     }
 

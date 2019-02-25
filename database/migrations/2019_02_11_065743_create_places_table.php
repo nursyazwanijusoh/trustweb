@@ -16,15 +16,16 @@ class CreatePlacesTable extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->integer('building_id');
             $table->integer('seat_type');
             $table->integer('priviledge');
             $table->string('label', 100);
             $table->string('qr_code', 255);
-            $table->string('remark', 255);
-            $table->integer('reserve_staff_id');
-            $table->dateTime('reserve_expire');
-            $table->integer('checkin_staff_id');
-            $table->integer('status');
+            $table->string('remark', 255)->nullable();
+            $table->integer('reserve_staff_id')->nullable();
+            $table->dateTime('reserve_expire')->nullable();
+            $table->integer('checkin_staff_id')->nullable();
+            $table->integer('status'); 
         });
     }
 

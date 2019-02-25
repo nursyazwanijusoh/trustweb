@@ -49,6 +49,8 @@ class LoginController extends Controller
 			// new data. create it
 			$staffdata = new User;
 			$staffdata->staff_id = $ldapstaffid;
+			$staffdata->status = 0; // set it to inactive
+			$staffdata->role = 3;
 		}
 
 		// overwrite with ldap data

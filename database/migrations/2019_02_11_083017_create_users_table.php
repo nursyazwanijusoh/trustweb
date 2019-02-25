@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('mobile_no', 15)->nullable();
             $table->string('photo_url', 255)->nullable();
             $table->string('allowed_building', 255)->nullable();
+            $table->string('lob', 20)->nullable();
             $table->integer('status')->nullable();
         });
     }
