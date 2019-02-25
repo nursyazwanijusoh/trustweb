@@ -151,7 +151,7 @@ class BookingHelper extends Controller
     ];
   }
 
-  private function checkSeat($seat_id, $key = 'id'){
+  public function checkSeat($seat_id, $key = 'id'){
     // check if the seat is available
     $theseat = place::where($key, $seat_id)->first();
     if($theseat){

@@ -155,7 +155,8 @@ class UserController extends Controller
       $input = app('request')->all();
 
   		$rules = [
-  			'staff_id' => ['required']
+  			'staff_id' => ['required'],
+        'qr_code' => ['required']
   		];
 
   		$validator = app('validator')->make($input, $rules);
@@ -169,6 +170,17 @@ class UserController extends Controller
         $theresv = reservation::where('id', $theuser->curr_reserve)->first();
         if($theresv->status == 0){
           return $this->respond_json(401, 'Reservation no longer active and maybe overwritten by others', $theresv);
+        }
+
+        // check the seat this qr belongs to
+        $seatbyqr = place::where('qr_code', $req->qr_code)->first();
+        if($seatbyqr){
+          // check if it's the same seat reserved earlier
+          if($seatbyqr->id != $theresv->place_id){
+            return $this->respond_json(401, 'Not the reserved seat');
+          }
+        } else {
+          return $this->respond_json(404, 'QR code not registered');
         }
 
         // proceed with checkin
