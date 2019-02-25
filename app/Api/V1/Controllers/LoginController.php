@@ -18,7 +18,7 @@ class LoginController extends Controller
 		$input = app('request')->all();
 
 		$rules = [
-			'staff_id' => ['required'],
+			'staff_no' => ['required'],
 			'password' => ['required']
 		];
 
@@ -42,7 +42,7 @@ class LoginController extends Controller
 		$ldapstaffid = $ldapresp['data']['STAFF_ID'];
 
 		// find from User table
-		$staffdata = User::where('staff_id', $ldapstaffid)->first();
+		$staffdata = User::where('staff_no', $ldapstaffid)->first();
 
 		if($staffdata){
 		} else {

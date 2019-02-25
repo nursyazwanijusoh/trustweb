@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('password')->nullable();
             $table->rememberToken();
-            $table->string('staff_id', 10);
+            $table->string('staff_no', 10);
             $table->integer('role')->nullable();
             $table->integer('curr_reserve')->nullable();
             $table->integer('curr_checkin')->nullable();

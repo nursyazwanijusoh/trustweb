@@ -282,6 +282,24 @@ class InfraController extends Controller
 
       }
 
+      function buildingListSeats(Request $req){
+        $input = app('request')->all();
+
+        $rules = [
+          'building_id' => ['required']
+        ];
+
+        $validator = app('validator')->make($input, $rules);
+        if($validator->fails()){
+          return $this->respond_json(412, 'Invalid input', $input);
+        }
+
+        $seats = place::where('building_id', $req->building_id)->get();
+
+        return $this->respond_json(200, 'seat list', $seats);
+
+      }
+
 
       // get seat info from QR code
       function seatScanQR(Request $req){

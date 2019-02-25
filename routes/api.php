@@ -42,7 +42,7 @@ $api->version('v1', function ($api) {
   // admin->staff kind of thingy
   $api->post('/AdminAddStaff',  ['as' => 'admin.as', 'uses' => 'App\Api\V1\Controllers\AdminController@adminAddStaff']);
   $api->post('/AdminUpdateStaff',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\AdminController@AdminUpdateStaff']);
-  $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\AdminController@doLogin']);
+  // $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\AdminController@doLogin']);
 
   // activities
   $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\LoginController@doLogin']);
@@ -60,6 +60,8 @@ $api->version('v1', function ($api) {
   $api->post('/UserGetInfo',  ['as' => 'user.info', 'uses' => 'App\Api\V1\Controllers\UserController@getCustInfo']);
   $api->post('/buildingGetSummary',  ['as' => 'build.summary', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingGetSummary']);
   $api->get('/buildingAllSummary',  ['as' => 'build.allsummary', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingAllSummary']);
+  $api->post('/buildingListSeats',  ['as' => 'build.listseat', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingListSeats']);
+  $api->post('/UserListBuilding',  ['as' => 'user.listbuild', 'uses' => 'App\Api\V1\Controllers\UserController@ListAllowedBuilding']);
 
 
 });

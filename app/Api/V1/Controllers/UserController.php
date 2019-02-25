@@ -18,6 +18,7 @@ class UserController extends Controller
     function __construct(){
       $this->bh = new BookingHelper;
     }
+
     // view info
     public function getCustInfo(Request $req){
       $input = app('request')->all();
@@ -31,8 +32,7 @@ class UserController extends Controller
   			return $this->respond_json(412, 'Invalid input', $input);
   		}
 
-
-      $staffdata = User::where('id', $staffid)->first();
+      $staffdata = User::where('id', $req->staff_id)->first();
 
       // return $staffdata;
       if($staffdata){
@@ -44,6 +44,31 @@ class UserController extends Controller
       $staff = $this->getStaffInfo($staffdata);
 
       return $this->respond_json(200, 'OK', $staff);
+    }
+
+    public function ListAllowedBuilding(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required']
+  		];
+
+  		$validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $staff = User::where('id', $req->staff_id)->first();
+      $allowedbuilding = explode(',', $staff->allowed_building);
+
+      $ret = [];
+
+      foreach ($allowedbuilding as $buildid) {
+        array_push($ret, $this->bh->getBuildingStat($buildid));
+      }
+
+      return $this->respond_json(200, 'Allowed buildings', $ret);
+
     }
 
 
@@ -229,5 +254,7 @@ class UserController extends Controller
       if(isset($staffdata->last_checkin)){
         $staff['last_checkin'] = $this->bh->getCheckinInfo($staffdata->last_checkin);
       }
+
+      return $staff;
     }
 }
