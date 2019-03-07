@@ -41,14 +41,14 @@ $api->version('v1', function ($api) {
 
   // admin->staff kind of thingy
   $api->post('/AdminAddStaff',  ['as' => 'admin.as', 'uses' => 'App\Api\V1\Controllers\AdminController@adminAddStaff']);
-  $api->post('/AdminUpdateStaff',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\AdminController@AdminUpdateStaff']);
+  $api->post('/AdminUpdateStaff',  ['as' => 'admin.ups', 'uses' => 'App\Api\V1\Controllers\AdminController@AdminUpdateStaff']);
   // $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\AdminController@doLogin']);
 
   // activities
   $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\LoginController@doLogin']);
 
   $api->post('/ReserveSeat',  ['as' => 'user.reserve', 'uses' => 'App\Api\V1\Controllers\UserController@ReserveSeat']);
-  $api->post('/ReserveCancel',  ['as' => 'user.reserve', 'uses' => 'App\Api\V1\Controllers\UserController@ReserveCancel']);
+  $api->post('/ReserveCancel',  ['as' => 'user.reservec', 'uses' => 'App\Api\V1\Controllers\UserController@ReserveCancel']);
   $api->post('/CheckinFromReserve',  ['as' => 'user.checkin.res', 'uses' => 'App\Api\V1\Controllers\UserController@CheckinFromReserve']);
   $api->post('/CheckinDirect',  ['as' => 'user.checkin.dir', 'uses' => 'App\Api\V1\Controllers\UserController@CheckinDirect']);
   $api->post('/CheckOut',  ['as' => 'user.checkout', 'uses' => 'App\Api\V1\Controllers\UserController@CheckOut']);

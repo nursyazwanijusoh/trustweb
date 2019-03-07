@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
 use \DateTime;
+use QrCode;
 
 /**
  * Shared functions will be placed here
@@ -59,10 +60,21 @@ class Controller extends BaseController
 
   function playground(){
 
-    $nom = new BookingHelper;
+    // $nom = new LdapHelper;
+    //
+    // return $nom->getSubordinate('Norasiah Binti Kamarudin');
+    $vvv =  [];
 
-    return $nom->getReserveInfo(5);
+    for ($i=0; $i < 20; $i++) {
+      $data1 = [
+        'qrcode' => 'MTM28S_S000' . $i,
+        'label' => 'Menara L28 000' . $i
+      ];
 
+      array_push($vvv, $data1);
+    }
+
+    return view('admin.qrdisplay', ['qdata' => $vvv]);
   }
 
 

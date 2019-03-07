@@ -27,7 +27,7 @@ class LoginController extends Controller
 			return $this->respond_json(412, 'Invalid input', $input);
 		}
 
-		$username = $req->staff_id;
+		$username = $req->staff_no;
 		$password = $req->password;
 
 		$ldapherpel = new LdapHelper;

@@ -1,17 +1,20 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>GIT Work Record</title>
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    </head>
-    <body class="text-center">
-      <div class="container">
-        <h1>My First Bootstrap Page</h1>
-        <p>This is some text.</p>
-        <p>The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.</p>
-      </div>
-    </body>
-</html>
+@section('content')
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">Amer's Playground</div>
+                <div class="card-body">
+                  <div class="list-group">
+                    <a href="{{ route('staff') }}" class="list-group-item list-group-item-action">Staff Menu</a>
+                    <a href="{{ route('admin') }}" class="list-group-item list-group-item-action">Admin Menu</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

@@ -95,6 +95,11 @@ class InfraController extends Controller
       $build = building::where('id', $req->building_id)->first();
 
       if($build){
+        // delete the seats first
+        place::where('building_id', $build->id)->delete();
+
+        // then delete the building
+        $build->delete();
         return $this->respond_json(200, 'record deleted', []);
       } else {
         return $this->respond_json(404, 'record not found', $input);
@@ -212,6 +217,7 @@ class InfraController extends Controller
         $build = place::where('id', $req->seat_id)->first();
 
         if($build){
+          $build->delete();
           return $this->respond_json(200, 'record deleted', []);
         } else {
           return $this->respond_json(404, 'record not found', $input);
