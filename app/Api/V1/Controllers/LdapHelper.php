@@ -122,7 +122,8 @@ class LdapHelper extends Controller
               // 'ROLE' => $role,
               'NIRC' => $ldapdata['0']['ppnewic']['0'],
               'EMAIL' => $ldapdata['0']['mail']['0'],
-              'MOBILE_NO' => $ldapdata['0']['mobile']['0']
+              'MOBILE_NO' => $ldapdata['0']['mobile']['0'],
+              'SUPERIOR' => $ldapdata['0']['ppreporttoname']['0']
             ];
 
             //$retdata = $ldapdata;

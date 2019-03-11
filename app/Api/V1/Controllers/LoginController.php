@@ -57,6 +57,7 @@ class LoginController extends Controller
 		$staffdata->email = $ldapresp['data']['EMAIL'];
 		$staffdata->mobile_no = $ldapresp['data']['MOBILE_NO'];
 		$staffdata->name = $ldapresp['data']['NAME'];
+		$staffdata->lob = $resp['data']['DEPARTMENT'];
 		$staffdata->save();
 
 		$respon = [

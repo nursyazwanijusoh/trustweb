@@ -8,25 +8,49 @@
             <div class="card">
                 <div class="card-header">Bulk Staff Account Management</div>
                 <div class="card-body">
-                  <form method="POST" action="{{ route('admin.addtt') }}">
+                  <form method="POST" action="{{ route('admin.addsr') }}">
                     @csrf
                     <h5 class="card-title">Add new task type</h5>
-                    <div class="form-group row">
-                        <label for="descr" class="col-md-4 col-form-label text-md-right">Description</label>
+                    <!-- <div class="form-group row">
+                        <label for="lob" class="col-md-4 col-form-label text-md-right">Group</label>
                         <div class="col-md-6">
-                            <input id="descr" type="text" name="descr" required autofocus>
+                            <input id="lob" type="text" name="lob" maxlength="15" required autofocus>
+                        </div>
+                    </div> -->
+                    <div class="form-group row">
+                      <label for="srole" class="col-md-4 col-form-label text-md-right">Role</label>
+                      <div class="col-md-6">
+                        <select class="form-control" id="srole" name="srole">
+                          @if ($role == 0)
+                          <option value="0" title="Great power comes with great responsibilities">Super Admin</option>
+                          @endif
+
+                          <option value="1" title="Be responsible">Floor Admin</option>
+                          <option value="2" title="Yea.. The Bosses">VIP</option>
+                          <option value="3" title="The plebians goes here">Staff</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staffs" class="col-md-4 col-form-label text-md-right">List of Staff No</label>
+                        <div class="col-md-6">
+                          <textarea rows="5" id="staffs" name="staffs"></textarea>
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="remark" class="col-md-4 col-form-label text-md-right">Remark</label>
-                        <div class="col-md-6">
-                          <textarea rows="3" id="remark" name="remark"></textarea>
-                        </div>
+                    <h5 class="card-title">Select which floor to give access to these staff</h5>
+                    @foreach($blist as $abuild)
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="{{ $abuild['id'] }}" id="defaultCheck{{ $abuild['id'] }}" name="cbfloor[]">
+                      <label class="form-check-label" for="defaultCheck{{ $abuild['id'] }}">
+                        {{ $abuild['floor_name'] . '@' . $abuild['building_name'] }}
+                      </label>
                     </div>
+                    @endforeach
+
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">Add Task Type</button>
+                            <button type="submit" class="btn btn-primary">Assign Staff</button>
                         </div>
                     </div>
                   </form>

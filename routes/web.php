@@ -22,16 +22,26 @@ Route::get('/admin', 'TAdminController@index')->name('admin');
 // admin task type
 Route::get('/admin/tasktype', 'TAdminController@showTaskManagement')->name('admin.tt');
 Route::post('/admin/addtt', 'TAdminController@doTaskMgmtAdd')->name('admin.addtt');
-Route::post('/admin/deltt', 'TAdminController@disableTaskType')->name('admin.deltt');
+Route::get('/admin/deltt', 'TAdminController@disableTaskType')->name('admin.deltt');
 // admin building
 Route::get('/admin/build', 'TAdminController@buildingIndex')->name('admin.build');
 Route::post('/admin/addbuild', 'TAdminController@addBuilding')->name('admin.addbuild');
-Route::post('/admin/delbuild', 'TAdminController@delBuilding')->name('admin.delbuild');
+Route::get('/admin/delbuild', 'TAdminController@delBuilding')->name('admin.delbuild');
+// admin staff role
+Route::get('/admin/sr', 'TAdminController@showStaffRole')->name('admin.sr');
+Route::post('/admin/addsr', 'TAdminController@assignRole')->name('admin.addsr');
+Route::post('/admin/editst', 'TAdminController@updateUser')->name('admin.upst');
+Route::post('/admin/findstaff', 'TAdminController@findStaff')->name('admin.findst');
 
 
 // normal users
 Route::get('/user', 'TStaffController@index')->name('staff');
 Route::get('/user/task', 'TStaffController@taskIndex')->name('staff.t');
+Route::get('/user/taskdetail', 'TStaffController@taskDetail')->name('staff.tdetail');
+Route::post('/user/addtask', 'TStaffController@addTask')->name('staff.addtask');
+Route::post('/user/closetask', 'TStaffController@closeTask')->name('staff.closetask');
+Route::get('/user/addactivity', 'TStaffController@addActivity')->name('staff.addact');
+Route::post('/user/doaddactivity', 'TStaffController@doAddACtivity')->name('staff.doaddact');
 
 
 // bosses?

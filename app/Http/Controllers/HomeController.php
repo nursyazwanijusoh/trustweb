@@ -27,7 +27,7 @@ class HomeController extends Controller
     }
 
     function playground(){
-      return version('v1')->route('api.home');
+      return version('v1')->route('api.home', [], false);
     }
 
     function welcome(){

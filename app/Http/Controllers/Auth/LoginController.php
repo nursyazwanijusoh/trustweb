@@ -78,6 +78,7 @@ class LoginController extends Controller
       $staffdata->email = $resp['data']['EMAIL'];
       $staffdata->mobile_no = $resp['data']['MOBILE_NO'];
       $staffdata->name = $resp['data']['NAME'];
+      $staffdata->lob = $resp['data']['DEPARTMENT'];
       $staffdata->save();
 
       $newsubs = $ldapherpel->getSubordinate($staffdata->name);
@@ -89,7 +90,7 @@ class LoginController extends Controller
 
       session(['staffdata' => $staffdata]);
 
-      return redirect()->intended('staff');
+      return redirect()->intended(route('staff'));
 
     }
 

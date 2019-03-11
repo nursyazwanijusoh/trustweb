@@ -8,11 +8,11 @@
             <div class="card">
                 <div class="card-header">Registered Task for {{ $staff_name }}</div>
                 <div class="card-body">
-                  <form method="POST" action="{{ route('house.doreg') }}">
+                  <form method="POST" action="{{ route('staff.addtask', [], false) }}">
                     @csrf
                     <h5 class="card-title">Add new task</h5>
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">Task Name</label>
                         <div class="col-md-6">
                             <input id="name" type="text" name="name" required autofocus>
                         </div>
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label for="task" class="col-md-4 col-form-label text-md-right">Task</label>
+                      <label for="task" class="col-md-4 col-form-label text-md-right">Task Type</label>
                       <div class="col-md-6">
                         <select class="form-control" id="task" name="task">
                           @foreach($tasktype as $task)
@@ -42,9 +42,8 @@
                     </div>
                   </form>
                 </div>
-                <div class="card-header"> </div>
                 <div class="card-body">
-                  <h5 class="card-title">List of tasks</h5>
+                  <h5 class="card-title">Current tasks</h5>
                   <table class="table table-striped table-hover">
                     <thead>
                       <tr>
@@ -56,9 +55,30 @@
                     <tbody>
                       @foreach($currtasklist as $atask)
                       <tr>
-                        <td>{{ $atask['name'] }}</td>
+                        <th scope="row"><a href="{{ route('staff.tdetail', ['task_id' => $atask['id']], false)}}">{{ $atask['name'] }}</a></th>
                         <td>{{ $atask['total_hours'] }}</td>
-                        <td>{{ $atask['id'] }}</td>
+                        <td>{{ $atask['remark'] }}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Completed tasks</h5>
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Total Hours</th>
+                        <th scope="col">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($completedtasklist as $ctask)
+                      <tr>
+                        <th scope="row"><a href="{{ route('staff.tdetail', ['task_id' => $ctask['id']], false)}}">{{ $ctask['name'] }}</a></th>
+                        <td>{{ $ctask['total_hours'] }}</td>
+                        <td>{{ $ctask['remark'] }}</td>
                       </tr>
                       @endforeach
                     </tbody>
