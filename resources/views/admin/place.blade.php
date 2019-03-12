@@ -8,27 +8,27 @@
             <div class="card">
                 <div class="card-header">Work Place Management</div>
                 <div class="card-body">
-                  <form method="POST" action="{{ route('admin.addtt') }}">
+                  <form method="POST" action="{{ route('admin.addtt', [], false) }}">
                     @csrf
                     <h5 class="card-title">Add new location</h5>
                     <div class="form-group row">
                         <label for="building_name" class="col-md-4 col-form-label text-md-right">Building Name</label>
                         <div class="col-md-6">
-                            <input id="building_name" type="text" name="building_name" required autofocus>
+                            <input id="building_name" class="form-control" type="text" name="building_name" required autofocus>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="floor_name" class="col-md-4 col-form-label text-md-right">Floor name</label>
                         <div class="col-md-6">
-                            <input id="floor_name" type="text" name="floor_name" required>
+                            <input id="floor_name" class="form-control" type="text" name="floor_name" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Remark</label>
                         <div class="col-md-6">
-                          <textarea rows="3" id="remark" name="remark"></textarea>
+                          <textarea rows="3" class="form-control" id="remark" name="remark"></textarea>
                         </div>
                     </div>
                     <div class="form-group row mb-0">

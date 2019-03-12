@@ -5,6 +5,7 @@ use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
 use \DateTime;
 use QrCode;
+use App\Subordinate;
 
 /**
  * Shared functions will be placed here
@@ -60,12 +61,19 @@ class Controller extends BaseController
 
   function playground(){
 
-    // $nom = new LdapHelper;
-    // return $nom->fetchUser('WOO WAI MUN', 'name');
+    $nom = new LdapHelper;
+    return $nom->getSubordinate('WOO WAI MUN');
     // $sum = \DB::table('activities')->where('task_id', 1)->sum('hours_spent');
     // $sum = \DB::table()
 
     // return $sum;
+    // $subs = [
+    //   0 => 'checked',
+    //   2 => 'nom'
+    // ];
+    //
+    // return $subs[1];
+
   }
 
 

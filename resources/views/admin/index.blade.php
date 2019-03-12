@@ -9,10 +9,10 @@
                 <div class="card-header">Admin Menu</div>
                 <div class="card-body">
                   <div class="list-group">
-                    <a href="{{ route('admin.build') }}" class="list-group-item list-group-item-action">Building List</a>
-                    <a href="{{ route('admin.sr') }}" class="list-group-item list-group-item-action">Bulk Staff Update</a>
-                    <a href="#" class="list-group-item list-group-item-action">Edit Staff</a>
-                    <a href="{{ route('admin.tt') }}" class="list-group-item list-group-item-action">Task Type List</a>
+                    <a href="{{ route('admin.build', [], false) }}" class="list-group-item list-group-item-action">Building List</a>
+                    <a href="{{ route('admin.sr', [], false) }}" class="list-group-item list-group-item-action">Bulk Staff Update</a>
+                    <a href="{{ route('admin.st', [], false) }}" class="list-group-item list-group-item-action">Edit Staff</a>
+                    <a href="{{ route('admin.tt', [], false) }}" class="list-group-item list-group-item-action">Task Type List</a>
                   </div>
                 </div>
             </div>

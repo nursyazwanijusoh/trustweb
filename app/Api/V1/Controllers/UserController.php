@@ -59,7 +59,7 @@ class UserController extends Controller
   		}
 
       $staff = User::where('id', $req->staff_id)->first();
-      $allowedbuilding = explode(',', $staff->allowed_building);
+      $allowedbuilding = json_decode($staff->allowed_building);
 
       $ret = [];
 
@@ -252,7 +252,7 @@ class UserController extends Controller
         'photo_url' => $staffdata->photo_url,
         'staff_id' => $staffdata->staff_id,
         'role' => $staffdata->role,
-        'allowed_building' => $staffdata->allowed_building
+        'allowed_building' => json_decode($staffdata->allowed_building)
       ];
 
       if(isset($staffdata->curr_reserve)){

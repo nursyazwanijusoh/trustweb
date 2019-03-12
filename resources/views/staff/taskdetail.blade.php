@@ -14,7 +14,7 @@
                     <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">Task Name</label>
                         <div class="col-md-6">
-                            <input id="name" type="text" name="name" value="{{ $taskinfo['name'] }}" disabled readonly />
+                            <input id="name" type="text" class="form-control" name="name" value="{{ $taskinfo['name'] }}" disabled readonly />
                         </div>
                     </div>
 
@@ -37,10 +37,17 @@
                         <input id="thours" type="text" name="thours" value="{{ $taskinfo['total_hours'] }}" disabled readonly />
                       </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="addedby" class="col-md-4 col-form-label text-md-right">Added By</label>
+                        <div class="col-md-6">
+                            <input id="addedby" type="text" name="addedby" value="{{ $taskinfo['created_by'] }}" disabled readonly />
+                        </div>
+                    </div>
                     <input id="task_id" type="hidden" name="task_id" value="{{ $taskinfo['id'] }}" >
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                           @if($taskinfo['status'] == 1)
+                            <a href="{{ route('staff.addact', ['task_id' => $taskinfo['id']], false) }}"><button type="button" class="btn btn-secondary">Add Activity</button></a>
                             <button type="submit" class="btn btn-primary">Close Task</button>
                           @else
                             <button type="submit" class="btn btn-primary" disabled>Closed</button>

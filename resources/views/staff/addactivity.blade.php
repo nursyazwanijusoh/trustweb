@@ -31,7 +31,7 @@
                       <div class="col-md-6">
                         <select class="form-control" id="acttask" name="acttask">
                           @foreach ($tasklist as $atask)
-                          <option value="{{ $atask['id'] }}">{{ $atask['name'] }}</option>
+                          <option value="{{ $atask['id'] }}" {{ $atask['sel'] }} >{{ $atask['name'] }}</option>
                           @endforeach
                         </select>
                       </div>

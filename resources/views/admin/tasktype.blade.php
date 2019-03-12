@@ -8,20 +8,20 @@
             <div class="card">
                 <div class="card-header">Task Type Management</div>
                 <div class="card-body">
-                  <form method="POST" action="{{ route('admin.addtt') }}">
+                  <form method="POST" action="{{ route('admin.addtt', [], false) }}">
                     @csrf
                     <h5 class="card-title">Add new task type</h5>
                     <div class="form-group row">
                         <label for="descr" class="col-md-4 col-form-label text-md-right">Description</label>
                         <div class="col-md-6">
-                            <input id="descr" type="text" name="descr" required autofocus>
+                            <input id="descr" class="form-control" type="text" name="descr" required autofocus>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Remark</label>
                         <div class="col-md-6">
-                          <textarea rows="3" id="remark" name="remark"></textarea>
+                          <textarea rows="3" class="form-control" id="remark" name="remark"></textarea>
                         </div>
                     </div>
                     <div class="form-group row mb-0">

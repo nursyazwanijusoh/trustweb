@@ -62,7 +62,7 @@ class LoginController extends Controller
       }
 
       // get the username
-      $ldapstaffid = $resp['data']['STAFF_ID'];
+      $ldapstaffid = $resp['data']['STAFF_NO'];
 
       // find from User table
       $staffdata = User::where('staff_no', $ldapstaffid)->first();
@@ -71,7 +71,9 @@ class LoginController extends Controller
       } else {
         // new data. create it
         $staffdata = new User;
-        $staffdata->staff_id = $ldapstaffid;
+        $staffdata->staff_no = $ldapstaffid;
+        $staffdata->status = 0; // set it to inactive
+  			$staffdata->role = 3;
       }
 
       // overwrite with ldap data
@@ -79,11 +81,15 @@ class LoginController extends Controller
       $staffdata->mobile_no = $resp['data']['MOBILE_NO'];
       $staffdata->name = $resp['data']['NAME'];
       $staffdata->lob = $resp['data']['DEPARTMENT'];
+      $staffdata->unit = $resp['data']['UNIT'];
       $staffdata->save();
 
       $newsubs = $ldapherpel->getSubordinate($staffdata->name);
+      if($newsubs['code'] == 200){
+        $this->getSubords($staffdata->id, $newsubs['data']);
+      }
 
-      // $this->getSubords($staffdata->id, $newsubs);
+      $this->amIsubords($staffdata->id, $ldapstaffid);
 
       // then 'auth' it
       Auth::loginUsingId($staffdata->id, $req->filled('remember'));
@@ -133,11 +139,19 @@ class LoginController extends Controller
             $anusib->subordinate_id = $subuser->id;
           }
 
-          $subuser->save();
+          $anusib->save();
         }
 
       }
 
     }
 
+    private function amIsubords($staff_id, $staff_no){
+      // check if i'm someone's subordinates. update the id
+      $cursubs = Subordinate::where('sub_staff_no', $staff_no)->get();
+      foreach($cursubs as $asub){
+        $asub->subordinate_id = $staff_id;
+        $asub->save();
+      }
+    }
 }

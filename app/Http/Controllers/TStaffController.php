@@ -8,6 +8,7 @@ use App\Task;
 use App\TaskCategory;
 use App\User;
 use App\Activity;
+use App\Subordinate;
 
 class TStaffController extends Controller
 {
@@ -17,8 +18,12 @@ class TStaffController extends Controller
   }
 
   // staff homepage
-  public function index(){
-    $s_staff_id = Session::get('staffdata')['id'];
+  public function index(Request $rq){
+    if($rq->filled('staff_id')){
+      $s_staff_id = $rq->staff_id;
+    } else {
+      $s_staff_id = Session::get('staffdata')['id'];
+    }
 
     // get some summaries
     $opentaskcount = Task::where('user_id', $s_staff_id)
@@ -26,10 +31,14 @@ class TStaffController extends Controller
     $donetaskcount = Task::where('user_id', $s_staff_id)
       ->where('status', 0)->count();
 
+    // get subordinates
+    $sublist = Subordinate::where('superior_id', $s_staff_id)->get();
+
     return view('staff.index', [
       'staff_id' => $s_staff_id,
       'opentask' => $opentaskcount,
-      'donetask' => $donetaskcount
+      'donetask' => $donetaskcount,
+      'subords' => $sublist
     ]);
   }
 
@@ -116,6 +125,14 @@ class TStaffController extends Controller
     $mystaffid = Session::get('staffdata')['id'];
     // get the list of task
     $tasklist = Task::where('user_id', $mystaffid)->where('status', 1)->get();
+    foreach($tasklist as $atask){
+      $atask['sel'] = '';
+      if($req->filled('task_id')){
+        if($atask->id == $req->task_id){
+          $atask['sel'] = 'selected';
+        }
+      }
+    }
     // return $tasklist;
     $curdate = date('Y-m-d');
 

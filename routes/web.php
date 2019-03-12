@@ -30,6 +30,7 @@ Route::get('/admin/delbuild', 'TAdminController@delBuilding')->name('admin.delbu
 // admin staff role
 Route::get('/admin/sr', 'TAdminController@showStaffRole')->name('admin.sr');
 Route::post('/admin/addsr', 'TAdminController@assignRole')->name('admin.addsr');
+Route::get('/admin/staff', 'TAdminController@blankStaff')->name('admin.st');
 Route::post('/admin/editst', 'TAdminController@updateUser')->name('admin.upst');
 Route::post('/admin/findstaff', 'TAdminController@findStaff')->name('admin.findst');
 

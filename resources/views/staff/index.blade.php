@@ -23,11 +23,21 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title">My Subordinate</h5>
-                <div class="list-group">
-                  <a href="{{ route('admin.build') }}" class="list-group-item list-group-item-action">Building List</a>
-                  <a href="{{ route('admin.sr') }}" class="list-group-item list-group-item-action">Bulk Staff Update</a>
-                  <a href="#" class="list-group-item list-group-item-action">Edit Staff</a>
-                  <a href="{{ route('admin.tt') }}" class="list-group-item list-group-item-action">Task Type List</a>
+                <div class="card-columns">
+                  @foreach($subords as $asub)
+                  <div class="card text-center">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ $asub['sub_staff_no'] }}</h5>
+                      <p class="card-text">{{ $asub['sub_name'] }}</p>
+                      @if(isset($asub['subordinate_id']))
+                      <p class="card-text">
+                        <a href="{{ route('staff', ['staff_id' => $asub['subordinate_id']], false) }}">Active</a></p>
+                      @else
+                      <p class="card-text"><small class="text-muted">Inactive</small></p>
+                      @endif
+                    </div>
+                  </div>
+                  @endforeach
                 </div>
               </div>
             </div>

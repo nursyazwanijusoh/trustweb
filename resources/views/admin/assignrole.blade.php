@@ -7,10 +7,13 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Bulk Staff Account Management</div>
+                @if(isset($alert))
+                <div class="alert alert-warning" role="alert">{{ $alert }}</div>
+                @endif
                 <div class="card-body">
-                  <form method="POST" action="{{ route('admin.addsr') }}">
+                  <form method="POST" action="{{ route('admin.addsr', [], false) }}">
                     @csrf
-                    <h5 class="card-title">Add new task type</h5>
+                    <h5 class="card-title">Staff access assignment</h5>
                     <!-- <div class="form-group row">
                         <label for="lob" class="col-md-4 col-form-label text-md-right">Group</label>
                         <div class="col-md-6">
@@ -27,14 +30,14 @@
 
                           <option value="1" title="Be responsible">Floor Admin</option>
                           <option value="2" title="Yea.. The Bosses">VIP</option>
-                          <option value="3" title="The plebians goes here">Staff</option>
+                          <option value="3" title="The plebians goes here" selected>Staff</option>
                         </select>
                       </div>
                     </div>
                     <div class="form-group row">
                         <label for="staffs" class="col-md-4 col-form-label text-md-right">List of Staff No</label>
                         <div class="col-md-6">
-                          <textarea rows="5" id="staffs" name="staffs"></textarea>
+                          <textarea rows="5" class="form-control" id="staffs" name="staffs"></textarea>
                         </div>
                     </div>
 

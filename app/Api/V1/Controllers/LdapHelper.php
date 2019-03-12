@@ -113,7 +113,7 @@ class LdapHelper extends Controller
 
 
             $retdata = [
-              'STAFF_ID' => $stid,
+              'STAFF_NO' => $stid,
               'NAME' => $ldapdata['0']['fullname']['0'],
               'UNIT' => $ldapdata['0']['pporgunitdesc']['0'],
               'DEPARTMENT' => $ldapdata['0']['departmentnumber']['0'],

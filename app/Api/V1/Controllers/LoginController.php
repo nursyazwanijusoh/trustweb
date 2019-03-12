@@ -39,7 +39,7 @@ class LoginController extends Controller
 		}
 
 		// get the username
-		$ldapstaffid = $ldapresp['data']['STAFF_ID'];
+		$ldapstaffid = $ldapresp['data']['STAFF_NO'];
 
 		// find from User table
 		$staffdata = User::where('staff_no', $ldapstaffid)->first();
@@ -48,7 +48,7 @@ class LoginController extends Controller
 		} else {
 			// new data. create it
 			$staffdata = new User;
-			$staffdata->staff_id = $ldapstaffid;
+			$staffdata->staff_no = $ldapstaffid;
 			$staffdata->status = 0; // set it to inactive
 			$staffdata->role = 3;
 		}
@@ -58,6 +58,7 @@ class LoginController extends Controller
 		$staffdata->mobile_no = $ldapresp['data']['MOBILE_NO'];
 		$staffdata->name = $ldapresp['data']['NAME'];
 		$staffdata->lob = $resp['data']['DEPARTMENT'];
+		$staffdata->unit = $resp['data']['UNIT'];
 		$staffdata->save();
 
 		$respon = [
