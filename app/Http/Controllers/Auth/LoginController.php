@@ -82,14 +82,15 @@ class LoginController extends Controller
       $staffdata->name = $resp['data']['NAME'];
       $staffdata->lob = $resp['data']['DEPARTMENT'];
       $staffdata->unit = $resp['data']['UNIT'];
+  		$staffdata->subunit = $resp['data']['SUBUNIT'];
       $staffdata->save();
 
-      $newsubs = $ldapherpel->getSubordinate($staffdata->name);
-      if($newsubs['code'] == 200){
-        $this->getSubords($staffdata->id, $newsubs['data']);
-      }
-
-      $this->amIsubords($staffdata->id, $ldapstaffid);
+      // $newsubs = $ldapherpel->getSubordinate($staffdata->name);
+      // if($newsubs['code'] == 200){
+      //   $this->getSubords($staffdata->id, $newsubs['data']);
+      // }
+      //
+      // $this->amIsubords($staffdata->id, $ldapstaffid);
 
       // then 'auth' it
       Auth::loginUsingId($staffdata->id, $req->filled('remember'));

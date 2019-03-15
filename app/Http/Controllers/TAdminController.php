@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Middleware\AdminGate;
 use App\TaskCategory;
 use App\building;
 use App\User;
+use App\Unit;
+use App\SubUnit;
 use Session;
 use App\Api\V1\Controllers\LdapHelper;
 
@@ -14,6 +17,7 @@ class TAdminController extends Controller
   public function __construct()
   {
       $this->middleware('auth');
+      $this->middleware('AdminGate');
   }
 
   // main admin page
@@ -83,6 +87,7 @@ class TAdminController extends Controller
       'STAFF_NO' => '',
       'NAME' => '',
       'UNIT' => '',
+      'SUBUNIT' => '',
       'DEPARTMENT' => '',
       'MOBILE_NO' => '',
       'EMAIL' => '',
@@ -121,6 +126,7 @@ class TAdminController extends Controller
         'STAFF_NO' => $staffft->staff_no,
         'NAME' => $staffft->name,
         'UNIT' => $staffft->unit,
+        'SUBUNIT' => $staffft->subunit,
         'DEPARTMENT' => $staffft->lob,
         'MOBILE_NO' => $staffft->mobile_no,
         'EMAIL' => $staffft->email,
@@ -167,6 +173,7 @@ class TAdminController extends Controller
           'STAFF_NO' => $req->staff_no,
           'NAME' => '',
           'UNIT' => '',
+          'SUBUNIT' => '',
           'DEPARTMENT' => '',
           'MOBILE_NO' => '',
           'EMAIL' => '',
@@ -238,6 +245,7 @@ class TAdminController extends Controller
       $user->staff_no = $req->staff_no2;
       $user->name = $req->staff_name;
       $user->unit = $req->unit_disc;
+      $user->subunit = $req->subunit_disc;
       $user->lob = $req->lob;
       $user->mobile_no = $req->mobile;
       $user->email = $req->email;
@@ -288,6 +296,73 @@ class TAdminController extends Controller
     return $thestaff;
   }
 
+  // List of Units / sub-units under current department
+  public function showLov(Request $req){
+    // $mylob = Session::get('staffdata')['lob'];
+    $mylob = 3000;
+
+    $unitlist = Unit::where('lob', $mylob)->get();
+    foreach($unitlist as $aunit){
+      $subunitlist = SubUnit::where('lob', $mylob)->where('pporgunit', $aunit->pporgunit)->get();
+      $aunit['subunit'] = $subunitlist;
+    }
+
+    if($req->filled('err')){
+      return view('admin.deptlov', ['deptid' => $mylob, 'units' => $unitlist, 'err' => $req->err]);
+    }
+
+    return view('admin.deptlov', ['deptid' => $mylob, 'units' => $unitlist]);
+
+  }
+
+  public function refreshLov(){
+    // delete old data first
+    // $mylob = Session::get('staffdata')['lob'];
+    $mylob = 3000;
+    Unit::where('lob', $mylob)->delete();
+    SubUnit::where('lob', $mylob)->delete();
+
+    // then look for new data
+    $lhelper = new LdapHelper;
+    $lresp = $lhelper->fetchSubUnits($mylob);
+    // return $lresp;
+
+    $unit = [];
+    if($lresp['code'] == 200){
+      foreach($lresp['data'] as $asubu){
+
+          if(in_array($asubu['pporgunit'], $unit)){
+            // dont create created unit
+          } else {
+            // create the units
+            $nuunit = new Unit;
+            $nuunit->lob = $mylob;
+            $nuunit->pporgunit = $asubu['pporgunit'];
+            $nuunit->pporgunitdesc = $asubu['pporgunitdesc'];
+            $nuunit->save();
+
+            array_push($unit, $asubu['pporgunit']);
+          }
+
+          // create the sub ubit
+          $subunit = new SubUnit;
+          $subunit->lob = $mylob;
+          $subunit->pporgunit = $asubu['pporgunit'];
+          $subunit->pporgunitdesc = $asubu['pporgunitdesc'];
+          $subunit->ppsuborg = $asubu['ppsuborg'];
+          $subunit->ppsuborgunitdesc = $asubu['ppsuborgunitdesc'];
+          $subunit->save();
+
+
+      }
+
+      return redirect(route('admin.lov', ['err' => 'Data loaded'], false));
+
+    } else {
+        return redirect(route('admin.lov', ['err' => $lresp['msg']], false));
+    }
+  }
+
   // -------- building mgmt ----
   public function buildingIndex(){
     // fetch all current list of buildings
@@ -296,6 +371,8 @@ class TAdminController extends Controller
     // then call the view
     return view('admin.place', ['buildlist' => $buildlist]);
   }
+
+
 
   public function addBuilding(Request $req){
 

@@ -6,11 +6,47 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Amer's Playground</div>
+                <div class="card-header">trUSt Web</div>
                 <div class="card-body">
-                  <div class="list-group">
-                    <a href="{{ route('staff') }}" class="list-group-item list-group-item-action">Staff Menu</a>
-                    <a href="{{ route('admin') }}" class="list-group-item list-group-item-action">Admin Menu</a>
+                  <h5 class="card-title">Modules</h5>
+                  <div class="card-columns">
+                    <div class="card bg-light">
+                      <div class="card-header text-center">Hot Desk</div>
+                      <div class="card-body">
+                        <h5 class="card-title">Admin</h5>
+                        <p class="card-text">
+                          <ul>
+                            <li>Manage Inventory</li>
+                            <li>Manage Staff Access</li>
+                          </ul>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card bg-light">
+                      <div class="card-header text-center">Group Work Distribution</div>
+                      <div class="card-body">
+                        <h5 class="card-title">Admin</h5>
+                        <p class="card-text">
+                          <ul>
+                            <li>Manage Task Type</li>
+                            <li>Manage Staff Access</li>
+                          </ul>
+                        </p>
+                        <h5 class="card-title">Superior</h5>
+                        <p class="card-text">
+                          <ul>
+                            <li>Manage Staff's Task</li>
+                          </ul>
+                        </p>
+                        <h5 class="card-title">Staff / General</h5>
+                        <p class="card-text">
+                          <ul>
+                            <li>Manage Task</li>
+                            <li>Update daily activity</li>
+                          </ul>
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>

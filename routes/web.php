@@ -16,6 +16,7 @@ Auth::routes();
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pg', 'HomeController@playground')->name('pg');
+Route::get('/adminlist', 'HomeController@listAdmins')->name('adminlist');
 
 // ============ admins ================
 Route::get('/admin', 'TAdminController@index')->name('admin');
@@ -33,6 +34,8 @@ Route::post('/admin/addsr', 'TAdminController@assignRole')->name('admin.addsr');
 Route::get('/admin/staff', 'TAdminController@blankStaff')->name('admin.st');
 Route::post('/admin/editst', 'TAdminController@updateUser')->name('admin.upst');
 Route::post('/admin/findstaff', 'TAdminController@findStaff')->name('admin.findst');
+Route::post('/admin/reflov', 'TAdminController@refreshLOV')->name('admin.reflov');
+Route::get('/admin/reflov', 'TAdminController@showLOV')->name('admin.lov');
 
 
 // normal users
@@ -46,3 +49,5 @@ Route::post('/user/doaddactivity', 'TStaffController@doAddACtivity')->name('staf
 
 
 // bosses?
+Route::get('/reports', 'ReportController@index')->name('reports');
+Route::get('/reports/regstat', 'ReportController@registeredUser')->name('reports.regstat');

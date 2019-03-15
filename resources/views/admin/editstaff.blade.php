@@ -57,6 +57,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="subunit_disc" class="col-md-4 col-form-label text-md-right">Sub Unit</label>
+                        <div class="col-md-6">
+                            <input id="subunit_disc" class="form-control" type="text" name="subunit_disc" value="{{ $staffdata['SUBUNIT'] }}" readonly  />
+                        </div>
+                    </div>
+                    <div class="form-group row">
                       <label for="srole" class="col-md-4 col-form-label text-md-right">Role</label>
                       <div class="col-md-6">
                         <select class="form-control" id="srole" name="srole" autofocus>
@@ -89,7 +95,7 @@
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-primary" {{ $staffdata['btn_state'] }}>{{ $staffdata['btn_txt'] }}</button>
                         </div>
-                    </div>
+                    </div> 
                   </form>
                 </div>
             </div>

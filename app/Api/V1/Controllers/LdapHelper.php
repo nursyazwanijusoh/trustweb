@@ -56,7 +56,7 @@ class LdapHelper extends Controller
 
     if($errorcode == 200){
       // $this->logs($username, 'Login', []);
-      return $this->fetchUser($username, 'id');
+      return $this->fetchUser($username);
     }
 
     return $this->respond_json($errorcode, $errm);
@@ -68,7 +68,7 @@ class LdapHelper extends Controller
   *	get the information for the requested user
   *	to be used internally
   */
-  function fetchUser($username, $searchtype = 'id'){
+  function fetchUser($username, $searchtype = 'cn'){
 
     set_error_handler(array($this, 'errorHandler'));
 
@@ -82,13 +82,6 @@ class LdapHelper extends Controller
     //	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
     putenv('LDAPTLS_REQCERT=never');
 
-    $stype = 'cn';
-    if(strcasecmp($searchtype,'name') == 0){
-      $stype = 'sn';
-    } else if(strcasecmp($searchtype,'mail') == 0){
-      $stype = 'mail';
-    }
-
     $con =  ldap_connect($hostnameSSL);
     if (is_resource($con)){
       if (ldap_set_option($con, LDAP_OPT_PROTOCOL_VERSION, 3)){
@@ -99,8 +92,10 @@ class LdapHelper extends Controller
         if (ldap_bind($con,$udn, $password)){
 
           // perform the search
-          $ldres = ldap_search($con, 'ou=users,o=data', "$stype=$username");
+          $ldres = ldap_search($con, 'ou=users,o=data', "$searchtype=$username");
           $ldapdata = ldap_get_entries($con, $ldres);
+
+          // return $ldapdata;
 
           if($ldapdata['count'] == 0){
             $errorcode = 404;
@@ -116,7 +111,8 @@ class LdapHelper extends Controller
               'STAFF_NO' => $stid,
               'NAME' => $ldapdata['0']['fullname']['0'],
               'UNIT' => $ldapdata['0']['pporgunitdesc']['0'],
-              'DEPARTMENT' => $ldapdata['0']['departmentnumber']['0'],
+              'SUBUNIT' => $ldapdata['0']['ppsuborgunitdesc']['0'],
+              'DEPARTMENT' => $ldapdata['0']['pporgunit']['0'],
               // 'COST_CENTER' => $costcenter,
               // 'BC_NAME' => $bcname,
               // 'ROLE' => $role,
@@ -126,6 +122,95 @@ class LdapHelper extends Controller
               'SUPERIOR' => $ldapdata['0']['ppreporttoname']['0']
             ];
 
+            //$retdata = $ldapdata;
+          }
+
+        } else {
+          $errorcode = 403;
+          $errm = 'Invalid admin credentials.';
+        }} catch(Exception $e) {
+          $errorcode = 500;
+          $errm = $e->getMessage();
+        }
+
+      } else {
+        $errorcode = 500;
+        $errm = "TLS not supported. Unable to set LDAP protocol version to 3";
+      }
+
+      // clean up after done
+      ldap_close($con);
+
+    } else {
+      $errorcode = 500;
+      $errm = "Unable to connect to $hostnameSSL";
+    }
+
+    return $this->respond_json($errorcode, $errm, $retdata);
+  }
+
+  /**
+   * get units and subunit under the LOB (departmentnumber)
+   */
+  function fetchSubUnits($lob){
+
+    set_error_handler(array($this, 'errorHandler'));
+
+    // do the ldap things
+    $errm = 'success';
+    $errorcode = 200;
+    $udn= 'cn=novabillviewerldapadmin, ou=serviceAccount, o=Telekom';
+    $password = 'nHQUbG9Z';
+    $hostnameSSL = env('TMLDAP_HOSTNAME', 'ldaps://idssldap.tm.com.my:636');
+    $retdata = [];
+    //	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+    putenv('LDAPTLS_REQCERT=never');
+
+    $con =  ldap_connect($hostnameSSL);
+    if (is_resource($con)){
+      if (ldap_set_option($con, LDAP_OPT_PROTOCOL_VERSION, 3)){
+        ldap_set_option($con, LDAP_OPT_REFERRALS, 0);
+
+        // try to bind / authenticate
+        try{
+        if (ldap_bind($con,$udn, $password)){
+
+          // perform the search
+          $ldres = ldap_search(
+            $con, 'ou=users,o=data', "departmentnumber=$lob",
+            array('ppsuborg', 'pporgunit', 'pporgunitdesc', 'ppsuborgunitdesc'),
+            0, 0
+          );
+          $ldapdata = ldap_get_entries($con, $ldres);
+
+          // return $ldapdata;
+          $sublist = [];
+
+          if($ldapdata['count'] == 0){
+            $errorcode = 404;
+            $errm = 'LOB not found';
+          } else {
+            for ($i=0; $i < $ldapdata['count']; $i++) {
+              $ppsuborg = (isset($ldapdata[$i]['ppsuborg']['0'])) ? $ldapdata[$i]['ppsuborg']['0'] : 1;
+              $pporgunit = (isset($ldapdata[$i]['pporgunit']['0'])) ? $ldapdata[$i]['pporgunit']['0'] : 1;
+              $pporgunitdesc = (isset($ldapdata[$i]['pporgunitdesc']['0'])) ? $ldapdata[$i]['pporgunitdesc']['0'] : 'Empty';
+              $ppsuborgunitdesc = (isset($ldapdata[$i]['ppsuborgunitdesc']['0'])) ? $ldapdata[$i]['ppsuborgunitdesc']['0'] : 'Empty';
+
+              if(in_array($ldapdata[$i]['ppsuborg']['0'], $sublist)){
+                // already fetched. skip
+              } else {
+                array_push($sublist, $ldapdata[$i]['ppsuborg']['0']);
+                $subdata = [
+                  'ppsuborg' => $ppsuborg,
+                  'pporgunit' => $pporgunit,
+                  'pporgunitdesc' => $pporgunitdesc,
+                  'ppsuborgunitdesc' => $ppsuborgunitdesc
+                ];
+
+                array_push($retdata, $subdata);
+              }
+
+            }
             //$retdata = $ldapdata;
           }
 
@@ -179,7 +264,10 @@ class LdapHelper extends Controller
         if (ldap_bind($con,$udn, $password)){
 
           // perform the search
-          $ldres = ldap_search($con, 'ou=users,o=data', "$stype=$username");
+          $ldres = ldap_search(
+            $con, 'ou=users,o=data', "$stype=$username",
+            array('sn', 'cn')
+          );
           $ldapdata = ldap_get_entries($con, $ldres);
 
           if($ldapdata['count'] == 0){

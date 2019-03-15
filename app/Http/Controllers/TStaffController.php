@@ -49,19 +49,23 @@ class TStaffController extends Controller
     $tasktype = TaskCategory::where('status', 1)->get();
     $staff_name = 'Not Found!!';
     $currtasklist = [];
+    $def_staff_id = Session::get('staffdata')['id'];
+    if($req->filled('staff_id')){
+      $def_staff_id = $req->staff_id;
+    }
 
-    $staff = User::where('id', $req->staff_id)->first();
+    $staff = User::where('id', $def_staff_id)->first();
     if($staff){
       $staff_name = $staff->name;
-      $currtasklist = Task::where('user_id', $req->staff_id)
+      $currtasklist = Task::where('user_id', $def_staff_id)
         ->where('status', 1)->get();
-      $closedtasklist = Task::where('user_id', $req->staff_id)
+      $closedtasklist = Task::where('user_id', $def_staff_id)
         ->where('status', 0)->get();
     }
 
 
     return view('staff.taskindex', ['tasktype' => $tasktype,
-      's_staff_id' => $req->staff_id,
+      's_staff_id' => $def_staff_id,
       'staff_name' => $staff_name,
       'currtasklist' => $currtasklist,
       'completedtasklist' => $closedtasklist

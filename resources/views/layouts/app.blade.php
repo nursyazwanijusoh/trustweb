@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script> -->
+    <!-- <script src="{{ asset('js/Chart.min.js') }}"></script> -->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -43,11 +45,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login', [], false) }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register', [], false) }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -55,19 +52,21 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                  <a class="dropdown-item" href="{{ route('staff', [], false) }}">Home</a>
                                   @if (Session::get('staffdata')['role'] <= 1)
                                   <a class="dropdown-item" href="{{ route('admin', [], false) }}">Admin</a>
                                   @endif
-                                    <a class="dropdown-item" href="#"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                  <a class="dropdown-item" href="{{ route('staff', [], false) }}">Staff Home</a>
+                                  <a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a>
+                                  <a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a>
+                                  <a class="dropdown-item" href="#"
+                                     onclick="event.preventDefault();
+                                                   document.getElementById('logout-form').submit();">
+                                      {{ __('Logout') }}
+                                  </a>
 
-                                    <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
+                                  <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST" style="display: none;">
+                                      @csrf
+                                  </form>
                                 </div>
                             </li>
                         @endguest
