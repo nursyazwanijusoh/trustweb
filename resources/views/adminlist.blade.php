@@ -13,7 +13,7 @@
                       <div class="card-header text-center">{{ $asub['name'] }}</div>
                       <div class="card-body">
                         <p class="card-text">{{ $asub['unit'] }}<br />
-                        Email: {{ $asub['name'] }}<br />
+                        Email: {{ $asub['email'] }}<br />
                         Mobile: {{ $asub['mobile_no'] }}</p>
                       </div>
                     </div>
