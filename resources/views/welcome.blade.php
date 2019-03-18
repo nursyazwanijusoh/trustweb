@@ -13,6 +13,9 @@
                     <div class="card bg-light">
                       <div class="card-header text-center">Hot Desk</div>
                       <div class="card-body">
+                        <p class="card-text">
+                          Agile workspace. Free seating for everyone
+                        </p>
                         <h5 class="card-title">Admin</h5>
                         <p class="card-text">
                           <ul>
@@ -25,6 +28,9 @@
                     <div class="card bg-light">
                       <div class="card-header text-center">Group Work Distribution</div>
                       <div class="card-body">
+                        <p class="card-text">
+                          Make your work be known. Keep track what you have done, and for how long. :D
+                        </p>
                         <h5 class="card-title">Admin</h5>
                         <p class="card-text">
                           <ul>
