@@ -24,7 +24,7 @@ class ReportController extends Controller
     // get some summary
     $unitlist = \DB::table('users')
       ->select('unit', \DB::raw('count(*) as total'))
-      ->where('lob', \Session::get('staffdata')['lob'])
+      // ->where('lob', \Session::get('staffdata')['lob'])
       ->groupBy('unit')->get();
 
     $label = [];
