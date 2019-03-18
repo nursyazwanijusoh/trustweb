@@ -54,7 +54,7 @@ class ReportController extends Controller
       $aunit['subunit'] = $subunitlist;
     }
 
-    return view('admin.deptlov', ['deptid' => $mylob, 'units' => $unitlist]);
+    return view('report.deptlov', ['deptid' => $mylob, 'units' => $unitlist]);
   }
 
 }
