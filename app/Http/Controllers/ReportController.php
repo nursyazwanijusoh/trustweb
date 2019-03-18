@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Unit;
+use App\SubUnit;
 use App\Charts\RegStatChart;
 
 class ReportController extends Controller
@@ -40,7 +42,19 @@ class ReportController extends Controller
   }
 
   public function manDaysDisp(Request $req){
-    
+
+  }
+
+  public function showDepts(){
+    $mylob = 3000;
+
+    $unitlist = Unit::where('lob', $mylob)->get();
+    foreach($unitlist as $aunit){
+      $subunitlist = SubUnit::where('lob', $mylob)->where('pporgunit', $aunit->pporgunit)->get();
+      $aunit['subunit'] = $subunitlist;
+    }
+
+    return view('admin.deptlov', ['deptid' => $mylob, 'units' => $unitlist]);
   }
 
 }

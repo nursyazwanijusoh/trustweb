@@ -51,3 +51,4 @@ Route::post('/user/doaddactivity', 'TStaffController@doAddACtivity')->name('staf
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');
 Route::get('/reports/regstat', 'ReportController@registeredUser')->name('reports.regstat');
+Route::get('/reports/depts', 'ReportController@showDepts')->name('reports.depts');
