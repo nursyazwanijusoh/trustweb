@@ -7,9 +7,6 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">View work-hours summary</div>
-                @if(isset($alert))
-                <div class="alert alert-success" role="alert">Activity added</div>
-                @endif
                 <div class="card-body">
                   <form method="POST" action="{{ route('reports.workhourf') }}" id="whform">
                     @csrf
@@ -39,7 +36,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary" name="subtype" value="pporgunit">Get Division Report</button>
+                            <button type="submit" class="btn btn-primary" name="subtype" value="lob">Get Division Report</button>
                         </div>
                     </div>
                     <div class="form-group row  {{ $gotunit }}">

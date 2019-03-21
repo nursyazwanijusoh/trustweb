@@ -55,12 +55,12 @@ class ReportController extends Controller
 
     // if actually pressed submit
     if($req->filled('subtype')){
-      if($req->subtype == 'pporgunit'){
+      if($req->subtype == 'lob'){
         $svalue = $req->pporgunit;
       } else {
         $svalue = $req->subunit;
       }
-
+      // return $req;
       return $this->getWorkdaysResult($req->subtype, $svalue, $req->fdate, $req->todate);
     }
 
@@ -134,8 +134,18 @@ class ReportController extends Controller
 
   private function getWorkdaysResult($field, $svalue, $fdate, $todate){
 
+    $searchlabel = $svalue;
+    $totExptHours = 0;
+    if($field == 'lob'){
+      $unitv = Unit::where('pporgunit', $svalue)->first();
+      if($unitv){
+        $searchlabel = $unitv->pporgunitdesc;
+      }
+    }
 
-    $datelist = [];
+    $finalout = [];
+    $dateheader = [];
+    array_push($dateheader, ['date' => 'Staff Name', 'isweekend' => 'y']);
     // first, get the list of date that we need to check
     $daterange = new DatePeriod(
       new DateTime($fdate),
@@ -143,16 +153,59 @@ class ReportController extends Controller
       new DateTime($todate)
     );
 
-
-    // then for each day,
     foreach($daterange as $onedate){
-      array_push($datelist, $onedate->format('Y-m-d'));
+      if($onedate->format('w') == 0 || $onedate->format('w') == 6){
+        $isweken = 'y';
+      } elseif ($onedate->format('w') == 5) {
+        // friday
+        $isweken = 'n';
+        $totExptHours += 7.5;
+      }
+      else {
+        $isweken = 'n';
+        $totExptHours += 8;
+      }
 
+      $d = [
+        'date' => $onedate->format('m-d'),
+        'isweekend' => $isweken
+      ];
 
+      array_push($dateheader, $d);
+    }
+    array_push($dateheader, ['date' => 'Total Hours', 'isweekend' => 'y']);
 
+    // next, get the list of staff under the selection criteria
+    $allstaffs = User::where($field, $svalue)->get();
+    // return $field;
+
+    // so, for each staff
+    foreach($allstaffs as $astaff){
+      $sdata = [];
+      $stotal = 0;
+      array_push($sdata, $astaff->name);
+      // and for each day,
+      foreach($daterange as $onedate){
+        $dsum = DB::table('activities')
+          ->join('tasks', 'tasks.id', '=', 'activities.task_id')
+          ->where('tasks.user_id', $astaff->id)
+          ->where('activities.date', $onedate->format('Y-m-d'))
+          ->sum('activities.hours_spent');
+        array_push($sdata, $dsum);
+        $stotal += $dsum;
+      }
+      array_push($sdata, $stotal);
+      array_push($finalout, $sdata);
 
     }
-    return $datelist;
+
+    return view('report.workhourr', [
+      'rlabel' => $searchlabel,
+      'header' => $dateheader,
+      'staffs' => $finalout,
+      'expthours' => $totExptHours
+    ]);
+
   }
 
   public function showDepts(){
