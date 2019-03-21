@@ -38,7 +38,7 @@ class ReportController extends Controller
       $unit = Unit::where('pporgunit', $aunit->lob)->first();
       $unitname = $aunit->lob;
       if($unit){
-        $unitname = $unit->lob;
+        $unitname = $unit->pporgunitdesc;
       }
       array_push($label, $unitname);
       array_push($value, $aunit->total);
