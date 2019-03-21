@@ -177,7 +177,7 @@ class ReportController extends Controller
 
     // next, get the list of staff under the selection criteria
     $allstaffs = User::where($field, $svalue)
-      orderBy('name', 'ASC')->get();
+      ->orderBy('name', 'ASC')->get();
     // return $field;
 
     // so, for each staff
