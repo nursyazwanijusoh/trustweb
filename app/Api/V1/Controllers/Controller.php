@@ -62,7 +62,7 @@ class Controller extends BaseController
   function playground(){
 
     $nom = new LdapHelper;
-    return $nom->fetchUser('Hazimi Bin Kassim', 'sn');
+    return $nom->fetchUser('S53788', 'cn');
     // $sum = \DB::table('activities')->where('task_id', 1)->sum('hours_spent');
     // $sum = \DB::table()
 
