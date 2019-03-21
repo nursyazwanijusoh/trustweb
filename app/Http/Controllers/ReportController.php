@@ -176,7 +176,8 @@ class ReportController extends Controller
     array_push($dateheader, ['date' => 'Total Hours', 'isweekend' => 'y']);
 
     // next, get the list of staff under the selection criteria
-    $allstaffs = User::where($field, $svalue)->get();
+    $allstaffs = User::where($field, $svalue)
+      orderBy('name', 'ASC')->get();
     // return $field;
 
     // so, for each staff
