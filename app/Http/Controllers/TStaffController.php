@@ -132,7 +132,10 @@ class TStaffController extends Controller
     $mystaffid = Session::get('staffdata')['id'];
     // get the list of task
     $tasklist = Task::where('user_id', $mystaffid)->where('status', 1)->get();
+    $gottask = false;
+
     foreach($tasklist as $atask){
+      $gottask = true;
       $atask['sel'] = '';
       if($req->filled('task_id')){
         if($atask->id == $req->task_id){
@@ -144,10 +147,14 @@ class TStaffController extends Controller
     $curdate = date('Y-m-d');
 
     if($req->filled('alert')){
-      return view('staff.addactivity', ['tasklist' => $tasklist, 'curdate' => $curdate, 'alert' => 'y']);
+      return view('staff.addactivity', [
+        'tasklist' => $tasklist,
+        'curdate' => $curdate, 'alert' => 'y',
+        'gottask' => $gottask
+      ]);
     }
 
-    return view('staff.addactivity', ['tasklist' => $tasklist, 'curdate' => $curdate]);
+    return view('staff.addactivity', ['tasklist' => $tasklist, 'curdate' => $curdate, 'gottask' => $gottask]);
   }
 
   public function doAddACtivity(Request $req){

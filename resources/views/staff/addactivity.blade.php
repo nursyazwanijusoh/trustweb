@@ -29,7 +29,7 @@
                     <div class="form-group row">
                       <label for="acttask" class="col-md-4 col-form-label text-md-right">Task</label>
                       <div class="col-md-6">
-                        <select class="form-control" id="acttask" name="acttask">
+                        <select class="form-control" id="acttask" name="acttask" required>
                           @foreach ($tasklist as $atask)
                           <option value="{{ $atask['id'] }}" {{ $atask['sel'] }} >{{ $atask['name'] }}</option>
                           @endforeach
@@ -39,7 +39,7 @@
                     <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Remark</label>
                         <div class="col-md-6">
-                          <textarea rows="5" class="form-control" id="remark" name="remark"></textarea>
+                          <textarea rows="5" class="form-control" id="remark" name="remark" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -52,7 +52,11 @@
                     </div>
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
+                          @if ($gottask == true)
                             <button type="submit" class="btn btn-primary">Add Activity</button>
+                          @else
+                            <a href="{{ route('staff.t', [], false) }}"><button type="button" class="btn btn-warning">Add Task First</button></a>
+                          @endif
                         </div>
                     </div>
                   </form>
