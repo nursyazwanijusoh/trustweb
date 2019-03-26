@@ -34,11 +34,14 @@ class TStaffController extends Controller
     // get subordinates
     $sublist = Subordinate::where('superior_id', $s_staff_id)->get();
 
+    $user = User::find($s_staff_id);
+
     return view('staff.index', [
       'staff_id' => $s_staff_id,
       'opentask' => $opentaskcount,
       'donetask' => $donetaskcount,
-      'subords' => $sublist
+      'subords' => $sublist,
+      'user' => $user
     ]);
   }
 
