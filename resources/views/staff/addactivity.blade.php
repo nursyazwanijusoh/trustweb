@@ -37,9 +37,19 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label for="acttype" class="col-md-4 col-form-label text-md-right">Activity Type</label>
+                      <div class="col-md-6">
+                        <select class="form-control" id="acttype" name="acttype" required>
+                          @foreach ($actlist as $act)
+                          <option value="{{ $act['id'] }}" >{{ $act['descr'] }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Remark</label>
                         <div class="col-md-6">
-                          <textarea rows="5" class="form-control" id="remark" name="remark" required></textarea>
+                          <textarea rows="3" class="form-control" id="remark" name="remark"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">

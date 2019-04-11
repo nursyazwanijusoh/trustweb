@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Api\V1\Controllers\UserController;
 use Session;
 use App\Task;
 use App\TaskCategory;
+use App\ActivityType;
 use App\User;
 use App\Activity;
 use App\Subordinate;
@@ -96,7 +98,9 @@ class TStaffController extends Controller
     $task = Task::where('id', $req->task_id)->first();
     if($task){
       // get the activities
-      $acts = Activity::where('task_id', $req->task_id)->get();
+      $usercontrol = new UserController;
+      // $acts = Activity::where('task_id', $req->task_id)->get();
+      $acts = $usercontrol->getActivityList($req->task_id);
 
       // get the type
       $ttype = TaskCategory::where('id', $task->task_cat_id)->first();
@@ -132,6 +136,8 @@ class TStaffController extends Controller
     $mystaffid = Session::get('staffdata')['id'];
     // get the list of task
     $tasklist = Task::where('user_id', $mystaffid)->where('status', 1)->get();
+    // list of activity type
+    $acttypelist = ActivityType::where('status', 1)->get();
     $gottask = false;
 
     foreach($tasklist as $atask){
@@ -150,19 +156,24 @@ class TStaffController extends Controller
       return view('staff.addactivity', [
         'tasklist' => $tasklist,
         'curdate' => $curdate, 'alert' => 'y',
+        'actlist' => $acttypelist,
         'gottask' => $gottask
       ]);
     }
 
-    return view('staff.addactivity', ['tasklist' => $tasklist, 'curdate' => $curdate, 'gottask' => $gottask]);
+    return view('staff.addactivity', [
+      'tasklist' => $tasklist, 'curdate' => $curdate,
+      'actlist' => $acttypelist, 'gottask' => $gottask
+    ]);
   }
 
   public function doAddACtivity(Request $req){
     $act = new Activity;
     $act->task_id = $req->acttask;
     $act->date = $req->actdate;
-    $act->remark = $req->remark;
+    $act->act_type = $req->acttype;
     $act->hours_spent = $req->hours;
+    $act->remark = $req->remark;
     $act->save();
 
     // update the task with total sum of hours of activities

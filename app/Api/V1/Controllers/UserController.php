@@ -7,6 +7,8 @@ use App\User;
 use App\place;
 use App\building;
 use App\reservation;
+use App\ActivityType;
+use App\Activity;
 use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
@@ -268,5 +270,17 @@ class UserController extends Controller
       }
 
       return $staff;
+    }
+
+    public function getActivityList($task_id){
+      $actlist = Activity::where('task_id', $task_id)->get();
+
+      // append the readable activity type
+      foreach ($actlist as $aact) {
+        $acttype = ActivityType::find($aact->act_type);
+        $aact['act_type_desc'] = $acttype->descr;
+      }
+
+      return $actlist;
     }
 }

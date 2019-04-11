@@ -61,8 +61,20 @@ class Controller extends BaseController
 
   function playground(){
 
-    $nom = new LdapHelper;
-    return $nom->fetchUser('S53788', 'cn');
+    $qrarray = [];
+    for ($i=1; $i < 20; $i++) {
+      $QRdata = [
+          'qrcode' => 'MTM28s_' . $i,
+          'label' => 'MTM28s_' . $i
+        ];
+      array_push($qrarray, $QRdata);
+
+    }
+
+    return view('admin.qrdisplay', ['qdata' => $qrarray]);
+
+    // $nom = new LdapHelper;
+    // return $nom->fetchUser('S53788', 'cn');
     // $sum = \DB::table('activities')->where('task_id', 1)->sum('hours_spent');
     // $sum = \DB::table()
 

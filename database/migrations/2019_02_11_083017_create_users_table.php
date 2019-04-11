@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('allowed_building', 255)->nullable();
             $table->string('lob', 20)->nullable();
             $table->integer('status')->nullable();
+            $table->string('pushnoti_id')->nullable();
         });
     }
 

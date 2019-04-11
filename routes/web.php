@@ -24,6 +24,10 @@ Route::get('/admin', 'TAdminController@index')->name('admin');
 Route::get('/admin/tasktype', 'TAdminController@showTaskManagement')->name('admin.tt');
 Route::post('/admin/addtt', 'TAdminController@doTaskMgmtAdd')->name('admin.addtt');
 Route::get('/admin/deltt', 'TAdminController@disableTaskType')->name('admin.deltt');
+// admin activity type
+Route::get('/admin/acttype', 'TAdminController@showActivityType')->name('admin.at');
+Route::post('/admin/addat', 'TAdminController@doActivityTypeAdd')->name('admin.addat');
+Route::get('/admin/delat', 'TAdminController@disableActivityType')->name('admin.delat');
 // admin building
 Route::get('/admin/build', 'TAdminController@buildingIndex')->name('admin.build');
 Route::post('/admin/addbuild', 'TAdminController@addBuilding')->name('admin.addbuild');

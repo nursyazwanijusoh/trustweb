@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Middleware\AdminGate;
 use App\TaskCategory;
+use App\ActivityType;
 use App\building;
 use App\User;
 use App\Unit;
@@ -54,6 +55,35 @@ class TAdminController extends Controller
     $task->save();
 
     return redirect(route('admin.tt', [], false));
+  }
+
+  // ----- activity type management -----
+  public function showActivityType(){
+    $tasklist = ActivityType::where('status', 1)->get();
+    return view('admin.activitytype', ['currtasklist' => $tasklist]);
+  }
+
+  // add the submitted task type, then redirect back to showTaskManagement
+  public function doActivityTypeAdd(Request $req){
+    $tt = new ActivityType;
+    $tt->descr = $req->descr;
+    $tt->remark = $req->remark;
+    $tt->status = 1;
+
+    $tt->save();
+
+    $tasklist = ActivityType::where('status', 1)->get();
+    return view('admin.activitytype', ['currtasklist' => $tasklist]);
+
+  }
+
+  // delete task type. more like, change the status to inactive
+  public function disableActivityType(Request $req){
+    $task = ActivityType::where('id', $req->taskid)->first();
+    $task->status = 0;
+    $task->save();
+
+    return redirect(route('admin.at', [], false));
   }
 
 

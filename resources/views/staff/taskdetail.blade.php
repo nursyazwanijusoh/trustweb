@@ -62,6 +62,7 @@
                     <thead>
                       <tr>
                         <th scope="col">Date</th>
+                        <th scope="col">Type</th>
                         <th scope="col">Remark</th>
                         <th scope="col">Hours</th>
                       </tr>
@@ -70,6 +71,7 @@
                       @foreach($activities as $acts)
                       <tr>
                         <td>{{ $acts['date'] }}</td>
+                        <td>{{ $acts['act_type_desc'] }}</td>
                         <td>{{ $acts['remark'] }}</td>
                         <td>{{ $acts['hours_spent'] }}</td>
                       </tr>
