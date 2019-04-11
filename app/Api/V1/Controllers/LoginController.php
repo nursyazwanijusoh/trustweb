@@ -71,6 +71,26 @@ class LoginController extends Controller
 
 	}
 
+	function justLogin(Request $req){
+		$input = app('request')->all();
+
+		$rules = [
+			'staff_no' => ['required'],
+			'password' => ['required']
+		];
+
+		$validator = app('validator')->make($input, $rules);
+		if($validator->fails()){
+			return $this->respond_json(412, 'Invalid input', $input);
+		}
+
+		$username = $req->staff_no;
+		$password = $req->password;
+
+		$ldapherpel = new LdapHelper;
+		return $ldapherpel->doLogin($username, $password);
+	}
+
 	// to be called by API
 	function getUserInfo(Request $req){
 		// first, validate the input

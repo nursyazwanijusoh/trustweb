@@ -25,7 +25,7 @@ $api->version('v1', function ($api) {
   $api->get('/',            ['as' => 'api.home',   'uses' => 'App\Api\V1\Controllers\Controller@home']);
   $api->get('/pg',            ['as' => 'api.pg',   'uses' => 'App\Api\V1\Controllers\Controller@playground']);
 
-  // management
+  // inventory management
   $api->post('/buildingCreate',  ['as' => 'build.c', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingCreate']);
   $api->post('/buildingSearch',  ['as' => 'build.r', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingSearch']);
   $api->post('/buildingEdit',    ['as' => 'build.u', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingEdit']);
@@ -44,8 +44,20 @@ $api->version('v1', function ($api) {
   $api->post('/AdminUpdateStaff',  ['as' => 'admin.ups', 'uses' => 'App\Api\V1\Controllers\AdminController@AdminUpdateStaff']);
   // $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\AdminController@doLogin']);
 
+  // LOV management
+  $api->post('/LovTaskTypeAdd',  ['as' => 'lov.tt.c', 'uses' => 'App\Api\V1\Controllers\LovController@ttCreate']);
+  $api->post('/LovTaskTypeSearch',  ['as' => 'lov.tt.r', 'uses' => 'App\Api\V1\Controllers\LovController@ttSearch']);
+  $api->post('/LovTaskTypeEdit',  ['as' => 'lov.tt.u', 'uses' => 'App\Api\V1\Controllers\LovController@ttEdit']);
+  $api->post('/LovTaskTypeDelete',  ['as' => 'lov.tt.d', 'uses' => 'App\Api\V1\Controllers\LovController@ttDelete']);
+
+  $api->post('/LovActTypeAdd',  ['as' => 'lov.at.c', 'uses' => 'App\Api\V1\Controllers\LovController@atCreate']);
+  $api->post('/LovActTypeSearch',  ['as' => 'lov.at.r', 'uses' => 'App\Api\V1\Controllers\LovController@atSearch']);
+  $api->post('/LovActTypeEdit',  ['as' => 'lov.at.u', 'uses' => 'App\Api\V1\Controllers\LovController@atEdit']);
+  $api->post('/LovActTypeDelete',  ['as' => 'lov.at.d', 'uses' => 'App\Api\V1\Controllers\LovController@atDelete']);
+
   // activities
   $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\LoginController@doLogin']);
+  $api->post('/UserJustLogin',  ['as' => 'user.j.login', 'uses' => 'App\Api\V1\Controllers\LoginController@justLogin']);
 
   $api->post('/ReserveSeat',  ['as' => 'user.reserve', 'uses' => 'App\Api\V1\Controllers\UserController@ReserveSeat']);
   $api->post('/ReserveCancel',  ['as' => 'user.reservec', 'uses' => 'App\Api\V1\Controllers\UserController@ReserveCancel']);
