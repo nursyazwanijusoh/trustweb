@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">Generate QR</div>
                 <div class="card-body">
-                  <form method="get" action="{{ route('admin.genqrg', [], false) }}">
+                  <form method="get" action="{{ route('admin.genqrp', [], false) }}">
                     @csrf
                     <!-- <h5 class="card-title">Add new task type</h5> -->
                     <div class="form-group row">
