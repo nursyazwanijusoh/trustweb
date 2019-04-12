@@ -408,7 +408,7 @@ class TAdminController extends Controller
     $build = new building;
     $build->building_name = $req->building_name;
     $build->floor_name = $req->floor_name;
-    $build->created_by = Session::get('staffdata')['id'];
+    $build->created_by = Session::get('staffdata')['name'];
     $build->status = 1;
 
     if($req->filled('remark')){
@@ -424,7 +424,7 @@ class TAdminController extends Controller
   }
 
   public function delBuilding(Request $req){
-    $build = building::where('id', $req->building_id)->first();
+    $build = building::find($req->build_id);
     if($build){
       // delete the seats first
       place::where('building_id', $build->id)->delete();
