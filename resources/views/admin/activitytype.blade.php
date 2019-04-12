@@ -47,7 +47,7 @@
                       <tr>
                         <td>{{ $atask['descr'] }}</td>
                         <td>{{ $atask['remark'] }}</td>
-                        <td><a href="{{ route('admin.delat', ['taskid' => $atask['id']]) }}">Remove</a></td>
+                        <td><a href="{{ route('admin.delat', ['taskid' => $atask['id']], false) }}">Remove</a></td>
                       </tr>
                       @endforeach
                     </tbody>

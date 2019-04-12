@@ -58,7 +58,7 @@
                         <td>{{ $atask['floor_name'] }}</td>
                         <td>{{ $atask['remark'] }}</td>
                         <td>{{ $atask['created_by'] }}</td>
-                        <td><a href="{{ route('admin.delbuild', ['build_id' => $atask['id']]) }}">Remove</a></td>
+                        <td><a href="{{ route('admin.delbuild', ['build_id' => $atask['id']], false) }}">Remove</a></td>
                       </tr>
                       @endforeach
                     </tbody>
