@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">Work Place Management</div>
                 <div class="card-body">
-                  <form method="POST" action="{{ route('admin.addtt', [], false) }}">
+                  <form method="POST" action="{{ route('admin.addbuild', [], false) }}">
                     @csrf
                     <h5 class="card-title">Add new location</h5>
                     <div class="form-group row">
