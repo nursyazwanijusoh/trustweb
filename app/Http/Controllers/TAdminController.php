@@ -412,4 +412,15 @@ class TAdminController extends Controller
 
   }
 
+  public function genQR(Request $req){
+    $qrcontent = $req->filled('qrc') ? $req->qrc : "empty";
+    $qrlabel = $req->filled('qrl') ? $req->qrl : "empty";
+
+    return view('admin.genqr', [
+      'qrcontent' => $qrcontent,
+      'qrlabel' => $qrlabel
+    ]);
+
+  }
+
 }

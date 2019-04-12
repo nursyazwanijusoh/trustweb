@@ -15,6 +15,7 @@
                     <a href="{{ route('admin.tt', [], false) }}" class="list-group-item list-group-item-action">Task Type List</a>
                     <a href="{{ route('admin.at', [], false) }}" class="list-group-item list-group-item-action">Activity Type List</a>
                     <a href="{{ route('admin.lov', [], false) }}" class="list-group-item list-group-item-action">Department LOVs</a>
+                    <a href="{{ route('admin.genqrg', [], false) }}" class="list-group-item list-group-item-action">Generate QR</a>
                   </div>
                 </div>
             </div>

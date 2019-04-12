@@ -41,6 +41,9 @@ Route::post('/admin/findstaff', 'TAdminController@findStaff')->name('admin.finds
 Route::post('/admin/reflov', 'TAdminController@refreshLOV')->name('admin.reflov');
 Route::get('/admin/reflov', 'TAdminController@showLOV')->name('admin.lov');
 
+Route::get('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrg');
+// Route::post('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrp');
+
 
 // normal users
 Route::get('/user', 'TStaffController@index')->name('staff');
