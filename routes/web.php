@@ -31,7 +31,7 @@ Route::get('/admin/delat', 'TAdminController@disableActivityType')->name('admin.
 // admin building
 Route::get('/admin/build', 'TAdminController@buildingIndex')->name('admin.build');
 Route::post('/admin/addbuild', 'TAdminController@addBuilding')->name('admin.addbuild');
-Route::get('/admin/delbuild', 'TAdminController@delBuilding')->name('admin.delbuild');
+Route::post('/admin/delbuild', 'TAdminController@delBuilding')->name('admin.delbuild');
 // admin staff role
 Route::get('/admin/sr', 'TAdminController@showStaffRole')->name('admin.sr');
 Route::post('/admin/addsr', 'TAdminController@assignRole')->name('admin.addsr');

@@ -58,7 +58,10 @@
                         <td>{{ $atask['floor_name'] }}</td>
                         <td>{{ $atask['remark'] }}</td>
                         <td>{{ $atask['created_by'] }}</td>
-                        <td><a href="{{ route('admin.delbuild', ['build_id' => $atask['id']], false) }}">Remove</a></td>
+                        <td><form method="POST" action="{{ route('admin.delbuild', [], false) }}">
+                          <input type="hidden" name="build_id" value="{{ $atask['id'] }}"  />
+                          <button type="submit" class="btn btn-primary">Remove</button>
+                        </form></td>
                       </tr>
                       @endforeach
                     </tbody>
