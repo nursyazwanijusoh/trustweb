@@ -59,8 +59,9 @@
                         <td>{{ $atask['remark'] }}</td>
                         <td>{{ $atask['created_by'] }}</td>
                         <td><form method="POST" action="{{ route('admin.delbuild', [], false) }}">
+                          @csrf
                           <input type="hidden" name="build_id" value="{{ $atask['id'] }}"  />
-                          <button type="submit" class="btn btn-primary">Remove</button>
+                          <button type="submit" class="btn">Remove</button>
                         </form></td>
                       </tr>
                       @endforeach
