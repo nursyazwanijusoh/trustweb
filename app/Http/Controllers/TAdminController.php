@@ -405,10 +405,37 @@ class TAdminController extends Controller
 
 
   public function addBuilding(Request $req){
+    $build = new building;
+    $build->building_name = $req->building_name;
+    $build->floor_name = $req->floor_name;
+    $build->status = 1;
 
+    if($req->filled('remark')){
+      $build->remark = $req->remark;
+    }
+
+    $build->save();
+
+    $buildlist = building::all();
+
+    // then call the view
+    return view('admin.place', ['buildlist' => $buildlist]);
   }
 
   public function delBuilding(Request $req){
+    $build = building::where('id', $req->building_id)->first();
+    if($build){
+      // delete the seats first
+      place::where('building_id', $build->id)->delete();
+
+      // then delete the building
+      $build->delete();
+    }
+
+    $buildlist = building::all();
+
+    // then call the view
+    return view('admin.place', ['buildlist' => $buildlist]);
 
   }
 
