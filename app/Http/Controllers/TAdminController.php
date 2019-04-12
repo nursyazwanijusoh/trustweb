@@ -7,6 +7,7 @@ use App\Http\Middleware\AdminGate;
 use App\TaskCategory;
 use App\ActivityType;
 use App\building;
+use App\place;
 use App\User;
 use App\Unit;
 use App\SubUnit;
