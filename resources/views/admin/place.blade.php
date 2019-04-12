@@ -47,6 +47,7 @@
                         <th scope="col">Building</th>
                         <th scope="col">Floor</th>
                         <th scope="col">Remark</th>
+                        <th scope="col">Added By</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -56,6 +57,7 @@
                         <td>{{ $atask['building_name'] }}</td>
                         <td>{{ $atask['floor_name'] }}</td>
                         <td>{{ $atask['remark'] }}</td>
+                        <td>{{ $atask['created_by'] }}</td>
                         <td><a href="{{ route('admin.delbuild', ['build_id' => $atask['id']]) }}">Remove</a></td>
                       </tr>
                       @endforeach

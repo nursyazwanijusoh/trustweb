@@ -408,6 +408,7 @@ class TAdminController extends Controller
     $build = new building;
     $build->building_name = $req->building_name;
     $build->floor_name = $req->floor_name;
+    $build->created_by = Session::get('staffdata')['id'];
     $build->status = 1;
 
     if($req->filled('remark')){
