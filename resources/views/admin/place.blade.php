@@ -61,7 +61,7 @@
                         <td><form method="POST" action="{{ route('admin.delbuild', [], false) }}">
                           @csrf
                           <input type="hidden" name="build_id" value="{{ $atask['id'] }}"  />
-                          <button type="submit" class="btn">Remove</button>
+                          <button type="submit" class="btn-link">Remove</button>
                         </form></td>
                       </tr>
                       @endforeach

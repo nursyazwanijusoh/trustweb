@@ -31,6 +31,7 @@ class InfraController extends Controller
       $build = new building;
       $build->building_name = $req->building_name;
       $build->floor_name = $req->floor_name;
+      $build->created_by = $req->created_by;
       $build->status = 1;
 
       if($req->filled('remark')){
