@@ -35,7 +35,8 @@
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                           @if($build['seat_count'] != 0)
-                          <a href="{{ route('admin.delallseat', ['build_id' => $build['id']], false) }}"><button type="button" class="btn btn-warning">Remove all seats</button></a>
+                          <a href="{{ route('admin.delallseat', ['build_id' => $build['id']], false) }}"><button type="button" class="btn btn-danger">Remove all seats</button></a>
+                          <a href="{{ route('admin.getallqr', ['build_id' => $build['id']], false) }}"><button type="button" class="btn btn-warning">Get ALL QR Code</button></a>
                           @endif
                           <button type="submit" class="btn btn-primary">Save</button>
                         </div>

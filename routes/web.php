@@ -38,6 +38,7 @@ Route::get('/admin/getqr', 'TAdminController@getqr')->name('admin.getqr');
 Route::get('/admin/delaseat', 'TAdminController@delaseat')->name('admin.delaseat');
 Route::get('/admin/delallseat', 'TAdminController@delallseat')->name('admin.delallseat');
 Route::get('/admin/buildetail', 'TAdminController@buildetail')->name('admin.buildetail');
+Route::get('/admin/getallqr', 'TAdminController@getallqr')->name('admin.getallqr');
 
 
 // admin staff role

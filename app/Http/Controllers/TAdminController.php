@@ -560,6 +560,26 @@ class TAdminController extends Controller
     ]);
   }
 
+  public function getallqr(Request $req){
+
+    $build = building::findOrFail($req->build_id);
+    $seats = place::where('building_id', $req->build_id)->get();
+
+    $width = 300;
+
+    if($req->filled('width')){
+        $width = $req->width;
+    }
+
+    return view('admin.genallqr', [
+      'location' => $build->floor_name . '@' . $build->building_name,
+      'build_id' => $build->id,
+      'seats' => $seats,
+      'width' => $width
+    ]);
+
+  }
+
   public function genQR(Request $req){
     $qrcontent = $req->filled('qrc') ? $req->qrc : "empty";
     $qrlabel = $req->filled('qrl') ? $req->qrl : "empty";
