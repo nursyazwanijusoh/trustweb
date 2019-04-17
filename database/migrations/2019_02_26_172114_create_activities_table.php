@@ -20,7 +20,7 @@ class CreateActivitiesTable extends Migration
             $table->date('date');
             $table->decimal('hours_spent', 4, 1);
             $table->integer('act_type');
-            $table->string('remark');
+            $table->string('remark')->nullable();
         });
     }
 

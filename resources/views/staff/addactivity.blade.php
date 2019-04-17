@@ -11,7 +11,7 @@
                 <div class="alert alert-success" role="alert">Activity added</div>
                 @endif
                 <div class="card-body">
-                  <form method="POST" action="{{ route('staff.doaddact') }}">
+                  <form method="POST" action="{{ route('staff.doaddact', [], false) }}">
                     @csrf
                     <!-- <h5 class="card-title">Add new task type</h5> -->
                     <!-- <div class="form-group row">

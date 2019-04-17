@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">View work-hours summary</div>
                 <div class="card-body">
-                  <form method="POST" action="{{ route('reports.workhourf') }}" id="whform">
+                  <form method="POST" action="{{ route('reports.workhourf', [], false) }}" id="whform">
                     @csrf
                     <h5 class="card-title">Date range</h5>
                     <div class="form-group row">
