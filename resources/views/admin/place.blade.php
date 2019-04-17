@@ -55,14 +55,10 @@
                       @foreach($buildlist as $atask)
                       <tr>
                         <td>{{ $atask['building_name'] }}</td>
-                        <td>{{ $atask['floor_name'] }}</td>
+                        <td><a href="{{ route('admin.buildetail', ['build_id' => $atask['id']], false) }}">{{ $atask['floor_name'] }}</a></td>
                         <td>{{ $atask['remark'] }}</td>
                         <td>{{ $atask['created_by'] }}</td>
-                        <td><form method="POST" action="{{ route('admin.delbuild', [], false) }}">
-                          @csrf
-                          <input type="hidden" name="build_id" value="{{ $atask['id'] }}"  />
-                          <button type="submit" class="btn-link">Remove</button>
-                        </form></td>
+                        <td><a href="{{ route('admin.delbuild', ['build_id' => $atask['id']], false) }}">Remove</a></td>
                       </tr>
                       @endforeach
                     </tbody>

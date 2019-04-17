@@ -35,7 +35,7 @@
                 <div class="card-body">
                   <div class="d-flex flex-wrap">
                     <div class="visible-print border text-center">
-                      {!! QrCode::size(300)->generate($qrcontent); !!}
+                      {!! QrCode::size(300)->generate('trUSt : ' . $qrcontent); !!}
                       <p>{{ $qrlabel }}</p>
                     </div>
                   </div>

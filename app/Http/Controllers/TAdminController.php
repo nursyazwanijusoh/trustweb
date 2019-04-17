@@ -13,6 +13,7 @@ use App\Unit;
 use App\SubUnit;
 use Session;
 use App\Api\V1\Controllers\LdapHelper;
+use App\Api\V1\Controllers\BookingHelper;
 
 class TAdminController extends Controller
 {
@@ -427,10 +428,19 @@ class TAdminController extends Controller
   public function delBuilding(Request $req){
     $build = building::find($req->build_id);
     if($build){
-      // delete the seats first
-      place::where('building_id', $build->id)->delete();
+      // get all seats under this building
+      $seats = place::where('building_id', $req->build_id)->get();
 
-      // then delete the building
+      foreach($seats as $aseat){
+        // first, check if there is anyone checked in to this seat
+        if($aseat->status > 1){
+          // force checkout that staff
+          $bh->checkOut($aseat->checkin_staff_id, 'seat deleted');
+        }
+
+        // then delete this seat
+        $aseat->delete();
+      }
       $build->delete();
     }
 
@@ -439,6 +449,115 @@ class TAdminController extends Controller
     // then call the view
     return view('admin.place', ['buildlist' => $buildlist]);
 
+  }
+
+  public function modbuild(Request $req){
+    $build = building::findOrFail($req->build_id);
+    $build->building_name = $req->building_name;
+    $build->floor_name = $req->floor_name;
+    $build->remark = $req->remark;
+    $build->save();
+
+    return redirect(route('admin.buildetail', ['build_id' => $req->build_id], false));
+  }
+
+  public function genseats(Request $req){
+    for ($i=1; $i <= $req->add_count; $i++) {
+      $pcount = str_pad($i, 3, '0', STR_PAD_LEFT);
+      $label = $req->label_pref . $pcount . $req->label_suf;
+      $qrc = $req->qr_pref . $pcount . $req->qr_suf;
+
+      // create the seat
+      $seat = new place;
+      $seat->building_id = $req->build_id;
+      $seat->status = 1;
+      $seat->seat_type = 1;
+      $seat->priviledge = 1;
+      $seat->label = $label;
+      $seat->qr_code = $qrc;
+
+      $seat->save();
+    }
+
+    // update the building seat_count
+    $build = building::find($req->build_id);
+    $build->seat_count = $build->seat_count + $req->add_count;
+    $build->save();
+
+    return redirect(route('admin.buildetail', ['build_id' => $build->id], false));
+  }
+
+  public function getqr(Request $req){
+
+    $seat = place::findOrFail($req->seat_id);
+
+    return view('admin.genqr', [
+      'qrcontent' => $seat->qr_code,
+      'qrlabel' => $seat->label
+    ]);
+  }
+
+  public function delaseat(Request $req){
+    $bh = new BookingHelper;
+    $seat = place::findOrFail($req->seat_id);
+    $buildid = $seat->building_id;
+
+    // first, check if there is anyone checked in to this seat
+    if($seat->status > 1){
+      // force checkout that staff
+      $bh->checkOut($seat->checkin_staff_id, 'seat deleted');
+    }
+
+    // then delete this seat
+    $seat->delete();
+
+    return redirect(route('admin.buildetail', ['build_id' => $buildid], false));
+  }
+
+  public function delallseat(Request $req){
+    $bh = new BookingHelper;
+
+    // get all seats under this building
+    $seats = place::where('building_id', $req->build_id)->get();
+
+    foreach($seats as $aseat){
+      // first, check if there is anyone checked in to this seat
+      if($aseat->status > 1){
+        // force checkout that staff
+        $bh->checkOut($aseat->checkin_staff_id, 'seat deleted');
+      }
+
+      // then delete this seat
+      $aseat->delete();
+    }
+
+    // update the building seat_count
+    $build = building::find($req->build_id);
+    $build->seat_count = 0;
+    $build->save();
+
+    return redirect(route('admin.buildetail', ['build_id' => $req->build_id], false));
+  }
+
+  public function buildetail(Request $req){
+    // get the building info
+    $build = building::findOrFail($req->build_id);
+
+    // also get all current seats
+    $seats = place::where('building_id', $req->build_id)->get();
+
+    $lov = [
+      '0' => 'Inactive',
+      '1' => 'Vacant',
+      '2' => 'Reserved',
+      '3' => 'Occupied'
+    ];
+
+    return view('admin.placedetail', [
+      'build' => $build,
+      'seatlist' => $seats,
+      'status' => $lov
+    ]);
   }
 
   public function genQR(Request $req){
