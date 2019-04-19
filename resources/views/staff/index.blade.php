@@ -36,7 +36,7 @@
                 <div class="card-columns">
                   @foreach($subords as $asub)
                   @if(isset($asub['subordinate_id']))
-                  <div class="card text-center text-white bg-success">
+                  <div class="card text-center text-white bg-dark">
                     <a href="{{ route('staff', ['staff_id' => $asub['subordinate_id']], false) }}">
                     <div class="card-body">
                       <h5 class="card-title">{{ $asub['sub_staff_no'] }}</h5>
@@ -45,7 +45,7 @@
                     </a>
                   </div>
                   @else
-                  <div class="card text-center text-white bg-secondary">
+                  <div class="card text-center">
                     <div class="card-body">
                       <h5 class="card-title">{{ $asub['sub_staff_no'] }}</h5>
                       <p class="card-text">{{ $asub['sub_name'] }}</p>
