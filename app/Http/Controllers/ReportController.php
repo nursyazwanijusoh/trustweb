@@ -325,11 +325,12 @@ class ReportController extends Controller
 
         }
         array_push($sdata, $aday->tot_hrs);
-        array_push($datalist, [
+        $oneday = [
           'ddate' => date('D d-m', strtotime($aday->date)),
           'rdate' => $aday->date,
           'hours' => $sdata
-        ]);
+        ];
+        array_push($datalist, $oneday);
 
       }
 
