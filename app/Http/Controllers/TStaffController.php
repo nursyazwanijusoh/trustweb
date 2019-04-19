@@ -140,7 +140,7 @@ class TStaffController extends Controller
       // get who this task actually belongs to
       $t1task = Task::find($req->task_id);
       if($t1task->staff_id != $mystaffid){
-        $lock = 'disabled'
+        $lock = 'disabled';
       }
     }
 
