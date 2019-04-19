@@ -19,7 +19,7 @@
                     <tbody>
                       @foreach($data as $acts)
                       <tr>
-                        <td style="white-space:nowrap;"><a href="{{ route('staff.tdetail', ['task_id' => $acts['id']], false) }}">{{ $acts->name }}</a></td>
+                        <td style="white-space:nowrap;"><a href="{{ route('staff.tdetail', ['task_id' => $acts->id], false) }}">{{ $acts->name }}</a></td>
                         <td>{{ $acts->remark }}</td>
                         <td>{{ $acts->hours_spent }}</td>
                       </tr>
