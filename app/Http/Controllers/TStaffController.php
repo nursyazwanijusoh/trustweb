@@ -109,6 +109,7 @@ class TStaffController extends Controller
       $ttypename = $ttype->descr;
 
       // check if current user is the owner of this task
+      $lock = '';
       if($task->user_id != $mystaffid){
         $lock = 'disabled';
       }
