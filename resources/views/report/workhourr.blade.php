@@ -16,7 +16,7 @@
                         @if($ah['isweekend'] == 'y')
                         <td style="white-space:nowrap;"><b>{{ $ah['date'] }}</b></td>
                         @else
-                        <td>{{ $ah['date'] }}</td>
+                        <td style="white-space:nowrap;">{{ $ah['date'] }}</td>
                         @endif
                         @endforeach
                       </tr>
@@ -24,7 +24,7 @@
                     <tbody>
                       @foreach($staffs as $acts)
                       <tr>
-                        <th scope="col">
+                        <th scope="col" style="white-space:nowrap;">
                           <a href="{{ route('reports.staff.drs', [
                               'staff_no' => $acts['staff_no'],
                               'fromdate' => $fromdate,
@@ -32,7 +32,7 @@
                             ], false) }}">{{ $acts['name'] }}</a>
                         </th>
                         @foreach($acts['hours'] as $mds)
-                        <td style="white-space:nowrap;">{{ $mds }}</td>
+                        <td>{{ $mds }}</td>
                         @endforeach
                       </tr>
                       @endforeach

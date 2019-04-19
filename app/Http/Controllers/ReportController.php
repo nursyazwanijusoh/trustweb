@@ -312,7 +312,7 @@ class ReportController extends Controller
 
       foreach($daylistdb as $aday){
         $sdata = [];
-        array_push($sdata, date('D d-m', strtotime($aday->date)));
+        // array_push($sdata, date('D d-m', strtotime($aday->date)));
         // get the sum hours for each type
         foreach($typelist as $tl){
           $dsum = DB::table('activities')
@@ -325,7 +325,11 @@ class ReportController extends Controller
 
         }
         array_push($sdata, $aday->tot_hrs);
-        array_push($datalist, $sdata);
+        array_push($datalist, [
+          'ddate' => date('D d-m', strtotime($aday->date)),
+          'rdate' => $aday->date,
+          'hours' => $sdata
+        ]);
 
       }
 
@@ -336,6 +340,7 @@ class ReportController extends Controller
         'header' => $typeHeader,
         'data' => $datalist,
         'name' => $staffdata->name,
+        'staff_no' => $staffdata->staff_no,
         'fromdate' => $minus7days,
         'todate' => $curdate
       ]);
