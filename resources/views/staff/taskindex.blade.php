@@ -76,9 +76,7 @@
                     <tbody>
                       @foreach($completedtasklist as $ctask)
                       <tr>
-                        <th scope="row">
-                          <th scope="row"><a href="{{ route('staff.tdetail', ['task_id' => $ctask['id']], false)}}">{{ $ctask['name'] }}</a></th>
-                        </th>
+                        <th scope="row"><a href="{{ route('staff.tdetail', ['task_id' => $ctask['id']], false)}}">{{ $ctask['name'] }}</a></th>
                         <td>{{ $ctask['total_hours'] }}</td>
                         <td>{{ $ctask['remark'] }}</td>
                       </tr>
