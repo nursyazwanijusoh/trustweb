@@ -273,7 +273,9 @@ class UserController extends Controller
     }
 
     public function getActivityList($task_id){
-      $actlist = Activity::where('task_id', $task_id)->get();
+      $actlist = Activity::where('task_id', $task_id)
+        ->orderBy('date', 'ASC')
+        ->get();
 
       // append the readable activity type
       foreach ($actlist as $aact) {
