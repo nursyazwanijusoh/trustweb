@@ -35,18 +35,23 @@
                 <h5 class="card-title">My Subordinate</h5>
                 <div class="card-columns">
                   @foreach($subords as $asub)
-                  <div class="card text-center">
+                  @if(isset($asub['subordinate_id']))
+                  <div class="card text-center text-white bg-success">
+                    <a href="{{ route('staff', ['staff_id' => $asub['subordinate_id']], false) }}">
                     <div class="card-body">
                       <h5 class="card-title">{{ $asub['sub_staff_no'] }}</h5>
                       <p class="card-text">{{ $asub['sub_name'] }}</p>
-                      @if(isset($asub['subordinate_id']))
-                      <p class="card-text">
-                        <a href="{{ route('staff', ['staff_id' => $asub['subordinate_id']], false) }}">Active</a></p>
-                      @else
-                      <p class="card-text"><small class="text-muted">Inactive</small></p>
-                      @endif
+                    </div>
+                    </a>
+                  </div>
+                  @else
+                  <div class="card text-center text-white bg-secondary">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ $asub['sub_staff_no'] }}</h5>
+                      <p class="card-text">{{ $asub['sub_name'] }}</p>
                     </div>
                   </div>
+                  @endif
                   @endforeach
                 </div>
               </div>

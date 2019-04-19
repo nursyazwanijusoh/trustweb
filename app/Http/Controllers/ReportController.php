@@ -169,7 +169,7 @@ class ReportController extends Controller
       }
 
       $d = [
-        'date' => $onedate->format('m-d'),
+        'date' => $onedate->format('D d-m'),
         'isweekend' => $isweken
       ];
 

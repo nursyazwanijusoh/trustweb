@@ -134,6 +134,16 @@ class TStaffController extends Controller
 
   public function addActivity(Request $req){
     $mystaffid = Session::get('staffdata')['id'];
+    $lock = '';
+
+    if($req->filled('task_id')){
+      // get who this task actually belongs to
+      $t1task = Task::find($req->task_id);
+      if($t1task->staff_id != $mystaffid){
+        $lock = 'disabled'
+      }
+    }
+
     // get the list of task
     $tasklist = Task::where('user_id', $mystaffid)->where('status', 1)->get();
     // list of activity type
@@ -157,13 +167,14 @@ class TStaffController extends Controller
         'tasklist' => $tasklist,
         'curdate' => $curdate, 'alert' => 'y',
         'actlist' => $acttypelist,
-        'gottask' => $gottask
+        'gottask' => $gottask, 'lock' => $lock
       ]);
     }
 
     return view('staff.addactivity', [
       'tasklist' => $tasklist, 'curdate' => $curdate,
-      'actlist' => $acttypelist, 'gottask' => $gottask
+      'actlist' => $acttypelist, 'gottask' => $gottask,
+      'lock' => $lock
     ]);
   }
 
