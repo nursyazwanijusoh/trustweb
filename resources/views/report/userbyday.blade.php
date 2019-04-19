@@ -29,6 +29,12 @@
                         @endforeach
                       </tr>
                       @endforeach
+                      <tr>
+                        <td style="white-space:nowrap;">Total</td>
+                        @foreach($footer as $mds)
+                        <td>{{ $mds }}</td>
+                        @endforeach
+                      </tr>
                     </tbody>
                   </table>
                 </div>

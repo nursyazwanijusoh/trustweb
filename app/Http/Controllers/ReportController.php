@@ -268,7 +268,7 @@ class ReportController extends Controller
       $typeHeader = [];
       array_push($typeHeader, 'Date');
       $typeFooter = [];
-      array_push($typeFooter, 'Total');
+      // array_push($typeFooter, 'Total');
       $datalist = [];
       $tothrs = 0;
 
@@ -335,7 +335,7 @@ class ReportController extends Controller
       }
 
 
-      array_push($datalist, $typeFooter);
+      // array_push($datalist, $typeFooter);
 
       return view('report.userbyday', [
         'header' => $typeHeader,
@@ -343,7 +343,8 @@ class ReportController extends Controller
         'name' => $staffdata->name,
         'staff_no' => $staffdata->staff_no,
         'fromdate' => $minus7days,
-        'todate' => $curdate
+        'todate' => $curdate,
+        'footer' => $typeFooter
       ]);
     } else {
       dd('Staff Not Registered: ' . $req->staff_no);
