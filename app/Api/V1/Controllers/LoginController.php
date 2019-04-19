@@ -49,7 +49,7 @@ class LoginController extends Controller
 			// new data. create it
 			$staffdata = new User;
 			$staffdata->staff_no = $ldapstaffid;
-			$staffdata->status = 0; // set it to inactive
+			$staffdata->status = 1; // set it to inactive
 			$staffdata->role = 3;
 		}
 
@@ -57,9 +57,9 @@ class LoginController extends Controller
 		$staffdata->email = $ldapresp['data']['EMAIL'];
 		$staffdata->mobile_no = $ldapresp['data']['MOBILE_NO'];
 		$staffdata->name = $ldapresp['data']['NAME'];
-		$staffdata->lob = $resp['data']['DEPARTMENT'];
-		$staffdata->unit = $resp['data']['UNIT'];
-		$staffdata->subunit = $resp['data']['SUBUNIT'];
+		$staffdata->lob = $ldapresp['data']['DEPARTMENT'];
+		$staffdata->unit = $ldapresp['data']['UNIT'];
+		$staffdata->subunit = $ldapresp['data']['SUBUNIT'];
 		$staffdata->save();
 
 		$respon = [
@@ -68,6 +68,10 @@ class LoginController extends Controller
 		];
 
 		return $this->respond_json(200, 'OK', $respon);
+
+	}
+
+	function doExternalLogin($username, $password){
 
 	}
 

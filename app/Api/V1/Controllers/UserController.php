@@ -244,6 +244,10 @@ class UserController extends Controller
 
     // internal functions ======================
 
+    public function updateStaffProfile(Request $req){
+      
+    }
+
     private function getStaffInfo($staffdata){
 
       $staff = [
