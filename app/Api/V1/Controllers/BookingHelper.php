@@ -79,6 +79,11 @@ class BookingHelper extends Controller
     // clear the reservation
     $this->clearReservation($staff);
 
+    // set the seat status
+    $place = place::find($seat_id);
+    $place->status = 3;
+    $place->save();
+
     // create checkin
     $cekin = new Checkin;
     $cekin->checkin_time = $time;
