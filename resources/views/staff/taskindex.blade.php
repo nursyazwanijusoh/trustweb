@@ -77,10 +77,7 @@
                       @foreach($completedtasklist as $ctask)
                       <tr>
                         <th scope="row">
-                          <form method="post" action="{{ route('staff.tdetail', [], false)}}">
-                            <input type="hidden" name="task_id" value="$ctask['id']"  />
-                            <button type="submit" class="btn-link">{{ $ctask['name'] }}</button>
-                          </form>
+                          <th scope="row"><a href="{{ route('staff.tdetail', ['task_id' => $ctask['id']], false)}}">{{ $ctask['name'] }}</a></th>
                         </th>
                         <td>{{ $ctask['total_hours'] }}</td>
                         <td>{{ $ctask['remark'] }}</td>

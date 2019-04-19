@@ -28,19 +28,19 @@
                     <div class="form-group row">
                       <label for="ttype" class="col-md-4 col-form-label text-md-right">Task Type</label>
                       <div class="col-md-6">
-                        <input id="ttype" type="text" name="ttype" value="{{ $tasktype }}" disabled readonly />
+                        <input id="ttype" type="text" class="form-control" name="ttype" value="{{ $tasktype }}" disabled readonly />
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="thours" class="col-md-4 col-form-label text-md-right">Total Hours</label>
                       <div class="col-md-6">
-                        <input id="thours" type="text" name="thours" value="{{ $taskinfo['total_hours'] }}" disabled readonly />
+                        <input id="thours" type="text" class="form-control" name="thours" value="{{ $taskinfo['total_hours'] }}" disabled readonly />
                       </div>
                     </div>
                     <div class="form-group row">
                         <label for="addedby" class="col-md-4 col-form-label text-md-right">Added By</label>
                         <div class="col-md-6">
-                            <input id="addedby" type="text" name="addedby" value="{{ $taskinfo['created_by'] }}" disabled readonly />
+                            <input id="addedby" type="text" class="form-control" name="addedby" value="{{ $taskinfo['created_by'] }}" disabled readonly />
                         </div>
                     </div>
                     <input id="task_id" type="hidden" name="task_id" value="{{ $taskinfo['id'] }}" >
@@ -48,7 +48,7 @@
                         <div class="col-md-6 offset-md-4">
                           @if($taskinfo['status'] == 1)
                             <a href="{{ route('staff.addact', ['task_id' => $taskinfo['id']], false) }}"><button type="button" class="btn btn-secondary">Add Activity</button></a>
-                            <button type="submit" class="btn btn-primary">Close Task</button>
+                            <button type="submit" class="btn btn-warning">Close Task</button>
                           @else
                             <button type="submit" class="btn btn-primary" disabled>Closed</button>
                           @endif

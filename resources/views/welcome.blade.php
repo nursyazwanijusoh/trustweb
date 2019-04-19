@@ -51,6 +51,9 @@
                             <li>Update daily activity</li>
                           </ul>
                         </p>
+                        <p class="card-text">
+                          GWD - Eliminating the needs for human interactions since 2018
+                        </p>
                       </div>
                     </div>
                   </div>

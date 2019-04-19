@@ -216,7 +216,7 @@ class UserController extends Controller
       }
 
       $theuser = User::where('id', $req->staff_id)->first();
-      $cekin = $this->bh->checkIn($theuser, $theresv->place_id);
+      $cekin = $this->bh->checkIn($theuser, $req->seat_id);
       return $this->respond_json(200, 'Checkin successful', $cekin);
     }
 

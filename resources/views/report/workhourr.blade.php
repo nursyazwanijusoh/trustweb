@@ -24,7 +24,14 @@
                     <tbody>
                       @foreach($staffs as $acts)
                       <tr>
-                        @foreach($acts as $mds)
+                        <th scope="col">
+                          <a href="{{ route('reports.staff.drs', [
+                              'staff_no' => $acts['staff_no'],
+                              'fromdate' => $fromdate,
+                              'todate' => $todate
+                            ], false) }}">{{ $acts['name'] }}</a>
+                        </th>
+                        @foreach($acts['hours'] as $mds)
                         <td style="white-space:nowrap;">{{ $mds }}</td>
                         @endforeach
                       </tr>
