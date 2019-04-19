@@ -71,3 +71,4 @@ Route::get('/reports/depts', 'ReportController@showDepts')->name('reports.depts'
 Route::get('/reports/workhour', 'ReportController@manDaysDispf')->name('reports.workhour');
 Route::post('/reports/workhour', 'ReportController@manDaysDispf')->name('reports.workhourf');
 Route::get('/reports/staffdayrpt', 'ReportController@staffDayRptSearch')->name('reports.staff.drs');
+Route::get('/reports/staffspecificdayrpt', 'ReportController@staffSpecificDayRptSearch')->name('reports.staff.sdrs');

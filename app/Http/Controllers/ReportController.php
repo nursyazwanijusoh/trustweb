@@ -258,9 +258,6 @@ class ReportController extends Controller
 
     }
 
-
-
-
     // get the user id from staff_no
     $staffdata = User::where('staff_no', $req->staff_no)->first();
 
@@ -274,7 +271,6 @@ class ReportController extends Controller
       array_push($typeFooter, 'Total');
       $datalist = [];
       $tothrs = 0;
-
 
       // get distinct activity types within those date
       $typelistdb = DB::table('activities')
@@ -346,9 +342,47 @@ class ReportController extends Controller
     } else {
       dd('Staff Not Registered: ' . $req->staff_no);
     }
+  }
 
+  public function staffSpecificDayRptSearch(Request $req){
+    $input = app('request')->all();
 
+    $rules = [
+      'staff_no' => ['required']
+    ];
 
+    $validator = app('validator')->make($input, $rules);
+    if($validator->fails()){
+      return response('staff_no is required', 413, $input);
+    }
+
+    //date inputs
+    $curdate = date('Y-m-d');
+    if($req->filled('date')){
+      $curdate = date('Y-m-d', strtotime($req->date));
+    }
+
+    $staffdata = User::where('staff_no', $req->staff_no)->first();
+
+    if($staffdata){
+
+      // get the activities for that date
+      $activit = DB::table('activities')
+        ->join('tasks', 'tasks.id', '=', 'activities.task_id')
+        ->where('tasks.user_id', $staffdata->id)
+        ->where('activities.date',  $curdate)
+        ->select('activities.remark', 'tasks.id', 'tasks.name', 'activities.hours_spent')
+        ->orderBy('tasks.name', 'ASC')
+        ->get();
+
+      return view('report.userspecificday', [
+        'name' => $staffdata->name,
+        'date' => $req->date,
+        'data' => $activit
+      ]);
+    } else {
+      dd('Staff Not Registered: ' . $req->staff_no);
+    }
 
   }
 
