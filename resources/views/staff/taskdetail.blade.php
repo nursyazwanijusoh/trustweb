@@ -47,7 +47,12 @@
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                           @if($taskinfo['status'] == 1)
-                            <a href="{{ route('staff.addact', ['task_id' => $taskinfo['id']], false) }}"><button type="button" class="btn btn-secondary">Add Activity</button></a>
+                            @if($lock == 'disabled')
+                            <button type="button" class="btn btn-warning" >Only owner can add activity</button>
+                            @else
+                            <a href="{{ route('staff.addact', ['task_id' => $taskinfo['id']], false) }}"><button type="button" class="btn btn-secondary" >Add Activity</button></a>
+                            @endif
+
                             <button type="submit" class="btn btn-warning">Close Task</button>
                           @else
                             <button type="submit" class="btn btn-primary" disabled>Closed</button>

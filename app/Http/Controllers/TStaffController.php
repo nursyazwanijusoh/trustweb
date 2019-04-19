@@ -95,6 +95,8 @@ class TStaffController extends Controller
   }
 
   public function taskDetail(Request $req){
+    $mystaffid = Session::get('staffdata')['id'];
+
     $task = Task::where('id', $req->task_id)->first();
     if($task){
       // get the activities
@@ -106,10 +108,16 @@ class TStaffController extends Controller
       $ttype = TaskCategory::where('id', $task->task_cat_id)->first();
       $ttypename = $ttype->descr;
 
+      // check if current user is the owner of this task
+      if($task->user_id != $mystaffid){
+        $lock = 'disabled';
+      }
+
       return view('staff.taskdetail', [
         'taskinfo' => $task,
         'activities' => $acts,
-        'tasktype' => $ttypename
+        'tasktype' => $ttypename,
+        'lock' => $lock
       ]);
 
     } else {
@@ -134,15 +142,7 @@ class TStaffController extends Controller
 
   public function addActivity(Request $req){
     $mystaffid = Session::get('staffdata')['id'];
-    $lock = '';
 
-    if($req->filled('task_id')){
-      // get who this task actually belongs to
-      $t1task = Task::find($req->task_id);
-      if($t1task->staff_id != $mystaffid){
-        $lock = 'disabled';
-      }
-    }
 
     // get the list of task
     $tasklist = Task::where('user_id', $mystaffid)->where('status', 1)->get();
@@ -167,14 +167,13 @@ class TStaffController extends Controller
         'tasklist' => $tasklist,
         'curdate' => $curdate, 'alert' => 'y',
         'actlist' => $acttypelist,
-        'gottask' => $gottask, 'lock' => $lock
+        'gottask' => $gottask
       ]);
     }
 
     return view('staff.addactivity', [
       'tasklist' => $tasklist, 'curdate' => $curdate,
-      'actlist' => $acttypelist, 'gottask' => $gottask,
-      'lock' => $lock
+      'actlist' => $acttypelist, 'gottask' => $gottask
     ]);
   }
 

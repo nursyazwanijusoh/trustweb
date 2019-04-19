@@ -63,7 +63,7 @@
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                           @if ($gottask == true)
-                            <button type="submit" class="btn btn-primary" {{ $lock }}>Add Activity</button>
+                            <button type="submit" class="btn btn-primary">Add Activity</button>
                             <a href="{{ route('staff.t', [], false) }}"><button type="button" class="btn btn-success">Back to Task List</button></a>
                           @else
                             <a href="{{ route('staff.t', [], false) }}"><button type="button" class="btn btn-warning">Add Task First</button></a>
