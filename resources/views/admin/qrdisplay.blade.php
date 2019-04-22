@@ -24,8 +24,10 @@
     <div class="d-flex flex-wrap">
       @foreach($qdata as $adata)
       <div class="visible-print border text-center">
+        <p>Scan to check in</p>
         {!! QrCode::size(250)->generate($adata['qrcode']); !!}
         <p>{{ $adata['label'] }}</p>
+        <p>Visit <a href="https://trust.tm.com.my/info">https://trust.tm.com.my/info</a> for more info</p>
       </div>
       @endforeach
     </div>

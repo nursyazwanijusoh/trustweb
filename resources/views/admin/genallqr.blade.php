@@ -20,9 +20,13 @@
                   </form>
                   <div class="d-flex flex-wrap">
                     @foreach($seats as $seat)
-                    <div class="visible-print border text-center">
-                      {!! QrCode::size($width)->generate('trUSt : ' . $seat['qr_code']); !!}
-                      <p>{{ $seat['label'] }}</p>
+                    <div class="visible-print border text-center" >
+                      <b>Scan to check in</b><br />
+                      {!! QrCode::size($width)->margin(1)->generate('trUSt : ' . $seat['qr_code']); !!}
+                      <p><u>{{ $seat['label'] }}</u></p>
+                      <p style="line-height: 1em">For more info, visit<br />
+                        <a href="https://trust.tm.com.my/info">https://trust.tm.com.my/info</a>
+                      </p>
                     </div>
                     @endforeach
                   </div>

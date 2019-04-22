@@ -35,8 +35,12 @@
                 <div class="card-body">
                   <div class="d-flex flex-wrap">
                     <div class="visible-print border text-center">
-                      {!! QrCode::size(300)->generate('trUSt : ' . $qrcontent); !!}
+                      <b>Scan to check in</b><br />
+                      {!! QrCode::size(300)->margin(1)->generate('trUSt : ' . $qrcontent); !!}
                       <p>{{ $qrlabel }}</p>
+                      <p style="line-height: 1em">For more info, visit<br />
+                        <a href="https://trust.tm.com.my/info">https://trust.tm.com.my/info</a>
+                      </p>
                     </div>
                   </div>
                 </div>
