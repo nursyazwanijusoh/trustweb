@@ -82,6 +82,7 @@ class BookingHelper extends Controller
     // set the seat status
     $place = place::find($seat_id);
     $place->status = 3;
+    $place->checkin_staff_id = $staff->id;
     $place->save();
 
     // create checkin
