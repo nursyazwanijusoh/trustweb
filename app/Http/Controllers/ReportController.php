@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \DB;
+use Session;
 use \DateTime;
 use \DateInterval;
 use \DatePeriod;
@@ -21,7 +22,8 @@ class ReportController extends Controller
   }
 
   public function index(){
-    return view('report.index');
+    $role = Session::get('staffdata')['role'];
+    return view('report.index', ['role' => $role]);
   }
 
   public function registeredUser(){

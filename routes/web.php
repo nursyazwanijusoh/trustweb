@@ -72,3 +72,7 @@ Route::get('/reports/workhour', 'ReportController@manDaysDispf')->name('reports.
 Route::post('/reports/workhour', 'ReportController@manDaysDispf')->name('reports.workhourf');
 Route::get('/reports/staffdayrpt', 'ReportController@staffDayRptSearch')->name('reports.staff.drs');
 Route::get('/reports/staffspecificdayrpt', 'ReportController@staffSpecificDayRptSearch')->name('reports.staff.sdrs');
+
+// hot desking reports
+Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->name('hdreports.dbdf');
+Route::get('/hdreports/WorkSpaceUsage', 'AdminReportController@WorkSpaceUsage')->name('hdreports.wsu');

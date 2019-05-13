@@ -462,7 +462,9 @@ class TAdminController extends Controller
   }
 
   public function genseats(Request $req){
-    for ($i=1; $i <= $req->add_count; $i++) {
+    $build = building::find($req->build_id);
+
+    for ($i=$build->seat_count + 1; $i <= $build->seat_count + $req->add_count; $i++) {
       $pcount = str_pad($i, 3, '0', STR_PAD_LEFT);
       $label = $req->label_pref . $pcount . $req->label_suf;
       $qrc = $req->qr_pref . $pcount . $req->qr_suf;

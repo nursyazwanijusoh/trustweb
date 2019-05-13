@@ -13,6 +13,14 @@
                     <a href="{{ route('reports.workhour', [], false) }}" class="list-group-item list-group-item-action">Work Hour?</a>
                     <a href="{{ route('reports.depts', [], false) }}" class="list-group-item list-group-item-action">List of Departments?</a>
                   </div>
+
+                  @if($role <= 2)
+                  <h5 class="card-title">Hot Desking</h5>
+                  <div class="list-group">
+                    <a href="{{ route('hdreports.dbdf', [], false) }}" class="list-group-item list-group-item-action">Daily Checkin by Division</a>
+                    <a href="{{ route('hdreports.wsu', [], false) }}" class="list-group-item list-group-item-action">Workspace Occupants</a>
+                  </div>
+                  @endif
                 </div>
             </div>
         </div>
