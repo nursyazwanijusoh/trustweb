@@ -84,4 +84,28 @@ class AdminReportController extends Controller
   }
 
 
+  public function rptFindStaff(Request $req){
+    if($req->filled('input')){
+      $data = $this->hdrh->findStaff($req->input);
+
+      if($data['type'] == 'id'){
+        return redirect(route('staff', ['staff_id' => $data['data']->id], false));
+      } else {
+        if($data['data']->count() == 0){
+          return view('staff.find', ['result' => '404']);
+        } elseif ($data['data']->count() == 1) {
+          $astaff = $data['data']->shift();
+          return redirect(route('staff', ['staff_id' => $astaff->id], false));
+        } else {
+          return view('staff.find', ['result' => $data['data']]);
+        }
+
+      }
+
+    } else {
+      return view('staff.find', ['result' => 'empty']);
+    }
+  }
+
+
 }

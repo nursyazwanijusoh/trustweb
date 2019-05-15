@@ -21,6 +21,8 @@
                     <a href="{{ route('hdreports.wsu', [], false) }}" class="list-group-item list-group-item-action">Workspace Occupants</a>
                   </div>
                   @endif
+                  <h5 class="card-title">Misc</h5>
+                  <a href="{{ route('staff.find', [], false) }}" class="list-group-item list-group-item-action">Find Staff</a>
                 </div>
             </div>
         </div>

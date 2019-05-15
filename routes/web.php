@@ -76,3 +76,4 @@ Route::get('/reports/staffspecificdayrpt', 'ReportController@staffSpecificDayRpt
 // hot desking reports
 Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->name('hdreports.dbdf');
 Route::get('/hdreports/WorkSpaceUsage', 'AdminReportController@WorkSpaceUsage')->name('hdreports.wsu');
+Route::get('/find/staff', 'AdminReportController@rptFindStaff')->name('staff.find');

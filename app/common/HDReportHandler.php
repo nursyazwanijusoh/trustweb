@@ -105,4 +105,20 @@ class HDReportHandler
 
   }
 
+  public function findStaff($input){
+    // first find as exact staff no
+    $user = User::where('staff_no', trim($input))->first();
+    $count = 'no';
+
+    if(!$user){
+      $user = User::where('name', 'LIKE', "%${input}%")->get();
+      $count = 'name';
+    }
+
+
+    return [
+      'type' => $count, 'data' => $user
+    ];
+  }
+
 }

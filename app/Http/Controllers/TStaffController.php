@@ -21,6 +21,7 @@ class TStaffController extends Controller
 
   // staff homepage
   public function index(Request $rq){
+    $c_staff_id = Session::get('staffdata')['id'];
     if($rq->filled('staff_id')){
       $s_staff_id = $rq->staff_id;
     } else {
@@ -43,7 +44,8 @@ class TStaffController extends Controller
       'opentask' => $opentaskcount,
       'donetask' => $donetaskcount,
       'subords' => $sublist,
-      'user' => $user
+      'user' => $user,
+      'cuser' => $c_staff_id
     ]);
   }
 
