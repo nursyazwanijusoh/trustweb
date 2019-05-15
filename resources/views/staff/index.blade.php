@@ -9,12 +9,13 @@
               <div class="card-header">Staff Home Page</div>
               <div class="card-body">
                 <h5 class="card-title">My Info</h5>
-                <p class="card-text">
-                  Name: {{ $user['name'] }}<br />
-                  Division: {{ $user['unit'] }}<br />
-                  Unit: {{ $user['subunit'] }}<br />
-                  Email: {{ $user['email'] }}<br />
-                  Mobile: {{ $user['mobile_no'] }}<br />
+                <p class="card-text text-monospace">
+                  Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $user['name'] }}<br />
+                  Division&nbsp;: {{ $user['unit'] }}<br />
+                  Unit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $user['subunit'] }}<br />
+                  Email&nbsp;&nbsp;&nbsp;&nbsp;: {{ $user['email'] }}<br />
+                  Mobile&nbsp;&nbsp;&nbsp;: {{ $user['mobile_no'] }}<br />
+                  Current Check-in : {{ $currcekin }}<br />
                 </p>
               </div>
               <div class="card-body">

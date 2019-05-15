@@ -46,6 +46,11 @@ class BookingHelper extends Controller
 
   }
 
+  public function getCheckinMinimal($check_id){
+    $cek = $this->getCheckinInfo($check_id);
+    return $cek->loc_detail->loc_name . ' -> ' . $cek->loc_detail->label . ' since ' . $cek->checkin_time;
+  }
+
   public function checkOut($staff_id, $remark = ''){
     $time = new DateTime('NOW');
     $time->setTimezone(new DateTimeZone('+0800'));

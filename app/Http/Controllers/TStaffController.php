@@ -11,6 +11,7 @@ use App\ActivityType;
 use App\User;
 use App\Activity;
 use App\Subordinate;
+use App\Api\V1\Controllers\BookingHelper;
 
 class TStaffController extends Controller
 {
@@ -38,15 +39,25 @@ class TStaffController extends Controller
     $sublist = Subordinate::where('superior_id', $s_staff_id)->get();
 
     $user = User::find($s_staff_id);
-
-    return view('staff.index', [
+    if(isset($user->curr_checkin)){
+      $bh = new BookingHelper;
+      $lastloc = $bh->getCheckinMinimal($user->curr_checkin);
+      // dd($lastloc);
+    } else {
+      $lastloc = 'N/A';
+    }
+    $final = [
       'staff_id' => $s_staff_id,
       'opentask' => $opentaskcount,
       'donetask' => $donetaskcount,
       'subords' => $sublist,
       'user' => $user,
-      'cuser' => $c_staff_id
-    ]);
+      'cuser' => $c_staff_id,
+      'currcekin' => $lastloc
+    ];
+    // dd($final);
+
+    return view('staff.index', $final);
   }
 
   // ========= TASK management ==========
