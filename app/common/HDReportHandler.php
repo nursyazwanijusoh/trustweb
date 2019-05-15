@@ -111,7 +111,7 @@ class HDReportHandler
     $count = 'no';
 
     if(!$user){
-      $user = User::where('name', 'LIKE', "%${input}%")->get();
+      $user = User::where('name', 'LIKE', "%${input}%")->orderBy('unit', 'ASC')->get();
       $count = 'name';
     }
 

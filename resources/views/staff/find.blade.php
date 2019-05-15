@@ -44,7 +44,7 @@
                     <tbody>
                       @foreach($result as $atask)
                       <tr>
-                        <td>{{ $atask->staff_no }}</td>
+                        <td><a href="{{ route('staff', ['staff_id' => $atask->id], false) }}">{{ $atask->staff_no }}</a></td>
                         <td>{{ $atask->name }}</td>
                         <td>{{ $atask->unit }}</td>
                         <td>{{ $atask->email }}</td>
