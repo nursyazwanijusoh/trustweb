@@ -88,7 +88,7 @@ class AdminReportController extends Controller
     if($req->filled('input')){
       $data = $this->hdrh->findStaff($req->input);
 
-      if($data['type'] == 'id'){
+      if($data['type'] == 'no'){
         return redirect(route('staff', ['staff_id' => $data['data']->id], false));
       } else {
         if($data['data']->count() == 0){
