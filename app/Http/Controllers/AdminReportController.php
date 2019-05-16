@@ -88,6 +88,19 @@ class AdminReportController extends Controller
     if($req->filled('input')){
       $data = $this->hdrh->findStaff($req->input);
 
+      // dd($data);
+
+      if($data->count() == 1){
+        $auser = $data->shift();
+
+        return redirect(route('staff', ['staff_id' => $auser->id], false));
+      } elseif($data->count() == 0){
+        return view('staff.find', ['result' => '404']);
+      } else {
+        return view('staff.find', ['result' => $data]);
+      }
+
+      /*
       if($data['type'] == 'no'){
         return redirect(route('staff', ['staff_id' => $data['data']->id], false));
       } else {
@@ -101,6 +114,7 @@ class AdminReportController extends Controller
         }
 
       }
+      */
 
     } else {
       return view('staff.find', ['result' => 'empty']);

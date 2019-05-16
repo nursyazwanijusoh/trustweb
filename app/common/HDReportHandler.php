@@ -107,18 +107,18 @@ class HDReportHandler
 
   public function findStaff($input){
     // first find as exact staff no
-    $user = User::where('staff_no', trim($input))->first();
-    $count = 'no';
+    $user = User::where('staff_no', trim($input))->get();
+    // $count = 'no';
 
-    if(!$user){
+    if($user->count() == 0){
       $user = User::where('name', 'LIKE', "%${input}%")->orderBy('unit', 'ASC')->get();
-      $count = 'name';
+      // $count = 'name';
     }
 
 
-    return [
-      'type' => $count, 'data' => $user
-    ];
+    // return ['type' => $count, 'data' => $user];
+    // dd($user);
+    return $user;
   }
 
 }

@@ -169,13 +169,15 @@ class TAdminController extends Controller
 
       // set which building to be checked
       $mybuildlist = json_decode($staffft->allowed_building);
-      foreach($blist as $build){
-        $build['chk'] = '';
+      if(isset($mybuildlist)){  
+        foreach($blist as $build){
+          $build['chk'] = '';
 
-        foreach($mybuildlist as $myb){
-          if($build->id == $myb){
-            $build['chk'] = 'checked';
-            break 1;
+          foreach($mybuildlist as $myb){
+            if($build->id == $myb){
+              $build['chk'] = 'checked';
+              break 1;
+            }
           }
         }
       }
