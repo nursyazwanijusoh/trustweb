@@ -169,18 +169,19 @@ class TAdminController extends Controller
 
       // set which building to be checked
       $mybuildlist = json_decode($staffft->allowed_building);
-      if(isset($mybuildlist)){  
+
         foreach($blist as $build){
           $build['chk'] = '';
-
-          foreach($mybuildlist as $myb){
-            if($build->id == $myb){
-              $build['chk'] = 'checked';
-              break 1;
+          if(isset($mybuildlist)){
+            foreach($mybuildlist as $myb){
+              if($build->id == $myb){
+                $build['chk'] = 'checked';
+                break 1;
+              }
             }
           }
         }
-      }
+
 
       // set the selected role
       if(isset($staffft->role)){
@@ -453,7 +454,7 @@ class TAdminController extends Controller
 
   }
 
-  public function modbuild(Request $req){
+  public function modbuilding(Request $req){
     $build = building::findOrFail($req->build_id);
     $build->building_name = $req->building_name;
     $build->floor_name = $req->floor_name;
