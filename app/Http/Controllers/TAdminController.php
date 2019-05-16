@@ -448,7 +448,6 @@ class TAdminController extends Controller
     }
 
     $buildlist = building::all();
-
     // then call the view
     return view('admin.place', ['buildlist' => $buildlist]);
 
