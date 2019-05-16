@@ -460,7 +460,6 @@ class TAdminController extends Controller
     $build->floor_name = $req->floor_name;
     $build->remark = $req->remark;
     $build->save();
-
     return redirect(route('admin.buildetail', ['build_id' => $req->build_id], false));
   }
 
