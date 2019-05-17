@@ -67,6 +67,7 @@ Route::post('/user/doaddactivity', 'TStaffController@doAddACtivity')->name('staf
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');
 Route::get('/reports/regstat', 'ReportController@registeredUser')->name('reports.regstat');
+Route::get('/reports/floorutil', 'ReportController@floorAvailability')->name('reports.floorutil');
 Route::get('/reports/depts', 'ReportController@showDepts')->name('reports.depts');
 Route::get('/reports/workhour', 'ReportController@manDaysDispf')->name('reports.workhour');
 Route::post('/reports/workhour', 'ReportController@manDaysDispf')->name('reports.workhourf');

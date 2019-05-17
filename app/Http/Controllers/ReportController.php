@@ -10,9 +10,11 @@ use \DateInterval;
 use \DatePeriod;
 use App\User;
 use App\Unit;
+use App\building;
 use App\SubUnit;
 use App\ActivityType;
 use App\Charts\RegStatChart;
+use App\Api\V1\Controllers\BookingHelper;
 
 class ReportController extends Controller
 {
@@ -51,7 +53,40 @@ class ReportController extends Controller
     $schart->labels($label);
     $schart->dataset('Registered user', 'horizontalBar', $value);
 
-    return view('report.regstat', ['chart' => $schart]);
+    return view('report.regstat', ['chart' => $schart, 'title' => 'Registered User By Division']);
+  }
+
+  public function floorAvailability(){
+    $bookh = new BookingHelper;
+    $buildlist = building::all();
+    $ret = [];
+    foreach ($buildlist as $abuild) {
+      array_push($ret, $bookh->getBuildingStat($abuild->id));
+    }
+
+    $label = [];
+    $frees = [];
+    $resv = [];
+    $occp = [];
+
+
+    foreach($ret as $afloor){
+      array_push($label, $afloor['building_name']);
+      array_push($frees, $afloor['free_seat']);
+      array_push($resv, $afloor['reserved_seat']);
+      array_push($occp, $afloor['occupied_seat']);
+    }
+
+    $schart = new RegStatChart;
+    $schart->labels($label);
+    $fd = $schart->dataset('Free Seat', 'horizontalBar', $frees);
+    $fd->backgroundColor('green');
+    $fr = $schart->dataset('Reserved Seat', 'horizontalBar', $resv);
+    $fr->backgroundColor('blue');
+    $fo = $schart->dataset('Occupied Seat', 'horizontalBar', $occp);
+    $fo->backgroundColor('yellow');
+
+    return view('report.regstat', ['chart' => $schart, 'title' => 'Floor Utilization']);
   }
 
   public function manDaysDispf(Request $req){

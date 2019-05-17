@@ -19,6 +19,7 @@
                   <div class="list-group">
                     <a href="{{ route('hdreports.dbdf', [], false) }}" class="list-group-item list-group-item-action">Daily Checkin by Division</a>
                     <a href="{{ route('hdreports.wsu', [], false) }}" class="list-group-item list-group-item-action">Workspace Occupants</a>
+                    <a href="{{ route('reports.floorutil', [], false) }}" class="list-group-item list-group-item-action">Floor Utilization</a>
                   </div>
                   @endif
                   <h5 class="card-title">Misc</h5>
