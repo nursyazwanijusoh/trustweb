@@ -62,12 +62,13 @@ class UserController extends Controller
   		}
 
       $staff = User::where('id', $req->staff_id)->first();
-      $allowedbuilding = json_decode($staff->allowed_building);
-
       $ret = [];
 
-      foreach ($allowedbuilding as $buildid) {
-        array_push($ret, $this->bh->getBuildingStat($buildid));
+      if(isset($staff->allowed_building)){
+        $allowedbuilding = json_decode($staff->allowed_building);
+        foreach ($allowedbuilding as $buildid) {
+          array_push($ret, $this->bh->getBuildingStat($buildid));
+        }
       }
 
       return $this->respond_json(200, 'Allowed buildings', $ret);
