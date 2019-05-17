@@ -74,6 +74,7 @@ $api->version('v1', function ($api) {
   $api->get('/buildingAllSummary',  ['as' => 'build.allsummary', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingAllSummary']);
   $api->post('/buildingListSeats',  ['as' => 'build.listseat', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingListSeats']);
   $api->post('/UserListBuilding',  ['as' => 'user.listbuild', 'uses' => 'App\Api\V1\Controllers\UserController@ListAllowedBuilding']);
+  $api->post('/UserFind',  ['as' => 'user.finda', 'uses' => 'App\Api\V1\Controllers\UserController@Find']);
 
 
 });

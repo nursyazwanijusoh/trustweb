@@ -12,6 +12,7 @@ use App\Activity;
 use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
+use App\common\HDReportHandler;
 
 class UserController extends Controller
 {
@@ -239,13 +240,36 @@ class UserController extends Controller
 
     }
 
+    function Find(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'input' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $finder = new HDReportHandler;
+      $data = $finder->findStaff($req->input);
+      $errc = 200;
+      if($data->count() == 0){
+        $errc = 404;
+      }
+
+      return $this->respond_json($errc, 'Search result for ' . $req->input, $data);
+
+    }
+
 
 
 
     // internal functions ======================
 
     public function updateStaffProfile(Request $req){
-      
+
     }
 
     private function getStaffInfo($staffdata){
