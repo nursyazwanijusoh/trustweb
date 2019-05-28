@@ -34,7 +34,9 @@ class BookingHelper extends Controller
 
   public function getPlaceInfo($place_id){
     $place = place::where('id', $place_id)->first();
-    $place->loc_name = $this->getBuildingInfo($place->building_id);
+    $thebuild = $this->getBuildingInfo($place->building_id);
+    $place->floor_name = $thebuild->floor_name;
+    $place->building_name = $thebuild->building_name;
 
     return $place;
   }
@@ -42,7 +44,7 @@ class BookingHelper extends Controller
   public function getBuildingInfo($building_id){
     $build = building::where('id', $building_id)->first();
 
-    return $build->floor_name . '@' . $build->building_name;
+    return $build; //->floor_name . '@' . $build->building_name;
 
   }
 

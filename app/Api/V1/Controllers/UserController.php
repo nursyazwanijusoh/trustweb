@@ -62,7 +62,7 @@ class UserController extends Controller
   		}
 
       $staff = User::where('id', $req->staff_id)->first();
-      $ret = [];
+      $ret = array();
 
       if(isset($staff->allowed_building)){
         $allowedbuilding = json_decode($staff->allowed_building);
@@ -70,8 +70,12 @@ class UserController extends Controller
           array_push($ret, $this->bh->getBuildingStat($buildid));
         }
       }
+      $errcode = 200;
+      if($ret){
+        $errcode = 300;
+      }
 
-      return $this->respond_json(200, 'Allowed buildings', $ret);
+      return $this->respond_json($errcode, 'Allowed buildings', $ret);
 
     }
 
