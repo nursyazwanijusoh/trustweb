@@ -168,9 +168,12 @@ class BookingHelper extends Controller
     $reservedcount = place::where('building_id', $building_id)->where('status', 2)->count();
     $occupiedcount = place::where('building_id', $building_id)->where('status', 3)->count();
 
+    $thebuild = $this->getBuildingInfo($building_id);
+    $loc_name = $thebuild->floor_name . '@' . $thebuild->building_name;
+
     return [
       'building_id' => $building_id,
-      'building_name' => $this->getBuildingInfo($building_id),
+      'building_name' => $loc_name,
       'total_seat' => $totalcount,
       'free_seat' => $freecount,
       'reserved_seat' => $reservedcount,

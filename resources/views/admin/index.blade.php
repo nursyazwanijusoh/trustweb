@@ -10,7 +10,7 @@
                 <div class="card-body">
                   <div class="list-group">
                     <a href="{{ route('admin.build', [], false) }}" class="list-group-item list-group-item-action">Building List</a>
-                    <a href="{{ route('admin.sr', [], false) }}" class="list-group-item list-group-item-action">Bulk Staff Update</a>
+                    <a href="{{ route('admin.sr', [], false) }}" class="list-group-item list-group-item-action">Assign Floor Access By Division</a>
                     <a href="{{ route('admin.st', [], false) }}" class="list-group-item list-group-item-action">Edit Staff</a>
                     <a href="{{ route('admin.tt', [], false) }}" class="list-group-item list-group-item-action">Task Type List</a>
                     <a href="{{ route('admin.at', [], false) }}" class="list-group-item list-group-item-action">Activity Type List</a>

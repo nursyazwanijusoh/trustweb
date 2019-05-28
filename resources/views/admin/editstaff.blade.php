@@ -81,7 +81,7 @@
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="{{ $abuild['id'] }}" id="defaultCheck{{ $abuild['id'] }}" {{ $abuild['chk'] }} name="cbfloor[]">
                       <label class="form-check-label" for="defaultCheck{{ $abuild['id'] }}">
-                        {{ $abuild['floor_name'] . '@' . $abuild['building_name'] }}
+                        {{ $abuild['unit'] . ' -> ' . $abuild['floor_name'] . '@' . $abuild['building_name'] }}
                       </label>
                     </div>
                     @endforeach
@@ -95,7 +95,7 @@
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-primary" {{ $staffdata['btn_state'] }}>{{ $staffdata['btn_txt'] }}</button>
                         </div>
-                    </div> 
+                    </div>
                   </form>
                 </div>
             </div>

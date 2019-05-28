@@ -92,21 +92,49 @@ class TAdminController extends Controller
   // ------- ROLES --------
   public function showStaffRole(Request $req){
     // get the list of buildings
-    $blist = building::all();
-    $myrole = Session::get('staffdata')['role'];
+    $blist = building::where('status', '1')->orderBy('unit', 'ASC')->get();
+    $seldiv = Session::get('staffdata')['lob'];
+
+    // get the registered list of division / unit
+    $divrlist = \DB::table('users')
+      ->select('lob', \DB::raw('count(*) as reg_count'))
+      ->groupBy('lob')
+      ->get();
+    $divalist = [];
+
+    // translate the div/unit
+    foreach($divrlist as $adiv){
+      $sel = '';
+      $unit = Unit::where('pporgunit', $adiv->lob)->first();
+      $unitname = $adiv->lob;  // default, just in case
+      if($unit){
+        $unitname = $unit->pporgunitdesc;
+      }
+
+      if($adiv->lob == $seldiv){
+        $sel = 'selected';
+      }
+
+      array_push($divalist, [
+        'pporgunit' => $adiv->lob,
+        'divname' => $unitname,
+        'regcount' => $adiv->reg_count,
+        'sel' => $sel
+      ]);
+    }
 
     if($req->filled('alert')){
       return view('admin.assignrole', [
-        'blist' => $blist, 'role' => $myrole,
-        'alert' => $req->alert . ' records updated'
+        'blist' => $blist, 'divlist' => $divalist,
+        'alert' => $req->alert
       ]);
     } else {
-      return view('admin.assignrole', ['blist' => $blist, 'role' => $myrole]);
+      return view('admin.assignrole', ['blist' => $blist, 'divlist' => $divalist]);
     }
   }
 
   public function blankStaff(){
-    $blist = building::all();
+    $blist = building::where('status', '1')->orderBy('unit', 'ASC')->get();
     // add blank check status for each building
     foreach($blist as $build){
       $build['chk'] = '';
@@ -250,21 +278,15 @@ class TAdminController extends Controller
   }
 
   public function assignRole(Request $req){
-    $text = str_replace("\r\n", "\n", trim($req->staffs));
-    $stafflist = explode("\n", $text);
+
     $floorlist = '';
     if($req->filled('cbfloor')){
       $floorlist = json_encode($req->cbfloor);
     }
-    $counter = 0;
 
-    foreach($stafflist as $astaff){
-      $dump = $this->doUpdateUser($astaff, '', $floorlist, $req->srole);
-      $counter++;
-    }
+    \DB::table('users')->where('lob', $req->pporgunit)->update(array('allowed_building' => $floorlist));
 
-
-    return redirect(route('admin.sr', ['alert' => $counter]));
+    return redirect(route('admin.sr', ['alert' => 'update successful']));
   }
 
   // create the user profile if they never logged in yet
