@@ -413,6 +413,7 @@ class TAdminController extends Controller
     $build = new building;
     $build->building_name = $req->building_name;
     $build->floor_name = $req->floor_name;
+    $build->unit = $req->unit;
     $build->created_by = Session::get('staffdata')['name'];
     $build->status = 1;
 
@@ -457,6 +458,7 @@ class TAdminController extends Controller
     $build = building::findOrFail($req->build_id);
     $build->building_name = $req->building_name;
     $build->floor_name = $req->floor_name;
+    $build->unit = $req->unit;
     $build->remark = $req->remark;
     $build->save();
     return redirect(route('admin.buildetail', ['build_id' => $req->build_id], false));

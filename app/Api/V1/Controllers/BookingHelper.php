@@ -37,6 +37,8 @@ class BookingHelper extends Controller
     $thebuild = $this->getBuildingInfo($place->building_id);
     $place->floor_name = $thebuild->floor_name;
     $place->building_name = $thebuild->building_name;
+    $place->unit = $thebuild->unit;
+    $place->loc_name = $thebuild->floor_name . '@' . $thebuild->building_name;
 
     return $place;
   }

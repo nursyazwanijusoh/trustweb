@@ -27,6 +27,13 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="unit" class="col-md-4 col-form-label text-md-right">Unit</label>
+                        <div class="col-md-6">
+                            <input id="unit" value="{{ $build['unit'] }}" class="form-control" type="text" name="unit" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Remark</label>
                         <div class="col-md-6">
                           <textarea rows="3" class="form-control" id="remark" name="remark">{{ $build['remark'] }}</textarea>

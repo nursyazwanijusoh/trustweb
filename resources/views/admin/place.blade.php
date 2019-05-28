@@ -26,6 +26,13 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="unit" class="col-md-4 col-form-label text-md-right">Unit</label>
+                        <div class="col-md-6">
+                            <input id="unit" class="form-control" type="text" name="unit" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Remark</label>
                         <div class="col-md-6">
                           <textarea rows="3" class="form-control" id="remark" name="remark"></textarea>
@@ -46,6 +53,7 @@
                       <tr>
                         <th scope="col">Building</th>
                         <th scope="col">Floor</th>
+                        <th scope="col">Unit</th>
                         <th scope="col">Remark</th>
                         <th scope="col">Added By</th>
                         <th scope="col">Action</th>
@@ -56,6 +64,7 @@
                       <tr>
                         <td>{{ $atask['building_name'] }}</td>
                         <td><a href="{{ route('admin.buildetail', ['build_id' => $atask['id']], false) }}">{{ $atask['floor_name'] }}</a></td>
+                        <td>{{ $atask['unit'] }}</td>
                         <td>{{ $atask['remark'] }}</td>
                         <td>{{ $atask['created_by'] }}</td>
                         <td><a href="{{ route('admin.delbuild', ['build_id' => $atask['id']], false) }}">Remove</a></td>
