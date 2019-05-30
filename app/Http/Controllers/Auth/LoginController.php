@@ -76,9 +76,14 @@ class LoginController extends Controller
   			$staffdata->role = 3;
       }
 
+      $tmobile = $resp['data']['MOBILE_NO'];
+  		if(substr($tmobile, 0, 1) === '0'){
+  			$tmobile = '6' . $tmobile;
+  		}
+
       // overwrite with ldap data
       $staffdata->email = $resp['data']['EMAIL'];
-      $staffdata->mobile_no = $resp['data']['MOBILE_NO'];
+      $staffdata->mobile_no = $tmobile;
       $staffdata->name = $resp['data']['NAME'];
       $staffdata->lob = $resp['data']['DEPARTMENT'];
       $staffdata->unit = $resp['data']['UNIT'];
