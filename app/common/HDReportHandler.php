@@ -94,11 +94,12 @@ class HDReportHandler
       ->where('status', '1')->get();
 
     $free = $feeseats->count();
+    $thebuild = $bh->getBuildingInfo($buildid);
 
     return [
       'occupied' => $occseats
       , 'free' => $feeseats
-      , 'buildname' => $bh->getBuildingInfo($buildid)
+      , 'buildname' => $thebuild->floor_name . '@' . $thebuild->building_name
       , 'freecount' => $free
       , 'occcount' => $occupied
     ];
