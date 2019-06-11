@@ -10,9 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="/js/app.js" defer></script>
+    <script src="/js/app.js"></script>
     <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script> -->
     <!-- <script src="{{ asset('js/Chart.min.js') }}"></script> -->
 
     <!-- Fonts -->
@@ -22,6 +21,7 @@
     <!-- Styles -->
     <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
     <link href="/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 </head>
 <body>
     <div id="app">
@@ -48,6 +48,9 @@
                                 <a class="nav-link" href="{{ route('login', [], false) }}">{{ __('Login') }}</a>
                             </li>
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login', [], false) }}">Feedback</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -82,4 +85,5 @@
         </main>
     </div>
 </body>
+@yield('page-js')
 </html>
