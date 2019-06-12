@@ -11,6 +11,7 @@ use App\place;
 use App\User;
 use App\Unit;
 use App\SubUnit;
+use App\Feedback;
 use Session;
 use App\Api\V1\Controllers\LdapHelper;
 use App\Api\V1\Controllers\BookingHelper;
@@ -25,7 +26,10 @@ class TAdminController extends Controller
 
   // main admin page
   public function index(){
-    return view('admin.index');
+
+    $fbcount = Feedback::where('status', 1)->count();
+
+    return view('admin.index', ['fbc' => $fbcount]);
     // return Session::get('staffdata')['role'];
   }
 
@@ -312,6 +316,8 @@ class TAdminController extends Controller
     $user->role = $req->srole;
     if(isset($req->cbfloor)){
       $user->allowed_building = json_encode($req->cbfloor);
+    } else {
+      $user->allowed_building = '';
     }
 
     // dd($user);
@@ -616,6 +622,25 @@ class TAdminController extends Controller
       'qrlabel' => $qrlabel
     ]);
 
+  }
+
+  public function showSharedSkillset(Request $req){
+
+    return view('admin.sharedskillset', []);
+  }
+
+  public function deleteSharedSkillset(Request $req){
+
+    $currskilset = [];
+
+    return view('admin.sharedskillset', ['alert' => 'Skillset Deleted', 'currtasklist' => $currskilset]);
+  }
+
+  public function addSharedSkillset(Request $req){
+
+    $currskilset = [];
+
+    return view('admin.sharedskillset', ['alert' => 'Skillset Added', 'currtasklist' => $currskilset]);
   }
 
 }

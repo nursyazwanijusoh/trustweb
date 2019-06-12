@@ -49,6 +49,7 @@ Route::post('/admin/editst', 'TAdminController@updateUser')->name('admin.upst');
 Route::post('/admin/findstaff', 'TAdminController@findStaff')->name('admin.findst');
 Route::post('/admin/reflov', 'TAdminController@refreshLOV')->name('admin.reflov');
 Route::get('/admin/reflov', 'TAdminController@showLOV')->name('admin.lov');
+Route::get('/admin/sharedskill', 'TAdminController@showSharedSkillset')->name('admin.sharedskill');
 
 Route::get('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrg');
 Route::post('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrp');
@@ -78,3 +79,15 @@ Route::get('/reports/staffspecificdayrpt', 'ReportController@staffSpecificDayRpt
 Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->name('hdreports.dbdf');
 Route::get('/hdreports/WorkSpaceUsage', 'AdminReportController@WorkSpaceUsage')->name('hdreports.wsu');
 Route::get('/find/staff', 'AdminReportController@rptFindStaff')->name('staff.find');
+
+// skillsets
+Route::get('/skillset/index', 'SkillsetController@viewCurrentSkillset')->name('skillset');
+Route::get('/skillset/shared', 'TAdminController@showSharedSkillset')->name('skillset.shared.manage');
+Route::post('/skillset/shared/del', 'TAdminController@deleteSharedSkillset')->name('skillset.shared.del');
+Route::post('/skillset/shared/add', 'TAdminController@addSharedSkillset')->name('skillset.shared.add');
+
+// feedback
+Route::get('/feedback', 'FeedbackController@sform')->name('feedback');
+Route::post('/feedback', 'FeedbackController@submit')->name('feedback.submit');
+Route::get('/feedback/close', 'FeedbackController@close')->name('feedback.close');
+Route::get('/feedback/list', 'FeedbackController@list')->name('feedback.list');

@@ -14,8 +14,14 @@
                     <a href="{{ route('admin.st', [], false) }}" class="list-group-item list-group-item-action">Edit Staff</a>
                     <a href="{{ route('admin.tt', [], false) }}" class="list-group-item list-group-item-action">Task Type List</a>
                     <a href="{{ route('admin.at', [], false) }}" class="list-group-item list-group-item-action">Activity Type List</a>
+                    <a href="{{ route('skillset.shared.manage', [], false) }}" class="list-group-item list-group-item-action">Shared Skillset</a>
                     <a href="{{ route('admin.lov', [], false) }}" class="list-group-item list-group-item-action">Department LOVs</a>
                     <a href="{{ route('admin.genqrg', [], false) }}" class="list-group-item list-group-item-action">Generate QR</a>
+                    <a href="{{ route('feedback.list', [], false) }}" class="list-group-item list-group-item-action">Feedbacks
+                    @if($fbc > 0)
+                    <span class="badge badge-info">{{ $fbc }}</span>
+                    @endif
+                    </a>
                   </div>
                 </div>
             </div>

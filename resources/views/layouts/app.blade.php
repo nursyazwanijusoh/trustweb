@@ -45,11 +45,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login', [], false) }}">{{ __('Login') }}</a>
+                                <a title="Click to login" class="nav-link" href="{{ route('login', [], false) }}">{{ __('Login') }}</a>
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login', [], false) }}">Feedback</a>
+                                <a class="nav-link" href="{{ route('feedback', [], false) }}">Feedback</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

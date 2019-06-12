@@ -1,0 +1,74 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Feedback;
+use App\User;
+use Illuminate\Http\Request;
+
+class FeedbackController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    public function sform()
+    {
+      return view('feedback.sform');
+    }
+
+    public function submit(Request $request)
+    {
+      $staffid = \Session::get('staffdata')['id'];
+      $fb = new Feedback;
+      $fb->staff_id = $staffid;
+      $fb->title = $request->title;
+      $fb->content = $request->content;
+      $fb->status = 1;
+      $fb->save();
+
+      return view('feedback.sform', ['alert' => 'success']);
+    }
+
+    public function list(Request $req)
+    {
+      $type = 'active';
+      $atype = 1;
+
+      if($req->filled('type')){
+        $type = $req->type;
+      }
+
+      if($type == 'closed'){
+        $atype = 0;
+      }
+
+      $feedbacklist = Feedback::where('status', $atype)->get();
+
+      // add name to the results
+      foreach($feedbacklist as $afb){
+        $user = User::find($afb->staff_id);
+        $afb->name = $user->name;
+        $afb->staff_no = $user->staff_no;
+      }
+
+      return view('feedback.list', ['type' => $type, 'data' => $feedbacklist]);
+
+    }
+
+    public function close(Request $request)
+    {
+      $fb = Feedback::find($request->id);
+      $fb->status = 0;
+      $fb->save();
+
+      return redirect(route('feedback.list', [], false));
+    }
+
+}
