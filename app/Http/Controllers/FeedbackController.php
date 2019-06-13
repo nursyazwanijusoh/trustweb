@@ -25,7 +25,10 @@ class FeedbackController extends Controller
 
     public function submit(Request $request)
     {
-      $staffid = \Session::get('staffdata')['id'];
+      $staffid = 0;
+      if(session()->has('staffdata')){
+        $staffid = \Session::get('staffdata')['id'];
+      }
       $fb = new Feedback;
       $fb->staff_id = $staffid;
       $fb->title = $request->title;
@@ -53,9 +56,15 @@ class FeedbackController extends Controller
 
       // add name to the results
       foreach($feedbacklist as $afb){
-        $user = User::find($afb->staff_id);
-        $afb->name = $user->name;
-        $afb->staff_no = $user->staff_no;
+        if($afb->staff_id == 0){
+          $afb->name = 'Anonymous';
+          $afb->staff_no = 'Anon';
+        } else {
+          $user = User::find($afb->staff_id);
+          $afb->name = $user->name;
+          $afb->staff_no = $user->staff_no;
+        }
+
       }
 
       return view('feedback.list', ['type' => $type, 'data' => $feedbacklist]);

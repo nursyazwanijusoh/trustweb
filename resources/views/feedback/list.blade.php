@@ -38,7 +38,11 @@
                     <tbody>
                       @foreach($data as $atask)
                       <tr>
+                        @if($atask->staff_id == 0)
+                        <td>{{ $atask->name }}</td>
+                        @else
                         <td><a title="{{ $atask->name }}" href="{{ route('staff', ['staff_id' => $atask->staff_id], false) }}">{{ $atask->staff_no }}</a></td>
+                        @endif
                         <td>{{ $atask->title }}</td>
                         <td>{{ $atask->content }}</td>
                         @if($type == 'active')
