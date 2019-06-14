@@ -55,6 +55,8 @@ $api->version('v1', function ($api) {
   $api->post('/LovActTypeEdit',  ['as' => 'lov.at.u', 'uses' => 'App\Api\V1\Controllers\LovController@atEdit']);
   $api->post('/LovActTypeDelete',  ['as' => 'lov.at.d', 'uses' => 'App\Api\V1\Controllers\LovController@atDelete']);
 
+  $api->get('/CCGet',  ['as' => 'lov.cc.get', 'uses' => 'App\Api\V1\Controllers\LovController@ccGet']);
+
   // activities
   $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\LoginController@doLogin']);
   $api->post('/UserJustLogin',  ['as' => 'user.j.login', 'uses' => 'App\Api\V1\Controllers\LoginController@justLogin']);

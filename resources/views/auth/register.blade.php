@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register', [], false) }}">
                         @csrf
 
                         <div class="form-group row">
@@ -22,6 +22,30 @@
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="staff_no" class="col-md-4 col-form-label text-md-right">Staff No</label>
+                            <div class="col-md-6">
+                                <input id="staff_no" type="text" class="form-control{{ $errors->has('staff_no') ? ' is-invalid' : '' }}" name="staff_no" value="{{ old('staff_no') }}" required maxlength="10">
+
+                                @if ($errors->has('staff_no'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('staff_no') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="partner_id" class="col-md-4 col-form-label text-md-right">Partner / Vendor</label>
+                            <div class="col-md-6">
+                              <select class="form-control" id="partner_id" name="partner_id" required>
+                                @foreach ($partn as $atask)
+                                <option value="{{ $atask['id'] }}">{{ $atask['comp_name'] }}</option>
+                                @endforeach
+                              </select>
                             </div>
                         </div>
 

@@ -5,6 +5,7 @@ namespace App\Api\V1\Controllers;
 use Illuminate\Http\Request;
 use App\ActivityType;
 use App\TaskCategory;
+use App\CommonConfig;
 
 /**
  * Controller for buildings / tables
@@ -234,6 +235,27 @@ class LovController extends Controller
         $builds = TaskCategory::where($req->key, $req->value)->get();
 
         return $this->respond_json(200, 'result', $builds);
+
+      }
+
+      function ccGet(Request $req){
+        $input = app('request')->all();
+
+        $rules = [
+          'key' => ['required']
+        ];
+
+        $validator = app('validator')->make($input, $rules);
+        if($validator->fails()){
+          return $this->respond_json(412, 'Invalid input', $input);
+        }
+
+        $cfg = CommonConfig::where('key', $req->key)->first();
+        if($cfg){
+          return $this->respond_json(200, 'key found', $cfg);
+        } else {
+          return $this->respond_json(404, 'key not found', $input);
+        }
 
       }
 }

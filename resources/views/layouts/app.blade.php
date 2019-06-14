@@ -47,6 +47,9 @@
                             <li class="nav-item">
                                 <a title="Click to login" class="nav-link" href="{{ route('login', [], false) }}">{{ __('Login') }}</a>
                             </li>
+                            <li class="nav-item">
+                              <a title="Click to login" class="nav-link" href="{{ route('register', [], false) }}">{{ __('Register') }}</a>
+                            </li>
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('feedback', [], false) }}">Feedback</a>

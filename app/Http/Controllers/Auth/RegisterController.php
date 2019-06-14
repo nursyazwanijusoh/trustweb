@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Partner;
+use App\common\UserRegisterHandler;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -51,7 +53,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'staff_no' => ['required', 'string', 'max:10', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'partner_id' => ['required', 'integer'],
         ]);
     }
 
@@ -63,10 +67,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user = UserRegisterHandler::register($data);
+
+        return $user;
     }
+
+    public function showRegistrationForm()
+{
+    $partn=Partner::all();
+    return view('auth.register', compact('partn'));
+}
+
 }

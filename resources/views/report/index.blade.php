@@ -15,6 +15,7 @@
                   </div>
 
                   @if($role <= 2)
+                  <br />
                   <h5 class="card-title">Hot Desking</h5>
                   <div class="list-group">
                     <a href="{{ route('hdreports.dbdf', [], false) }}" class="list-group-item list-group-item-action">Daily Checkin by Division</a>
@@ -22,6 +23,7 @@
                     <a href="{{ route('reports.floorutil', [], false) }}" class="list-group-item list-group-item-action">Floor Utilization</a>
                   </div>
                   @endif
+                  <br />
                   <h5 class="card-title">Misc</h5>
                   <a href="{{ route('staff.find', [], false) }}" class="list-group-item list-group-item-action">Find Staff</a>
                 </div>

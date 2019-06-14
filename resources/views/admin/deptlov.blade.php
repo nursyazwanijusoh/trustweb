@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Department #{{ $deptid }} List Of Values</div>
+                <div class="card-header">Scan LDAP for list of departments</div>
                 @if(isset($err))
                 <div class="alert alert-warning" role="alert">{{ $err }}</div>
                 @endif

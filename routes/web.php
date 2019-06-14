@@ -57,6 +57,7 @@ Route::post('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrp');
 
 // normal users
 Route::get('/user', 'TStaffController@index')->name('staff');
+Route::get('/user/verify/{token}', 'VerifyUserController@verify')->name('staff.verify');
 Route::get('/user/task', 'TStaffController@taskIndex')->name('staff.t');
 Route::get('/user/taskdetail', 'TStaffController@taskDetail')->name('staff.tdetail');
 Route::post('/user/addtask', 'TStaffController@addTask')->name('staff.addtask');
@@ -91,3 +92,14 @@ Route::get('/feedback', 'FeedbackController@sform')->name('feedback');
 Route::post('/feedback', 'FeedbackController@submit')->name('feedback.submit');
 Route::get('/feedback/close', 'FeedbackController@close')->name('feedback.close');
 Route::get('/feedback/list', 'FeedbackController@list')->name('feedback.list');
+
+// partners
+Route::get('/partner/list', 'PartnerController@list')->name('partner.list');
+Route::post('/partner/add', 'PartnerController@add')->name('partner.add');
+Route::get('/partner/del', 'PartnerController@del')->name('partner.del');
+
+// configs
+Route::get('/cfg/list', 'CommonConfigController@list')->name('cfg.list');
+Route::post('/cfg/add', 'CommonConfigController@addedit')->name('cfg.add');
+Route::post('/cfg/edit', 'CommonConfigController@edit')->name('cfg.edit');
+Route::get('/cfg/del', 'CommonConfigController@del')->name('cfg.del');
