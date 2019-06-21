@@ -89,7 +89,7 @@ public function register(Request $request)
       // $this->guard()->login($user);
 
       return $this->registered($request, $user)
-                      ?: redirect(route('postreg', ['id' => $user->id], false));
+                      ?: redirect(route('postreg', ['staff' => $user->id], false));
   }
 
 }

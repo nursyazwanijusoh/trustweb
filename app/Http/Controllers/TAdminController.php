@@ -360,6 +360,10 @@ class TAdminController extends Controller
     return $thestaff;
   }
 
+  public function deactivateUser(Request $req){
+    
+  }
+
   // List of Units / sub-units under current department
   public function showLov(Request $req){
     // $mylob = Session::get('staffdata')['lob'];

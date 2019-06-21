@@ -49,12 +49,21 @@ class UserRegisterHandler
 
     if($user && $user->isvendor == 1){
       // is vendor. do normal login
-      if(!Auth::attemp([
-        'email' => $username,
-        'password' => $password
-      ])){
-        $errormsg = "failed";
+
+      if($user->verified == 0){
+        $errormsg = "email";
+      } elseif($user->status == 1){
+        if(!Auth::attemp([
+          'email' => $username,
+          'password' => $password
+        ])){
+          $errormsg = "failed";
+        }
+      } else{
+        $errormsg = "pending";
       }
+
+
     } else {
       // user not exist or is TM staff. Try login through LDAP
 		  $ldapresp = $ldapherpel->doLogin($username, $password);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\VerifyMail;
 use App\User;
 
 class HomeController extends Controller
@@ -41,12 +42,13 @@ class HomeController extends Controller
     }
 
     public function postreg(Request $req){
-      return view('auth.verify', ['id' => $req->id]);
+      return view('auth.verify', ['staff' => $req->staff]);
     }
 
     public function resend(Request $req){
-      $user = User::findOrFail($req->id);
+      $user = User::findOrFail($req->staff);
       \Mail::to($user->email)->send(new VerifyMail($user));
-      return view('auth.verify', ['id' => $req->id, 'resend' => true]);
+      return view('auth.verify', ['staff' => $req->staff, 'resend' => true]);
     }
+
 }
