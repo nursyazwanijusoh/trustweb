@@ -17,6 +17,7 @@ Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pg', 'HomeController@playground')->name('pg');
 Route::get('/adminlist', 'HomeController@listAdmins')->name('adminlist');
+Route::get('/postreg', 'HomeController@postreg')->name('postreg');
 
 // ============ admins ================
 Route::get('/admin', 'TAdminController@index')->name('admin');

@@ -39,4 +39,8 @@ class HomeController extends Controller
       $adminlist = User::where('role', '<=', 2)->get();
       return view('adminlist', ['admins' => $adminlist]);
     }
+
+    public function postreg(){
+      return view('auth.verify');
+    }
 }
