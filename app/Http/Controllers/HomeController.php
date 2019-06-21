@@ -40,7 +40,13 @@ class HomeController extends Controller
       return view('adminlist', ['admins' => $adminlist]);
     }
 
-    public function postreg(){
-      return view('auth.verify');
+    public function postreg(Request $req){
+      return view('auth.verify', ['id' => $req->id]);
+    }
+
+    public function resend(Request $req){
+      $user = User::findOrFail($req->id);
+      \Mail::to($user->email)->send(new VerifyMail($user));
+      return view('auth.verify', ['id' => $req->id, 'resend' => true]);
     }
 }
