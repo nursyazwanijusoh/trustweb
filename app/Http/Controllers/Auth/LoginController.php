@@ -52,7 +52,7 @@ class LoginController extends Controller
       $logresp = UserRegisterHandler::userLogin($req->staff_id, $req->password, 1);
 
       if($logresp['msg'] == 'failed'){
-        return view('auth.login', ['loginerror' => 'Invalid Credential']);
+        return view('auth.login', ['loginerror' => 'Invalid Credential', 'type' => 'warning']);
       } elseif ($logresp['msg'] == 'email') {
         return view('auth.verify', ['staff' => $logresp['user']->id]);
       } elseif ($logresp['msg'] == 'pending') {

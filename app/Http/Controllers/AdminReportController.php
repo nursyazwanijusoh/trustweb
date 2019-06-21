@@ -31,8 +31,12 @@ class AdminReportController extends Controller
 
     // translate the div/unit
     foreach($divrlist as $adiv){
-      $unit = Unit::where('pporgunit', $adiv->lob)->first();
       $unitname = $adiv->lob;  // default, just in case
+      if($adiv->lob === null){
+        $unitname = 'Vendor';
+      }
+      $unit = Unit::where('pporgunit', $adiv->lob)->first();
+
       if($unit){
         $unitname = $unit->pporgunitdesc;
       }

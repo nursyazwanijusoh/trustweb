@@ -83,6 +83,7 @@
                               <a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a>
                               <a class="dropdown-item" href="{{ route('app.list', [], false) }}">Download App</a>
                               <a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a>
+                              <a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admins</a>
                             </div>
                         </li>
                     </ul>
