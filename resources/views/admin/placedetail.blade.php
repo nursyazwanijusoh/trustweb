@@ -13,9 +13,13 @@
                     <h5 class="card-title">Edit Place Information</h5>
                     <input type="hidden" name="build_id" value="{{ $build['id'] }}"  />
                     <div class="form-group row">
-                        <label for="building_name" class="col-md-4 col-form-label text-md-right">Building Name</label>
+                        <label for="building_name" class="col-md-4 col-form-label text-md-right">Office Building</label>
                         <div class="col-md-6">
-                            <input id="building_name" value="{{ $build['building_name'] }}" class="form-control" type="text" name="building_name" required>
+                          <select class="form-control" id="building_name" name="office_id" required>
+                            @foreach ($office as $atask)
+                            <option value="{{ $atask['id'] }}" {{ $atask['selected'] }}>{{ $atask['building_name'] }}</option>
+                            @endforeach
+                          </select>
                         </div>
                     </div>
 
@@ -36,7 +40,7 @@
                     <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Remark</label>
                         <div class="col-md-6">
-                          <textarea rows="3" class="form-control" id="remark" name="remark">{{ $build['remark'] }}</textarea>
+                          <textarea rows="3" class="form-control" id="remark" name="remark" required>{{ $build['remark'] }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row mb-0">

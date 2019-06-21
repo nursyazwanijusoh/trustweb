@@ -10,11 +10,16 @@
                 <div class="card-body">
                   <form method="POST" action="{{ route('admin.addbuild', [], false) }}">
                     @csrf
-                    <h5 class="card-title">Add new location</h5>
+                    <h5 class="card-title">Add new Office Floor</h5>
+
                     <div class="form-group row">
-                        <label for="building_name" class="col-md-4 col-form-label text-md-right">Building Name</label>
+                        <label for="building_name" class="col-md-4 col-form-label text-md-right">Office Building</label>
                         <div class="col-md-6">
-                            <input id="building_name" class="form-control" type="text" name="building_name" required autofocus>
+                          <select class="form-control" id="building_name" name="office_id" required>
+                            @foreach ($office as $atask)
+                            <option value="{{ $atask['id'] }}">{{ $atask['building_name'] }}</option>
+                            @endforeach
+                          </select>
                         </div>
                     </div>
 

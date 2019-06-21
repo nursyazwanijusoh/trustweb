@@ -51,9 +51,6 @@
                               <a title="Click to login" class="nav-link" href="{{ route('register', [], false) }}">{{ __('Register') }}</a>
                             </li>
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('feedback', [], false) }}">Feedback</a>
-                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -65,7 +62,6 @@
                                   @endif
                                   <a class="dropdown-item" href="{{ route('staff', [], false) }}">Staff Home</a>
                                   <a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a>
-                                  <a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a>
                                   <a class="dropdown-item" href="#"
                                      onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">
@@ -78,6 +74,17 @@
                                 </div>
                             </li>
                         @endguest
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown2" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Help <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown2">
+                              <a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a>
+                              <a class="dropdown-item" href="{{ route('app.list', [], false) }}">Download App</a>
+                              <a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

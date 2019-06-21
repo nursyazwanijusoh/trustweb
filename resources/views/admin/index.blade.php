@@ -21,7 +21,8 @@
                   <br />
                   <h5 class="card-title">LOV Management</h5>
                   <div class="list-group">
-                    <a href="{{ route('admin.build', [], false) }}" class="list-group-item list-group-item-action">Building List</a>
+                    <a href="{{ route('geo.list', [], false) }}" class="list-group-item list-group-item-action">Office Building List</a>
+                    <a href="{{ route('admin.build', [], false) }}" class="list-group-item list-group-item-action">Floor List</a>
                     <a href="{{ route('admin.tt', [], false) }}" class="list-group-item list-group-item-action">Task Type List</a>
                     <a href="{{ route('admin.at', [], false) }}" class="list-group-item list-group-item-action">Activity Type List</a>
                     <a href="{{ route('skillset.shared.manage', [], false) }}" class="list-group-item list-group-item-action">Shared Skillset List</a>

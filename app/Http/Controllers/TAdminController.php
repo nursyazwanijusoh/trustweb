@@ -7,6 +7,7 @@ use App\Http\Middleware\AdminGate;
 use App\TaskCategory;
 use App\ActivityType;
 use App\building;
+use App\Office;
 use App\place;
 use App\User;
 use App\Unit;
@@ -430,16 +431,17 @@ class TAdminController extends Controller
   public function buildingIndex(){
     // fetch all current list of buildings
     $buildlist = building::all();
+    $offices = Office::all();
 
     // then call the view
-    return view('admin.place', ['buildlist' => $buildlist]);
+    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices]);
   }
 
-
-
   public function addBuilding(Request $req){
+    // dd(Session::get('staffdata'));
     $build = new building;
-    $build->building_name = $req->building_name;
+    $build->office_id = $req->office_id;
+    $build->building_name = $build->office->building_name;
     $build->floor_name = $req->floor_name;
     $build->unit = $req->unit;
     $build->created_by = Session::get('staffdata')['name'];
@@ -452,9 +454,10 @@ class TAdminController extends Controller
     $build->save();
 
     $buildlist = building::all();
+    $offices = Office::all();
 
     // then call the view
-    return view('admin.place', ['buildlist' => $buildlist]);
+    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices]);
   }
 
   public function delBuilding(Request $req){
@@ -477,14 +480,16 @@ class TAdminController extends Controller
     }
 
     $buildlist = building::all();
+    $offices = Office::all();
     // then call the view
-    return view('admin.place', ['buildlist' => $buildlist]);
+    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices]);
 
   }
 
   public function modBuilding(Request $req){
     $build = building::findOrFail($req->build_id);
-    $build->building_name = $req->building_name;
+    $build->office_id = $req->office_id;
+    $build->building_name = $build->office->building_name;
     $build->floor_name = $req->floor_name;
     $build->unit = $req->unit;
     $build->remark = $req->remark;
@@ -575,6 +580,15 @@ class TAdminController extends Controller
   public function buildetail(Request $req){
     // get the building info
     $build = building::findOrFail($req->build_id);
+    $offices = Office::all();
+
+    // mark selected office
+    foreach($offices as $off){
+      $off->selected = '';
+      if($off->id == $build->office_id){
+        $off->selected = 'selected';
+      }
+    }
 
     // also get all current seats
     $seats = place::where('building_id', $req->build_id)->get();
@@ -589,7 +603,8 @@ class TAdminController extends Controller
     return view('admin.placedetail', [
       'build' => $build,
       'seatlist' => $seats,
-      'status' => $lov
+      'status' => $lov,
+      'office' => $offices
     ]);
   }
 

@@ -103,3 +103,15 @@ Route::get('/cfg/list', 'CommonConfigController@list')->name('cfg.list');
 Route::post('/cfg/add', 'CommonConfigController@addedit')->name('cfg.add');
 Route::post('/cfg/edit', 'CommonConfigController@edit')->name('cfg.edit');
 Route::get('/cfg/del', 'CommonConfigController@del')->name('cfg.del');
+
+// coordinate
+Route::get('/geo/list', 'OfficeController@list')->name('geo.list');
+Route::post('/geo/add', 'OfficeController@addedit')->name('geo.add');
+Route::post('/geo/edit', 'OfficeController@edit')->name('geo.edit');
+Route::get('/geo/del', 'OfficeController@del')->name('geo.del');
+
+// mobile app installers
+Route::get('/download', 'AppDownloadController@list')->name('app.list');
+Route::post('/app/upload', 'AppDownloadController@upload')->name('app.up');
+Route::get('/app/get', 'AppDownloadController@download')->name('app.down');
+Route::get('/app/delete', 'AppDownloadController@delete')->name('app.del');
