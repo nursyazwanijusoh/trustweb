@@ -13,6 +13,7 @@ use App\Unit;
 use App\building;
 use App\SubUnit;
 use App\ActivityType;
+use App\Partner;
 use App\Charts\RegStatChart;
 use App\Api\V1\Controllers\BookingHelper;
 
@@ -33,6 +34,7 @@ class ReportController extends Controller
     // get some summary
     $unitlist = \DB::table('users')
       ->select('lob', \DB::raw('count(*) as total'))
+      ->where('isvendor', 0)
       // ->where('lob', \Session::get('staffdata')['lob'])
       ->groupBy('lob')->get();
 
@@ -47,6 +49,13 @@ class ReportController extends Controller
       }
       array_push($label, $unitname);
       array_push($value, $aunit->total);
+    }
+
+    // get vendors data
+    $partners = Partner::all();
+    foreach($partners as $prtn){
+      array_push($label, $prtn->comp_name);
+      array_push($value, $prtn->staff_count);
     }
 
     $schart = new RegStatChart;
