@@ -53,7 +53,7 @@ class UserRegisterHandler
       if($user->verified == 0){
         $errormsg = "email";
       } elseif($user->status == 1){
-        if(!Auth::attemp([
+        if(!Auth::attempt([
           'email' => $username,
           'password' => $password
         ])){

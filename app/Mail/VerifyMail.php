@@ -30,6 +30,6 @@ class VerifyMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.verifyuser');
+        return $this->subject('trUSt verification email')->view('email.verifyuser');
     }
 }
