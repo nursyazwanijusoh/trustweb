@@ -25,6 +25,7 @@ class FeedbackController extends Controller
 
     public function submit(Request $request)
     {
+      // dd($request);
       $staffid = 0;
       if(session()->has('staffdata')){
         $staffid = \Session::get('staffdata')['id'];
@@ -33,6 +34,7 @@ class FeedbackController extends Controller
       $fb->staff_id = $staffid;
       $fb->title = $request->title;
       $fb->content = $request->content;
+      $fb->agent = $request->header('user-agent');
       $fb->status = 1;
       $fb->save();
 

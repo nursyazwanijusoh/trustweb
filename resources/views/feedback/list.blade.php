@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
                       @foreach($data as $atask)
-                      <tr>
+                      <tr title="{{ $atask->agent }}">
                         @if($atask->staff_id == 0)
                         <td>{{ $atask->name }}</td>
                         @else

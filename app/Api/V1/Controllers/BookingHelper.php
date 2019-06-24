@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\reservation;
 use App\Checkin;
 use App\building;
+use App\Office;
 use App\place;
 use App\User;
 use \DateTime;
@@ -81,7 +82,7 @@ class BookingHelper extends Controller
 
   }
 
-  public function checkIn($staff, $seat_id){
+  public function checkIn($staff, $seat_id, $lat = 0, $long = 0){
     $time = new DateTime('NOW');
     $time->setTimezone(new DateTimeZone('+0800'));
 
@@ -90,6 +91,7 @@ class BookingHelper extends Controller
 
     // set the seat status
     $place = place::find($seat_id);
+
     $place->status = 3;
     $place->checkin_staff_id = $staff->id;
     $place->save();
@@ -99,6 +101,8 @@ class BookingHelper extends Controller
     $cekin->checkin_time = $time;
     $cekin->place_id = $seat_id;
     $cekin->user_id = $staff->id;
+    $cekin->latitude = $lat;
+    $cekin->longitude = $long;
     $cekin->save();
 
     // update back to the staff
@@ -108,6 +112,26 @@ class BookingHelper extends Controller
 
     return $cekin;
 
+  }
+
+  // this function only consider scenarios in malaysia (North-east quadrant)
+  public function inCorrectPlace($seat_id, $lat, $long){
+    $place = place::find($seat_id);
+
+    if($lat == 0){
+      // for cases without coordinate, just accept it
+      return true;
+    }
+
+    $off = $place->building->office;
+    // check if this coordinate is within this office square
+    if($lat >= $off->a_latitude && $lat <= $off->b_latitude){
+      if($long <= $off->a_longitude && $lat >= $off->b_longitude){
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public function kickAllOut(){

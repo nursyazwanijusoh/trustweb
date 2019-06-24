@@ -14,13 +14,13 @@ class AppDownloadController extends Controller
     // check for existing file:
     //
     $ipa = \Storage::exists('public/tm_trust.ipa');
-    $ipk = \Storage::exists('public/tm_trust.ipk');
+    $apk = \Storage::exists('public/tm_trust.apk');
 
     if($req->filled('alert')){
-      return view('appdownload', ['alert' => $req->alert, 'ipa' => $ipa, 'ipk' => $ipk]);
+      return view('appdownload', ['alert' => $req->alert, 'ipa' => $ipa, 'apk' => $apk]);
     }
 
-    return view('appdownload', ['ipa' => $ipa, 'ipk' => $ipk]);
+    return view('appdownload', ['ipa' => $ipa, 'apk' => $apk]);
   }
 
   public function upload(Request $req){

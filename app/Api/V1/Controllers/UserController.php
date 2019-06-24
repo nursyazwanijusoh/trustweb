@@ -221,8 +221,23 @@ class UserController extends Controller
         return $seatstatys;
       }
 
+      $lat = 0;
+      $long = 0;
+
+      if($req->filled('lat')){
+        $lat = $req->lat;
+      }
+
+      if($req->filled('long')){
+        $long = $req->long;
+      }
+
+      if($this->bh->inCorrectPlace($req->seat_id, $lat, $long == false)){
+        return $this->respond_json(403, 'Not in correct location', $input);
+      }
+
       $theuser = User::where('id', $req->staff_id)->first();
-      $cekin = $this->bh->checkIn($theuser, $req->seat_id);
+      $cekin = $this->bh->checkIn($theuser, $req->seat_id, $lat, $long);
       return $this->respond_json(200, 'Checkin successful', $cekin);
     }
 

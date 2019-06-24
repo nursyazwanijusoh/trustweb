@@ -27,13 +27,13 @@
                   <h5 class="card-title">Download Android Installer</h5>
                   <div class="form-group row mb-0">
                       <div class="col-md-6 offset-md-4">
-                        @if($ipk)
-                          <a href="{{ route('app.down', ['type' => 'ipk'], false) }}"><button id="and_dl" type="button" class="btn btn-primary">Download</button></a>
+                        @if($apk)
+                          <a href="{{ route('app.down', ['type' => 'apk'], false) }}"><button id="and_dl" type="button" class="btn btn-primary">Download</button></a>
                         @else
                           <button id="and_dl"  type="button" class="btn btn-secondary" disabled>Not Available</button>
                         @endif
-                        @if( Auth::user() !== null && Auth::user()->role == 0 && $ipk)
-                        <a href="{{ route('app.del', ['type' => 'ipk'], false) }}"><button type="button" class="btn btn-danger">Delete</button></a>
+                        @if( Auth::user() !== null && Auth::user()->role == 0 && $apk)
+                        <a href="{{ route('app.del', ['type' => 'apk'], false) }}"><button type="button" class="btn btn-danger">Delete</button></a>
                         @endif
                       </div>
                   </div>
@@ -54,16 +54,16 @@
                     </div>
                   </form>
                   <hr />
-                  <h5 class="card-title">Upload new IPK</h5>
+                  <h5 class="card-title">Upload new apk</h5>
                   <form method="POST" action="{{ route('app.up', [], false) }}" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="type" value="ipk"  />
+                    <input type="hidden" name="type" value="apk"  />
                     <div class="input-group mb-3">
                       <div class="custom-file">
                         <input type="file" class="custom-file-label" name="inputfile" required >
                       </div>
                       <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Upload IPK</button>
+                        <button type="submit" class="btn btn-primary">Upload apk</button>
                       </div>
                     </div>
                   </form>
