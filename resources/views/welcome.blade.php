@@ -8,14 +8,15 @@
     <meta name="keywords" content="">
     <title>Welcome to trUSt</title>
 	<!-- CSS -->
-    <link href="css/fp/bootstrap.min.css" rel="stylesheet">
+<link href="/css/app.css" rel="stylesheet">
+    <!-- <link href="css/fp/bootstrap.min.css" rel="stylesheet">
     <link href="css/fp/font-awesome.min.css" rel="stylesheet">
     <link href="css/fp/animate.min.css" rel="stylesheet">
     <link href="css/fp/owl.carousel.css" rel="stylesheet">
     <link href="css/fp/owl.transitions.css" rel="stylesheet">
     <link href="css/fp/prettyPhoto.css" rel="stylesheet">
     <link href="css/fp/main.css" rel="stylesheet">
-    <link href="css/fp/styles.css" rel="stylesheet">
+    <link href="css/fp/styles.css" rel="stylesheet"> -->
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -406,17 +407,17 @@
             </div>
         </div>
     </footer><!--/#footer-->
-
-    <script src="js/fp/jquery.js"></script>
-    <script src="js/fp/bootstrap.min.js"></script>
+    <script src="/js/app.js"></script>
+    <!-- <script src="js/fp/jquery.js"></script> -->
+    <!-- <script src="js/fp/bootstrap.min.js"></script> -->
     <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script src="js/fp/owl.carousel.min.js"></script>
-    <script src="js/fp/mousescroll.js"></script>
+    <!-- <script src="js/fp/owl.carousel.min.js"></script> -->
+    <!-- <script src="js/fp/mousescroll.js"></script>
     <script src="js/fp/smoothscroll.js"></script>
     <script src="js/fp/jquery.prettyPhoto.js"></script>
     <script src="js/fp/jquery.inview.min.js"></script>
     <script src="js/fp/jquery.isotope.min.js"></script>
     <script src="js/fp/wow.min.js"></script>
-    <script src="js/fp/main.js"></script>
+    <script src="js/fp/main.js"></script> -->
 </body>
 </html>
