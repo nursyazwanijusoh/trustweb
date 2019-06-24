@@ -57,7 +57,7 @@
 
     <section id="main-slider">
         <div class="owl-carousel">
-            <div class="item" style="background-image: {{ asset('img/tm1.png')}};">
+            <div class="item" style="background-image: url('img/tm1.png');">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div><!--/.item-->
-             <div class="item" style="background-image: {{ asset('img/tm2.png')}};">
+             <div class="item" style="background-image: url('img/tm2.jpg');">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
