@@ -116,4 +116,5 @@ Route::get('/geo/del', 'OfficeController@del')->name('geo.del');
 Route::get('/download', 'AppDownloadController@list')->name('app.list');
 Route::post('/app/upload', 'AppDownloadController@upload')->name('app.up');
 Route::get('/app/get', 'AppDownloadController@download')->name('app.down');
+Route::get('/app/get/trust.ipa', 'AppDownloadController@getipa')->name('app.ios');
 Route::get('/app/delete', 'AppDownloadController@delete')->name('app.del');

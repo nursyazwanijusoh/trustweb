@@ -13,34 +13,39 @@ class AppDownloadController extends Controller
 
     // check for existing file:
     //
-    $ipa = \Storage::exists('public/tm_trust.ipa');
-    $apk = \Storage::exists('public/tm_trust.apk');
+    $ipa = \Storage::exists('public/trust.ipa');
+    $plist = \Storage::exists('public/trust.plist');
+    $apk = \Storage::exists('public/trust.apk');
 
     if($req->filled('alert')){
-      return view('appdownload', ['alert' => $req->alert, 'ipa' => $ipa, 'apk' => $apk]);
+      return view('appdownload', ['alert' => $req->alert, 'ipa' => $ipa, 'apk' => $apk, 'plist' => $plist]);
     }
 
-    return view('appdownload', ['ipa' => $ipa, 'apk' => $apk]);
+    return view('appdownload', ['ipa' => $ipa, 'apk' => $apk, 'plist' => $plist]);
   }
 
   public function upload(Request $req){
     $type = $req->type;
-    $storedfile = $req->file('inputfile')->storeAs('public', 'tm_trust.' . $type);
+    $storedfile = $req->file('inputfile')->storeAs('public', 'trust.' . $type);
 
     return redirect(route('app.list', ['alert' => $storedfile], false));
 
   }
 
   public function download(Request $req){
-    return \Storage::download('public/tm_trust.' . $req->type, 'tm_trust.' . $req->type);
+    return \Storage::download('public/trust.' . $req->type, 'trust.' . $req->type);
+  }
+
+  public function getipa(){
+    return \Storage::download('public/trust.ipa', 'trust.ipa');
   }
 
   public function delete(Request $req){
     $msg = 'file deleted';
-    if(\Storage::exists('public/tm_trust.' . $req->type)){
-      \Storage::delete('public/tm_trust.' . $req->type);
+    if(\Storage::exists('public/trust.' . $req->type)){
+      \Storage::delete('public/trust.' . $req->type);
     } else {
-      $msg = 'public/tm_trust.' . $req->type . ' not exist';
+      $msg = 'public/trust.' . $req->type . ' not exist';
     }
 
     return redirect(route('app.list', ['alert' => $msg], false));
