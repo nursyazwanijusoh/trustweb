@@ -39,7 +39,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="img/TrustNew.png" height="60" width="60" alt="logo"></a>
+                    <a class="navbar-brand" href="{{ route('welcome', [], false)}}"><img src="img/TrustNew.png" height="60" width="60" alt="logo"></a>
                 </div>
 
                 <div class="collapse navbar-collapse navbar-right">
@@ -48,7 +48,7 @@
                         <li class="scroll"><a href="#features">Features</a></li>
                         <li class="scroll"><a href="#meet-team">Team</a></li>
                         <li class="scroll"><a href="#contact">Contact</a></li>
-                        <li class="scroll"><a href="https://trust.tm.com.my/login">Login</a></li>
+                        <li class="scroll"><a href="{{ route('login', [], false)}}">Login</a></li>
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -57,7 +57,7 @@
 
     <section id="main-slider">
         <div class="owl-carousel">
-            <div class="item" style="background-image: url(img/tm1.png);">
+            <div class="item" style="background-image: {{ asset('img/tm1.png')}};">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div><!--/.item-->
-             <div class="item" style="background-image: url(img/tm2.jpg);">
+             <div class="item" style="background-image: {{ asset('img/tm2.png')}};">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
