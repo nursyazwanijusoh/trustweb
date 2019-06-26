@@ -14,7 +14,6 @@ use App\building;
 use App\SubUnit;
 use App\ActivityType;
 use App\Partner;
-use App\Charts\RegStatChart;
 use App\Api\V1\Controllers\BookingHelper;
 
 class ReportController extends Controller
@@ -40,7 +39,10 @@ class ReportController extends Controller
 
     $label = [];
     $value = [];
+    $bgcolor = [];
+    $counter = 0;
     foreach($unitlist as $aunit){
+      $counter++;
       // get the actual name of the div
       $unit = Unit::where('pporgunit', $aunit->lob)->first();
       $unitname = $aunit->lob;
@@ -49,18 +51,42 @@ class ReportController extends Controller
       }
       array_push($label, $unitname);
       array_push($value, $aunit->total);
+
+      if(($counter % 2) == 1){
+        array_push($bgcolor, 'rgba(255, 99, 132, 0.2)');
+      } else {
+        array_push($bgcolor, 'rgba(75, 192, 192, 0.2)');
+      }
     }
 
     // get vendors data
     $partners = Partner::all();
     foreach($partners as $prtn){
+      $counter++;
       array_push($label, $prtn->comp_name);
       array_push($value, $prtn->staff_count);
+      if(($counter % 2) == 1){
+        array_push($bgcolor, 'rgba(255, 99, 132, 0.2)');
+      } else {
+        array_push($bgcolor, 'rgba(75, 192, 192, 0.2)');
+      }
     }
 
-    $schart = new RegStatChart;
-    $schart->labels($label);
-    $schart->dataset('Registered user', 'horizontalBar', $value);
+    $schart = app()->chartjs
+         ->name('barChartTest')
+         ->type('horizontalBar')
+         ->size(['width' => 400, 'height' => 200])
+         ->labels($label)
+         ->datasets([
+             [
+                 "label" => "User Per Division",
+                 'backgroundColor' => $bgcolor,
+                 'data' => $value
+             ]
+         ])
+         ->options([]);
+
+    // dd($schart);
 
     return view('report.regstat', ['chart' => $schart, 'title' => 'Registered User By Division']);
   }
@@ -78,7 +104,6 @@ class ReportController extends Controller
     $resv = [];
     $occp = [];
 
-
     foreach($ret as $afloor){
       array_push($label, $afloor['building_name']);
       array_push($frees, $afloor['free_seat']);
@@ -86,16 +111,67 @@ class ReportController extends Controller
       array_push($occp, $afloor['occupied_seat']);
     }
 
-    $schart = new RegStatChart;
-    $schart->labels($label);
-    $fd = $schart->dataset('Free Seat', 'horizontalBar', $frees);
-    $fd->backgroundColor('green');
-    $fr = $schart->dataset('Reserved Seat', 'horizontalBar', $resv);
-    $fr->backgroundColor('blue');
-    $fo = $schart->dataset('Occupied Seat', 'horizontalBar', $occp);
-    $fo->backgroundColor('yellow');
+    $datasets = array([
+          'label' => 'Free',
+          'data' => $frees,
+          'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
+          'borderColor' => 'rgba(255, 99, 132, 0.7)',
+        ],
+        [
+          'label' => 'Reserved',
+          'data' => $resv,
+          'backgroundColor' => "rgba(255, 255, 0, 0.2)",
+          'borderColor' => "rgba(255, 255, 0, 0.7)",
+        ],
+        [
+          'label' => 'Occupied',
+          'data' => $occp,
+          'backgroundColor' => "rgba(38, 185, 154, 0.2)",
+          'borderColor' => "rgba(38, 185, 154, 0.7)",
+        ]
+      );
 
-    return view('report.regstat', ['chart' => $schart, 'title' => 'Floor Utilization']);
+    $schart = app()->chartjs
+         ->name('barChartTest')
+         ->type('horizontalBar')
+         ->size(['width' => 400, 'height' => 200])
+         ->labels($label)
+         ->datasets($datasets)
+         ->options([
+           'responsive' => true,
+           'title' => [
+             'display' => true,
+             'text' => 'Current Floor Utilization ',
+           ],
+           'tooltips' => [
+             'mode' => 'index',
+             'intersect' => false,
+           ],
+           'hover' => [
+             'mode' => 'nearest',
+             'intersect' => true,
+           ],
+           'scales' => [
+             'xAxes' => [[
+               'display' => true,
+               'stacked' => true,
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Time',
+               ]
+             ]],
+             'yAxes' => [[
+               'display' => true,
+               'stacked' => true,
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Seat Count',
+               ]
+             ]]
+           ]
+         ]);
+
+    return view('report.regstat', ['chart' => $schart, 'title' => 'Current Floor Utilization']);
   }
 
   public function manDaysDispf(Request $req){
@@ -437,6 +513,84 @@ class ReportController extends Controller
       dd('Staff Not Registered: ' . $req->staff_no);
     }
 
+  }
+
+  public function floorUtilDetail(){
+
+    $sysdate = date('Y-m-d');
+    $floors = building::all();
+    return view('report.detailfloorutil', ['gotdata' => false, 'fdate' => $sysdate, 'tdate' => $sysdate, 'floors' => $floors]);
+  }
+
+  public function floorUtilDetailRes(Request $req){
+
+    $building = building::find($req->floor_id);
+    $floors = building::all();
+
+    $label = ['8', '9', '10', '11', '12'];
+    $datasets = array([
+          'label' => '1 Jan 2019',
+          'data' => [10,20,10,10,5],
+          'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
+          'borderColor' => 'rgba(255, 99, 132, 0.7)',
+          'fill' => false,
+        ],
+        [
+          'label' => '2 Jan 2019',
+          'data' => [13,21,9,10,15],
+          'backgroundColor' => "rgba(38, 185, 154, 0.31)",
+          'borderColor' => "rgba(38, 185, 154, 0.7)",
+          'fill' => false,
+        ]
+      );
+
+      $schart = app()->chartjs
+           ->name('barChartTest')
+           ->type('line')
+           ->size(['width' => 400, 'height' => 200])
+           ->labels($label)
+           ->datasets($datasets)
+           ->options([
+             'responsive' => true,
+             'title' => [
+               'display' => true,
+               'text' => 'Floor Utilization for ' . $building->floor_name,
+             ],
+             'tooltips' => [
+               'mode' => 'index',
+               'intersect' => false,
+             ],
+             'hover' => [
+               'mode' => 'nearest',
+               'intersect' => true,
+             ],
+             'scales' => [
+               'xAxes' => [[
+                 'display' => true,
+                 'scaleLabel' => [
+                   'display' => true,
+                   'LabelString' => 'Time',
+                 ]
+               ]],
+               'yAxes' => [[
+                 'display' => true,
+                 'scaleLabel' => [
+                   'display' => true,
+                   'LabelString' => 'Seat Count',
+                 ]
+               ]]
+             ]
+           ]);
+
+    return view('report.detailfloorutil', ['chart' =>$schart,
+      'chosenn' => $building->floor_name,
+      'gotdata' => true,
+      'fdate' => $req->fdate,
+      'tdate' => $req->tdate,
+      'floors' => $floors
+      ]);
+
+      // return view('report.regstat', ['chart' => $schart, 'title' => 'Registered User By Division']);
   }
 
 

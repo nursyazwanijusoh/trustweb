@@ -55,6 +55,9 @@ Route::get('/admin/sharedskill', 'TAdminController@showSharedSkillset')->name('a
 
 Route::get('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrg');
 Route::post('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrp');
+Route::get('/admin/regpendingapprove', 'TAdminController@reglist')->name('admin.reglist');
+Route::get('/admin/regapprove', 'TAdminController@regapprove')->name('admin.regapprove');
+Route::get('/admin/regreject', 'TAdminController@regreject')->name('admin.regreject');
 
 
 // normal users
@@ -77,6 +80,8 @@ Route::get('/reports/workhour', 'ReportController@manDaysDispf')->name('reports.
 Route::post('/reports/workhour', 'ReportController@manDaysDispf')->name('reports.workhourf');
 Route::get('/reports/staffdayrpt', 'ReportController@staffDayRptSearch')->name('reports.staff.drs');
 Route::get('/reports/staffspecificdayrpt', 'ReportController@staffSpecificDayRptSearch')->name('reports.staff.sdrs');
+Route::get('/reports/floorutildetail', 'ReportController@floorUtilDetail')->name('reports.fud');
+Route::post('/reports/floorutildetailr', 'ReportController@floorUtilDetailRes')->name('reports.fudr');
 
 // hot desking reports
 Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->name('hdreports.dbdf');

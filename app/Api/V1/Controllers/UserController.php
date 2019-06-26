@@ -232,7 +232,7 @@ class UserController extends Controller
         $long = $req->long;
       }
 
-      if($this->bh->inCorrectPlace($req->seat_id, $lat, $long == false)){
+      if($this->bh->inCorrectPlace($req->seat_id, $lat, $long) == false){
         return $this->respond_json(403, 'Not in correct location', $input);
       }
 
