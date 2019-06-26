@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Middleware\AdminGate;
+use App\Mail\RegApproved;
+use App\Mail\RegRejected;
 use App\TaskCategory;
 use App\ActivityType;
 use App\building;
@@ -29,8 +31,9 @@ class TAdminController extends Controller
   public function index(){
 
     $fbcount = Feedback::where('status', 1)->count();
+    $prc = User::where('status', 2)->where('verified', true)->count();
 
-    return view('admin.index', ['fbc' => $fbcount]);
+    return view('admin.index', ['fbc' => $fbcount, 'prc' => $prc]);
     // return Session::get('staffdata')['role'];
   }
 
@@ -361,7 +364,7 @@ class TAdminController extends Controller
   }
 
   public function deactivateUser(Request $req){
-    
+
   }
 
   // List of Units / sub-units under current department
@@ -660,6 +663,35 @@ class TAdminController extends Controller
     $currskilset = [];
 
     return view('admin.sharedskillset', ['alert' => 'Skillset Added', 'currtasklist' => $currskilset]);
+  }
+
+  public function reglist(Request $req){
+    $users = User::where('status', 2)->where('verified', true)->get();
+
+    if($req->filled('alert')){
+      return view('admin.pendingreg', ['users' => $users, 'alert' => $req->alert]);
+    }
+
+    return view('admin.pendingreg', ['users' => $users]);
+
+  }
+
+  public function regapprove(Request $req){
+    $user = User::findOrFail($req->staff_id);
+    $user->status = 1;
+    $user->save();
+
+    // \Mail::to($user->email)->send(new RegApproved($user));
+
+    return redirect(route('admin.reglist', ['alert' => 'Approved: ' . $user->name], false));
+  }
+
+  public function regreject(Request $req){
+    $user = User::findOrFail($req->staff_id);
+    // \Mail::to($user->email)->send(new RegRejected($user));
+    $user->delete();
+
+    return redirect(route('admin.reglist', ['alert' => 'User rejected and deleted'], false));
   }
 
 }

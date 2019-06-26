@@ -31,4 +31,8 @@ class User extends Authenticatable
     public function verifyUser(){
       return $this->hasOne('App\VerifyUser');
     }
+
+    public function Partner(){
+      return $this->belongsTo('App\Partner', 'partner_id');
+    }
 }

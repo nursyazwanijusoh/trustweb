@@ -12,6 +12,11 @@
                   <div class="list-group">
                     <a href="{{ route('admin.sr', [], false) }}" class="list-group-item list-group-item-action">Assign Floor Access By Division</a>
                     <a href="{{ route('admin.st', [], false) }}" class="list-group-item list-group-item-action">Edit Staff</a>
+                    <a href="{{ route('admin.reglist', [], false) }}" class="list-group-item list-group-item-action">Pending Registration
+                    @if($prc > 0)
+                    <span class="badge badge-warning">{{ $prc }}</span>
+                    @endif
+                    </a>
                     <a href="{{ route('feedback.list', [], false) }}" class="list-group-item list-group-item-action">Feedbacks
                     @if($fbc > 0)
                     <span class="badge badge-info">{{ $fbc }}</span>
