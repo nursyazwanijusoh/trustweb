@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\common\UserRegisterHandler;
 
 class LoginController extends Controller
 {
@@ -27,53 +28,19 @@ class LoginController extends Controller
 			return $this->respond_json(412, 'Invalid input', $input);
 		}
 
-		$username = $req->staff_no;
-		$password = $req->password;
+		$logresp = UserRegisterHandler::userLogin($req->staff_no, $req->password);
 
-		$ldapherpel = new LdapHelper;
-		$ldapresp = $ldapherpel->doLogin($username, $password);
+		// dd($logresp);
 
-		if($ldapresp['code'] != 200){
-			// bad login
-			return $ldapresp;
+		if($logresp['msg'] == 'failed'){
+			return $this->respond_json(403, 'Invalid Credential', $logresp);
+		} elseif ($logresp['msg'] == 'email') {
+			return $this->respond_json(403, 'Pending Email Validation', $logresp);
+		} elseif ($logresp['msg'] == 'pending') {
+			return $this->respond_json(403, 'Pending Admin Approval', $logresp);
 		}
 
-		// get the username
-		$ldapstaffid = $ldapresp['data']['STAFF_NO'];
-
-		// find from User table
-		$staffdata = User::where('staff_no', $ldapstaffid)->first();
-
-		if($staffdata){
-		} else {
-			// new data. create it
-			$staffdata = new User;
-			$staffdata->staff_no = $ldapstaffid;
-			$staffdata->status = 1; // set it to inactive
-			$staffdata->role = 3;
-		}
-
-		$tmobile = $ldapresp['data']['MOBILE_NO'];
-		if(substr($tmobile, 0, 1) === '0'){
-			$tmobile = '6' . $tmobile;
-		}
-
-		// overwrite with ldap data
-		$staffdata->email = $ldapresp['data']['EMAIL'];
-		$staffdata->mobile_no = $tmobile;
-		$staffdata->name = $ldapresp['data']['NAME'];
-		$staffdata->lob = $ldapresp['data']['DEPARTMENT'];
-		$staffdata->unit = $ldapresp['data']['UNIT'];
-		$staffdata->subunit = $ldapresp['data']['SUBUNIT'];
-		$staffdata->save();
-
-		$respon = [
-			'ldap' => $ldapresp['data'],
-			'user' => $staffdata
-		];
-
-		return $this->respond_json(200, 'OK', $respon);
-
+		return $this->respond_json(200, 'OK', $logresp);
 	}
 
 	function doExternalLogin($username, $password){

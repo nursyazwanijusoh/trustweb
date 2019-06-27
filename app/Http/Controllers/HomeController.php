@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mail\VerifyMail;
 use App\User;
+use App\Partner;
 
 class HomeController extends Controller
 {
@@ -49,6 +50,11 @@ class HomeController extends Controller
       $user = User::findOrFail($req->staff);
       \Mail::to($user->email)->send(new VerifyMail($user));
       return view('auth.verify', ['staff' => $req->staff, 'resend' => true]);
+    }
+
+    public function mobregform(){
+      $partn=Partner::all();
+      return view('auth.mobreg', compact('partn'));
     }
 
 }

@@ -123,3 +123,11 @@ Route::post('/app/upload', 'AppDownloadController@upload')->name('app.up');
 Route::get('/app/get', 'AppDownloadController@download')->name('app.down');
 Route::get('/app/get/trust.ipa', 'AppDownloadController@getipa')->name('app.ios');
 Route::get('/app/delete', 'AppDownloadController@delete')->name('app.del');
+
+// dashboard data feed thingy
+Route::get('/dash', 'DashboardDataController@index')->name('dash.index');
+Route::post('/dash/fetch', 'DashboardDataController@fetch')->name('dash.fetch');
+
+// mobile only
+Route::get('/feedback/mobile', 'FeedbackController@mobform')->name('feedback.mobile');
+Route::get('/reg/mobile', 'HomeController@mobregform')->name('reg.mobile');

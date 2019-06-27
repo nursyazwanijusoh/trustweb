@@ -23,6 +23,11 @@ class FeedbackController extends Controller
       return view('feedback.sform');
     }
 
+    public function mobform()
+    {
+      return view('feedback.mobform');
+    }
+
     public function submit(Request $request)
     {
       // dd($request);
@@ -38,7 +43,12 @@ class FeedbackController extends Controller
       $fb->status = 1;
       $fb->save();
 
-      return view('feedback.sform', ['alert' => 'success']);
+      if($request->sos == 'web'){
+        return view('feedback.sform', ['alert' => 'success']);
+      } else {
+        return view('feedback.mobform', ['alert' => 'success']);
+      }
+
     }
 
     public function list(Request $req)

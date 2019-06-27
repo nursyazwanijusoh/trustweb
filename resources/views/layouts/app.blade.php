@@ -76,7 +76,7 @@
                         @endguest
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown2" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Tolong <span class="caret"></span>
+                                Help <span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown2">

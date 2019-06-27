@@ -65,6 +65,11 @@ class UserRegisterHandler
 
 
     } else {
+
+      if($field == 'email'){
+        $username = $user->staff_no;
+      }
+
       // user not exist or is TM staff. Try login through LDAP
 		  $ldapresp = $ldapherpel->doLogin($username, $password);
       if($ldapresp['code'] != 200){
