@@ -16,7 +16,7 @@ class DashboardDataController extends Controller
 
     public function fetch(Request $erq){
       $result = '';
-      $data = User::all();
+      $data = Checkin::all();
       $header = [
         'staff_no', 'name', 'checkin_time', 'checkout_time',
       ];
