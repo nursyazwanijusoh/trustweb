@@ -9,7 +9,7 @@
                 <div class="card-body">
                   <div class="card-columns">
                     @foreach($admins as $asub)
-                    <div class="card text-white bg-success">
+                    <div class="card text-white bg-dark">
                       <div class="card-header text-center">{{ $asub['name'] }}</div>
                       <div class="card-body">
                         <p class="card-text">{{ $asub['unit'] }}<br />
