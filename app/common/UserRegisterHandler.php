@@ -25,6 +25,11 @@ class UserRegisterHandler
     $user->partner_id = $data['partner_id'];
     $user->save();
 
+    // increment the user count
+    $pner = $user->Partner;
+    $pner->increment('staff_count');
+    $pner->save();
+
     $verify = new VerifyUser;
     $verify->user_id = $user->id;
     $verify->token = str_random(35);
@@ -53,10 +58,13 @@ class UserRegisterHandler
       if($user->verified == 0){
         $errormsg = "email";
       } elseif($user->status == 1){
-        if(!Auth::attempt([
+        if(Auth::attempt([
           'email' => $username,
           'password' => $password
         ])){
+          $user->status = 1;
+          $user->save();
+        } else {
           $errormsg = "failed";
         }
       } else{

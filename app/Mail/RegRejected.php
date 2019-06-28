@@ -12,15 +12,17 @@ class RegRejected extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $reason;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $sebab)
     {
         $this->user = $user;
+        $this->reason = $sebab;
     }
 
     /**

@@ -709,14 +709,20 @@ class TAdminController extends Controller
     $user->status = 1;
     $user->save();
 
-    // \Mail::to($user->email)->send(new RegApproved($user));
+    \Mail::to($user->email)->send(new RegApproved($user));
 
     return redirect(route('admin.reglist', ['alert' => 'Approved: ' . $user->name, 'type' => 'pending'], false));
   }
 
   public function regreject(Request $req){
     $user = User::findOrFail($req->staff_id);
-    // \Mail::to($user->email)->send(new RegRejected($user));
+    \Mail::to($user->email)->send(new RegRejected($user, 'rejected'));
+
+    // reduce the user count
+    $pner = $user->Partner;
+    $pner->decrement('staff_count');
+    $pner->save();
+
     $user->delete();
 
     return redirect(route('admin.reglist', ['alert' => 'User rejected and deleted'], false));
@@ -724,11 +730,16 @@ class TAdminController extends Controller
 
   public function delstaff(Request $req){
     $user = User::findOrFail($req->staff_id);
-    // \Mail::to($user->email)->send(new RegRejected($user));
+    \Mail::to($user->email)->send(new RegRejected($user, 'deleted'));
     if($user->verifyUser){
       $user->verifyUser->delete();
     }
-    
+
+    // reduce the user count
+    $pner = $user->Partner;
+    $pner->decrement('staff_count');
+    $pner->save();
+
     $user->delete();
 
     return redirect(route('admin.reglist', ['alert' => 'User deleted'], false));
