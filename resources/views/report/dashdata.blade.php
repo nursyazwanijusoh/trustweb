@@ -13,23 +13,23 @@
                 <div class="card-body">
                   <form method="POST" action="{{ route('dash.fetch', [], false) }}" id="whform">
                     @csrf
-                    <h5 class="card-title">Date range</h5>
+                    <h5 class="card-title">Select date range</h5>
                     <div class="form-group row">
                         <label for="fdate" class="col-md-4 col-form-label text-md-right">From</label>
                         <div class="col-md-6">
-                          <input type="date" name="fdate" id="fdate" value/>
+                          <input type="date" name="fdate" id="fdate" required />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="todate" class="col-md-4 col-form-label text-md-right">To (not inclusive)</label>
                         <div class="col-md-6">
-                          <input type="date" name="todate" id="todate" />
+                          <input type="date" name="todate" id="todate" required />
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-primary" name="subtype" value="checkin">Get Check-Ins Data</button>
-                            <button type="submit" class="btn btn-primary" name="subtype" value="gwd">Get GWD Activities Data</button>
+                            <!-- <button type="submit" class="btn btn-primary" name="subtype" value="gwd">Get GWD Activities Data</button> -->
                         </div>
                     </div>
                   </form>

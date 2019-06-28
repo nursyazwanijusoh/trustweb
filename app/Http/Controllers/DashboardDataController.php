@@ -14,26 +14,49 @@ class DashboardDataController extends Controller
       return view('report.dashdata');
     }
 
-    public function fetch(Request $erq){
-      $result = '';
-      $data = Checkin::all();
-      $header = [
-        'staff_no', 'name', 'checkin_time', 'checkout_time',
-      ];
+    public function fetch(Request $req){
 
+      $startdate = $req->fdate;
+      $enddate = $req->todate;
+      $filename = 'checkin_' . date_format(date_create($startdate), 'Ymd') . '_' . date_format(date_create($enddate), 'Ymd') . '.csv';
+
+      $header = [
+        'staff_no', 'name', 'checkin_time', 'checkout_time', 'seat_label', 'floor', 'building', 'division'
+      ];
+      $result = $this->arrayToCsv($header) . "\r\n";
+
+      $data = $this->getCheckinData($startdate, $enddate);
 
       foreach($data as $aa){
-        $d = $aa->toArray();
-        $result = $result . $this->arrayToCsv($d) . "\r\n";
+        $result = $result . $this->arrayToCsv($aa) . "\r\n";
       }
       // return $result;
 
-      return response()->attachment($result, 'contoh.csv');
+      return response()->attachment($result, $filename);
     }
 
     private function getCheckinData($startdate, $enddate){
       $data = Checkin::whereBetween('checkin_time', array($startdate, $enddate))->get();
-      return $data;
+      $toreturn = [];
+
+      foreach($data as $ac){
+        $div = $ac->User->isvendor == 1 ? $ac->User->Partner->comp_name : $ac->User->unit;
+
+        $nu = [
+          $ac->User->staff_no,
+          $ac->User->name,
+          $ac->checkin_time,
+          $ac->checkout_time,
+          $ac->place->label,
+          $ac->place->building->floor_name,
+          $ac->place->building->building_name,
+          $div
+        ];
+
+        array_push($toreturn, $nu);
+      }
+
+      return $toreturn;
     }
 
     private function arrayToCsv( array $fields, $delimiter = ';', $enclosure = '"' ) {
