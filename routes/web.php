@@ -55,9 +55,10 @@ Route::get('/admin/sharedskill', 'TAdminController@showSharedSkillset')->name('a
 
 Route::get('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrg');
 Route::post('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrp');
-Route::get('/admin/regpendingapprove', 'TAdminController@reglist')->name('admin.reglist');
+Route::get('/admin/vendorlist', 'TAdminController@reglist')->name('admin.reglist');
 Route::get('/admin/regapprove', 'TAdminController@regapprove')->name('admin.regapprove');
 Route::get('/admin/regreject', 'TAdminController@regreject')->name('admin.regreject');
+Route::get('/admin/delstaff', 'TAdminController@delstaff')->name('admin.delstaff');
 
 
 // normal users

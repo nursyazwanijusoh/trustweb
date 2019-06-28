@@ -666,13 +666,41 @@ class TAdminController extends Controller
   }
 
   public function reglist(Request $req){
-    $users = User::where('status', 2)->where('verified', true)->get();
-
-    if($req->filled('alert')){
-      return view('admin.pendingreg', ['users' => $users, 'alert' => $req->alert]);
+    // set the default view
+    $type = User::where('status', 2)->where('verified', true)->count() == 0 ? 'active' : 'pending';
+    $title = 'Active Vendor Users';
+    // overwrite with choice if any
+    if($req->filled('type')){
+      $type = $req->type;
     }
 
-    return view('admin.pendingreg', ['users' => $users]);
+    // then search based on type
+    if($type == 'pending'){
+      $users = User::where('status', 2)
+        ->where('isvendor', 1)
+        ->where('verified', true)
+        ->get();
+      $title = 'Vendor Users that requires approval';
+    } elseif($type == 'email'){
+      $users = User::where('status', 2)
+        ->where('isvendor', 1)
+        ->where('verified', false)
+        ->get();
+      $title = 'Vendor registration with pending email verification';
+    } else {
+      $users = User::where('status', 1)
+        ->where('isvendor', 1)
+        ->where('verified', true)
+        ->get();
+    }
+
+    if($req->filled('alert')){
+      return view('admin.pendingreg', ['users' => $users, 'alert' => $req->alert,
+        'type' => $type, 'title' => $title
+      ]);
+    }
+
+    return view('admin.pendingreg', ['users' => $users, 'type' => $type, 'title' => $title]);
 
   }
 
@@ -683,7 +711,7 @@ class TAdminController extends Controller
 
     // \Mail::to($user->email)->send(new RegApproved($user));
 
-    return redirect(route('admin.reglist', ['alert' => 'Approved: ' . $user->name], false));
+    return redirect(route('admin.reglist', ['alert' => 'Approved: ' . $user->name, 'type' => 'pending'], false));
   }
 
   public function regreject(Request $req){
@@ -692,6 +720,18 @@ class TAdminController extends Controller
     $user->delete();
 
     return redirect(route('admin.reglist', ['alert' => 'User rejected and deleted'], false));
+  }
+
+  public function delstaff(Request $req){
+    $user = User::findOrFail($req->staff_id);
+    // \Mail::to($user->email)->send(new RegRejected($user));
+    if($user->verifyUser){
+      $user->verifyUser->delete();
+    }
+    
+    $user->delete();
+
+    return redirect(route('admin.reglist', ['alert' => 'User deleted'], false));
   }
 
 }
