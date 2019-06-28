@@ -78,5 +78,7 @@ $api->version('v1', function ($api) {
   $api->post('/UserListBuilding',  ['as' => 'user.listbuild', 'uses' => 'App\Api\V1\Controllers\UserController@ListAllowedBuilding']);
   $api->post('/UserFind',  ['as' => 'user.finda', 'uses' => 'App\Api\V1\Controllers\UserController@Find']);
 
+  $api->post('/GiveFeedback',  ['as' => 'api.fb.submit', 'uses' => 'App\Api\V1\Controllers\MiscController@sendFeedback']);
+
 
 });
