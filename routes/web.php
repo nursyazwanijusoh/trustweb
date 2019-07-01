@@ -89,12 +89,6 @@ Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->n
 Route::get('/hdreports/WorkSpaceUsage', 'AdminReportController@WorkSpaceUsage')->name('hdreports.wsu');
 Route::get('/find/staff', 'AdminReportController@rptFindStaff')->name('staff.find');
 
-// skillsets
-Route::get('/skillset/index', 'SkillsetController@viewCurrentSkillset')->name('skillset');
-Route::get('/skillset/shared', 'TAdminController@showSharedSkillset')->name('skillset.shared.manage');
-Route::post('/skillset/shared/del', 'TAdminController@deleteSharedSkillset')->name('skillset.shared.del');
-Route::post('/skillset/shared/add', 'TAdminController@addSharedSkillset')->name('skillset.shared.add');
-
 // feedback
 Route::get('/feedback', 'FeedbackController@sform')->name('feedback');
 Route::post('/feedback', 'FeedbackController@submit')->name('feedback.submit');
@@ -117,6 +111,25 @@ Route::get('/geo/list', 'OfficeController@list')->name('geo.list');
 Route::post('/geo/add', 'OfficeController@addedit')->name('geo.add');
 Route::post('/geo/edit', 'OfficeController@edit')->name('geo.edit');
 Route::get('/geo/del', 'OfficeController@del')->name('geo.del');
+
+// skill cat
+Route::get('/skillcat/list', 'SkillCategoryController@list')->name('sc.list');
+Route::post('/skillcat/add', 'SkillCategoryController@addedit')->name('sc.add');
+Route::post('/skillcat/edit', 'SkillCategoryController@edit')->name('sc.edit');
+Route::get('/skillcat/del', 'SkillCategoryController@del')->name('sc.del');
+
+// common / shared skillset
+Route::get('/sharedskill/list', 'SkillCategoryController@sslist')->name('ss.list');
+Route::post('/sharedskill/add', 'SkillCategoryController@ssaddedit')->name('ss.add');
+Route::post('/sharedskill/edit', 'SkillCategoryController@ssedit')->name('ss.edit');
+Route::get('/sharedskill/del', 'SkillCategoryController@ssdel')->name('ss.del');
+
+// personal skillset
+Route::get('/user/skillset', 'PersonalSSController@list')->name('ps.list');
+Route::post('/user/skillset/update', 'PersonalSSController@update')->name('ps.update');
+Route::post('/user/skillset/create', 'PersonalSSController@addcustom')->name('ps.create');
+Route::get('/user/skillset/del', 'PersonalSSController@delete')->name('ps.del');
+
 
 // mobile app installers
 Route::get('/download', 'AppDownloadController@list')->name('app.list');

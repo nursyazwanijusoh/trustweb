@@ -28,6 +28,7 @@
               <div class="card-body">
                 <h5 class="card-title">Action</h5>
                 <div class="list-group">
+                  <a href="{{ route('ps.list', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Personal Skillset</a>
                   <a href="{{ route('staff.t', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Task Management</a>
                   @if($cuser == $staff_id)
                   <a href="{{ route('staff.addact', [], false) }}" class="list-group-item list-group-item-action">Update Daily Activity</a>

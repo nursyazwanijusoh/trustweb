@@ -646,25 +646,6 @@ class TAdminController extends Controller
 
   }
 
-  public function showSharedSkillset(Request $req){
-
-    return view('admin.sharedskillset', []);
-  }
-
-  public function deleteSharedSkillset(Request $req){
-
-    $currskilset = [];
-
-    return view('admin.sharedskillset', ['alert' => 'Skillset Deleted', 'currtasklist' => $currskilset]);
-  }
-
-  public function addSharedSkillset(Request $req){
-
-    $currskilset = [];
-
-    return view('admin.sharedskillset', ['alert' => 'Skillset Added', 'currtasklist' => $currskilset]);
-  }
-
   public function reglist(Request $req){
     // set the default view
     $type = User::where('status', 2)->where('verified', true)->count() == 0 ? 'active' : 'pending';
