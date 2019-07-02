@@ -62,7 +62,8 @@ class HomeController extends Controller
     }
 
     public function info(){
-      return redirect('https://tmsoagit.tm.com.my/trUSt');
+      return redirect()->away('https://tmsoagit.tm.com.my/trUSt');
+      
     }
 
 }
