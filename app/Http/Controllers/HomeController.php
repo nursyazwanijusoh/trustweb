@@ -57,4 +57,12 @@ class HomeController extends Controller
       return view('auth.mobreg', compact('partn'));
     }
 
+    public function troll(){
+      return view('troll');
+    }
+
+    public function info(){
+      return redirect('https://tmsoagit.tm.com.my/trUSt');
+    }
+
 }

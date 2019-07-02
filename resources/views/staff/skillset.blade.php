@@ -6,13 +6,14 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Personal Skillset</div>
+                <div class="card-header">Shared Skillset</div>
                 @if(isset($alert))
                 <div class="alert alert-success" role="alert">{{ $alert }}</div>
                 @endif
                 <div class="card-body">
                   <form method="POST" action="{{ route('ps.update', [], false) }}">
                     @csrf
+                    <input type="hidden" name="cat" value="Common"  />
                     @foreach($skillcatp as $asp)
                     <h5 class="card-title">{{ $asp['name'] }}</h5>
                     @foreach($asp['skills'] as $ask)
@@ -36,7 +37,7 @@
                     @endforeach
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                          <button type="submit" class="btn btn-primary">Update Personal Skillset</button>
+                          <button type="submit" class="btn btn-primary">Update Shared Skillset</button>
                         </div>
                     </div>
                   </form>
@@ -47,6 +48,7 @@
                 <div class="card-body">
                   <form method="POST" action="{{ route('ps.update', [], false) }}">
                     @csrf
+                    <input type="hidden" name="cat" value="Additional"  />
                     @foreach($skillcatm as $asp)
                     <h5 class="card-title">{{ $asp['name'] }}</h5>
                     @foreach($asp['skills'] as $ask)
@@ -69,8 +71,9 @@
                     @endforeach
                     @endforeach
                     <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
+                        <div class="col text-center">
                           <button type="submit" class="btn btn-primary">Update Additional Skillset</button>
+                          <a href="{{ route('ps.add', [], false)}}"><button type="button" class="btn btn-primary">Add New Skillset</button></a>
                         </div>
                     </div>
                   </form>

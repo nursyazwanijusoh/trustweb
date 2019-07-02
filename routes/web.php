@@ -19,6 +19,8 @@ Route::get('/pg', 'HomeController@playground')->name('pg');
 Route::get('/adminlist', 'HomeController@listAdmins')->name('adminlist');
 Route::get('/postreg', 'HomeController@postreg')->name('postreg');
 Route::get('/resend', 'HomeController@resend')->name('verification.resend');
+Route::get('/delete', 'HomeController@troll')->name('troll');
+Route::get('/info', 'HomeController@info')->name('info');
 
 // ============ admins ================
 Route::get('/admin', 'TAdminController@index')->name('admin');
@@ -127,7 +129,9 @@ Route::get('/sharedskill/del', 'SkillCategoryController@ssdel')->name('ss.del');
 // personal skillset
 Route::get('/user/skillset', 'PersonalSSController@list')->name('ps.list');
 Route::post('/user/skillset/update', 'PersonalSSController@update')->name('ps.update');
-Route::post('/user/skillset/create', 'PersonalSSController@addcustom')->name('ps.create');
+Route::post('/user/skillset/create', 'PersonalSSController@createcustom')->name('ps.create');
+Route::get('/user/skillset/addcustom', 'PersonalSSController@addcustom')->name('ps.add');
+Route::get('/user/skillset/doaddcustom', 'PersonalSSController@doaddcustom')->name('ps.do.add');
 Route::get('/user/skillset/del', 'PersonalSSController@delete')->name('ps.del');
 
 

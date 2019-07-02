@@ -21,7 +21,11 @@ class CommonSkillset extends Model
       return $myps->level;
     }
 
-    return 0;
+    return -1;
+  }
+
+  public function creator(){
+    return $this->belongsTo('App\User', 'added_by');
   }
 
 }
