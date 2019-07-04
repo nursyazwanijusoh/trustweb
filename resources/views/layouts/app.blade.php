@@ -42,13 +42,16 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                      <li class="nav-item">
+                          <a title="Go To Download Page" class="nav-link" href="{{ route('app.list', [], false) }}">Download App</a>
+                      </li>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
                                 <a title="Click to login" class="nav-link" href="{{ route('login', [], false) }}">{{ __('Login') }}</a>
                             </li>
                             <li class="nav-item">
-                              <a title="Click to login" class="nav-link" href="{{ route('register', [], false) }}">{{ __('Register') }}</a>
+                              <a title="Register New Account Here" class="nav-link" href="{{ route('register', [], false) }}">{{ __('Register') }}</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
@@ -81,7 +84,6 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown2">
                               <a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a>
-                              <a class="dropdown-item" href="{{ route('app.list', [], false) }}">Download App</a>
                               <a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a>
                               <a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admins</a>
                             </div>
