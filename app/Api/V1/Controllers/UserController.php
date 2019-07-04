@@ -232,9 +232,10 @@ class UserController extends Controller
         $long = $req->long;
       }
 
-      if($this->bh->inCorrectPlace($req->seat_id, $lat, $long) == false){
-        return $this->respond_json(403, 'Not in correct location', $input);
-      }
+      // // UNCOMMENT THIS TO RE-ENABLE GEOLOCATION VALIDATION
+      // if($this->bh->inCorrectPlace($req->seat_id, $lat, $long) == false){
+      //   return $this->respond_json(403, 'Not in correct location', $input);
+      // }
 
       $theuser = User::where('id', $req->staff_id)->first();
       $cekin = $this->bh->checkIn($theuser, $req->seat_id, $lat, $long);
