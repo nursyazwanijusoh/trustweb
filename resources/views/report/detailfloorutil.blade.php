@@ -7,6 +7,9 @@
         <div class="col-md-8">
             <div class="card">
               <div class="card-header">Detailed Floor Utilization</div>
+              @if(isset($alert))
+              <div class="alert alert-danger" role="alert">{{ $alert }}</div>
+              @endif
               <div class="card-body">
                 <form method="POST" action="{{ route('reports.fudr', [], false) }}">
                   @csrf

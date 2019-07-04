@@ -59,7 +59,7 @@ class UserRegisterHandler
         $errormsg = "email";
       } elseif($user->status == 1){
         if(Auth::attempt([
-          'email' => $username,
+          $field => $username,
           'password' => $password
         ])){
           $user->status = 1;

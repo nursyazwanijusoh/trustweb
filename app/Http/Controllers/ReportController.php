@@ -523,26 +523,81 @@ class ReportController extends Controller
   }
 
   public function floorUtilDetailRes(Request $req){
+    $floors = building::all();
+    // date validation. reject if the range is more than 7 days
+    $fromdate = new DateTime($req->fdate);
+    $todate = new DateTime($req->tdate);
+
+    $datedif = $fromdate->diff($todate);
+
+    if($datedif->days > 7){
+      $minus7days = date('Y-m-d', strtotime('-1 week', strtotime($req->tdate)));
+      return view('report.detailfloorutil', ['gotdata' => false,
+        'fdate' => $minus7days, 'tdate' => $req->tdate,
+        'floors' => $floors, 'alert' => 'Cannot exceed 7 days']);
+    }
+
+
+    $linecolors = [
+      'rgba(255, 99, 132, 0.9)',
+      'rgba(255, 150, 5, 0.9)',
+      'rgba(0, 255, 132, 0.9)',
+      'rgba(0, 0, 255, 0.9)',
+      'rgba(255, 0, 0, 0.7)',
+      'rgba(0, 0, 0, 0.7)',
+      'rgba(14, 170, 132, 0.9)',
+    ];
+
+    $bgcolors = [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 150, 5, 0.2)',
+      'rgba(0, 255, 132, 0.2)',
+      'rgba(0, 0, 255, 0.2)',
+      'rgba(255, 0, 0, 0.2)',
+      'rgba(0, 0, 0, 0.2)',
+      'rgba(14, 170, 132, 0.2)',
+    ];
+
+
 
     $building = building::find($req->floor_id);
-    $floors = building::all();
 
-    $label = ['8', '9', '10', '11', '12'];
-    $datasets = array([
-          'label' => '1 Jan 2019',
-          'data' => [10,20,10,10,5],
-          'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
-          'borderColor' => 'rgba(255, 99, 132, 0.7)',
-          'fill' => false,
-        ],
-        [
-          'label' => '2 Jan 2019',
-          'data' => [13,21,9,10,15],
-          'backgroundColor' => "rgba(38, 185, 154, 0.31)",
-          'borderColor' => "rgba(38, 185, 154, 0.7)",
-          'fill' => false,
-        ]
-      );
+    $daterange = new DatePeriod($fromdate, DateInterval::createFromDateString('1 day'), $todate);
+    $label = ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+    $datasets = [];
+    $dsetcount = 0;
+
+
+    // for each day
+    foreach($daterange as $oneday){
+      $ddata = [];
+
+      foreach ($label as $hour) {
+        // get the occupied seat on that day and hour
+        $occcount = \DB::table('places')
+          ->join('checkins', 'places.id', '=', 'checkins.place_id')
+          ->where('places.building_id', $building->id)
+          ->whereDate('checkins.checkin_time', $oneday->format('Y-m-d'))
+          ->whereRaw('HOUR(checkins.checkin_time) < '. $hour)
+          ->whereRaw('HOUR(checkins.checkout_time) > ' . $hour)
+          ->count();
+
+        // dd($occcount);
+
+        array_push($ddata, isset($occcount) ? $occcount : 0);
+      }
+
+      $dset = [
+            'label' => $oneday->format('d-m-Y'),
+            'data' => $ddata,
+            'backgroundColor' => $bgcolors[$dsetcount],
+            'borderColor' => $linecolors[$dsetcount],
+            'fill' => false,
+          ];
+
+      array_push($datasets, $dset);
+      $dsetcount++;
+    }
 
       $schart = app()->chartjs
            ->name('barChartTest')

@@ -39,6 +39,12 @@
                     <h5 class="card-title">Got anything to say to us? :D</h5>
                     <input type="hidden" name="sos" value="mob" />
                     <div class="form-group row">
+                        <label for="ctc" class="col-md-4 col-form-label text-md-right">Email / Mobile No</label>
+                        <div class="col-md-6">
+                            <input id="ctc" class="form-control" type="text" name="ctc" maxlength="50" required autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="title" class="col-md-4 col-form-label text-md-right">Title</label>
                         <div class="col-md-6">
                             <input id="title" class="form-control" type="text" name="title" maxlength="50" required autofocus>

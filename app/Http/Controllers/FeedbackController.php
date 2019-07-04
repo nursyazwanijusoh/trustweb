@@ -40,6 +40,13 @@ class FeedbackController extends Controller
       $fb->title = $request->title;
       $fb->content = $request->content;
       $fb->agent = $request->header('user-agent');
+
+      if($req->filled('ctc')){
+        $fb->contact = $req->ctc;
+      } else {
+        $fb->contact = 'no';
+      }
+
       $fb->status = 1;
       $fb->save();
 
@@ -69,7 +76,12 @@ class FeedbackController extends Controller
       // add name to the results
       foreach($feedbacklist as $afb){
         if($afb->staff_id == 0){
-          $afb->name = 'Anonymous';
+          if(isset($afb->contact)){
+            $afb->name = $afb->contact;
+          } else {
+            $afb->name = 'Anonymous';
+          }
+
           $afb->staff_no = 'Anon';
         } else {
           $user = User::find($afb->staff_id);
