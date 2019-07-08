@@ -38,6 +38,8 @@ class LoginController extends Controller
 			return $this->respond_json(403, 'Pending Email Validation', $logresp);
 		} elseif ($logresp['msg'] == 'pending') {
 			return $this->respond_json(403, 'Pending Admin Approval', $logresp);
+		} elseif ($logresp['msg'] == 'Div not allowed') {
+			return $this->respond_json(403, 'Your division is not yet registered', $logresp);
 		}
 
 		return $this->respond_json(200, 'OK', $logresp);

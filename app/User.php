@@ -35,4 +35,16 @@ class User extends Authenticatable
     public function Partner(){
       return $this->belongsTo('App\Partner', 'partner_id');
     }
+
+    public function Division(){
+      return $this->belongsTo('App\Unit', 'unit_id');
+    }
+
+    public function divName(){
+      if($this->isvendor == 1){
+        return $this->Partner->comp_name;
+      } else {
+        return $this->Division->pporgunitdesc;
+      }
+    }
 }

@@ -15,6 +15,7 @@ use App\User;
 use App\Unit;
 use App\SubUnit;
 use App\Feedback;
+use App\common\UserRegisterHandler;
 use Session;
 use App\Api\V1\Controllers\LdapHelper;
 use App\Api\V1\Controllers\BookingHelper;
@@ -369,20 +370,16 @@ class TAdminController extends Controller
 
   // List of Units / sub-units under current department
   public function showLov(Request $req){
-    // $mylob = Session::get('staffdata')['lob'];
-    $mylob = 3000;
 
-    $unitlist = Unit::where('lob', $mylob)->get();
-    foreach($unitlist as $aunit){
-      $subunitlist = SubUnit::where('lob', $mylob)->where('pporgunit', $aunit->pporgunit)->get();
-      $aunit['subunit'] = $subunitlist;
-    }
+    $allowedunits = Unit::where('allowed', true)->get();
+
+    $blockedunits = Unit::where('allowed', false)->get();
 
     if($req->filled('err')){
-      return view('admin.deptlov', ['deptid' => $mylob, 'units' => $unitlist, 'err' => $req->err]);
+      return view('admin.deptlov', ['allowedunits' => $allowedunits, 'blockedunits' => $blockedunits, 'err' => $req->err]);
     }
 
-    return view('admin.deptlov', ['deptid' => $mylob, 'units' => $unitlist]);
+    return view('admin.deptlov', ['allowedunits' => $allowedunits, 'blockedunits' => $blockedunits]);
 
   }
 
@@ -432,6 +429,46 @@ class TAdminController extends Controller
     } else {
         return redirect(route('admin.lov', ['err' => $lresp['msg']], false));
     }
+  }
+
+  public function allowdiv($divid){
+    $div = Unit::find($divid);
+
+    if($div){
+      $div->allowed = true;
+      $div->save();
+      $msg = $div->pporgunitdesc . " allowed";
+    } else {
+      $msg = "id not found";
+    }
+
+    return redirect(route('admin.lov', ['err' => $msg], false));
+
+  }
+
+  public function blockdiv($divid){
+    $div = Unit::find($divid);
+
+    if($div){
+      $div->allowed = false;
+      $div->save();
+      $msg = $div->pporgunitdesc . " blocked";
+    } else {
+      $msg = "id not found";
+    }
+
+    return redirect(route('admin.lov', ['err' => $msg], false));
+  }
+
+  public function updateStaffDiv(){
+    $users = User::where('isvendor', 0)->get();
+
+    foreach ($users as $key => $value) {
+      UserRegisterHandler::updateUserDiv($value);
+    }
+
+    return redirect(route('admin.lov', ['err' => 'Staff DIV updated'], false));
+
   }
 
   // -------- building mgmt ----

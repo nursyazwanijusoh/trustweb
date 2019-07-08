@@ -57,6 +57,8 @@ class LoginController extends Controller
         return view('auth.verify', ['staff' => $logresp['user']->id]);
       } elseif ($logresp['msg'] == 'pending') {
         return view('auth.approve');
+      } elseif ($logresp['msg'] == 'Div not allowed') {
+        return view('auth.login', ['loginerror' => 'Your division is not authorized for this application', 'type' => 'warning']);
       }
 
       session(['staffdata' => $logresp['user']]);

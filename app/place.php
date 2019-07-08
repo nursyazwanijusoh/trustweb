@@ -13,4 +13,5 @@ class place extends Model
   public function Checkin(){
     return $this->hasMany('App\Checkin');
   }
+
 }

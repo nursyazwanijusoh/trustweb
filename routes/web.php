@@ -44,6 +44,13 @@ Route::get('/admin/delallseat', 'TAdminController@delallseat')->name('admin.dela
 Route::get('/admin/buildetail', 'TAdminController@buildetail')->name('admin.buildetail');
 Route::get('/admin/getallqr', 'TAdminController@getallqr')->name('admin.getallqr');
 
+// admin allow access according to division
+Route::get('/admin/allowdiv/{divid}', 'TAdminController@allowdiv')->name('admin.allowdiv');
+Route::get('/admin/blockdiv/{divid}', 'TAdminController@blockdiv')->name('admin.blockdiv');
+Route::post('/admin/reflov', 'TAdminController@refreshLOV')->name('admin.reflov');
+Route::get('/admin/reflov', 'TAdminController@showLOV')->name('admin.lov');
+Route::post('/admin/upstaffdiv', 'TAdminController@updateStaffDiv')->name('admin.upstaffdiv');
+
 
 // admin staff role
 Route::get('/admin/sr', 'TAdminController@showStaffRole')->name('admin.sr');
@@ -51,8 +58,6 @@ Route::post('/admin/addsr', 'TAdminController@assignRole')->name('admin.addsr');
 Route::get('/admin/staff', 'TAdminController@blankStaff')->name('admin.st');
 Route::post('/admin/editst', 'TAdminController@updateUser')->name('admin.upst');
 Route::post('/admin/findstaff', 'TAdminController@findStaff')->name('admin.findst');
-Route::post('/admin/reflov', 'TAdminController@refreshLOV')->name('admin.reflov');
-Route::get('/admin/reflov', 'TAdminController@showLOV')->name('admin.lov');
 Route::get('/admin/sharedskill', 'TAdminController@showSharedSkillset')->name('admin.sharedskill');
 
 Route::get('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrg');

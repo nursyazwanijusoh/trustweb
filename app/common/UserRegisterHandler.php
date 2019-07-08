@@ -3,8 +3,10 @@
 namespace App\common;
 
 use App\User;
+use App\Unit;
 use App\Subordinate;
 use App\VerifyUser;
+use App\CommonConfig;
 use App\Mail\VerifyMail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -87,16 +89,25 @@ class UserRegisterHandler
         // update the data back to the User
         $user = UserRegisterHandler::updateFromLdap($ldapresp);
 
-        // get the subords info
-        $newsubs = $ldapherpel->getSubordinate($user->name);
-        if($newsubs['code'] == 200){
-          UserRegisterHandler::getSubords($user->id, $newsubs['data']);
-        }
+        // update the division info
+        UserRegisterHandler::updateUserDiv($user);
 
-        UserRegisterHandler::amIsubords($user->id, $user->staff_no);
+        // check if my division is not allowed
+        $cconfig = CommonConfig::where('key', 'lock_division')->first();
+        if($cconfig && $cconfig->value = 'true' && $user->role == 3 && $user->Division->allowed == false){
+          $errormsg = "Div not allowed";
+        } else {
+          // get the subords info
+          $newsubs = $ldapherpel->getSubordinate($user->name);
+          if($newsubs['code'] == 200){
+            UserRegisterHandler::getSubords($user->id, $newsubs['data']);
+          }
 
-        if($isweb == 1){
-          Auth::loginUsingId($user->id, false);
+          UserRegisterHandler::amIsubords($user->id, $user->staff_no);
+
+          if($isweb == 1){
+            Auth::loginUsingId($user->id, false);
+          }
         }
       }
     }
@@ -202,6 +213,25 @@ class UserRegisterHandler
 
     return $user;
 
+  }
+
+  public static function updateUserDiv($staffdata){
+    // first, check if current division exist
+    $div = Unit::where('pporgunit', $staffdata->lob)->first();
+    if($div){
+      //
+    } else {
+      // create this division
+      $div = new Unit;
+      $div->pporgunit = $staffdata->lob;
+      $div->pporgunitdesc = $staffdata->unit;
+      $div->lob = 3000;
+      $div->save();
+    }
+
+    // update the unit id for this user
+    $staffdata->unit_id = $div->id;
+    $staffdata->save();
   }
 
 }

@@ -233,9 +233,13 @@ class UserController extends Controller
       }
 
       // // UNCOMMENT THIS TO RE-ENABLE GEOLOCATION VALIDATION
-      // if($this->bh->inCorrectPlace($req->seat_id, $lat, $long) == false){
-      //   return $this->respond_json(403, 'Not in correct location', $input);
-      // }
+      $cconfig = CommonConfig::where('key', 'geo_checkin')->first();
+      if($cconfig && $cconfig->value == 'true'){
+        if($this->bh->inCorrectPlace($req->seat_id, $lat, $long) == false){
+          return $this->respond_json(403, 'Not in correct location', $input);
+        }
+      }
+
 
       $theuser = User::where('id', $req->staff_id)->first();
       $cekin = $this->bh->checkIn($theuser, $req->seat_id, $lat, $long);
