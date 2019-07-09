@@ -111,7 +111,7 @@ class FeedbackController extends Controller
 
     public function doclose(Request $req){
 
-      dd($req->all());
+      // dd($req->all());
 
       $fb = Feedback::find($req->id);
       $fb->status = 0;
