@@ -24,6 +24,7 @@ Route::get('/info', 'HomeController@info')->name('info');
 
 // ============ admins ================
 Route::get('/admin', 'TAdminController@index')->name('admin');
+Route::get('/createDummyAccs', 'TAdminController@createDummyAccs')->name('createdummy');
 // admin task type
 Route::get('/admin/tasktype', 'TAdminController@showTaskManagement')->name('admin.tt');
 Route::post('/admin/addtt', 'TAdminController@doTaskMgmtAdd')->name('admin.addtt');

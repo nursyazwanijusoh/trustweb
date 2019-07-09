@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Middleware\AdminGate;
 use App\Mail\RegApproved;
 use App\Mail\RegRejected;
@@ -19,6 +20,7 @@ use App\common\UserRegisterHandler;
 use Session;
 use App\Api\V1\Controllers\LdapHelper;
 use App\Api\V1\Controllers\BookingHelper;
+
 
 class TAdminController extends Controller
 {
@@ -761,6 +763,33 @@ class TAdminController extends Controller
     $user->delete();
 
     return redirect(route('admin.reglist', ['alert' => 'User deleted'], false));
+  }
+
+  public function createDummyAccs(){
+
+    for ($i=1; $i < 1000; $i++) {
+      $staffno = 'DM' . str_pad($i, 5, '0', STR_PAD_LEFT);
+
+      $user = new User;
+      $user->name = 'Dummy ' . $i;
+      $user->email = $staffno . '@dummy.kom';
+      $user->staff_no = $staffno;
+      $user->mobile_no = '60123456789';
+      $user->password = Hash::make('password');
+      $user->verified = true;
+      $user->isvendor = 1;
+      $user->role = 3;
+      $user->status = 1;
+      $user->partner_id = 1;
+      $user->save();
+
+      $pner = $user->Partner;
+      $pner->increment('staff_count');
+      $pner->save();
+
+    }
+
+      return "users created";
   }
 
 }
