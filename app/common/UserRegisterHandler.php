@@ -19,6 +19,7 @@ class UserRegisterHandler
     $user->name = $data['name'];
     $user->email = $data['email'];
     $user->staff_no = $data['staff_no'];
+    $user->mobile_no = $data['mobile_no'];
     $user->password = Hash::make($data['password']);
     $user->verified = false;
     $user->isvendor = 1;

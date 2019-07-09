@@ -16,10 +16,15 @@ class AdminGate
      */
     public function handle($request, Closure $next)
     {
+      // dd($next);
+      if($request->session()->exists('staffdata')){
         if(Session::get('staffdata')['role'] > 1){
           abort(403);
         }
+      } else {
+        return redirect(route('login', [], false));
+      }
 
-        return $next($request);
+      return $next($request);
     }
 }

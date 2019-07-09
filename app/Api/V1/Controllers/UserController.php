@@ -9,6 +9,7 @@ use App\building;
 use App\reservation;
 use App\ActivityType;
 use App\Activity;
+use App\CommonConfig;
 use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
