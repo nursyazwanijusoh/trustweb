@@ -26,13 +26,19 @@
                     <div class="form-group row">
                         <label for="content" class="col-md-4 col-form-label text-md-right">Content</label>
                         <div class="col-md-6">
-                          <textarea rows="5" class="form-control" id="content" disabled>{{ $feedback->content }}</textarea>
+                          <textarea rows="3" class="form-control" id="content" disabled>{{ $feedback->content }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="agent" class="col-md-4 col-form-label text-md-right">Device Info</label>
+                        <div class="col-md-6">
+                          <textarea rows="3" class="form-control" id="agent" disabled>{{ $feedback->agent }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="content" class="col-md-4 col-form-label text-md-right">Remark</label>
                         <div class="col-md-6">
-                          <textarea rows="5" class="form-control" id="content" name="remark" required></textarea>
+                          <textarea rows="3" class="form-control" id="content" name="remark" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row text-center">
