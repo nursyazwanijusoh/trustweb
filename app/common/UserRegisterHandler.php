@@ -26,6 +26,7 @@ class UserRegisterHandler
     $user->role = 3;
     $user->status = 2;
     $user->partner_id = $data['partner_id'];
+    $user->unit = $user->divName();
     $user->save();
 
     // increment the user count
@@ -66,6 +67,7 @@ class UserRegisterHandler
           'password' => $password
         ])){
           $user->status = 1;
+          $user->unit = $user->divName();
           $user->save();
         } else {
           $errormsg = "failed";
