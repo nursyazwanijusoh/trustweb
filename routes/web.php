@@ -99,8 +99,9 @@ Route::get('/find/staff', 'AdminReportController@rptFindStaff')->name('staff.fin
 // feedback
 Route::get('/feedback', 'FeedbackController@sform')->name('feedback');
 Route::post('/feedback', 'FeedbackController@submit')->name('feedback.submit');
-Route::get('/feedback/close', 'FeedbackController@close')->name('feedback.close');
-Route::get('/feedback/list', 'FeedbackController@list')->name('feedback.list');
+Route::get('/feedback/close', 'FeedbackController@close')->name('feedback.close')->middleware('AdminGate');
+Route::get('/feedback/list', 'FeedbackController@list')->name('feedback.list')->middleware('AdminGate');
+Route::post('/feedback/doclose', 'FeedbackController@doclose')->name('feedback.doclose')->middleware('AdminGate');
 
 // partners
 Route::get('/partner/list', 'PartnerController@list')->name('partner.list');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Feedback;
 use App\User;
+use App\Mail\RespFeedback;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -97,8 +98,34 @@ class FeedbackController extends Controller
 
     public function close(Request $request)
     {
-      $fb = Feedback::find($request->id);
+      $fb = Feedback::findOrFail($request->id);
+      $ctc = $fb->getContact();
+      $isemail = 'disabled';
+      if(strpos($ctc, '@') !== false){
+        $isemail = ' ';
+      }
+
+      return view('feedback.close', ['feedback' => $fb, 'isemail' => $isemail, 'contact' => $ctc]);
+
+    }
+
+    public function doclose(Request $req){
+
+      dd($req->all());
+
+      $fb = Feedback::find($req->id);
       $fb->status = 0;
+      $fb->remark = $req->remark;
+      $fb->closed_by =  $req->session()->get('staffdata')['id'];
+      $fb->save();
+
+      if($req->filled('sendemail')){
+        \Mail::to($fb->getContact())->send(new RespFeedback($fb));
+        $fb->contacted = true;
+      } else {
+        $fb->contacted = false;
+      }
+
       $fb->save();
 
       return redirect(route('feedback.list', [], false));
