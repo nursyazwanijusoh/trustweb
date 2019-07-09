@@ -55,7 +55,7 @@
                         <td><a href="{{ route('feedback.close', ['id' => $atask->id], false) }}">Close</a></td>
                         @else
                         <td>{{ $atask->remark }}</td>
-                        <td>{{ $atask->Closer->name }}</td>
+                        <td><a title="{{ $atask->Closer->name }}" href="{{ route('staff', ['staff_id' => $atask->Closer->id], false) }}">{{ $atask->Closer->staff_no }}</a></td>
                         <td>{{ $atask->updated_at }}</td>
                         @endif
                       </tr>
