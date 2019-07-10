@@ -24,10 +24,16 @@
                     </a>
                   </div>
                   <br />
-                  <h5 class="card-title">LOV Management</h5>
+                  <h5 class="card-title">Infrastructure Management</h5>
                   <div class="list-group">
                     <a href="{{ route('geo.list', [], false) }}" class="list-group-item list-group-item-action">Office Building List</a>
                     <a href="{{ route('admin.build', [], false) }}" class="list-group-item list-group-item-action">Floor List</a>
+                    <a href="{{ route('admin.meetroom', [], false) }}" class="list-group-item list-group-item-action">Meeting Rooms</a>
+                    <a href="{{ route('admin.genqrg', [], false) }}" class="list-group-item list-group-item-action">Generate Custom QR</a>
+                  </div>
+                  <br />
+                  <h5 class="card-title">LOV Management</h5>
+                  <div class="list-group">
                     <a href="{{ route('admin.tt', [], false) }}" class="list-group-item list-group-item-action">Task Type List</a>
                     <a href="{{ route('admin.at', [], false) }}" class="list-group-item list-group-item-action">Activity Type List</a>
                     <a href="{{ route('sc.list', [], false) }}" class="list-group-item list-group-item-action">Skill Category</a>
@@ -35,7 +41,6 @@
                     <a href="{{ route('partner.list', [], false) }}" class="list-group-item list-group-item-action">Partner / Vendor List</a>
                     <a href="{{ route('cfg.list', [], false) }}" class="list-group-item list-group-item-action">Common Configs</a>
                     <a href="{{ route('admin.lov', [], false) }}" class="list-group-item list-group-item-action">Department LOVs</a>
-                    <a href="{{ route('admin.genqrg', [], false) }}" class="list-group-item list-group-item-action">Generate QR</a>
                   </div>
                 </div>
             </div>

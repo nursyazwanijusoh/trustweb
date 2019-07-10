@@ -301,7 +301,7 @@ class InfraController extends Controller
           return $this->respond_json(412, 'Invalid input', $input);
         }
 
-        $seats = place::where('building_id', $req->building_id)->get();
+        $seats = place::where('building_id', $req->building_id)->where('seat_type', 1)->get();
 
         return $this->respond_json(200, 'seat list', $seats);
 

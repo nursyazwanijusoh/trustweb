@@ -92,9 +92,12 @@ class BookingHelper extends Controller
     // set the seat status
     $place = place::find($seat_id);
 
-    $place->status = 3;
-    $place->checkin_staff_id = $staff->id;
-    $place->save();
+    // only change the status if it's normal seat
+    if($place->seat_type == 1){
+      $place->status = 3;
+      $place->checkin_staff_id = $staff->id;
+      $place->save();
+    }
 
     // create checkin
     $cekin = new Checkin;
@@ -187,10 +190,10 @@ class BookingHelper extends Controller
   }
 
   public function getBuildingStat($building_id){
-    $totalcount = place::where('building_id', $building_id)->where('status', '!=', 0)->count();
-    $freecount = place::where('building_id', $building_id)->where('status', 1)->count();
-    $reservedcount = place::where('building_id', $building_id)->where('status', 2)->count();
-    $occupiedcount = place::where('building_id', $building_id)->where('status', 3)->count();
+    $totalcount = place::where('building_id', $building_id)->where('status', '!=', 0)->where('seat_type', 1)->count();
+    $freecount = place::where('building_id', $building_id)->where('status', 1)->where('seat_type', 1)->count();
+    $reservedcount = place::where('building_id', $building_id)->where('status', 2)->where('seat_type', 1)->count();
+    $occupiedcount = place::where('building_id', $building_id)->where('status', 3)->where('seat_type', 1)->count();
 
     $thebuild = $this->getBuildingInfo($building_id);
     $loc_name = $thebuild->floor_name . '@' . $thebuild->building_name;

@@ -11,7 +11,7 @@ class place extends Model
   }
 
   public function Checkin(){
-    return $this->hasMany('App\Checkin');
+    return $this->hasMany('App\Checkin')->whereNull('checkout_time');
   }
 
 }

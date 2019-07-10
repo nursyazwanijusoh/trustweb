@@ -513,10 +513,10 @@ class TAdminController extends Controller
       $seats = place::where('building_id', $req->build_id)->get();
 
       foreach($seats as $aseat){
-        // first, check if there is anyone checked in to this seat
-        if($aseat->status > 1){
-          // force checkout that staff
-          $bh->checkOut($aseat->checkin_staff_id, 'seat deleted');
+        // get all checkins under this seat
+        $cekins = $seat->Checkin;
+        foreach($cekins as $acek){
+          $bh->checkOut($acek->user_id, 'building deleted');
         }
 
         // then delete this seat
@@ -637,7 +637,7 @@ class TAdminController extends Controller
     }
 
     // also get all current seats
-    $seats = place::where('building_id', $req->build_id)->get();
+    $seats = $build->place;
 
     $lov = [
       '0' => 'Inactive',
@@ -765,31 +765,79 @@ class TAdminController extends Controller
     return redirect(route('admin.reglist', ['alert' => 'User deleted'], false));
   }
 
-  public function createDummyAccs(){
+  // ===================================
+  // manage meeting rooms
+  public function meetroom(Request $req){
+    $buildlist = building::all();
+    $meetrooms = place::where('seat_type', 2)->get();
 
-    for ($i=1; $i < 1000; $i++) {
-      $staffno = 'DM' . str_pad($i, 5, '0', STR_PAD_LEFT);
-
-      $user = new User;
-      $user->name = 'Dummy ' . $i;
-      $user->email = $staffno . '@dummy.kom';
-      $user->staff_no = $staffno;
-      $user->mobile_no = '60123456789';
-      $user->password = Hash::make('password');
-      $user->verified = true;
-      $user->isvendor = 1;
-      $user->role = 3;
-      $user->status = 1;
-      $user->partner_id = 1;
-      $user->save();
-
-      $pner = $user->Partner;
-      $pner->increment('staff_count');
-      $pner->save();
-
+    if($req->filled('alert')){
+      return view('admin.meetroom', ['buildings' => $buildlist, 'data' => $meetrooms, 'alert' => $req->alert]);
     }
 
-      return "users created";
+    return view('admin.meetroom', ['buildings' => $buildlist, 'data' => $meetrooms]);
+
   }
+
+  public function meetroomAdd(Request $req){
+    // search for dups
+    $place = place::where('label', $req->name)->where('building_id', $req->building_id)->first();
+    if($place){
+      return redirect(route('admin.meetroom', ['alert', 'Meeting room exists']));
+    }
+
+    $place = place::where('qr_code', $req->qrdata)->first();
+    if($place){
+      return redirect(route('admin.meetroom', ['alert', 'Duplicate QR data']));
+    }
+
+    // create new
+    $seat = new place;
+    $seat->building_id = $req->building_id;
+    $seat->status = 1;
+    $seat->seat_type = 2;
+    $seat->priviledge = 1;
+    $seat->label = $req->name;
+    $seat->qr_code = $req->qrdata;
+    $seat->save();
+    return redirect(route('admin.meetroom', ['alert' => 'Meeting room ' . $req->name . ' added']));
+  }
+
+  public function meetroomEdit(Request $req){
+    $seat = place::findOrFail($req->id);
+
+    // search for possible dups after edit
+    $place = place::where('label', $req->name)->where('building_id', $req->building_id)->where('id', '!=', $req->id)->first();
+    if($place){
+      return redirect(route('admin.meetroom', ['alert' => 'Error: will cause duplicate -> ' . $req->name]));
+    }
+
+    $place = place::where('qr_code', $req->qrdata)->where('id', '!=', $req->id)->first();
+    if($place){
+      return redirect(route('admin.meetroom', ['alert' => 'Duplicate QR data']));
+    }
+
+    $seat->label = $req->name;
+    $seat->qr_code = $req->qrdata;
+    $seat->building_id = $req->building_id;
+    $seat->save();
+    return redirect(route('admin.meetroom', ['alert' => 'Meeting room ' . $req->name . ' updated']));
+  }
+
+  public function meetroomDel(Request $req){
+    $bh = new BookingHelper;
+    $seat = place::findOrFail($req->id);
+
+    // get all checkins under this meeting room
+    $cekins = $seat->Checkin;
+    foreach($cekins as $acek){
+      $bh->checkOut($acek->user_id, 'meeting room deleted');
+    }
+
+    // then delete the seat
+    $seat->delete();
+    return redirect(route('admin.meetroom', ['alert'=> 'Meeting room deleted']));
+  }
+
 
 }

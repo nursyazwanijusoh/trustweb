@@ -68,7 +68,7 @@
                       @foreach($buildlist as $atask)
                       <tr>
                         <td>{{ $atask['building_name'] }}</td>
-                        <td><a href="{{ route('admin.buildetail', ['build_id' => $atask['id']], false) }}">{{ $atask['floor_name'] }}</a></td>
+                        <td><a title="{{ $atask->place->count() . ' seats, ' . $atask->MeetingRooms->count() . ' meeting rooms.' }}" href="{{ route('admin.buildetail', ['build_id' => $atask['id']], false) }}">{{ $atask['floor_name'] }}</a></td>
                         <td>{{ $atask['unit'] }}</td>
                         <td>{{ $atask['remark'] }}</td>
                         <td>{{ $atask['created_by'] }}</td>

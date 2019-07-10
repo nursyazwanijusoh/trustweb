@@ -24,7 +24,6 @@ Route::get('/info', 'HomeController@info')->name('info');
 
 // ============ admins ================
 Route::get('/admin', 'TAdminController@index')->name('admin');
-Route::get('/createDummyAccs', 'TAdminController@createDummyAccs')->name('createdummy');
 // admin task type
 Route::get('/admin/tasktype', 'TAdminController@showTaskManagement')->name('admin.tt');
 Route::post('/admin/addtt', 'TAdminController@doTaskMgmtAdd')->name('admin.addtt');
@@ -44,6 +43,12 @@ Route::get('/admin/delaseat', 'TAdminController@delaseat')->name('admin.delaseat
 Route::get('/admin/delallseat', 'TAdminController@delallseat')->name('admin.delallseat');
 Route::get('/admin/buildetail', 'TAdminController@buildetail')->name('admin.buildetail');
 Route::get('/admin/getallqr', 'TAdminController@getallqr')->name('admin.getallqr');
+
+// meeting rooms
+Route::get('/admin/meetroom', 'TAdminController@meetroom')->name('admin.meetroom');
+Route::post('/admin/meetroom/add', 'TAdminController@meetroomAdd')->name('admin.meetroom.add');
+Route::post('/admin/meetroom/edit', 'TAdminController@meetroomEdit')->name('admin.meetroom.edit');
+Route::get('/admin/meetroom/del', 'TAdminController@meetroomDel')->name('admin.meetroom.del');
 
 // admin allow access according to division
 Route::get('/admin/allowdiv/{divid}', 'TAdminController@allowdiv')->name('admin.allowdiv');

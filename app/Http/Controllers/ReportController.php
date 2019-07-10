@@ -72,19 +72,45 @@ class ReportController extends Controller
       }
     }
 
+    $heighttt = 50 + (30 * count($value));
+
     $schart = app()->chartjs
          ->name('barChartTest')
          ->type('horizontalBar')
-         ->size(['width' => 400, 'height' => 200])
+         ->size(['width' => 400, 'height' => $heighttt])
          ->labels($label)
          ->datasets([
              [
-                 "label" => "User Per Division",
+                 "label" => "Registered Staff",
                  'backgroundColor' => $bgcolor,
                  'data' => $value
              ]
          ])
-         ->options([]);
+         ->options([
+           'responsive' => true,
+           'tooltips' => [
+             'mode' => 'index',
+             'intersect' => false,
+           ],
+           'hover' => [
+             'mode' => 'nearest',
+             'intersect' => true,
+           ],
+           'scales' => [
+             'xAxes' => [[
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Staff Count',
+               ]
+             ]],
+             'yAxes' => [[
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Division',
+               ]
+             ]]
+           ]
+         ]);
 
     // dd($schart);
 
@@ -131,10 +157,12 @@ class ReportController extends Controller
         ]
       );
 
+      $heighttt = 50 + (30 * count($label));
+
     $schart = app()->chartjs
          ->name('barChartTest')
          ->type('horizontalBar')
-         ->size(['width' => 400, 'height' => 200])
+         ->size(['width' => 400, 'height' => $heighttt])
          ->labels($label)
          ->datasets($datasets)
          ->options([

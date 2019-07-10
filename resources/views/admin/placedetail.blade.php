@@ -60,7 +60,7 @@
                     <div class="form-group row">
                         <label for="curr_count" class="col-md-4 col-form-label text-md-right">Current Seat Count</label>
                         <div class="col-md-6">
-                            <input id="curr_count" value="{{ $build['seat_count'] }}" class="form-control" type="number" disabled >
+                            <input id="curr_count" value="{{ $seatlist->count() }}" class="form-control" type="number" disabled >
                         </div>
                     </div>
 
@@ -109,12 +109,12 @@
                 <!-- <div class="card-header"> </div> -->
                 <div class="card-body">
                   <h5 class="card-title">List of seats</h5>
-                  <table class="table table-striped table-hover">
+                  <table id="seattable" class="table table-striped table-hover">
                     <thead>
                       <tr>
                         <th scope="col">Label</th>
                         <th scope="col">Status</th>
-                        <th scope="col" colspan="2" >Actions</th>
+                        <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -122,8 +122,11 @@
                       <tr>
                         <td>{{ $atask['label'] }}</td>
                         <td>{{ $status[$atask['status']] }}</td>
-                        <td><a href="{{ route('admin.getqr', ['seat_id' => $atask['id']], false) }}">Get QR</a></td>
-                        <td><a href="{{ route('admin.delaseat', ['seat_id' => $atask['id']], false) }}">Delete</a></td>
+                        <td>
+                          <a href="{{ route('admin.getqr', ['seat_id' => $atask['id']], false) }}">Get QR</a>
+                          &nbsp;
+                          <a href="{{ route('admin.delaseat', ['seat_id' => $atask['id']], false) }}">Delete</a>
+                        </td>
                       @endforeach
                     </tbody>
                   </table>
@@ -133,3 +136,14 @@
     </div>
 </div>
 @endsection
+
+@section('page-js')
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" defer>
+$(document).ready(function() {
+    $('#seattable').DataTable();
+} );
+</script>
+@stop
