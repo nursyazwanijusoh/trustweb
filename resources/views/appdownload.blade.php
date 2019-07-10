@@ -14,7 +14,7 @@
                   <div class="form-group row mb-0">
                       <div class="col">
                         @if($ipa && $plist)
-                          <a href="{{ route('app.ios.plist', [], false) }}"><button id="ios_dl" type="button" class="btn btn-primary">Download</button></a>
+                          <a href="{{ asset('storage/trust.plist' }}"><button id="ios_dl" type="button" class="btn btn-primary">Download</button></a>
                         @else
                           <button id="ios_dl" type="button" class="btn btn-secondary" disabled>Not Available</button>
                         @endif
@@ -66,7 +66,7 @@
                   </form>
                   @if($ipa)
                   <div class="input-group mb-3">
-                    <a href="{{ route('app.ios', [], false)}}">https://trust.tm.com.my/app/get/trust.ipa</a>
+                    <a href="{{ asset('storage/trust.ipa' }}">alink</a>
                   </div>
                   @endif
                   <form method="POST" action="{{ route('app.up', [], false) }}" enctype="multipart/form-data">
