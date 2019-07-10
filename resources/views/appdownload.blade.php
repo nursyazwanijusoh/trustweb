@@ -14,7 +14,7 @@
                   <div class="form-group row mb-0">
                       <div class="col">
                         @if($ipa && $plist)
-                          <a href="{{ route('app.down', ['type' => 'plist'], false) }}"><button id="ios_dl" type="button" class="btn btn-primary">Download</button></a>
+                          <a href="{{ route('app.ios.plist', [], false) }}"><button id="ios_dl" type="button" class="btn btn-primary">Download</button></a>
                         @else
                           <button id="ios_dl" type="button" class="btn btn-secondary" disabled>Not Available</button>
                         @endif

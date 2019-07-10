@@ -40,6 +40,10 @@ class AppDownloadController extends Controller
     return \Storage::download('public/trust.ipa', 'trust.ipa');
   }
 
+  public function getplist(){
+    return \Storage::download('public/trust.plist', 'trust.plist');
+  }
+
   public function delete(Request $req){
     $msg = 'file deleted';
     if(\Storage::exists('public/trust.' . $req->type)){

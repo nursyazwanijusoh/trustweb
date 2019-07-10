@@ -70,7 +70,7 @@ Route::get('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrg');
 Route::post('/admin/genqr', 'TAdminController@genQR')->name('admin.genqrp');
 Route::get('/admin/vendorlist', 'TAdminController@reglist')->name('admin.reglist');
 Route::get('/admin/regapprove', 'TAdminController@regapprove')->name('admin.regapprove');
-Route::get('/admin/regreject', 'TAdminController@regreject')->name('admin.regreject');
+Route::post('/admin/regreject', 'TAdminController@regreject')->name('admin.regreject');
 Route::get('/admin/delstaff', 'TAdminController@delstaff')->name('admin.delstaff');
 
 
@@ -152,6 +152,7 @@ Route::get('/download', 'AppDownloadController@list')->name('app.list');
 Route::post('/app/upload', 'AppDownloadController@upload')->name('app.up');
 Route::get('/app/get', 'AppDownloadController@download')->name('app.down');
 Route::get('/app/get/trust.ipa', 'AppDownloadController@getipa')->name('app.ios');
+Route::get('/app/get/trust.plist', 'AppDownloadController@getplist')->name('app.ios.plist');
 Route::get('/app/delete', 'AppDownloadController@delete')->name('app.del');
 
 // dashboard data feed thingy
