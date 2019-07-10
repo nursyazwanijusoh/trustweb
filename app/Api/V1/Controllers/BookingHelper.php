@@ -88,6 +88,8 @@ class BookingHelper extends Controller
 
     // clear the reservation
     $this->clearReservation($staff);
+    // check out from current, if exist
+    $this->checkOut($staff->id, 'checking in elsewhere');
 
     // set the seat status
     $place = place::find($seat_id);
