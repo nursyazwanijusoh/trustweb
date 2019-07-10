@@ -66,7 +66,7 @@
                   </form>
                   @if($ipa)
                   <div class="input-group mb-3">
-                    <a href="{{ asset('storage/trust.ipa' }}">alink</a>
+                    <a href="{{ asset('storage/trust.ipa') }}">alink</a>
                   </div>
                   @endif
                   <form method="POST" action="{{ route('app.up', [], false) }}" enctype="multipart/form-data">
