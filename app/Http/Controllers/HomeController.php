@@ -62,7 +62,7 @@ class HomeController extends Controller
     }
 
     public function info(){
-      return view('redirect');
+      return redirect(route('app.list', [], false));
 
     }
 
