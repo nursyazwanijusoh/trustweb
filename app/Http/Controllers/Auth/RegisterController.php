@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Partner;
 use App\common\UserRegisterHandler;
+use App\Api\V1\Controllers\LdapHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -83,6 +84,22 @@ class RegisterController extends Controller
 public function register(Request $request)
   {
       $this->validator($request->all())->validate();
+      
+      // double check for TM emails
+      $ldh = new LdapHelper;
+      $resp = $ldh->fetchUser($request->email, 'mail');
+      if($resp['code'] == 200){
+        // exist in ldap
+        return \Redirect::back()->withInput()->withErrors(['email' => 'TM email. Please login using IDM']);
+      }
+
+      // triple check for IDM staff id
+      $resp = $ldh->fetchUser($request->staff_no, 'cn');
+      if($resp['code'] == 200){
+        // exist in ldap
+        return \Redirect::back()->withInput()->withErrors(['staff_no' => 'TM staff no. Please login using IDM']);
+      }
+
 
       event(new Registered($user = $this->create($request->all())));
 
