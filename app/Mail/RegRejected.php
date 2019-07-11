@@ -11,18 +11,16 @@ class RegRejected extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-    public $reason;
+    public $rejecteduser;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, $sebab)
+    public function __construct($rejusr)
     {
-        $this->user = $user;
-        $this->reason = $sebab;
+        $this->$rejecteduser = $rejusr;
     }
 
     /**
@@ -32,6 +30,6 @@ class RegRejected extends Mailable
      */
     public function build()
     {
-        return $this->subject('trUSt registration rejected')->view('email.regreject');
+        return $this->subject('trUSt registration ' . $this->$rejecteduser->action)->view('email.regreject');
     }
 }

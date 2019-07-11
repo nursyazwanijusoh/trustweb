@@ -87,12 +87,12 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group row">
                             <label for="mobile_no" class="col-md-4 col-form-label text-md-right">Mobile No.</label>
 
                             <div class="col-md-6">
-                                <input id="mobile_no" type="text" class="form-control{{ $errors->has('mobile_no') ? ' is-invalid' : '' }}" name="mobile_no" value="{{ old('mobile_no') }}" required>
+                                <input id="mobile_no" type="text" class="form-control{{ $errors->has('mobile_no') ? ' is-invalid' : '' }}" name="mobile_no" value="{{ old('mobile_no') }}" required maxlength="15">
 
                                 @if ($errors->has('mobile_no'))
                                     <span class="invalid-feedback" role="alert">

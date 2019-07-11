@@ -10,12 +10,12 @@ Regarding your feedback below:
 <br/>
 <div style="border: green solid; border-radius: 5px; padding: 5px; margin: 5px;">
 <b>{{ $fb->title }}</b><br />
-{{ $fb->content }}
+{{ nl2br($fb->content) }}
 </div>
 <br />
 Response from the admin
 <div style="border: blue dashed; border-radius: 5px; padding: 5px; margin: 5px;">
-{{ $fb->remark }}
+{{ nl2br($fb->remark) }}
 </div>
 </body>
 

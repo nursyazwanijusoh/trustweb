@@ -113,6 +113,7 @@ Route::post('/feedback/doclose', 'FeedbackController@doclose')->name('feedback.d
 Route::get('/partner/list', 'PartnerController@list')->name('partner.list');
 Route::post('/partner/add', 'PartnerController@add')->name('partner.add');
 Route::get('/partner/del', 'PartnerController@del')->name('partner.del');
+Route::post('/partner/edit', 'PartnerController@edit')->name('partner.edit');
 
 // configs
 Route::get('/cfg/list', 'CommonConfigController@list')->name('cfg.list');

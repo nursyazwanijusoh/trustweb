@@ -39,6 +39,13 @@ class PartnerController extends Controller
     return redirect(route('partner.list', [], false));
   }
 
+  public function edit(Request $req){
+    $part = Partner::findOrFail($req->id);
+    $part->comp_name = $req->name;
+    $part->save();
+    return redirect(route('partner.list', [], false));
+  }
+
 
 
 }

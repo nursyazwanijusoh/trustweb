@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Middleware\AdminGate;
 use App\Mail\RegApproved;
 use App\Mail\RegRejected;
+use App\RejectedUser;
 use App\TaskCategory;
 use App\ActivityType;
 use App\building;
@@ -736,21 +737,7 @@ class TAdminController extends Controller
 
   public function regreject(Request $req){
     $user = User::findOrFail($req->staff_id);
-    \Mail::to($user->email)->send(new RegRejected($user, 'rejected'));
 
-    // reduce the user count
-    $pner = $user->Partner;
-    $pner->decrement('staff_count');
-    $pner->save();
-
-    $user->delete();
-
-    return redirect(route('admin.reglist', ['alert' => 'User rejected and deleted'], false));
-  }
-
-  public function delstaff(Request $req){
-    $user = User::findOrFail($req->staff_id);
-    \Mail::to($user->email)->send(new RegRejected($user, 'deleted'));
     if($user->verifyUser){
       $user->verifyUser->delete();
     }
@@ -760,7 +747,48 @@ class TAdminController extends Controller
     $pner->decrement('staff_count');
     $pner->save();
 
+    $rj = new RejectedUser;
+    $rj->staff_no = $user->staff_no;
+    $rj->name = $user->name;
+    $rj->email = $user->email;
+    $rj->mobile_no = $user->mobile_no;
+    $rj->partner_id = $user->partner_id;
+    $rj->remark = $req->remark;
+    $rj->action = $req->act;
+    $rj->rejected_by = Session::get('staffdata')['id'];
+    $rj->save();
     $user->delete();
+
+    \Mail::to($rj->email)->send(new RegRejected($rj));
+
+    return redirect(route('admin.reglist', ['alert' => 'User rejected'], false));
+  }
+
+  public function delstaff(Request $req){
+    $user = User::findOrFail($req->staff_id);
+
+    if($user->verifyUser){
+      $user->verifyUser->delete();
+    }
+
+    // reduce the user count
+    $pner = $user->Partner;
+    $pner->decrement('staff_count');
+    $pner->save();
+
+    $rj = new RejectedUser;
+    $rj->staff_no = $user->staff_no;
+    $rj->name = $user->name;
+    $rj->email = $user->email;
+    $rj->mobile_no = $user->mobile_no;
+    $rj->partner_id = $user->partner_id;
+    $rj->remark = $req->remark;
+    $rj->action = 'deleted';
+    $rj->rejected_by = Session::get('staffdata')['id'];
+    $rj->save();
+    $user->delete();
+
+    \Mail::to($rj->email)->send(new RegRejected($rj));
 
     return redirect(route('admin.reglist', ['alert' => 'User deleted'], false));
   }
