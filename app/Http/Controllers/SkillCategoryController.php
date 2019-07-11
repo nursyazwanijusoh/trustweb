@@ -149,7 +149,7 @@ class SkillCategoryController extends Controller
 
   public function ssdel(Request $req){
 
-    $cs = CommonSkillet::findOrFail($req->id);
+    $cs = CommonSkillset::findOrFail($req->id);
 
     // delete all the personal skills tied to this
     $cs->PersonalSkillset->delete();
