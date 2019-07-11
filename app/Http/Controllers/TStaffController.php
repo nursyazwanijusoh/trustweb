@@ -11,6 +11,7 @@ use App\ActivityType;
 use App\User;
 use App\Activity;
 use App\Subordinate;
+use App\common\GDWActions;
 use App\Api\V1\Controllers\BookingHelper;
 
 class TStaffController extends Controller
@@ -29,12 +30,6 @@ class TStaffController extends Controller
       $s_staff_id = Session::get('staffdata')['id'];
     }
 
-    // get some summaries
-    $opentaskcount = Task::where('user_id', $s_staff_id)
-      ->where('status', 1)->count();
-    $donetaskcount = Task::where('user_id', $s_staff_id)
-      ->where('status', 0)->count();
-
     // get subordinates
     $sublist = Subordinate::where('superior_id', $s_staff_id)->get();
 
@@ -46,10 +41,44 @@ class TStaffController extends Controller
     } else {
       $lastloc = 'N/A';
     }
+
+    // build the graph lul
+    $gdata = GDWActions::getActSummary($s_staff_id, date('Y-m-d'));
+    // dd($gdata);
+    $schart = app()->chartjs
+         ->name('barChartTest')
+         ->type('doughnut')
+         ->size(['width' => 400, 'height' => 150])
+         ->labels($gdata['label'])
+         ->datasets([
+             [
+                 'label' => 'Hours Spent',
+                 'backgroundColor' => $gdata['bg'],
+                 'borderColor' => '#000',
+                 'data' => $gdata['data']
+             ]
+         ])
+         ->options([
+           'responsive' => true,
+           'title' => [
+             'display' => true,
+             'text' => 'Number of hours spent this month',
+           ],
+           'tooltips' => [
+             'mode' => 'index',
+             'intersect' => false,
+           ],
+           'hover' => [
+             'mode' => 'nearest',
+             'intersect' => true,
+           ],
+         ]);
+
+
+
     $final = [
       'staff_id' => $s_staff_id,
-      'opentask' => $opentaskcount,
-      'donetask' => $donetaskcount,
+      'chart' => $schart,
       'subords' => $sublist,
       'user' => $user,
       'cuser' => $c_staff_id,

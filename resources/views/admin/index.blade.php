@@ -34,7 +34,6 @@
                   <br />
                   <h5 class="card-title">LOV Management</h5>
                   <div class="list-group">
-                    <a href="{{ route('admin.tt', [], false) }}" class="list-group-item list-group-item-action">Task Type List</a>
                     <a href="{{ route('admin.at', [], false) }}" class="list-group-item list-group-item-action">Activity Type List</a>
                     <a href="{{ route('sc.list', [], false) }}" class="list-group-item list-group-item-action">Skill Category</a>
                     <a href="{{ route('ss.list', [], false) }}" class="list-group-item list-group-item-action">Shared Skillset List</a>

@@ -61,8 +61,10 @@
                     </div>
                   </form>
                 </div>
+              </div>
+              <div class="card">
+                <div class="card-header">List of Activities</div>
                 <div class="card-body">
-                  <h5 class="card-title">List of Activities</h5>
                   <table id="taskdetailtable" class="table table-striped table-bordered table-hover">
                     <thead>
                       <tr>

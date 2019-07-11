@@ -81,9 +81,14 @@ Route::get('/user/task', 'TStaffController@taskIndex')->name('staff.t');
 Route::get('/user/taskdetail', 'TStaffController@taskDetail')->name('staff.tdetail');
 Route::post('/user/addtask', 'TStaffController@addTask')->name('staff.addtask');
 Route::post('/user/closetask', 'TStaffController@closeTask')->name('staff.closetask');
-Route::get('/user/addactivity', 'TStaffController@addActivity')->name('staff.addact');
-Route::post('/user/doaddactivity', 'TStaffController@doAddACtivity')->name('staff.doaddact');
+// Route::get('/user/addactivity', 'TStaffController@addActivity')->name('staff.addact');
+// Route::post('/user/doaddactivity', 'TStaffController@doAddACtivity')->name('staff.doaddact');
 
+// GWD V2
+
+Route::get('/user/activity', 'GwdActivityController@form')->name('staff.addact');
+Route::post('/user/addactivity', 'GwdActivityController@add')->name('staff.doaddact');
+Route::get('/user/activity/list', 'GwdActivityController@list')->name('staff.list');
 
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');

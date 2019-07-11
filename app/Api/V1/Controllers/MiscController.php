@@ -4,6 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\Feedback;
+use App\ActivityType;
+use App\common\GDWActions;
 
 class MiscController extends Controller
 {
@@ -32,6 +34,51 @@ class MiscController extends Controller
 		$fb->save();
 
 		return $this->respond_json(200, 'Success', $fb);
+	}
+
+	function GwdAddActivity(Request $req){
+		$input = app('request')->all();
+
+		$rules = [
+			'title' => ['required'],
+			'staff_id' => ['required'],
+			'hours' => ['required'],
+			'acttype' => ['required'],
+		];
+
+		$validator = app('validator')->make($input, $rules);
+		if($validator->fails()){
+			return $this->respond_json(412, 'Invalid input', $input);
+		}
+
+		$act = GDWActions::addActivity($req, $req->staff_id);
+		return $this->respond_json(200, 'Success', $act);
+	}
+
+	function GwdGetSummary(Request $req){
+		$input = app('request')->all();
+
+		$rules = [
+			'staff_id' => ['required'],
+			'date' => ['required']
+		];
+
+		$validator = app('validator')->make($input, $rules);
+		if($validator->fails()){
+			return $this->respond_json(412, 'Invalid input', $input);
+		}
+
+		$redata = GDWActions::getActSummary($req->staff_id, $req->date);
+
+		return $this->respond_json(200, 'Success', $redata);
+	}
+
+	function GwdGetActType(){
+
+
+		$redata = ActivityType::where('status', 1)->get();
+
+		return $this->respond_json(200, 'Success', $redata);
 	}
 
 }

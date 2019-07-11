@@ -5,17 +5,19 @@ namespace App\common;
 use Illuminate\Http\Request;
 use App\User;
 use App\GwdActivity;
+use \Carbon\Carbon;
+use App\ActivityType;
 use \DB;
 
 class GDWActions
 {
-  public static function addActivity(Request $req){
+  public static function addActivity(Request $req, $staff_id){
 
     $act = new GwdActivity;
-    $act->user_id = $req->staff_id;
-    $act->activity_type_id = $req->act_type;
+    $act->user_id = $staff_id;
+    $act->activity_type_id = $req->acttype;
     $act->title = $req->title;
-    $act->hours_spent = $req->hours_spent;
+    $act->hours_spent = $req->hours;
 
     // optionals
     if($req->filled('parent_no')){
@@ -26,8 +28,8 @@ class GDWActions
       $act->details = $req->details;
     }
 
-    if($req->filled('act_date')){
-      $act->activity_date = $req->act_date;
+    if($req->filled('actdate')){
+      $act->activity_date = $req->actdate;
     } else {
       $act->activity_date = date('Y-m-d');
     }
@@ -47,4 +49,64 @@ class GDWActions
     return $act;
 
   }
+
+  public static function getActSummary($staff_id, $date){
+    // get the month range from the given date
+    $cdate = Carbon::parse($date);
+    $monmon = $cdate->format('F Y');
+    $sdate = $cdate->startOfMonth()->toDateString();
+    $edate = $cdate->addMonths(1)->toDateString();
+    $label = [];
+    $data = [];
+    $bgs = [];
+
+
+    // get the list of act type
+    $actype = ActivityType::where('status', 1)->get();
+    $counter = rand(0, 12);
+    foreach ($actype as $key => $value) {
+      $counter++;
+      array_push($label, $value->descr);
+      array_push($bgs, GDWActions::getBgColor($counter));
+      // get the sum of hours for this activity type
+      $hrs = GwdActivity::where('user_id', $staff_id)
+        ->where('activity_type_id', $value->id)
+        ->whereDate('activity_date', '>=', $sdate)
+        ->whereDate('activity_date', '<', $edate)
+        ->sum('hours_spent');
+      array_push($data, $hrs);
+    }
+
+    $info = [
+      'label' => $label,
+      'data' => $data,
+      'bg' => $bgs,
+      'month' => $monmon
+    ];
+
+    // dd($info);
+    return $info;
+
+  }
+
+  public static function getBgColor($i){
+    $bgcolors = [
+      'rgba(255, 99, 132, 0.5)',
+      'rgba(255, 150, 5, 0.5)',
+      'rgba(0, 255, 132, 0.5)',
+      'rgba(0, 0, 255, 0.5)',
+      'rgba(100, 114, 104, 0.5)',
+      'rgba(255, 0, 0, 0.5)',
+      'rgba(0, 0, 0, 0.5)',
+      'rgba(14, 170, 132, 0.5)',
+      'rgba(108, 68, 229, 0.5)',
+      'rgba(215, 215, 44, 0.5)',
+      'rgba(255, 0, 255, 0.5)',
+      'rgba(24, 38, 6, 0.5)',
+      'rgba(255,255,255, 0.5)',
+    ];
+
+    return $bgcolors[$i % count($bgcolors)];
+  }
+
 }

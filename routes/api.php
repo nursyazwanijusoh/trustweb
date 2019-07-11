@@ -80,5 +80,8 @@ $api->version('v1', function ($api) {
 
   $api->post('/GiveFeedback',  ['as' => 'api.fb.submit', 'uses' => 'App\Api\V1\Controllers\MiscController@sendFeedback']);
 
-
+  // GWD stuffs
+  $api->post('/gwd/add',  ['as' => 'api.gwd.add', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdAddActivity']);
+  $api->post('/gwd/summary',  ['as' => 'api.gwd.sum', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetSummary']);
+  $api->get('/gwd/acttype',  ['as' => 'api.gwd.type', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetActType']);
 });

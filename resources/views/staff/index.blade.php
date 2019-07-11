@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -19,17 +19,14 @@
                 </p>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Summary</h5>
-                <div class="list-group">
-                  <li class="list-group-item list-group-item-info">{{ $opentask }} Open Task</li>
-                  <li class="list-group-item list-group-item-success">{{ $donetask }} Completed Task</li>
-                </div>
+                <h5 class="card-title">Current Month Activities</h5>
+                {!! $chart->render() !!}
               </div>
               <div class="card-body">
                 <h5 class="card-title">Action</h5>
                 <div class="list-group">
                   <a href="{{ route('ps.list', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Personal Skillset</a>
-                  <a href="{{ route('staff.t', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Task Management</a>
+                  <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">My Monthly Activities</a>
                   @if($cuser == $staff_id)
                   <a href="{{ route('staff.addact', [], false) }}" class="list-group-item list-group-item-action">Update Daily Activity</a>
                   @endif
