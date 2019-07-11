@@ -24,26 +24,29 @@ class PartnerController extends Controller
     $partner->comp_name = $req->name;
     $partner->staff_count = 0;
     $partner->save();
-    return redirect(route('partner.list', [], false));
+    return redirect(route('partner.list', ['alert' => $req->name . ' added'], false));
   }
 
   public function del(Request $req){
     $part = Partner::findOrFail($req->id);
+    $pname = $part->comp_name;
+    $scount = $part->Users->count();
 
-    if($part->staff_count > 0){
-      User::where('partner_id', $part->id)->delete();
-    }
+    // delete the staffs
+    $part->Users->delete();
 
+    // then delete the partner
     $part->delete();
 
-    return redirect(route('partner.list', [], false));
+    return redirect(route('partner.list', ['alert' => $pname . ' deleted along with ' . $scount . ' staffs'], false));
   }
 
   public function edit(Request $req){
     $part = Partner::findOrFail($req->id);
+    $oldname = $part->comp_name;
     $part->comp_name = $req->name;
     $part->save();
-    return redirect(route('partner.list', [], false));
+    return redirect(route('partner.list', ['alert' => $oldname . ' changed to ' . $req->name], false));
   }
 
 

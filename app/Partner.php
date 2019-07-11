@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Partner extends Model
 {
-  public function verifyUser(){
+  public function Users(){
     return $this->hasMany('App\User');
   }
 }

@@ -45,7 +45,7 @@
                       @foreach($currtasklist as $atask)
                       <tr>
                         <td>{{ $atask['comp_name'] }}</td>
-                        <td>{{ $atask['staff_count'] }}</td>
+                        <td>{{ $atask->Users->count() }}</td>
                         <td>
 
                           <button id="btnedit" type="button" class="btn btn-success btn-sm" title="Edit Partner Name"
