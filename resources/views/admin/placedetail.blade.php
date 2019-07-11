@@ -121,7 +121,13 @@
                       @foreach($seatlist as $atask)
                       <tr>
                         <td>{{ $atask['label'] }}</td>
+                        @if($atask->status == 1)
                         <td>{{ $status[$atask['status']] }}</td>
+                        @else
+                        <td>
+                          <a title="{{ $atask->Occupant->name }}" href="{{ route('staff', ['staff_id' => $atask->Occupant->id], false) }}">{{ $atask->Occupant->staff_no }}</a>
+                        </td>
+                        @endif
                         <td>
                           <a href="{{ route('admin.getqr', ['seat_id' => $atask['id']], false) }}">Get QR</a>
                           &nbsp;

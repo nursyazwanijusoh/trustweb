@@ -14,4 +14,8 @@ class place extends Model
     return $this->hasMany('App\Checkin')->whereNull('checkout_time');
   }
 
+  public function Occupant(){
+    return $this->belongsTo('App\User', 'checkin_staff_id');
+  }
+
 }
