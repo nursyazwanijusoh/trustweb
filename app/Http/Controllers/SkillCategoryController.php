@@ -61,18 +61,22 @@ class SkillCategoryController extends Controller
       if(strcasecmp($delskill->name, 'misc') == 0){
         return redirect(route('sc.list', ['alert' => 'Must not delete misc skill category']));
       } else {
-        // find a misc category
-        $misc = SkillCategory::where('name', 'Misc')->first();
-        if(!$misc){
-          // create one if not exist
-          $misc = new SkillCategory;
-          $misc->name = 'Misc';
-          $misc->sequence = 99;
-          $misc->save();
-        }
+        if($delskill->CommonSkillset->count() > 0){
+          // find a misc category
+          $misc = SkillCategory::where('name', 'Misc')->first();
+          if(!$misc){
+            // create one if not exist
+            $misc = new SkillCategory;
+            $misc->name = 'Misc';
+            $misc->sequence = 99;
+            $misc->added_by = $req->session()->get('staffdata')['id'];
+            $misc->save();
+          }
 
-        // reassign to misc skill cat
-        $delskill->CommonSkillset->update(['skill_category_id' => $misc->id]);
+          // reassign to misc skill cat
+          $delskill->CommonSkillset->update(['skill_category_id' => $misc->id]);
+
+        }
 
         // then only delete the skill cat
         $delskill->delete();
