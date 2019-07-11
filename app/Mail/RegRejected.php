@@ -20,7 +20,7 @@ class RegRejected extends Mailable
      */
     public function __construct($rejusr)
     {
-        $this->$rejecteduser = $rejusr;
+        $this->rejecteduser = $rejusr;
     }
 
     /**
@@ -30,6 +30,6 @@ class RegRejected extends Mailable
      */
     public function build()
     {
-        return $this->subject('trUSt registration ' . $this->$rejecteduser->action)->view('email.regreject');
+        return $this->subject('trUSt registration ' . $this->rejecteduser->action)->view('email.regreject');
     }
 }
