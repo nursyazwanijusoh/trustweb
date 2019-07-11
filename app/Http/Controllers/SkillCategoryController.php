@@ -152,7 +152,10 @@ class SkillCategoryController extends Controller
     $cs = CommonSkillset::findOrFail($req->id);
 
     // delete all the personal skills tied to this
-    $cs->PersonalSkillset->delete();
+    $pss = $cs->PersonalSkillset;
+    foreach ($pss as $key => $value) {
+      $value->delete();
+    }
 
     // then delete itself
     $cs->delete();
