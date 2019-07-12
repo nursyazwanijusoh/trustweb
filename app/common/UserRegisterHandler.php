@@ -101,14 +101,12 @@ class UserRegisterHandler
           $errormsg = "Div not allowed";
         } else {
           // get the subords info
-          // $newsubs = $ldapherpel->getSubordinate($user->name);
-          // if($newsubs['code'] == 200){
-          //   UserRegisterHandler::getSubords($user->id, $newsubs['data']);
-          // }
-          //
-          // UserRegisterHandler::amIsubords($user->id, $user->staff_no);
-
           if($isweb == 1){
+            $newsubs = $ldapherpel->getSubordinate($user->name);
+            if($newsubs['code'] == 200){
+              UserRegisterHandler::getSubords($user->id, $newsubs['data']);
+            }
+            UserRegisterHandler::amIsubords($user->id, $user->staff_no);
             Auth::loginUsingId($user->id, false);
           }
         }
