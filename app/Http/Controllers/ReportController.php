@@ -72,7 +72,7 @@ class ReportController extends Controller
       }
     }
 
-    $heighttt = 50 + (30 * count($value));
+    $heighttt = 40 + (20 * count($value));
 
     $schart = app()->chartjs
          ->name('barChartTest')
@@ -157,7 +157,7 @@ class ReportController extends Controller
         ]
       );
 
-      $heighttt = 50 + (30 * count($label));
+      $heighttt = 70 + (20 * count($label));
 
     $schart = app()->chartjs
          ->name('barChartTest')
