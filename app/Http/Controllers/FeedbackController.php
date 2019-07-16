@@ -42,8 +42,8 @@ class FeedbackController extends Controller
       $fb->content = $request->content;
       $fb->agent = $request->header('user-agent');
 
-      if($req->filled('ctc')){
-        $fb->contact = $req->ctc;
+      if($request->filled('ctc')){
+        $fb->contact = $request->ctc;
       } else {
         $fb->contact = 'no';
       }
