@@ -617,7 +617,7 @@ class ReportController extends Controller
       }
 
       $dset = [
-            'label' => $oneday->format('d-m-Y'),
+            'label' => $oneday->format('D d-M'),
             'data' => $ddata,
             'backgroundColor' => $bgcolors[$dsetcount],
             'borderColor' => $linecolors[$dsetcount],
