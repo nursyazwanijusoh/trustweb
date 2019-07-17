@@ -591,7 +591,8 @@ class ReportController extends Controller
     $building = building::find($req->floor_id);
 
     $daterange = new DatePeriod($fromdate, DateInterval::createFromDateString('1 day'), $todate);
-    $label = ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+    $label = ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'];
+    $actlabel = ['8 am', '9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm', '7 pm'];
     $datasets = [];
     $dsetcount = 0;
 
@@ -631,7 +632,7 @@ class ReportController extends Controller
            ->name('barChartTest')
            ->type('line')
            ->size(['width' => 400, 'height' => 200])
-           ->labels($label)
+           ->labels($actlabel)
            ->datasets($datasets)
            ->options([
              'responsive' => true,
