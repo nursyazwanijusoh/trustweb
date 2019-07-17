@@ -45,7 +45,7 @@ class BookingHelper extends Controller
   }
 
   public function getBuildingInfo($building_id){
-    $build = building::where('id', $building_id)->first();
+    $build = building::findOrFail($building_id);
 
     return $build; //->floor_name . '@' . $build->building_name;
 
@@ -232,6 +232,7 @@ class BookingHelper extends Controller
           $theseat->save();
         }
       } elseif ($theseat->status == 3) {
+        $theseat->Occupant;
         return $this->respond_json(401, 'seat occupied', $theseat);
       }
 

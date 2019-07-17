@@ -30,6 +30,7 @@ class MiscController extends Controller
     $fb->title = $req->title;
     $fb->content = $req->content;
 		$fb->agent = $req->device;
+		$fb->contact = $req->filled('ctc') ? $req->ctc : '';
 		$fb->status = 1;
 		$fb->save();
 

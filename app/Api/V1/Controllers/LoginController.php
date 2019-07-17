@@ -27,8 +27,9 @@ class LoginController extends Controller
 		if($validator->fails()){
 			return $this->respond_json(412, 'Invalid input', $input);
 		}
+		$push = $req->filled('pnid') ? $req->pnid : '';
 
-		$logresp = UserRegisterHandler::userLogin($req->staff_no, $req->password);
+		$logresp = UserRegisterHandler::userLogin($req->staff_no, $req->password, 0, $push);
 
 		// dd($logresp);
 

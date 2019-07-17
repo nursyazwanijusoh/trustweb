@@ -44,7 +44,7 @@ class UserRegisterHandler
     return $user;
   }
 
-  public static function userLogin($username, $password, $isweb = 0){
+  public static function userLogin($username, $password, $isweb = 0, $pushid = ''){
     // first, check if this user exists
     $ldapherpel = new LdapHelper;
     $errormsg = "success";
@@ -97,7 +97,7 @@ class UserRegisterHandler
 
         // check if my division is not allowed
         $cconfig = CommonConfig::where('key', 'lock_division')->first();
-        if($cconfig && $cconfig->value = 'true' && $user->role == 3 && $user->Division->allowed == false){
+        if($cconfig && $cconfig->value == 'true' && $user->role == 3 && $user->Division->allowed == false){
           $errormsg = "Div not allowed";
         } else {
           // get the subords info
@@ -111,6 +111,15 @@ class UserRegisterHandler
           }
         }
       }
+    }
+
+    if($errormsg == 'success' && $isweb == 0){
+      $user->pushnoti_id = $pushid;
+      $user->save();
+      $user['token'] = $user->createToken('trUSt')->accessToken;
+
+
+
     }
 
     return [

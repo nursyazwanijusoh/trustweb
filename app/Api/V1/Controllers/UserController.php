@@ -308,6 +308,7 @@ class UserController extends Controller
         'photo_url' => $staffdata->photo_url,
         'staff_id' => $staffdata->staff_id,
         'role' => $staffdata->role,
+        'pushnoti_id' => $staffdata->pushnoti_id,
         'allowed_building' => json_decode($staffdata->allowed_building)
       ];
 
@@ -338,5 +339,9 @@ class UserController extends Controller
       }
 
       return $actlist;
+    }
+
+    public function pg(Request $req){
+      return $req->user();
     }
 }

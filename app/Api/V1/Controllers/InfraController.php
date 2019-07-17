@@ -271,6 +271,11 @@ class InfraController extends Controller
           return $this->respond_json(412, 'Invalid input', $input);
         }
 
+        $tvuild = building::find($req->building_id);
+        if(!$tvuild){
+          return $this->respond_json(404, 'not found', $req->all());
+        }
+
         $bookh = new BookingHelper;
         $bs = $bookh->getBuildingStat($req->building_id);
 

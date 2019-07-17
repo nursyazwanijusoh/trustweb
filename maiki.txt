@@ -1,0 +1,9 @@
+vagrant@homestead:~/code/trust$ php artisan passport:install
+Encryption keys generated successfully.
+Personal access client created successfully.
+Client ID: 1
+Client secret: 2BVelRNkuF95aLEudJTlOsN9Jz0rj8qbcXknhcmf
+Password grant client created successfully.
+Client ID: 2
+Client secret: mPaYjAzJ8ZqjOWDadLnCWNSN20f77q2ljMlYakAI
+
