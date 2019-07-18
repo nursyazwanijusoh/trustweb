@@ -716,7 +716,7 @@ class ReportController extends Controller
              ],
              [
                  "label" => "Checked-in",
-                 'backgroundColor' => 'rgba(255, 150, 5, 0.9)',
+                 'backgroundColor' => 'rgba(0, 0, 255, 0.9)',
                  'data' => $lobcekin
              ]
          ])
