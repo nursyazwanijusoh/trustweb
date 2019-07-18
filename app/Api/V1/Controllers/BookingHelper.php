@@ -196,6 +196,7 @@ class BookingHelper extends Controller
     $freecount = place::where('building_id', $building_id)->where('status', 1)->where('seat_type', 1)->count();
     $reservedcount = place::where('building_id', $building_id)->where('status', 2)->where('seat_type', 1)->count();
     $occupiedcount = place::where('building_id', $building_id)->where('status', 3)->where('seat_type', 1)->count();
+    $persen = $totalcount > 0 ? ($totalcount - $freecount) / $totalcount * 100 : 0;
 
     $thebuild = $this->getBuildingInfo($building_id);
     $loc_name = $thebuild->floor_name . '@' . $thebuild->building_name;
@@ -206,7 +207,8 @@ class BookingHelper extends Controller
       'total_seat' => $totalcount,
       'free_seat' => $freecount,
       'reserved_seat' => $reservedcount,
-      'occupied_seat' => $occupiedcount
+      'occupied_seat' => $occupiedcount,
+      'usage_percent' => $persen
     ];
   }
 
