@@ -199,7 +199,7 @@ class BookingHelper extends Controller
     $persen = $totalcount > 0 ? ($totalcount - $freecount) / $totalcount * 100 : 0;
 
     $thebuild = $this->getBuildingInfo($building_id);
-    $loc_name = $thebuild->floor_name . '@' . $thebuild->building_name;
+    $loc_name = $thebuild->floor_name . ' @ ' . $thebuild->building_name;
 
     return [
       'building_id' => $building_id,
