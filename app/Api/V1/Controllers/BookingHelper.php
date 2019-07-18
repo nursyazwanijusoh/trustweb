@@ -208,7 +208,7 @@ class BookingHelper extends Controller
       'free_seat' => $freecount,
       'reserved_seat' => $reservedcount,
       'occupied_seat' => $occupiedcount,
-      'usage_percent' => $persen
+      'usage_percent' => round($persen)
     ];
   }
 
