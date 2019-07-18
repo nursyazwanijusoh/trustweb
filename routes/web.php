@@ -101,6 +101,7 @@ Route::get('/reports/staffdayrpt', 'ReportController@staffDayRptSearch')->name('
 Route::get('/reports/staffspecificdayrpt', 'ReportController@staffSpecificDayRptSearch')->name('reports.staff.sdrs');
 Route::get('/reports/floorutildetail', 'ReportController@floorUtilDetail')->name('reports.fud');
 Route::post('/reports/floorutildetailr', 'ReportController@floorUtilDetailRes')->name('reports.fudr');
+Route::get('/reports/divcheckin', 'ReportController@checkinByDiv')->name('reports.divcheckin');
 
 // hot desking reports
 Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->name('hdreports.dbdf');

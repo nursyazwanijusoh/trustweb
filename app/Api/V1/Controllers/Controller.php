@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use \DateTime;
 use QrCode;
 use App\Subordinate;
+use Illuminate\Http\Request;
 
 /**
  * Shared functions will be placed here
@@ -59,22 +60,22 @@ class Controller extends BaseController
     return 'Rumah Api';
   }
 
-  function playground(){
+  function playground(Request $req){
 
-    $qrarray = [];
-    for ($i=1; $i < 20; $i++) {
-      $QRdata = [
-          'qrcode' => 'MTM28s_' . $i,
-          'label' => 'MTM28s_' . $i
-        ];
-      array_push($qrarray, $QRdata);
+    // $qrarray = [];
+    // for ($i=1; $i < 20; $i++) {
+    //   $QRdata = [
+    //       'qrcode' => 'MTM28s_' . $i,
+    //       'label' => 'MTM28s_' . $i
+    //     ];
+    //   array_push($qrarray, $QRdata);
+    //
+    // }
+    //
+    // return view('admin.qrdisplay', ['qdata' => $qrarray]);
 
-    }
-
-    return view('admin.qrdisplay', ['qdata' => $qrarray]);
-
-    // $nom = new LdapHelper;
-    // return $nom->fetchUser('S53788', 'cn');
+    $nom = new LdapHelper;
+    return $nom->fetchUser($req->id, 'cn');
     // $sum = \DB::table('activities')->where('task_id', 1)->sum('hours_spent');
     // $sum = \DB::table()
 

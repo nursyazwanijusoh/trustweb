@@ -677,5 +677,79 @@ class ReportController extends Controller
       // return view('report.regstat', ['chart' => $schart, 'title' => 'Registered User By Division']);
   }
 
+  public function checkinByDiv(){
+    $unitlist = \DB::table('users')
+      ->select('lob', \DB::raw('count(*) as total'))
+      ->where('isvendor', 0)
+      ->groupBy('lob')->get();
+
+    $lobcount = [];
+    $lobcekin = [];
+    $label = [];
+
+    foreach ($unitlist as $key => $value) {
+      array_push($lobcount, $value->total);
+
+      $ac = User::where('lob', $value->lob)->whereNotNull('curr_checkin')->count();
+      array_push($lobcekin, $ac);
+
+      $unit = Unit::where('pporgunit', $value->lob)->first();
+      $unitname = $value->lob;
+      if($unit){
+        $unitname = $unit->pporgunitdesc;
+      }
+      array_push($label, $unitname);
+    }
+
+    $heighttt = 40 + (30 * count($lobcount));
+
+    $schart = app()->chartjs
+         ->name('barChartTest')
+         ->type('horizontalBar')
+         ->size(['width' => 400, 'height' => $heighttt])
+         ->labels($label)
+         ->datasets([
+             [
+                 "label" => "Registered Staff",
+                 'backgroundColor' => 'rgba(255, 99, 132, 0.9)',
+                 'data' => $lobcount
+             ],
+             [
+                 "label" => "Checked-in",
+                 'backgroundColor' => 'rgba(255, 150, 5, 0.9)',
+                 'data' => $lobcekin
+             ]
+         ])
+         ->options([
+           'responsive' => true,
+           'tooltips' => [
+             'mode' => 'index',
+             'intersect' => false,
+           ],
+           'hover' => [
+             'mode' => 'nearest',
+             'intersect' => true,
+           ],
+           'scales' => [
+             'xAxes' => [[
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Staff Count',
+               ]
+             ]],
+             'yAxes' => [[
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Division',
+               ]
+             ]]
+           ]
+         ]);
+
+    // dd($schart);
+
+    return view('report.regstat', ['chart' => $schart, 'title' => 'Check-in By Division']);
+  }
+
 
 }
