@@ -83,6 +83,7 @@ Route::post('/user/addtask', 'TStaffController@addTask')->name('staff.addtask');
 Route::post('/user/closetask', 'TStaffController@closeTask')->name('staff.closetask');
 // Route::get('/user/addactivity', 'TStaffController@addActivity')->name('staff.addact');
 // Route::post('/user/doaddactivity', 'TStaffController@doAddACtivity')->name('staff.doaddact');
+Route::get('/user/lochist', 'TStaffController@locHistory')->name('staff.lochist');
 
 // GWD V2
 

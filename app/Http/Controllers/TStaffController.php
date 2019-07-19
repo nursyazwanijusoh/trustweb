@@ -242,4 +242,21 @@ class TStaffController extends Controller
 
   }
 
+  public function locHistory(Request $req){
+    $staffid = $req->session()->get('staffdata')['id'];
+    if($req->filled('staff_id')){
+      $staffid = $req->staff_id;
+    }
+    $staffdata = User::findOrFail($staffid);
+
+    $bh = new BookingHelper;
+    $ch = $bh->getCheckinHistory($staffid);
+
+    return view('staff.lochist', [
+      'username' => $staffdata->name,
+      'activities' => $ch
+    ]);
+
+  }
+
 }

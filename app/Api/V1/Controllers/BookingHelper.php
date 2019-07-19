@@ -275,5 +275,14 @@ class BookingHelper extends Controller
     }
   }
 
+  public function getCheckinHistory($staffid){
+    $lastmon = date("Y-m-d", strtotime("-1 months"));
+    $cekins = Checkin::where('user_id', $staffid)
+      ->whereDate('checkin_time', '>', $lastmon)
+      ->get();
+
+    return $cekins;
+  }
+
 
 }

@@ -25,6 +25,7 @@
               <div class="card-body">
                 <h5 class="card-title">Action</h5>
                 <div class="list-group">
+                  <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Where I've Been</a>
                   <a href="{{ route('ps.list', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Personal Skillset</a>
                   <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">My Monthly Activities</a>
                   @if($cuser == $staff_id)
