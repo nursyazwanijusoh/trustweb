@@ -87,7 +87,7 @@
                     @endforeach
 
                     <input type="hidden" name="lob" value="{{ $staffdata['DEPARTMENT'] }}" />
-                    <input type="hidden" name="mobile" value="{{ $staffdata['MOBILE_NO'] }}" />
+                    <input type="hidden" name="mobile" value="{{ substr($staffdata['MOBILE_NO'], 0, 14) }}" />
                     <input type="hidden" name="email" value="{{ $staffdata['EMAIL'] }}" />
                     <input type="hidden" name="id" value="{{ $staffdata['id'] }}" />
 
