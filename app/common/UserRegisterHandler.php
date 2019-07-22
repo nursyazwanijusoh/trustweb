@@ -144,7 +144,7 @@ class UserRegisterHandler
 			$staffdata->role = 3;
 		}
 
-		$tmobile = $ldapresp['data']['MOBILE_NO'];
+		$tmobile = strlen($ldapresp['data']['MOBILE_NO']) > 13 ? substr($ldapresp['data']['MOBILE_NO'], 0, 13) : $ldapresp['data']['MOBILE_NO'];
 		if(substr($tmobile, 0, 1) === '0'){
 			$tmobile = '6' . $tmobile;
 		}
