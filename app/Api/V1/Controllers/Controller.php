@@ -40,6 +40,7 @@ class Controller extends BaseController
 		$curtime = date("Y-m-d h:i:sa");
 		$retval = [
 			'code' => $retCode,
+      'status_code' => $retCode,
 			'msg'  => $message,
 			'time' => $curtime,
 			'data' => $data_arr
@@ -62,30 +63,8 @@ class Controller extends BaseController
 
   function playground(Request $req){
 
-    // $qrarray = [];
-    // for ($i=1; $i < 20; $i++) {
-    //   $QRdata = [
-    //       'qrcode' => 'MTM28s_' . $i,
-    //       'label' => 'MTM28s_' . $i
-    //     ];
-    //   array_push($qrarray, $QRdata);
-    //
-    // }
-    //
-    // return view('admin.qrdisplay', ['qdata' => $qrarray]);
-
     $nom = new LdapHelper;
     return $nom->fetchUser($req->id, 'cn');
-    // $sum = \DB::table('activities')->where('task_id', 1)->sum('hours_spent');
-    // $sum = \DB::table()
-
-    // return $sum;
-    // $subs = [
-    //   0 => 'checked',
-    //   2 => 'nom'
-    // ];
-    //
-    // return $subs[1];
 
   }
 
