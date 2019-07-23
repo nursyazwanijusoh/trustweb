@@ -6,7 +6,11 @@
 <body>
 <h2>Dear {{ $rejecteduser->name }}</h2>
 <br/>
-Your trUSt registration has been {{ $rejecteduser->action }}.
+@if($rejecteduser->action == 'Reject')
+Your trUSt registration has been rejected.
+@else
+Your trUSt account has been deleted.
+@endif
 <br/><br/>
 Remark from admin:
 <p>
