@@ -182,7 +182,8 @@ class TAdminController extends Controller
   }
 
   public function findStaff(Request $req){
-    $myrole = $req->user()->role;
+    // $myrole = $req->user()->role;
+    $myrole = Session::get('staffdata')['role'];
     $blist = building::all();
     $selected = [
       0 => '',
