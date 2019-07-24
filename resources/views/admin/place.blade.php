@@ -7,6 +7,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Work Place Management</div>
+                @if($role == 0)
                 <div class="card-body">
                   <form method="POST" action="{{ route('admin.addbuild', [], false) }}">
                     @csrf
@@ -50,10 +51,11 @@
                     </div>
                   </form>
                 </div>
+                @endif
                 <!-- <div class="card-header"> </div> -->
                 <div class="card-body">
                   <h5 class="card-title">List of work space</h5>
-                  <table class="table table-striped table-hover">
+                  <table id="taskdetailtable" class="table table-striped table-hover">
                     <thead>
                       <tr>
                         <th scope="col">Building</th>
@@ -61,7 +63,9 @@
                         <th scope="col">Unit</th>
                         <th scope="col">Remark</th>
                         <th scope="col">Added By</th>
+                        @if($role == 0)
                         <th scope="col">Action</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
@@ -72,7 +76,9 @@
                         <td>{{ $atask['unit'] }}</td>
                         <td>{{ $atask['remark'] }}</td>
                         <td>{{ $atask['created_by'] }}</td>
+                        @if($role == 0)
                         <td><a href="{{ route('admin.delbuild', ['build_id' => $atask['id']], false) }}">Remove</a></td>
+                        @endif
                       </tr>
                       @endforeach
                     </tbody>
@@ -83,3 +89,14 @@
     </div>
 </div>
 @endsection
+
+@section('page-js')
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" defer>
+$(document).ready(function() {
+    $('#taskdetailtable').DataTable();
+} );
+</script>
+@stop

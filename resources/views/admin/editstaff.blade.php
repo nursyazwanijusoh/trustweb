@@ -66,7 +66,7 @@
                       <label for="srole" class="col-md-4 col-form-label text-md-right">Role</label>
                       <div class="col-md-6">
                         <select class="form-control" id="srole" name="srole" autofocus>
-                          @if ($role == 0)
+                          @if ($staffdata['btn_state'] == 'disabled' || $role == 0)
                           <option value="0" title="Great power comes with great responsibilities" {{ $selected[0]}}>Super Admin</option>
                           @endif
                           <option value="1" title="Be responsible" {{ $selected[1] }}>Floor Admin</option>
@@ -79,7 +79,7 @@
                     <h5 class="card-title">Select which floor to give access to this staff</h5>
                     @foreach($blist as $abuild)
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="{{ $abuild['id'] }}" id="defaultCheck{{ $abuild['id'] }}" {{ $abuild['chk'] }} name="cbfloor[]">
+                      <input class="form-check-input" type="checkbox" value="{{ $abuild['id'] }}" id="defaultCheck{{ $abuild['id'] }}" {{ $abuild['chk'] }} name="cbfloor[]" {{ $cben }} >
                       <label class="form-check-label" for="defaultCheck{{ $abuild['id'] }}">
                         {{ $abuild['unit'] . ' -> ' . $abuild['floor_name'] . '@' . $abuild['building_name'] }}
                       </label>

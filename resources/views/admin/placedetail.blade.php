@@ -10,7 +10,7 @@
                 <div class="card-body">
                   <form method="POST" action="{{ route('admin.modbuild', [], false) }}">
                     @csrf
-                    <h5 class="card-title">Edit Place Information</h5>
+                    <h5 class="card-title">{{ $build->floor_name . ' @ ' . $build->building_name }}</h5>
                     <input type="hidden" name="build_id" value="{{ $build['id'] }}"  />
                     <div class="form-group row">
                         <label for="building_name" class="col-md-4 col-form-label text-md-right">Office Building</label>
@@ -46,13 +46,18 @@
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                           @if($build['seat_count'] != 0)
+                          @if($canedit == true)
                           <a href="{{ route('admin.delallseat', ['build_id' => $build['id']], false) }}"><button type="button" class="btn btn-danger">Remove all seats</button></a>
+                          @endif
                           <a href="{{ route('admin.getallqr', ['build_id' => $build['id']], false) }}"><button type="button" class="btn btn-warning">Get ALL QR Code</button></a>
                           @endif
+                          @if($canedit == true)
                           <button type="submit" class="btn btn-primary">Save</button>
+                          @endif
                         </div>
                     </div>
                   </form>
+                  @if($canedit == true)
                   <form method="POST" action="{{ route('admin.genseats', [], false) }}">
                     @csrf
                     <h5 class="card-title">Add Seats</h5>
@@ -104,7 +109,7 @@
                         </div>
                     </div>
                   </form>
-
+                  @endif
                 </div>
                 <!-- <div class="card-header"> </div> -->
                 <div class="card-body">
@@ -130,8 +135,10 @@
                         @endif
                         <td>
                           <a href="{{ route('admin.getqr', ['seat_id' => $atask['id']], false) }}">Get QR</a>
+                          @if($canedit == true)
                           &nbsp;
                           <a href="{{ route('admin.delaseat', ['seat_id' => $atask['id']], false) }}">Delete</a>
+                          @endif
                         </td>
                       @endforeach
                     </tbody>

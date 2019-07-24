@@ -34,8 +34,8 @@ Route::post('/admin/addat', 'TAdminController@doActivityTypeAdd')->name('admin.a
 Route::get('/admin/delat', 'TAdminController@disableActivityType')->name('admin.delat');
 // admin building
 Route::get('/admin/build', 'TAdminController@buildingIndex')->name('admin.build');
-Route::post('/admin/addbuild', 'TAdminController@addBuilding')->name('admin.addbuild');
-Route::get('/admin/delbuild', 'TAdminController@delBuilding')->name('admin.delbuild');
+Route::post('/admin/addbuild', 'TAdminController@addBuilding')->name('admin.addbuild')->middleware('SuperAdminGate');
+Route::get('/admin/delbuild', 'TAdminController@delBuilding')->name('admin.delbuild')->middleware('SuperAdminGate');
 Route::post('/admin/modbuild', 'TAdminController@modBuilding')->name('admin.modbuild');
 Route::post('/admin/genseats', 'TAdminController@genSeats')->name('admin.genseats');
 Route::get('/admin/getqr', 'TAdminController@getqr')->name('admin.getqr');
@@ -62,7 +62,8 @@ Route::post('/admin/upstaffdiv', 'TAdminController@updateStaffDiv')->name('admin
 Route::get('/admin/sr', 'TAdminController@showStaffRole')->name('admin.sr');
 Route::post('/admin/addsr', 'TAdminController@assignRole')->name('admin.addsr');
 Route::get('/admin/staff', 'TAdminController@blankStaff')->name('admin.st');
-Route::post('/admin/editst', 'TAdminController@updateUser')->name('admin.upst');
+Route::get('/admin/list', 'TAdminController@listAdmin')->name('admin.list');
+Route::post('/admin/editst', 'TAdminController@updateUser')->name('admin.upst')->middleware('SuperAdminGate');
 Route::post('/admin/findstaff', 'TAdminController@findStaff')->name('admin.findst');
 Route::get('/admin/sharedskill', 'TAdminController@showSharedSkillset')->name('admin.sharedskill');
 

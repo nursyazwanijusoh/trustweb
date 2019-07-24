@@ -177,12 +177,12 @@ class TAdminController extends Controller
 
     return view('admin.editstaff', [
       'blist' => $blist, 'role' => $myrole,
-      'staffdata' => $staff, 'selected' => $selected
+      'staffdata' => $staff, 'selected' => $selected, 'cben' => ''
     ]);
   }
 
   public function findStaff(Request $req){
-    $myrole = Session::get('staffdata')['role'];
+    $myrole = $req->user()->role;
     $blist = building::all();
     $selected = [
       0 => '',
@@ -192,8 +192,20 @@ class TAdminController extends Controller
     ];
 
     $staffft = User::where('staff_no', $req->staff_no)->first();
+    $flooren = 'disabled';
+
+    if($myrole == 0){
+      $flooren = '';
+    }
 
     if($staffft){
+      $btntxt = 'Update';
+      $btnstate = '';
+      if($myrole >= $staffft->role){
+        $btntxt = 'This user has >= role';
+        $btnstate = 'disabled';
+      }
+
       $staff = [
         'STAFF_NO' => $staffft->staff_no,
         'NAME' => $staffft->name,
@@ -203,8 +215,8 @@ class TAdminController extends Controller
         'MOBILE_NO' => $staffft->mobile_no,
         'EMAIL' => $staffft->email,
         'id' => $staffft->id,
-        'btn_txt' => 'Update',
-        'btn_state' => ''
+        'btn_txt' => $btntxt,
+        'btn_state' => $btnstate
       ];
 
       // set which building to be checked
@@ -260,7 +272,8 @@ class TAdminController extends Controller
         return view('admin.editstaff', [
           'blist' => $blist, 'role' => $myrole,
           'staffdata' => $staff, 'selected' => $selected,
-          'alert' => 'Staff not exist in LDAP'
+          'alert' => 'Staff not exist in LDAP',
+          'cben' => $flooren
         ]);
       } else {
           $staff = $lresp['data'];
@@ -279,12 +292,13 @@ class TAdminController extends Controller
       return view('admin.editstaff', [
         'blist' => $blist, 'role' => $myrole,
         'staffdata' => $staff, 'selected' => $selected,
-        'alert' => $req->nc
+        'alert' => $req->nc, 'cben' => $flooren
       ]);
     } else {
       return view('admin.editstaff', [
         'blist' => $blist, 'role' => $myrole,
-        'staffdata' => $staff, 'selected' => $selected
+        'staffdata' => $staff, 'selected' => $selected,
+        'cben' => $flooren
       ]);
     }
   }
@@ -318,24 +332,37 @@ class TAdminController extends Controller
       $user->lob = $req->lob;
       $user->mobile_no = $req->mobile;
       $user->email = $req->email;
+      $user->role = 3;
       $nc = 'Profile Created';
     }
 
-    $user->role = $req->srole;
+    // to prevent 'backdoor' update
+    $myrole = $req->user()->role;
+
+    //
+    if($myrole < $user->role ){
+      if($req->srole >= $myrole){
+        $user->role = $req->srole;
+      } else {
+        $nc = 'Cannot assign role higher than mine';
+      }
+    } else {
+      $nc = 'Cannot change role of someone higher than me';
+    }
+
+
     if(isset($req->cbfloor)){
       $user->allowed_building = json_encode($req->cbfloor);
     } else {
       $user->allowed_building = '';
     }
 
-    // dd($user);
-
     $user->save();
 
     // build up the POST 'redirect' request
     $redirreq = new Request;
     $redirreq->setMethod('POST');
-    $redirreq->merge(['staff_no' => $req->staff_no2]);
+    $redirreq->merge(['staff_no' => $req->staff_no2, 'nc' => $nc]);
 
     return $this->findStaff($redirreq);
 
@@ -475,13 +502,12 @@ class TAdminController extends Controller
   }
 
   // -------- building mgmt ----
-  public function buildingIndex(){
-    // fetch all current list of buildings
-    $buildlist = building::all();
+  public function buildingIndex(Request $req){
     $offices = Office::all();
+    $buildlist = building::all();
 
     // then call the view
-    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices]);
+    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices, 'role' => $req->user()->role]);
   }
 
   public function addBuilding(Request $req){
@@ -504,7 +530,7 @@ class TAdminController extends Controller
     $offices = Office::all();
 
     // then call the view
-    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices]);
+    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices, 'role' => $req->user()->role]);
   }
 
   public function delBuilding(Request $req){
@@ -515,7 +541,7 @@ class TAdminController extends Controller
 
       foreach($seats as $aseat){
         // get all checkins under this seat
-        $cekins = $seat->Checkin;
+        $cekins = $aseat->Checkin;
         foreach($cekins as $acek){
           $bh->checkOut($acek->user_id, 'building deleted');
         }
@@ -529,7 +555,7 @@ class TAdminController extends Controller
     $buildlist = building::all();
     $offices = Office::all();
     // then call the view
-    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices]);
+    return view('admin.place', ['buildlist' => $buildlist, 'office' => $offices, 'role' => $req->user()->role]);
 
   }
 
@@ -647,12 +673,31 @@ class TAdminController extends Controller
       '3' => 'Occupied'
     ];
 
+    $canedit = true;
+    if($req->user()->role != 0){
+      $canedit = false;
+      // check if this floor admin allowed to edit this floor
+      $myfloorlist = json_decode($req->user()->allowed_building);
+      foreach($myfloorlist as $alfoor){
+        if($alfoor == $req->build_id){
+          $canedit = true;
+          break;
+        }
+      }
+    }
+
     return view('admin.placedetail', [
       'build' => $build,
       'seatlist' => $seats,
       'status' => $lov,
-      'office' => $offices
+      'office' => $offices,
+      'canedit' => $canedit
     ]);
+  }
+
+  public function listAdmin(){
+    $admi = User::where('status', 1)->where('role', '<', 2)->get();
+    return view('admin.adminlist', ['users' => $admi]);
   }
 
   public function getallqr(Request $req){

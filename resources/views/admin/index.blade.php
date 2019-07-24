@@ -10,7 +10,8 @@
                 <div class="card-body">
                   <h5 class="card-title">User Management</h5>
                   <div class="list-group">
-                    <a href="{{ route('admin.sr', [], false) }}" class="list-group-item list-group-item-action">Assign Floor Access By Division</a>
+                    <!-- <a href="{{ route('admin.sr', [], false) }}" class="list-group-item list-group-item-action">Assign Floor Access By Division</a> -->
+                    <a href="{{ route('admin.list', [], false) }}" class="list-group-item list-group-item-action">Admin List</a>
                     <a href="{{ route('admin.st', [], false) }}" class="list-group-item list-group-item-action">Edit Staff (TM)</a>
                     <a href="{{ route('admin.reglist', [], false) }}" class="list-group-item list-group-item-action">Vendor Users
                     @if($prc > 0)
