@@ -94,7 +94,7 @@ class LdapHelper extends Controller
           // perform the search
           $ldres = ldap_search($con, 'ou=users,o=data', "$searchtype=$username");
           $ldapdata = ldap_get_entries($con, $ldres);
-
+          // dd($ldapdata);
           // return $ldapdata;
 
           if($ldapdata['count'] == 0){
@@ -113,7 +113,10 @@ class LdapHelper extends Controller
               'UNIT' => $ldapdata['0']['pporgunitdesc']['0'],
               'SUBUNIT' => $ldapdata['0']['ppsuborgunitdesc']['0'],
               'DEPARTMENT' => $ldapdata['0']['pporgunit']['0'],
-              // 'COST_CENTER' => $costcenter,
+              'COST_CENTER' => $costcenter,
+              'SAP_NUMBER' => $ldapdata['0']['employeenumber']['0'],
+              // 'JOB_STATUS' => $ldapdata['0']['ppjobstatus']['0'],
+              'JOB_GRADE' => $ldapdata['0']['ppjobgrade']['0'],
               // 'BC_NAME' => $bcname,
               // 'ROLE' => $role,
               'NIRC' => $ldapdata['0']['ppnewic']['0'],
