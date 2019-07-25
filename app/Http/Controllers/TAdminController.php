@@ -679,10 +679,12 @@ class TAdminController extends Controller
       $canedit = false;
       // check if this floor admin allowed to edit this floor
       $myfloorlist = json_decode($req->user()->allowed_building);
-      foreach($myfloorlist as $alfoor){
-        if($alfoor == $req->build_id){
-          $canedit = true;
-          break;
+      if(isset($myfloorlist)){
+        foreach($myfloorlist as $alfoor){
+          if($alfoor == $req->build_id){
+            $canedit = true;
+            break;
+          }
         }
       }
     }
