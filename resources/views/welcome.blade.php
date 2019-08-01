@@ -1,423 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <title>Welcome to trUSt</title>
-	<!-- CSS -->
-<link href="/css/app.css" rel="stylesheet">
-    <!-- <link href="css/fp/bootstrap.min.css" rel="stylesheet">
-    <link href="css/fp/font-awesome.min.css" rel="stylesheet">
-    <link href="css/fp/animate.min.css" rel="stylesheet">
-    <link href="css/fp/owl.carousel.css" rel="stylesheet">
-    <link href="css/fp/owl.transitions.css" rel="stylesheet">
-    <link href="css/fp/prettyPhoto.css" rel="stylesheet">
-    <link href="css/fp/main.css" rel="stylesheet">
-    <link href="css/fp/styles.css" rel="stylesheet"> -->
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
-    <link rel="shortcut icon" href="images/ico/favicon.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-</head><!--/head-->
+    <title>Reveal Bootstrap Template</title>
+    <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- <meta name=”viewport” content=”width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no”> -->
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-<body id="home" class="homepage">
+    <!-- Favicons -->
+    <link href="/welcome/img/TrustNew.png" rel="icon">
+    <link href="/welcome/img/TrustNew.png" rel="apple-touch-icon">
 
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="/welcome/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- /welcome/libraries CSS Files -->
+    <link href="/welcome/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/welcome/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/welcome/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="/welcome/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/welcome/lib/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="/welcome/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="/welcome/css/style.css" rel="stylesheet">
+
+    <style>
+    .vl {
+        border-left: 6px solid green;
+        height: 50px;
+    }
+    </style>
+
+    <!-- =======================================================
+    Theme Name: Reveal
+    Theme URL: https://bootstrapmade.com/reveal-bootstrap-corporate-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body id="body">
+
+    <!--==========================
+    Top Bar
+  ============================-->
+    <!-- <section id="topbar" class="d-none d-lg-block" style="background-color: orange">
+        <div class="container clearfix">
+            <div class="contact-info float-left">
+                <i class="fa fa-envelope-o"></i> <a href="mailto:contact@trust.tm.com.my">contact@trust.tm.com.my</a>
+                <i class="fa fa-phone"></i> +1 5589 55488 55
+            </div>
+        </div>
+    </section> -->
+
+    <!--==========================
+    Header
+  ============================-->
     <header id="header">
-        <nav id="main-menu" class="navbar navbar-default navbar-fixed-top" role="banner">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ route('welcome', [], false)}}"><img src="img/TrustNew.png" height="60" width="60" alt="logo"></a>
-                </div>
-
-                <div class="collapse navbar-collapse navbar-right">
-                    <ul class="nav navbar-nav">
-                        <li class="scroll active"><a href="#home">Home</a></li>
-                        <li class="scroll"><a href="#features">Features</a></li>
-                        <li class="scroll"><a href="#meet-team">Team</a></li>
-                        <li class="scroll"><a href="#contact">Contact</a></li>
-                        <li class="scroll"><a href="{{ route('login', [], false)}}">Login</a></li>
-                    </ul>
-                </div>
-            </div><!--/.container-->
-        </nav><!--/nav-->
-    </header><!--/header-->
-
-    <section id="main-slider">
-      <div id="wpagecaro" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#wpagecaro" data-slide-to="0" class="active"></li>
-          <li data-target="#wpagecaro" data-slide-to="1"></li>
-          <li data-target="#wpagecaro" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="d-block w-100" src="img/tm1.png" alt="First slide">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Gambar 2</h5>
-              <p>menara TM</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="img/tm2.jpg" alt="Second slide">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Gambar 2</h5>
-              <p>helipad</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="img/tm3.jpg" alt="Third slide">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Gambar 3</h5>
-              <p>salam bukan muhrim</p>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-prev" href="#wpagecaro" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#wpagecaro" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-    </section><!--/#main-slider-->
-
-    <section id="cta" class="wow fadeIn">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-9">
-                    <h3>OUR VISION</h3>
-                        <p><em>We Love Agile</em></p>
-                         <p>Agile working is all about creating a flexible and productive environment. By creating different working areas within the office you can ensure your staff have the complete freedom and flexibility to work where they want, when they want.
-
-                        Our expert team has more than 10 years experience in the industry. They work with your existing culture to create an agile working space that’s perfect for you and the way your organisation works.
-
-                        We are always researching the latest agile designs to bring you a unique and efficient office space that’s different from the norm. Providing your workforce with the freedom to make individual choices spurs creativity and intuitiveness, helps generate fresh ideas, and improves productivity and communication across different departments. With high-pressure, world-class organisations such as Google and Unilever utilising such environments you can be sure that your office interior design attracts the right talent, and brings positive measurable results to your business.
-
-                        We have years of experience that we use to bring you a totally unique and customised agile working strategy; working with you to decide what will work for you, and what won’t. We understand and appreciate that each client is different and we always tailor our designs to suit each clients individual circumstances, so you can embrace the innovation of agile working spaces with confidence..</p>
-                </div>
-
-            </div>
-        </div>
-    </section><!--/#cta-->
-
-    <section id="features" >
         <div class="container">
 
-            <div class="section-header">
-                <h2 class="section-title text-center wow fadeInDown">Features</h2>
-                <p class="text-center wow fadeInDown"> Trust application provide several features and module to simplify our users task. </p>
+            <div id="logo" class="pull-left">
+
+                <!-- <!-- Uncomment below if you prefer to use an image logo
+                <a class="v1" href="#body"><img src="/welcome/img/TM_LOGO.png" height="40" width="100" alt="" title=""
+                        style="padding-right: 20px;" /></a> -->
+                <a href="#body"><img src="/welcome/img/TrustNew.png" height="60" width="60" alt="" title="" /></a>
             </div>
 
-            <div class="row">
-                <div class="features">
-                    <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="0ms">
-                        <div class="media service-box">
-                            <div class="pull-left">
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">Check In</h4>
-                                <p>Check In and check Out via scanning the QR code</p>
-                            </div>
-                        </div>
-                    </div><!--/.col-md-4-->
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    <li class="menu-active"><a href="#body">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Features</a></li>
+                    <!-- <li class="menu-has-children"><a href="">Drop Down</a>
+            <ul>
+              <li><a href="#">Drop Down 1</a></li>
+              <li><a href="#">Drop Down 3</a></li>
+              <li><a href="#">Drop Down 4</a></li>
+              <li><a href="#">Drop Down 5</a></li>
+            </ul>
+          </li> -->
+                    <li><a id="downloada" href="#downloadmodal" role="button" data-toggle="modal">Download</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a id="logina" href="#loginModal" role="button" data-toggle="modal">Login</a></li>
+                </ul>
+            </nav><!-- #nav-menu-container -->
 
-                    <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="100ms">
-                        <div class="media service-box">
-                            <div class="pull-left">
-                                <i class="fa fa-search"></i>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">GIT Staff Search</h4>
-                                <p>Trust application allow the users to search GIT staff and locate them</p>
-                            </div>
-                        </div>
-                    </div><!--/.col-md-4-->
-
-                    <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="200ms">
-                        <div class="media service-box">
-                            <div class="pull-left">
-                                <i class="fa fa-pie-chart"></i>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading"> Reporting</h4>
-                                <p>Trust application provide pie-chart reporting to show the occupied of each office level</p>
-                            </div>
-                        </div>
-                    </div><!--/.col-md-4-->
-                </div>
-            </div><!--/.row-->
-        </div><!--/.container-->
-    </section><!--/#services-->
-
-
-<!--
-    <section id="meet-team">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title text-center wow fadeInDown">OUR TEAM</h2>
-                <p class="text-center wow fadeInDown">TRUST team members consist of highly qualified from different team and skillsets and specialist on their field</p>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-6 col-md-3">
-                    <div class="team-member wow fadeInUp" data-wow-duration="400ms" data-wow-delay="0ms">
-                        <div class="team-img">
-                            <img class="img-responsive img-circle" src="images/team/01.jpg" alt="">
-                        </div>
-                        <div class="team-info">
-                            <h3>Jane Dohan</h3>
-                            <span>Co-Founder</span>
-                        </div>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-                        <ul class="social-icons">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="team-member wow fadeInUp" data-wow-duration="400ms" data-wow-delay="100ms">
-                        <div class="team-img">
-                            <img class="img-responsive img-circle" src="images/team/02.jpg" alt="">
-                        </div>
-                        <div class="team-info">
-                            <h3>Leny Fuston</h3>
-                            <span>Accounter</span>
-                        </div>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-                        <ul class="social-icons">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="team-member wow fadeInUp" data-wow-duration="400ms" data-wow-delay="200ms">
-                        <div class="team-img">
-                            <img class="img-responsive img-circle" src="images/team/03.jpg" alt="">
-                        </div>
-                        <div class="team-info">
-                            <h3>Sander Bell</h3>
-                            <span>Designer</span>
-                        </div>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-                        <ul class="social-icons">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="team-member wow fadeInUp" data-wow-duration="400ms" data-wow-delay="300ms">
-                        <div class="team-img">
-                            <img class="img-responsive img-circle" src="images/team/04.jpg" alt="">
-                        </div>
-                        <div class="team-info">
-                            <h3>Nartleb August</h3>
-                            <span>Director</span>
-                        </div>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-                        <ul class="social-icons">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div> -->
-
-            <div class="divider"></div>
-
-
-            <div class="row">
-
-               <!-- <div class="col-sm-4">
-                    <h3 class="column-title">Modi Tempora</h3>
-                    <div role="tabpanel">
-                        <ul class="nav main-tab nav-justified" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#tab1" role="tab" data-toggle="tab" aria-controls="tab1" aria-expanded="true">2010</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#tab2" role="tab" data-toggle="tab" aria-controls="tab2" aria-expanded="false">2011</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#tab3" role="tab" data-toggle="tab" aria-controls="tab3" aria-expanded="false">2013</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#tab4" role="tab" data-toggle="tab" aria-controls="tab4" aria-expanded="false">2014</a>
-                            </li>
-                        </ul>
-                        <div id="tab-content" class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade active in" id="tab1" aria-labelledby="tab1">
-                                <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.</p>
-                                <p>velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero.</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="tab2">
-                                <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.</p>
-                                <p>velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero.</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="tab3" aria-labelledby="tab3">
-                                <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.</p>
-                                <p>velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero.</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="tab4" aria-labelledby="tab3">
-                                <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.</p>
-                                <p>velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <h3 class="column-title">Similique Sunt</h3>
-                    <strong>Voluptas Sit Aspernatur</strong>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-primary" role="progressbar" data-width="90">85%</div>
-                    </div>
-                    <strong>Quia Consequuntur</strong>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-primary" role="progressbar" data-width="85">70%</div>
-                    </div>
-                    <strong>Neque Porro Quisquam</strong>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-primary" role="progressbar" data-width="95">90%</div>
-                    </div>
-                    <strong>Numquam Eius</strong>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-primary" role="progressbar" data-width="78">65%</div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <h3 class="column-title">Dignissimos</h3>
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Ducimus qui blanditiis praesentium
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    Deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Nam libero tempore, cum soluta
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
-                                    Deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingThree">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Nobis est eligendi optio cumque
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                <div class="panel-body">
-                                    Deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-
-            </div>
         </div>
-    </section> <!--/#meet-team-->
 
+    </header><!-- #header -->
 
-    <section id="contact">
+    <!--==========================
+    Intro Section
+  ============================-->
+    <section id="intro">
+
+        <div id="intro-carousel" class="owl-carousel">
+            <div class="item"
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Transparency.jpg');"></div>
+            <div class="item"
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Responsibility.jpg');"></div>
+            <div class="item" style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Unity.jpg');">
+            </div>
+            <div class="item"
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Space optimization.jpg');">
+            </div>
+            <div class="item"
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Time Management.jpg');">
+            </div>
+
+        </div>
+
+    </section><!-- #intro -->
+
+    <main id="main">
+
+        <!--==========================
+      About Section
+    ============================-->
+        <section id="about" class="wow fadeInUp">
             <div class="container">
                 <div class="row">
-                    <div class=" col-sm-4 col-sm-offset-2">
-                        <div class="contact-form">
-                            <h3>Contact Info</h3>
-                            <address>
-                              <strong>TRUST Team Level 28 Menara TM.</strong><br>
-                              <br>
-                              <abbr title="Phone">P:</abbr> (123) 456-7890
-                            </address>
+                    <div class="col-lg-6 about-img">
+                        <img src="/welcome/img/agile.jpg" alt="">
+                    </div>
 
-                            <a href="{{ route('feedback', [], false)}}">Send Feedback</a>
+                    <div class="col-lg-6 content">
+                        <div class="section-header">
+                            <h2>AGILE OFFICE</h2>
                         </div>
+
+                        <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
+                        <span>In order for GIT to be more effective in delivering high quality solution with faster
+                            delivery,
+                            teamwork is crucial. We need to change the way we work…how we deal with each other. We need
+                            to be more
+                            collaborative</span>
+
+                        <ul>
+                            <li><i class="ion-android-checkmark-circle"></i>
+                                <b>SPACE OPTIMIZATION:</b>
+                                Less square footage required to host the employees. Bring your laptop only will be
+                                adhered! (staff will
+                                be provided drawer to keep their belonging but it is not dedicated)
+                                .</li>
+                            <li><i class="ion-android-checkmark-circle"></i>
+                                <b>PROMOTE 5S:</b>
+                                Safety and good housekeeping practices in all office space. A must criteria for
+                                Hot-Desking
+                            </li>
+                            <li><i class="ion-android-checkmark-circle"></i>
+                                <b> FLEXIBILITY:</b>
+                                Don’t have to commit to a single layout – will come in handy during structure
+                                re-organization.
+                            </li>
+                            <li><i class="ion-android-checkmark-circle"></i>
+                                <b>FREE & EASY:</b>
+                                We determine the floor, you determine your place. Get to know your new neighbor
+                                everyday!
+
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- #about -->
+
+        <!--==========================
+      Services Section
+    ============================-->
+        <section id="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Features</h2>
+                    <p>To realize the “Open Office’ and ‘Hot-Desking” implementation, the trUSt mobile app (Space
+                        Reservation) has
+                        been developed with the following features:
+                    </p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="box wow fadeInLeft bg-primary rounded" data-wow-delay="0.2s">
+                            <div class="icon"><i class="fa fa-check"></i></div>
+                            <h4 class="title"><a href="">Check In</a></h4>
+                            <p class="description">Enable employees to check in at any hot desk by scaning the QR code.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="box wow fadeInLeft bg-success rounded" data-wow-delay="0.2s">
+                            <div class="icon"><i class="fa fa-search"></i></div>
+                            <h4 class="title"><a href="">View seat availability</a></h4>
+                            <p class="description">Display number of available seats at each office location  .</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="box wow fadeInLeft bg-warning rounded" data-wow-delay="0.2s">
+                            <div class="icon"><i class="fa fa-check"></i></div>
+                            <h4 class="title"><a href="">Check Out</a></h4>
+                            <p class="description">Allow employees to check out from current desk anywhere.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="box wow fadeInLeft bg-info shadow rounded">
+                            <div class="icon"><i class="fa fa-search"></i></div>
+                            <h4 class="title"><a href="">Searh Person</a></h4>
+                            <p class="description">Search a person based on name locate the person whereabouts.</p>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-lg-6">
+                        <div class="box wow fadeInRight bg-primary rounded">
+                            <div class="icon"><i class="fa fa-bar-chart"></i></div>
+                            <h4 class="title"><a href="">Reporting</a></h4>
+                            <p class="description">Trust application provide pie-chart reporting to show the occupied of
+                                each office
+                                level.</p>
+                        </div>
+                    </div> -->
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </section><!-- #services -->
+
+        <!--==========================
+      Clients Section
+    ============================-->
+
+
+
+
+        <!--==========================
+      Leadership Section
+    ============================-->
+        <section id="testimonials" class="wow fadeInUp">
+            <div class="container">
+                <div class="section-header">
+                    <h2>What our leaders say</h2>
+
+                </div>
+                <div class="owl-carousel testimonials-carousel">
+
+
+                    <div class="testimonial-item">
+                        <p>
+                            <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
+                            Bagus trust ni..
+                            <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
+                        </p>
+                        <img src="/welcome/img/boss/en_izhan.png" class="testimonial-img" alt="">
+                        <h3>En Izhan Ayob</h3>
+                        <h4>VP GIT</h4>
+                    </div>
+
+                    <div class="testimonial-item">
+                        <p>
+                            <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
+                            Bagus trust ni..
+                            <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
+                        </p>
+                        <img src="/welcome/img/boss/pn-nana.png" class="testimonial-img" alt="">
+                        <h3>Puan Nana</h3>
+                        <h4>GM ITAS</h4>
+                    </div>
+
+                    <div class="testimonial-item">
+                        <p>
+                            <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
+                            Bagus trust ni.
+                            <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
+                        </p>
+                        <img src="/welcome/img/boss/en_shamsul.png" class="testimonial-img" alt="">
+                        <h3>En Shamsul</h3>
+                        <h4>GM ITEC</h4>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- #testimonials -->
+
+
+
+        <!--==========================
+      Our Team Section
+    ============================-->
+        <!-- <section id="team" class="wow fadeInUp">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Team</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="member">
+                            <div class="pic"><img src="/welcome/img/team-1.jpg" alt=""></div>
+                            <div class="details">
+                                <h4>Walter White</h4>
+                                <span>Chief Executive Officer</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="member">
+                            <div class="pic"><img src="/welcome/img/team-2.jpg" alt=""></div>
+                            <div class="details">
+                                <h4>Sarah Jhinson</h4>
+                                <span>Product Manager</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="member">
+                            <div class="pic"><img src="/welcome/img/team-3.jpg" alt=""></div>
+                            <div class="details">
+                                <h4>William Anderson</h4>
+                                <span>CTO</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="member">
+                            <div class="pic"><img src="/welcome/img/team-4.jpg" alt=""></div>
+                            <div class="details">
+                                <h4>Amanda Jepson</h4>
+                                <span>Accountant</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>#team -->
+
+        <!--==========================
+      Contact Section
+    ============================-->
+        <section id="contact" class="wow fadeInUp">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Contact Us</h2>
+                    <p>Send us your feedback.</p>
+                </div>
+
+                <!-- <div class="row contact-info">
+
+                    <div class="col-md-4">
+                        <div class="contact-address">
+                            <i class="ion-ios-location-outline"></i>
+                            <h3>Address</h3>
+                            <address>Level 8 North Menara Telekom Malaysia</address>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="contact-phone">
+                            <i class="ion-ios-telephone-outline"></i>
+                            <h3>Phone Number</h3>
+                            <p><a href="tel:+155895548855">+1 5589 55488 55</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="contact-email">
+                            <i class="ion-ios-email-outline"></i>
+                            <h3>Email</h3>
+                            <p><a href="mailto:info@trust.tm.com.my">info@trust.tm.com.my</a></p>
+                        </div>
+                    </div>
+
+                </div> -->
+            </div>
+
+
+            <div class="container">
+                <div class="form">
+                    <div id="sendmessage">Your message has been sent. Thank you!</div>
+                    <div id="errormessage"></div>
+                    <form action="" method="post" role="form" class="contactForm">
+                    @csrf
+                    <input type="hidden" name="sos" value="web" />
+                            <div class="form-group ">
+                                <input type="email" class="form-control" id="ctc" class="form-control" name="ctc"
+                                    placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                                <div class="validation"></div>
+                            </div>
+                        
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="title" class="form-control" name="title" placeholder="Subject"
+                                data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="content" name="content" rows="5" data-rule="required"
+                                data-msg="Please write something for us" placeholder="Message"></textarea>
+                            <div class="validation"></div>
+                        </div>
+                        <div class="text-center"><button type="submit">Send Message</button></div>
+                    </form>
+                </div>
+
+            </div>
+        </section><!-- #contact -->
+
+
+
+        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="text-align:center;">
+                        <h2>{{ __('Login') }}</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    @if ( isset($loginerror) )
+                    <div class="alert alert-{{ $type }}" role="alert">
+                        {{ $loginerror }}
+                    </div>
+                    @endif
+                    <div class="modal-body">
+                        <form method="POST" action="{{ route('login', [], false) }}">
+                            @csrf
+
+                            <div class="form-group row">
+                                <label for="staff_id"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Staff ID') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="staff_id" type="text"
+                                        class="form-control{{ $errors->has('staff_id') ? ' is-invalid' : '' }}"
+                                        name="staff_id" value="{{ old('staff_id') }}" required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="password" type="password"
+                                        class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                        name="password" required>
+
+                                    @if ($errors->has('password'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <div class="col-md-4 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Login') }}
+                                    </button>
+                                </div>
+                                <a href="https://trust.tm.com.my/register">New User?</a>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
-    </section><!--/#bottom-->
+        <div id="downloadmodal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:100%;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="text-align:center;">
+                        <h2>Download</h2>
+                    </div>
+                    <div class="modal-body">
 
+                        <div class="row">
+                            <div class="col-md-8">
+                                <a href="https://trust.tm.com.my/app/get?type=apk"><img
+                                        src="/welcome/img/download_android.png" height="80" width="100%" alt=""
+                                        title="" /></a>
 
-    <footer id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    &copy; 2016 Your Company.
-                </div>
-                <div class="col-sm-6">
-                    <ul class="social-icons">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                        <li><a href="#"><i class="fa fa-flickr"></i></a></li>
-                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                    </ul>
+                            </div>
+
+                        </div>
+                        
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-8">
+                                <a
+                                    href="itms-services://?action=download-manifest&url=https://trust.tm.com.my/storage/trust.plist"><img
+                                        src="/welcome/img/download_ios.png" height="80" width="100%" alt=""
+                                        title="" /></a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                    </div>
                 </div>
             </div>
         </div>
-    </footer><!--/#footer-->
-    <script src="/js/app.js"></script>
-    <!-- <script src="js/fp/jquery.js"></script> -->
-    <!-- <script src="js/fp/bootstrap.min.js"></script> -->
-    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <!-- <script src="js/fp/owl.carousel.min.js"></script> -->
-    <!-- <script src="js/fp/mousescroll.js"></script>
-    <script src="js/fp/smoothscroll.js"></script>
-    <script src="js/fp/jquery.prettyPhoto.js"></script>
-    <script src="js/fp/jquery.inview.min.js"></script>
-    <script src="js/fp/jquery.isotope.min.js"></script>
-    <script src="js/fp/wow.min.js"></script>
-    <script src="js/fp/main.js"></script> -->
+
+    </main>
+
+    <!--==========================
+    Footer
+  ============================-->
+    <footer id="footer" style="background-color: orange;color: orange">
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>Reveal</strong>. All Rights Reserved
+            </div>
+            <div class="credits" style="color: orange">
+                <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+        -->
+                Designed by <a href="https://bootstrapmade.com/" style="color:orange;">BootstrapMade</a>
+
+            </div>
+        </div>
+    </footer><!-- #footer -->
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JavaScript /welcome/libraries -->
+    <script src="/welcome/lib/jquery/jquery.min.js"></script>
+    <script src="/welcome/lib/jquery/jquery-migrate.min.js"></script>
+    <script src="/welcome/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/welcome/lib/easing/easing.min.js"></script>
+    <script src="/welcome/lib/superfish/hoverIntent.js"></script>
+    <script src="/welcome/lib/superfish/superfish.min.js"></script>
+    <script src="/welcome/lib/wow/wow.min.js"></script>
+    <script src="/welcome/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/welcome/lib/magnific-popup/magnific-popup.min.js"></script>
+    <script src="/welcome/lib/sticky/sticky.js"></script>
+
+    <!-- Contact Form JavaScript File -->
+    <script src="/welcome/contactform/contactform.js"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="/welcome/js/main.js"></script>
+
 </body>
+
 </html>

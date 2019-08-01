@@ -34,7 +34,7 @@ class HomeController extends Controller
     }
 
     function welcome(){
-      return view('home');
+      return view('welcome');
     }
 
     public function listAdmins(){

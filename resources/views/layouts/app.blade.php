@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +11,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
     <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
     <!-- <script src="{{ asset('js/Chart.min.js') }}"></script> -->
 
@@ -19,79 +19,70 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
-    <link href="/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <!-- Bootstrap CSS File -->
+    <link href="/welcome/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- /welcome/libraries CSS Files -->
+    <link href="/welcome/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/welcome/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/welcome/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="/welcome/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/welcome/lib/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="/welcome/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="/welcome/css/style.css" rel="stylesheet">
 </head>
+
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <header id="header">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('welcome', [], false) }}">
-                     <img src="{{ asset('img/TrustNew.png')}}" height="50px" alt="{{ config('app.name', 'Laravel') }}" />
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                      <li class="nav-item">
-                          <a title="Go To Download Page" class="nav-link" href="{{ route('app.list', [], false) }}">Download App</a>
-                      </li>
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a title="Click to login" class="nav-link" href="{{ route('login', [], false) }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                              <a title="Register New Account Here" class="nav-link" href="{{ route('register', [], false) }}">{{ __('Register') }}</a>
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                  @if (Session::get('staffdata')['role'] <= 1)
-                                  <a class="dropdown-item" href="{{ route('admin', [], false) }}">Admin</a>
-                                  @endif
-                                  <a class="dropdown-item" href="{{ route('staff', [], false) }}">Staff Home</a>
-                                  <a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a>
-                                  <a class="dropdown-item" href="#"
-                                     onclick="event.preventDefault();
-                                                   document.getElementById('logout-form').submit();">
-                                      {{ __('Logout') }}
-                                  </a>
-
-                                  <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST" style="display: none;">
-                                      @csrf
-                                  </form>
-                                </div>
-                            </li>
-                        @endguest
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown2" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Help <span class="caret"></span>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown2">
-                              <a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a>
-                              <a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a>
-                              <a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admins</a>
-                            </div>
-                        </li>
-                    </ul>
+                <div id="logo" class="pull-left">
+                    <!-- Uncomment below if you prefer to use an image logo -->
+                    <!-- <a class="v1" href="#body"><img src="/welcome/img/TM_LOGO.png" height="40" width="100" alt=""
+                            title="" style="padding-right: 20px;" /></a> -->
+                    <a href="#body"><img src="/welcome/img/TrustNew.png" height="60" width="60" alt="" title="" /></a>
                 </div>
+
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li><a href="{{ route('staff', [], false) }}">Home</a></li>
+                        @if (Session::get('staffdata')['role'] <= 1) <li class="menu-has-children"><a href="">Admin</a>
+                            <ul>
+                                <li><a href="{{ route('admin', [], false) }}"">Management</a></li>
+                                <li> <a class=" dropdown-item" href="{{ route('reports', [], false) }}">Reports</a>
+                                </li>
+                                
+                            </ul>
+                            </li>
+                            @endif
+                            <li> <a class="dropdown-item" href="#" onclick="event.preventDefault();
+                                                   document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a></li>
+                            <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
+                            <li class="menu-has-children"><a href="">Help</a> 
+                            <ul>
+                                <li><a href="{{ route('feedback', [], false) }}">Feedback</a></li>
+                                <li> <a class=" dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a>
+                                </li>
+                                <li><a href="{{ route('adminlist', [], false) }}">Admin List</a></li>
+                                
+                            </ul>
+                            </li>
+
+                    </ul>
+                </nav><!-- #nav-menu-container -->
+
             </div>
-        </nav>
+
+        </header><!-- #header -->
+        
 
         <main class="py-4">
             @yield('content')
@@ -99,4 +90,22 @@
     </div>
 </body>
 @yield('page-js')
+<!-- JavaScript /welcome/libraries -->
+<script src="/welcome/lib/jquery/jquery.min.js"></script>
+<script src="/welcome/lib/jquery/jquery-migrate.min.js"></script>
+<script src="/welcome/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/welcome/lib/easing/easing.min.js"></script>
+<script src="/welcome/lib/superfish/hoverIntent.js"></script>
+<script src="/welcome/lib/superfish/superfish.min.js"></script>
+<script src="/welcome/lib/wow/wow.min.js"></script>
+<script src="/welcome/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/welcome/lib/magnific-popup/magnific-popup.min.js"></script>
+<script src="/welcome/lib/sticky/sticky.js"></script>
+
+<!-- Contact Form JavaScript File -->
+<script src="/welcome/contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="/welcome/js/main.js"></script>
+
 </html>
