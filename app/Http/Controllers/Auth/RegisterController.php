@@ -84,11 +84,12 @@ class RegisterController extends Controller
 public function register(Request $request)
   {
       $this->validator($request->all())->validate();
-      
+
       // double check for TM emails
       $ldh = new LdapHelper;
-      $resp = $ldh->fetchUser($request->email, 'mail');
-      if($resp['code'] == 200){
+      // $resp = $ldh->fetchUser($request->email, 'mail');
+      // if($resp['code'] == 200){
+      if(strpos($request->email, "@tm.com.my") !== false){
         // exist in ldap
         return \Redirect::back()->withInput()->withErrors(['email' => 'TM email. Please login using IDM']);
       }
