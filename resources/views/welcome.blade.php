@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Reveal Bootstrap Template</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>    
     <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- <meta name=”viewport” content=”width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no”> -->
     <meta content="" name="keywords">
@@ -105,17 +105,17 @@
 
         <div id="intro-carousel" class="owl-carousel">
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Transparency.jpg');"></div>
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Transparency.jpg');"></div>
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Responsibility.jpg');">
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Responsibility.jpg');">
             </div>
-            <div class="item" style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Unity.jpg');">
-            </div>
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Space optimization.jpg');">
+            <div class="item" style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Unity.jpg');">
             </div>
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Time Management.jpg');">
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Spaceoptimization.jpg');">
+            </div>
+            <div class="item"
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2TimeManagement.jpg');">
             </div>
 
         </div>
