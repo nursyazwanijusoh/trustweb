@@ -124,7 +124,7 @@ h6 {
 
 #header {
   padding: 20px 0;
-  height: 84px;
+  height: 85px;
   transition: all 0.5s;
   z-index: 997;
   background: #fff;
@@ -260,6 +260,7 @@ h6 {
 }
 
 .nav-menu li {
+  vertical-align: middle;
   position: relative;
   white-space: nowrap;
 }
@@ -583,7 +584,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #services .box .icon i {
-  color: #444;
+  color: rgb(56, 42, 42);
   font-size: 64px;
   transition: 0.5s;
   line-height: 0;
@@ -1086,7 +1087,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
   #services .box .box {
     margin-bottom: 20px;
-    box-shadow: #000 10px
+    box-shadow: 12px #000 10px
   }
 
   #services .box .icon {

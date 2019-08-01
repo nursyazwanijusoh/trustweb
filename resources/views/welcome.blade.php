@@ -72,7 +72,7 @@
                 <!-- <!-- Uncomment below if you prefer to use an image logo
                 <a class="v1" href="#body"><img src="/welcome/img/TM_LOGO.png" height="40" width="100" alt="" title=""
                         style="padding-right: 20px;" /></a> -->
-                <a href="#body"><img src="/welcome/img/TrustNew.png" height="60" width="60" alt="" title="" /></a>
+                <a href="#body"><img src="/welcome/img/TrustNew.png" height="60" width="80" alt="" title="" /></a>
             </div>
 
             <nav id="nav-menu-container">
@@ -105,16 +105,17 @@
 
         <div id="intro-carousel" class="owl-carousel">
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Transparency.jpg');"></div>
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Transparency.jpg');"></div>
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Responsibility.jpg');"></div>
-            <div class="item" style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Unity.jpg');">
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Responsibility.jpg');">
+            </div>
+            <div class="item" style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Unity.jpg');">
             </div>
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Space optimization.jpg');">
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Space optimization.jpg');">
             </div>
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Time Management.jpg');">
+                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t. Banner2Time Management.jpg');">
             </div>
 
         </div>
@@ -133,7 +134,7 @@
                         <img src="/welcome/img/agile.jpg" alt="">
                     </div>
 
-                    <div class="col-lg-6 content">
+                    <div class="col-lg-6 content text-justify">
                         <div class="section-header">
                             <h2>AGILE OFFICE</h2>
                         </div>
@@ -141,7 +142,7 @@
                         <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
                         <span>In order for GIT to be more effective in delivering high quality solution with faster
                             delivery,
-                            teamwork is crucial. We need to change the way we work…how we deal with each other. We need
+                            teamwork is crucial. We need to change the way we work.how we deal with each other. We need
                             to be more
                             collaborative</span>
 
@@ -169,7 +170,6 @@
 
                             </li>
                         </ul>
-
                     </div>
                 </div>
 
@@ -183,8 +183,7 @@
             <div class="container">
                 <div class="section-header">
                     <h2>Features</h2>
-                    <p>To realize the “Open Office’ and ‘Hot-Desking” implementation, the trUSt mobile app (Space
-                        Reservation) has
+                    <p>To realize the “Open Office’ and ‘Hot-Desking” implementation, the trUSt mobile app has
                         been developed with the following features:
                     </p>
                 </div>
@@ -192,22 +191,23 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="box wow fadeInLeft bg-primary rounded" data-wow-delay="0.2s">
-                            <div class="icon"><i class="fa fa-check"></i></div>
+                            <div class="icon"><i class="fa fa-sign-in"></i></div>
                             <h4 class="title"><a href="">Check In</a></h4>
-                            <p class="description">Enable employees to check in at any hot desk by scaning the QR code.</p>
+                            <p class="description">Enable employees to check in at any hot desk by scaning the QR code.
+                            </p>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="box wow fadeInLeft bg-success rounded" data-wow-delay="0.2s">
-                            <div class="icon"><i class="fa fa-search"></i></div>
+                            <div class="icon"><i class="fa fa-eye"></i></div>
                             <h4 class="title"><a href="">View seat availability</a></h4>
-                            <p class="description">Display number of available seats at each office location  .</p>
+                            <p class="description">Display number of available seats at each office location .</p>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="box wow fadeInLeft bg-warning rounded" data-wow-delay="0.2s">
-                            <div class="icon"><i class="fa fa-check"></i></div>
+                            <div class="icon"><i class="fa fa-sign-out"></i></div>
                             <h4 class="title"><a href="">Check Out</a></h4>
                             <p class="description">Allow employees to check out from current desk anywhere.</p>
                         </div>
@@ -244,10 +244,6 @@
         <!--==========================
       Clients Section
     ============================-->
-
-
-
-
         <!--==========================
       Leadership Section
     ============================-->
@@ -258,45 +254,58 @@
 
                 </div>
                 <div class="owl-carousel testimonials-carousel">
-
-
                     <div class="testimonial-item">
-                        <p>
-                            <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                            Bagus trust ni..
-                            <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
-                        </p>
-                        <img src="/welcome/img/boss/en_izhan.png" class="testimonial-img" alt="">
-                        <h3>En Izhan Ayob</h3>
-                        <h4>VP GIT</h4>
+                        <div class="row pl-5 ml-5">
+                            <div class="md-col-6">
+                                <img src="/welcome/img/boss/en_izhan.png" class="testimonial-img" alt="">
+                                <h3>En Izhan Ayob</h3>
+                                <h3>VP GIT</h3>
+                            </div>
+                            <div class="md-col-6">
+                                <p>
+                                    <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
+                                    trust is good.
+                                    <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
                     <div class="testimonial-item">
-                        <p>
-                            <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                            Bagus trust ni..
-                            <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
-                        </p>
-                        <img src="/welcome/img/boss/pn-nana.png" class="testimonial-img" alt="">
-                        <h3>Puan Nana</h3>
-                        <h4>GM ITAS</h4>
+                        <div class="row pl-5 ml-5">
+                            <div class="md-col-6">
+                                <img src="/welcome/img/boss/pn-nana.png" class="testimonial-img" alt="">
+                                <h3>Puan Naziana</h3>
+                                <h3>GM ITAS</h3>
+                            </div>
+                            <div class="md-col-6">
+                                <p>
+                                    <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
+                                    trust is good.
+                                    <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
                     <div class="testimonial-item">
-                        <p>
-                            <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                            Bagus trust ni.
-                            <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
-                        </p>
-                        <img src="/welcome/img/boss/en_shamsul.png" class="testimonial-img" alt="">
-                        <h3>En Shamsul</h3>
-                        <h4>GM ITEC</h4>
+                        <div class="row pl-5 ml-5">
+                            <div class="md-col-6">
+                                <img src="/welcome/img/boss/en_shamsul.png" class="testimonial-img" alt="">
+                                <h3>Encik Shamsul</h3>
+                                <h3>GM ITEC</h3>
+                            </div>
+                            <div class="md-col-6">
+                                <p>
+                                    <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
+                                    trust is good.
+                                    <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
 
             </div>
-        </section><!-- #testimonials -->
+        </section>#testimonials
 
 
 
@@ -423,17 +432,18 @@
                     <div id="sendmessage">Your message has been sent. Thank you!</div>
                     <div id="errormessage"></div>
                     <form action="" method="post" role="form" class="contactForm">
-                    @csrf
-                    <input type="hidden" name="sos" value="web" />
-                            <div class="form-group ">
-                                <input type="email" class="form-control" id="ctc" class="form-control" name="ctc"
-                                    placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                                <div class="validation"></div>
-                            </div>
-                        
+                        @csrf
+                        <input type="hidden" name="sos" value="web" />
+                        <div class="form-group ">
+                            <input type="email" class="form-control" id="ctc" class="form-control" name="ctc"
+                                placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                            <div class="validation"></div>
+                        </div>
+
                         <div class="form-group">
-                            <input type="text" class="form-control" id="title" class="form-control" name="title" placeholder="Subject"
-                                data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                            <input type="text" class="form-control" id="title" class="form-control" name="title"
+                                placeholder="Subject" data-rule="minlen:4"
+                                data-msg="Please enter at least 8 chars of subject" />
                             <div class="validation"></div>
                         </div>
                         <div class="form-group">
@@ -499,7 +509,7 @@
                                         {{ __('Login') }}
                                     </button>
                                 </div>
-                                <a href="https://trust.tm.com.my/register">New User?</a>
+                                <a href="{{ route('register', [], false) }}">New User?</a>
 
                             </div>
                         </form>
@@ -515,26 +525,29 @@
                         <h2>Download</h2>
                     </div>
                     <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <a href="https://trust.tm.com.my/app/get?type=apk"><img
+                                            src="/welcome/img/download_android.png" height="80" width="100%" alt=""
+                                            title="" /></a>
 
-                        <div class="row">
-                            <div class="col-md-8">
-                                <a href="https://trust.tm.com.my/app/get?type=apk"><img
-                                        src="/welcome/img/download_android.png" height="80" width="100%" alt=""
-                                        title="" /></a>
-
-                            </div>
-
-                        </div>
-                        
-                        <div class="row" style="margin-top:10px;">
-                            <div class="col-md-8">
-                                <a
-                                    href="itms-services://?action=download-manifest&url=https://trust.tm.com.my/storage/trust.plist"><img
-                                        src="/welcome/img/download_ios.png" height="80" width="100%" alt=""
-                                        title="" /></a>
+                                </div>
 
                             </div>
+
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-8">
+                                    <a
+                                        href="itms-services://?action=download-manifest&url=https://trust.tm.com.my/storage/trust.plist"><img
+                                            src="/welcome/img/download_ios.png" height="80" width="100%" alt=""
+                                            title="" /></a>
+
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
 
                     <div class="modal-footer">

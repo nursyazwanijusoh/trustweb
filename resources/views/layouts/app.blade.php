@@ -40,10 +40,8 @@
             <div class="container">
 
                 <div id="logo" class="pull-left">
-                    <!-- Uncomment below if you prefer to use an image logo -->
-                    <!-- <a class="v1" href="#body"><img src="/welcome/img/TM_LOGO.png" height="40" width="100" alt=""
-                            title="" style="padding-right: 20px;" /></a> -->
-                    <a href="#body"><img src="/welcome/img/TrustNew.png" height="60" width="60" alt="" title="" /></a>
+                   
+                    <a href="{{ route('welcome', [], false) }}"><img src="/welcome/img/TrustNew.png" height="60" width="80" alt="" title="" /></a>
                 </div>
 
                 <nav id="nav-menu-container">
@@ -51,7 +49,7 @@
                         <li><a href="{{ route('staff', [], false) }}">Home</a></li>
                         @if (Session::get('staffdata')['role'] <= 1) <li class="menu-has-children"><a href="">Admin</a>
                             <ul>
-                                <li><a href="{{ route('admin', [], false) }}"">Management</a></li>
+                                <li><a href="{{ route('admin', [], false) }}">Management</a></li>
                                 <li> <a class=" dropdown-item" href="{{ route('reports', [], false) }}">Reports</a>
                                 </li>
                                 
