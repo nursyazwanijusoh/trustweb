@@ -264,7 +264,7 @@
                             <div class="md-col-6">
                                 <p>
                                     <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                                    trust is good.
+                                    Great App!
                                     <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
                                 </p>
                             </div>
