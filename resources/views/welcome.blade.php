@@ -105,17 +105,17 @@
 
         <div id="intro-carousel" class="owl-carousel">
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Transparency.jpg');"></div>
+                style="background-image: url('/welcome/img/intro-carousel/b1t.jpg');"></div>
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Responsibility.jpg');">
+                style="background-image: url('/welcome/img/intro-carousel/b2r.jpg');">
             </div>
-            <div class="item" style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Unity.jpg');">
-            </div>
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2Spaceoptimization.jpg');">
+            <div class="item" style="background-image: url('/welcome/img/intro-carousel/b3u.jpg');">
             </div>
             <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/T.r.u.s.t.Banner2TimeManagement.jpg');">
+                style="background-image: url('/welcome/img/intro-carousel/b4s.jpg');">
+            </div>
+            <div class="item"
+                style="background-image: url('/welcome/img/intro-carousel/b5t.jpg');">
             </div>
 
         </div>
