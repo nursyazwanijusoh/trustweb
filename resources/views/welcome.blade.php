@@ -247,6 +247,7 @@
         <!--==========================
       Leadership Section
     ============================-->
+        <!--
         <section id="testimonials" class="wow fadeInUp">
             <div class="container">
                 <div class="section-header">
@@ -306,6 +307,7 @@
 
             </div>
         </section>
+      -->
         <!-- #testimonials -->
 
 
