@@ -375,11 +375,24 @@ class InfraController extends Controller
           return $this->respond_json(412, 'Invalid input', $input);
         }
 
+        $bookh = new BookingHelper;
         $stype = $req->type == 'seat' ? 1 : 2;
 
         $ofc = Office::find($req->office_id);
         if($ofc){
-          return $this->respond_json(200, 'Floor with asset ' . $req->type, $ofc->buildingWithAsset($stype));
+
+          if($stype == 1){
+            $ret = [];
+            $buildlist = $ofc->buildingWithAsset($stype);
+            foreach ($buildlist as $abuild) {
+              array_push($ret, $bookh->getBuildingStat($abuild->id));
+            }
+
+            return $this->respond_json(200, 'Floor with asset ' . $req->type, $ret);
+          } else {
+            return $this->respond_json(200, 'Floor with asset ' . $req->type, $ofc->buildingWithAsset($stype));
+          }
+
         } else {
           return $this->respond_json(404, 'Office not found', $input);
         }
@@ -399,7 +412,21 @@ class InfraController extends Controller
 
         $floor = building::find($req->floor_id);
         if($floor){
-          return $this->respond_json(200, 'Area for ' . $floor->floor_name, $floor->MeetingRooms);
+
+          $rooms = $floor->MeetingRooms;
+
+          foreach($rooms as $aroom){
+            $cks = $aroom->Checkin;
+            if($cks){
+              $aroom->usercount = $cks->count();
+            } else {
+              $aroom->usercount = 0;
+            }
+
+            unset($aroom['Checkin']);
+          }
+
+          return $this->respond_json(200, 'Area for ' . $floor->floor_name, $rooms);
         } else {
           return $this->respond_json(404, 'Floor not found', $input);
         }
