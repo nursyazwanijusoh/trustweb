@@ -41,6 +41,10 @@ class User extends Authenticatable
       return $this->belongsTo('App\Unit', 'unit_id');
     }
 
+    public function Attendance(){
+      return $this->hasOne('App\Attendance', 'id', 'curr_attendance');
+    }
+
     public function divName(){
       if($this->isvendor == 1){
         return $this->Partner->comp_name;

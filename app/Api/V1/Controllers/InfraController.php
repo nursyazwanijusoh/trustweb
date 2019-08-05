@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\building;
+use App\Office;
 use App\place;
 
 /**
@@ -329,4 +330,80 @@ class InfraController extends Controller
         $bookh = new BookingHelper;
         return $bookh->checkSeat($req->qr_code, 'qr_code');
       }
+
+      // get office building list, that have the requested item
+      function getOfficeBuilding(Request $req){
+        $input = app('request')->all();
+
+        $rules = [
+          'type' => ['required']
+        ];
+
+        $validator = app('validator')->make($input, $rules);
+        if($validator->fails()){
+          return $this->respond_json(412, 'Invalid input', $input);
+        }
+
+        $stype = $req->type == 'seat' ? 1 : 2;
+
+        $oflist = Office::all();
+        foreach ($oflist as $key => $value) {
+          // dd($value->hasAsset($stype));
+          $asset = $value->buildingWithAsset($stype);
+          if($asset->count() == 0){
+            unset($oflist[$key]);
+          } else {
+            // $value->floorcount = $asset->count();
+            unset($value['building']);
+          }
+        }
+
+        return $this->respond_json(200, 'Office building with asset ' . $req->type, $oflist);
+
+      }
+
+      function getOfficeFloor(Request $req){
+        $input = app('request')->all();
+
+        $rules = [
+          'office_id' => ['required'],
+          'type' => ['required']
+        ];
+
+        $validator = app('validator')->make($input, $rules);
+        if($validator->fails()){
+          return $this->respond_json(412, 'Invalid input', $input);
+        }
+
+        $stype = $req->type == 'seat' ? 1 : 2;
+
+        $ofc = Office::find($req->office_id);
+        if($ofc){
+          return $this->respond_json(200, 'Floor with asset ' . $req->type, $ofc->buildingWithAsset($stype));
+        } else {
+          return $this->respond_json(404, 'Office not found', $input);
+        }
+      }
+
+      function getOfficeArea(Request $req){
+        $input = app('request')->all();
+
+        $rules = [
+          'floor_id' => ['required']
+        ];
+
+        $validator = app('validator')->make($input, $rules);
+        if($validator->fails()){
+          return $this->respond_json(412, 'Invalid input', $input);
+        }
+
+        $floor = building::find($req->floor_id);
+        if($floor){
+          return $this->respond_json(200, 'Area for ' . $floor->floor_name, $floor->MeetingRooms);
+        } else {
+          return $this->respond_json(404, 'Floor not found', $input);
+        }
+
+      }
+
 }

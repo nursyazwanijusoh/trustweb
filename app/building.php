@@ -17,4 +17,16 @@ class building extends Model
   public function MeetingRooms(){
     return $this->hasMany('App\place')->where('seat_type', 2);
   }
+
+  public function Asset($type){
+    if($type == 1){
+      $asset = $this->place;
+      unset($this['place']);
+    } else {
+      $asset = $this->MeetingRooms;
+      unset($this['MeetingRooms']);
+    }
+
+    return $asset;
+  }
 }

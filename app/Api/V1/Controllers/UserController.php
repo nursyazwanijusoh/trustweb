@@ -14,6 +14,7 @@ use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
 use App\common\HDReportHandler;
+use App\common\UserRegisterHandler;
 
 class UserController extends Controller
 {
@@ -290,6 +291,60 @@ class UserController extends Controller
     }
 
 
+    public function clockIn(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required'],
+        'in_time' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $user = UserRegisterHandler::attClockIn($req);
+
+      return $this->respond_json(200, 'clocked-in', $this->getStaffInfo($user));
+
+    }
+
+    public function clockOut(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required'],
+        'out_time' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      if($req->filled('reason')){
+        $reason = $req->reason;
+      } else {
+        $reason = 'clock-out';
+      }
+
+      $lat = 0;
+      $long = 0;
+
+      if($req->filled('lat')){
+        $lat = $req->lat;
+      }
+
+      if($req->filled('long')){
+        $long = $req->long;
+      }
+
+      $attendance = UserRegisterHandler::attClockOut($req->staff_id, $req->out_time, $lat, $long, $reason);
+
+      return $this->respond_json(200, 'clocked-out', $attendance);
+
+    }
 
 
     // internal functions ======================
@@ -322,6 +377,10 @@ class UserController extends Controller
 
       if(isset($staffdata->last_checkin)){
         $staff['last_checkin'] = $this->bh->getCheckinInfo($staffdata->last_checkin);
+      }
+
+      if(isset($staffdata->curr_attendance)){
+        $staff['attendance'] = $staffdata->Attendance;
       }
 
       return $staff;

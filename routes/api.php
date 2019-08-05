@@ -34,15 +34,15 @@ $api->version('v1', function ($api) {
   // might not even be used lol
 
   // inventory management
-  $api->post('/buildingCreate',  ['as' => 'build.c', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingCreate']);
-  $api->post('/buildingSearch',  ['as' => 'build.r', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingSearch']);
-  $api->post('/buildingEdit',    ['as' => 'build.u', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingEdit']);
-  $api->post('/buildingDelete',  ['as' => 'build.d', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingDelete']);
-
-  $api->post('/seatCreate',  ['as' => 'seat.c', 'uses' => 'App\Api\V1\Controllers\InfraController@seatCreate']);
-  $api->post('/seatSearch',  ['as' => 'seat.r', 'uses' => 'App\Api\V1\Controllers\InfraController@seatSearch']);
-  $api->post('/seatEdit',    ['as' => 'seat.u', 'uses' => 'App\Api\V1\Controllers\InfraController@seatEdit']);
-  $api->post('/seatDelete',  ['as' => 'seat.d', 'uses' => 'App\Api\V1\Controllers\InfraController@seatDelete']);
+  // $api->post('/buildingCreate',  ['as' => 'build.c', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingCreate']);
+  // $api->post('/buildingSearch',  ['as' => 'build.r', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingSearch']);
+  // $api->post('/buildingEdit',    ['as' => 'build.u', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingEdit']);
+  // $api->post('/buildingDelete',  ['as' => 'build.d', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingDelete']);
+  //
+  // $api->post('/seatCreate',  ['as' => 'seat.c', 'uses' => 'App\Api\V1\Controllers\InfraController@seatCreate']);
+  // $api->post('/seatSearch',  ['as' => 'seat.r', 'uses' => 'App\Api\V1\Controllers\InfraController@seatSearch']);
+  // $api->post('/seatEdit',    ['as' => 'seat.u', 'uses' => 'App\Api\V1\Controllers\InfraController@seatEdit']);
+  // $api->post('/seatDelete',  ['as' => 'seat.d', 'uses' => 'App\Api\V1\Controllers\InfraController@seatDelete']);
 
 
   // admin->staff kind of thingy
@@ -51,15 +51,15 @@ $api->version('v1', function ($api) {
   // $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\AdminController@doLogin']);
 
   // LOV management
-  $api->post('/LovTaskTypeAdd',  ['as' => 'lov.tt.c', 'uses' => 'App\Api\V1\Controllers\LovController@ttCreate']);
-  $api->post('/LovTaskTypeSearch',  ['as' => 'lov.tt.r', 'uses' => 'App\Api\V1\Controllers\LovController@ttSearch']);
-  $api->post('/LovTaskTypeEdit',  ['as' => 'lov.tt.u', 'uses' => 'App\Api\V1\Controllers\LovController@ttEdit']);
-  $api->post('/LovTaskTypeDelete',  ['as' => 'lov.tt.d', 'uses' => 'App\Api\V1\Controllers\LovController@ttDelete']);
-
-  $api->post('/LovActTypeAdd',  ['as' => 'lov.at.c', 'uses' => 'App\Api\V1\Controllers\LovController@atCreate']);
-  $api->post('/LovActTypeSearch',  ['as' => 'lov.at.r', 'uses' => 'App\Api\V1\Controllers\LovController@atSearch']);
-  $api->post('/LovActTypeEdit',  ['as' => 'lov.at.u', 'uses' => 'App\Api\V1\Controllers\LovController@atEdit']);
-  $api->post('/LovActTypeDelete',  ['as' => 'lov.at.d', 'uses' => 'App\Api\V1\Controllers\LovController@atDelete']);
+  // $api->post('/LovTaskTypeAdd',  ['as' => 'lov.tt.c', 'uses' => 'App\Api\V1\Controllers\LovController@ttCreate']);
+  // $api->post('/LovTaskTypeSearch',  ['as' => 'lov.tt.r', 'uses' => 'App\Api\V1\Controllers\LovController@ttSearch']);
+  // $api->post('/LovTaskTypeEdit',  ['as' => 'lov.tt.u', 'uses' => 'App\Api\V1\Controllers\LovController@ttEdit']);
+  // $api->post('/LovTaskTypeDelete',  ['as' => 'lov.tt.d', 'uses' => 'App\Api\V1\Controllers\LovController@ttDelete']);
+  //
+  // $api->post('/LovActTypeAdd',  ['as' => 'lov.at.c', 'uses' => 'App\Api\V1\Controllers\LovController@atCreate']);
+  // $api->post('/LovActTypeSearch',  ['as' => 'lov.at.r', 'uses' => 'App\Api\V1\Controllers\LovController@atSearch']);
+  // $api->post('/LovActTypeEdit',  ['as' => 'lov.at.u', 'uses' => 'App\Api\V1\Controllers\LovController@atEdit']);
+  // $api->post('/LovActTypeDelete',  ['as' => 'lov.at.d', 'uses' => 'App\Api\V1\Controllers\LovController@atDelete']);
 
 
 
@@ -90,6 +90,15 @@ $api->version('v1', function ($api) {
   $api->post('/CheckinDirect',  ['as' => 'user.checkin.dir', 'uses' => 'App\Api\V1\Controllers\UserController@CheckinDirect']);
   $api->post('/UserFind',  ['as' => 'user.finda', 'uses' => 'App\Api\V1\Controllers\UserController@Find']);
   $api->post('/UserListBuilding',  ['as' => 'user.listbuild', 'uses' => 'App\Api\V1\Controllers\UserController@ListAllowedBuilding']);
+
+  $api->post('/UserClockIn',  ['as' => 'user.clockin', 'uses' => 'App\Api\V1\Controllers\UserController@clockIn']);
+  $api->post('/UserClockOut',  ['as' => 'user.clockout', 'uses' => 'App\Api\V1\Controllers\UserController@clockOut']);
+
+  $api->get('/officeGetBuilding',  ['as' => 'office.b.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeBuilding']);
+  $api->get('/officeGetFloor',  ['as' => 'office.f.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeFloor']);
+  $api->get('/officeGetArea',  ['as' => 'office.area.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeArea']);
+
+
 });
 
 $api->version('v1', [
@@ -107,5 +116,12 @@ $api->version('v1', [
   $api->post('/CheckinDirect',  ['as' => 'o.user.checkin.dir', 'uses' => 'App\Api\V1\Controllers\UserController@CheckinDirect']);
   $api->post('/UserFind',  ['as' => 'o.user.finda', 'uses' => 'App\Api\V1\Controllers\UserController@Find']);
   $api->post('/UserListBuilding',  ['as' => 'o.user.listbuild', 'uses' => 'App\Api\V1\Controllers\UserController@ListAllowedBuilding']);
+  $api->post('/UserClockIn',  ['as' => 'user.clockin', 'uses' => 'App\Api\V1\Controllers\UserController@clockIn']);
+  $api->post('/UserClockOut',  ['as' => 'user.clockout', 'uses' => 'App\Api\V1\Controllers\UserController@clockOut']);
+
+
+  $api->get('/officeGetBuilding',  ['as' => 'office.b.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeBuilding']);
+  $api->get('/officeGetFloor',  ['as' => 'office.f.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeFloor']);
+  $api->get('/officeGetArea',  ['as' => 'office.area.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeArea']);
 
 });

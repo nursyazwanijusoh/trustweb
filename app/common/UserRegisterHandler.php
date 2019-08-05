@@ -7,10 +7,13 @@ use App\Unit;
 use App\Subordinate;
 use App\VerifyUser;
 use App\CommonConfig;
+use App\Attendance;
 use App\Mail\VerifyMail;
+use \Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Api\V1\Controllers\LdapHelper;
+use Illuminate\Http\Request;
 
 class UserRegisterHandler
 {
@@ -242,6 +245,91 @@ class UserRegisterHandler
     // update the unit id for this user
     $staffdata->unit_id = $div->id;
     $staffdata->save();
+  }
+
+  public static function attClockIn(Request $req){
+
+    $user = User::find($req->staff_id);
+
+    if($req->filled('reason')){
+      $reason = $req->reason;
+    } else {
+      $reason = 're-clock in';
+    }
+
+    $lat = 0;
+    $long = 0;
+
+    if($req->filled('lat')){
+      $lat = $req->lat;
+    }
+
+    if($req->filled('long')){
+      $long = $req->long;
+    }
+
+    // double check if there's existing clock in
+    if(isset($user->curr_attendance)){
+      // clock out that existing attendance
+      UserRegisterHandler::attClockOut($user->id, $req->in_time, $lat, $long, $reason);
+    }
+
+    // create new attendance
+    $att = new Attendance;
+    $att->user_id = $user->id;
+    $att->in_latitude = $lat;
+    $att->in_longitude = $long;
+    $att->clockin_time = $req->in_time;
+    $att->isvendor = $user->isvendor;
+
+    if($user->isvendor == 1){
+      $att->division_id = $user->partner_id;
+    } else {
+      $att->division_id = $user->unit_id;
+    }
+
+    $att->save();
+
+    $user->curr_attendance = $att->id;
+    $user->save();
+
+    return $user;
+
+  }
+
+  public static function attClockOut($staff_id, $time, $olat, $olong, $reason){
+    $user = User::find($staff_id);
+    if(isset($user->curr_attendance)){
+      $curratt = Attendance::find($user->curr_attendance);
+      $curratt->clockout_time = $time;
+      $curratt->out_latitude = $olat;
+      $curratt->out_longitude = $olong;
+      $curratt->out_reason = $reason;
+
+      // check for overnight
+      $indate = Carbon::parse($curratt->clockin_time);
+      $outdate = Carbon::parse($curratt->clockout_time);
+
+      if($indate->format('Ymd') != $outdate->format('Ymd')){
+        // overnight checkout
+        $overnightime = Carbon::parse($outdate->format('Y-m-d'));
+        $curratt->overnight = true;
+        $curratt->overnight_time = $overnightime;
+
+        $curratt->minute_work = $overnightime->diffInMinutes($indate);
+        $curratt->minute_work_overnight = $outdate->diffInMinutes($overnightime);
+
+      } else {
+        $curratt->minute_work = $outdate->diffInMinutes($indate);
+      }
+
+      $curratt->save();
+
+      $user->curr_attendance = null;
+      $user->save();
+    }
+
+    return $curratt;
   }
 
 }
