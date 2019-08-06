@@ -340,7 +340,9 @@ class UserController extends Controller
         $long = $req->long;
       }
 
+      $this->bh->checkOut($req->staff_id);
       $attendance = UserRegisterHandler::attClockOut($req->staff_id, $req->out_time, $lat, $long, $reason);
+
 
       return $this->respond_json(200, 'clocked-out', $attendance);
 
