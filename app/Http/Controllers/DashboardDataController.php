@@ -41,15 +41,24 @@ class DashboardDataController extends Controller
 
       foreach($data as $ac){
         $div = $ac->User->isvendor == 1 ? $ac->User->Partner->comp_name : $ac->User->unit;
+        if($ac->place){
+          $dseat = $ac->place->label;
+          $dfloor = $ac->place->building->floor_name;
+          $dbuild = $ac->place->building->building_name;
+        } else {
+          $dseat = "Deleted";
+          $dfloor = "Deleted";
+          $dbuild = "Deleted";
+        }
 
         $nu = [
           $ac->User->staff_no,
           $ac->User->name,
           $ac->checkin_time,
           $ac->checkout_time,
-          $ac->place->label,
-          $ac->place->building->floor_name,
-          $ac->place->building->building_name,
+          $dseat,
+          $dfloor,
+          $dbuild,
           $div
         ];
 
