@@ -36,7 +36,8 @@
                   <div class="d-flex flex-wrap">
                     <div class="visible-print border text-center">
                       <b>Scan to check in</b><br />
-                      {!! QrCode::size(300)->margin(1)->generate('trUSt : ' . $qrcontent); !!}
+                      <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->merge('/public/img/TrustLogo.png')->size(300)
+                        ->margin(1)->errorCorrection('H')->generate('trUSt : ' . $qrcontent)) !!}">
                       <p>{{ $qrlabel }}</p>
                       <p style="line-height: 1em">For more info, visit<br />
                         <a href="https://trust.tm.com.my/info">https://trust.tm.com.my/info</a>
