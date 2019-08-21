@@ -171,3 +171,10 @@ Route::post('/dash/fetch', 'DashboardDataController@fetch')->name('dash.fetch');
 // mobile only
 Route::get('/feedback/mobile', 'FeedbackController@mobform')->name('feedback.mobile');
 Route::get('/reg/mobile', 'HomeController@mobregform')->name('reg.mobile');
+
+// discussion area events
+Route::get('/area/list', 'AreaEventController@index')->name('area.list');
+Route::get('/area/areacal', 'AreaEventController@areaEventCalendar')->name('area.cal');
+Route::get('/area/eventdetail', 'AreaEventController@areaEventDetail')->name('area.evdetail');
+Route::post('/area/addevent', 'AreaEventController@addEvent')->name('area.addevent');
+Route::get('/area/myevents', 'AreaEventController@myevents')->name('area.myevents');

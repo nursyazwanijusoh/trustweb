@@ -10,6 +10,7 @@ use App\reservation;
 use App\ActivityType;
 use App\Activity;
 use App\CommonConfig;
+use App\EventAttendance;
 use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
@@ -39,7 +40,7 @@ class UserController extends Controller
 
       $luser = $req->user();
 
-      if($luser->staff_no == $req->staff_no){
+      if(strcasecmp($luser->staff_no, $req->staff_no) == 0){
         return $this->respond_json(200, 'Success', []);
       }
 
@@ -267,7 +268,20 @@ class UserController extends Controller
 
 
       $theuser = User::where('id', $req->staff_id)->first();
-      $cekin = $this->bh->checkIn($theuser, $req->seat_id, $lat, $long);
+      $evid = 0;
+      $evat = 0;
+
+      if($req->filled('event_att_id')){
+        $thatevent = EventAttendance::find($req->event_att_id);
+        if($thatevent){
+          $evat = $thatevent->id;
+          $evid = $thatevent->AreaEvent->id;
+        } else {
+          return $this->respond_json(404, 'Invalid event att id', $input);
+        }
+      }
+
+      $cekin = $this->bh->checkIn($theuser, $req->seat_id, $lat, $long, $evid, $evat);
       return $this->respond_json(200, 'Checkin successful', $cekin);
     }
 

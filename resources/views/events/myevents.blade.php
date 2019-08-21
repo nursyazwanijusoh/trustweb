@@ -5,26 +5,28 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
               <div class="card">
-                <div class="card-header">Where {{ $username }} has been for the past 1 month</div>
+                <div class="card-header">My Events</div>
                 <div class="card-body">
                   <table id="taskdetailtable" class="table table-striped table-bordered table-responsive table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">In</th>
-                        <th scope="col">Out</th>
-                        <th scope="col">Seat</th>
-                        <th scope="col">Location?</th>
-                        <th scope="col">Out Reason</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Meeting Area</th>
+                        <th scope="col">Floor Name</th>
+                        <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($activities as $acts)
+                      @foreach($elist as $acts)
                       <tr>
-                        <td>{{ $acts->checkin_time }}</td>
-                        <td>{{ $acts->checkout_time }}</td>
-                        <td>{{ $acts->place->label }}</td>
-                        <td><a href="https://www.google.com/maps/search/?api=1&query={{ $acts->latitude . ',' . $acts->longitude }}" target="_blank">See In Map</a></td>
-                        <td>{{ $acts->remark }}</td>
+                        <td>{{ $acts->start_time }}</td>
+                        <td>{{ $acts->end_time }}</td>
+                        <td><a href="{{ route('area.evdetail', ['id' => $acts->id], false) }}">{{ $acts->event_name }}</a></td>
+                        <td>{{ $acts->Location->label }}</td>
+                        <td>{{ $acts->Location->building->floor_name }}</td>
+                        <td>{{ $acts->status }}</td>
                       </tr>
                       @endforeach
                     </tbody>

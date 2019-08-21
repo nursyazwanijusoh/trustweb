@@ -26,11 +26,12 @@
                 <h5 class="card-title">Action</h5>
                 <div class="list-group">
                   <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Where I've Been</a>
-                  <a href="{{ route('ps.list', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Personal Skillset</a>
+                  <!-- <a href="{{ route('ps.list', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">Personal Skillset</a> -->
                   <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}" class="list-group-item list-group-item-action">My Monthly Activities</a>
                   @if($cuser == $staff_id)
                   <a href="{{ route('staff.addact', [], false) }}" class="list-group-item list-group-item-action">Update Daily Activity</a>
                   @endif
+                  <a href="{{ route('area.myevents', ['id' => $staff_id], false) }}" class="list-group-item list-group-item-action">My Events</a>
                 </div>
               </div>
               <div class="card-body">

@@ -90,17 +90,32 @@ class HDReportHandler
     }
 
     // next, get the free seats
-    $feeseats = place::where('building_id', $buildid)
-      ->where('status', '1')->get();
+    // $feeseats = place::where('building_id', $buildid)
+    //   ->where('status', '1')
+    //   ->where('seat_type', 1)->get();
+    //
+    // $free = $feeseats->count();
 
-    $free = $feeseats->count();
+    // get the floor building name
     $thebuild = $bh->getBuildingInfo($buildid);
+
+    // then, get the meeting areas
+    $marea = place::where('building_id', $buildid)
+      ->where('status', '1')
+      ->where('seat_type', 2)->get();
+
+    foreach ($marea as $key => $value) {
+      if($value->Checkin->count() == 0){
+        // remove meeting area with  no occupant
+        unset($marea[$key]);
+      }
+    }
 
     return [
       'occupied' => $occseats
-      , 'free' => $feeseats
+      , 'meetarea' => $marea
       , 'buildname' => $thebuild->floor_name . '@' . $thebuild->building_name
-      , 'freecount' => $free
+      // , 'freecount' => $free
       , 'occcount' => $occupied
     ];
 

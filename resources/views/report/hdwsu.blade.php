@@ -24,10 +24,12 @@
                     </div>
                   </form>
                 </div>
-                @if(isset($buildname))
-                <div class="card-header"> </div>
+              </div>
+              @if(isset($buildname))
+              <br />
+              <div class="card">
+                <div class="card-header">Occupied Seats for {{ $buildname }} - {{ $occcount }}</div>
                 <div class="card-body">
-                  <h5 class="card-title">Occupied Seats for {{ $buildname }} - {{ $occcount }}</h5>
                   <table class="table table-striped table-bordered table-hover" id="hdwsutable">
                     <thead>
                       <tr>
@@ -60,16 +62,20 @@
                     </tfoot>
                   </table>
                 </div>
+              </div><br />
 
-                <div class="card-header"> </div>
+              <div class="card">
+                <div class="card-header">Occupied Areas for {{ $buildname }}</div>
                 <div class="card-body">
-                  <h5 class="card-title">Free Seats - {{ $freecount }}</h5>
-                  @foreach($free as $fs)
-                  <div class="d-inline-flex flex-wrap border m1">{{ $fs->label }}</div>
+                @foreach($meetarea as $fs)
+                  <h5 class="card-title">{{ $fs->label }}</h5>
+                  @foreach($fs->checkin as $onecekin)
+                  <div class="d-inline-flex flex-wrap border m1 px-2">{{ $onecekin->User->name }}</div>
                   @endforeach
+                @endforeach
                 </div>
-                @endif
-            </div>
+              </div>
+              @endif
         </div>
     </div>
 </div>

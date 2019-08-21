@@ -33,6 +33,7 @@
     <!-- Main Stylesheet File -->
     <link href="/welcome/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    @yield('page-css')
 </head>
 
 <body>
@@ -48,33 +49,34 @@
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
                         <li><a href="{{ route('staff', [], false) }}">Home</a></li>
-                        @if (Session::get('staffdata')['role'] <= 1) <li class="menu-has-children"><a href="">Admin</a>
-                            <ul>
-                                <li><a href="{{ route('admin', [], false) }}">Management</a></li>
-                                <li> <a class=" dropdown-item" href="{{ route('reports', [], false) }}">Reports</a>
-                                </li>
+                        @if (Session::get('staffdata')['role'] <= 1)
+                        <li class="menu-has-children"><a href="">Admin</a>
+                          <ul>
+                              <li><a class="dropdown-item" href="{{ route('admin', [], false) }}">Management</a></li>
+                              <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
 
-                            </ul>
-                            </li>
-                            @endif
-                            <li> <a class="dropdown-item" href="#" onclick="event.preventDefault();
-                                                   document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a></li>
-                            <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                            </form>
-                            <li class="menu-has-children"><a href="">Help</a>
-                            <ul>
-                                <li><a href="{{ route('feedback', [], false) }}">Feedback</a></li>
-                                <li> <a class=" dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a>
-                                </li>
-                                <li><a href="{{ route('adminlist', [], false) }}">Admin List</a></li>
+                          </ul>
+                        </li>
+                        @endif
+                        <li class="menu-has-children"><a href="">Menu</a>
+                          <ul>
+                              <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
+                              <li><a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a></li>
+                              <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
+                              <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li>
 
-                            </ul>
-                            </li>
-
+                          </ul>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                              {{ __('Logout') }}
+                          </a>
+                        </li>
+                        <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                        </form>
                     </ul>
                 </nav><!-- #nav-menu-container -->
 
@@ -89,16 +91,10 @@
     </div>
 </body>
 @yield('page-js')
-<!-- JavaScript /welcome/libraries -->
-<!-- <script src="/welcome/lib/jquery/jquery.min.js"></script> -->
-<!-- <script src="/welcome/lib/jquery/jquery-migrate.min.js"></script> -->
-<!-- <script src="/welcome/lib/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-<!-- <script src="/welcome/lib/easing/easing.min.js"></script> -->
 <script src="/welcome/lib/superfish/hoverIntent.js"></script>
 <script src="/welcome/lib/superfish/superfish.min.js"></script>
 <script src="/welcome/lib/wow/wow.min.js"></script>
 <script src="/welcome/lib/owlcarousel/owl.carousel.min.js"></script>
-<!-- <script src="/welcome/lib/magnific-popup/magnific-popup.min.js"></script> -->
 <script src="/welcome/lib/sticky/sticky.js"></script>
 
 <!-- Contact Form JavaScript File -->

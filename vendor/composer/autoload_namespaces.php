@@ -10,6 +10,7 @@ return array(
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
+    'MaddHatter\\LaravelFullcalendar' => array($vendorDir . '/maddhatter/laravel-fullcalendar/src'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'BaconQrCode' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );

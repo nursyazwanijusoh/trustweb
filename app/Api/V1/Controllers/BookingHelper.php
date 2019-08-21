@@ -56,7 +56,7 @@ class BookingHelper extends Controller
     return $cek->loc_detail->loc_name . ' -> ' . $cek->loc_detail->label . ' since ' . $cek->checkin_time;
   }
 
-  public function checkOut($staff_id, $remark = ''){
+  public function checkOut($staff_id, $remark = 'manual'){
     $time = new DateTime('NOW');
     $time->setTimezone(new DateTimeZone('+0800'));
 
@@ -82,7 +82,7 @@ class BookingHelper extends Controller
 
   }
 
-  public function checkIn($staff, $seat_id, $lat = 0, $long = 0){
+  public function checkIn($staff, $seat_id, $lat = 0, $long = 0, $event_id = 0, $ev_att_id = 0){
     $time = new DateTime('NOW');
     $time->setTimezone(new DateTimeZone('+0800'));
 
@@ -108,6 +108,13 @@ class BookingHelper extends Controller
     $cekin->user_id = $staff->id;
     $cekin->latitude = $lat;
     $cekin->longitude = $long;
+
+    // link the events
+    if($ev_att_id != 0){
+      $cekin->area_event_id = $event_id;
+      $cekin->event_attendance_id = $ev_att_id;
+    }
+
     $cekin->save();
 
     // update back to the staff

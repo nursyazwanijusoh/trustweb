@@ -1,30 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-              <div class="card">
-                <div class="card-header">Where {{ $username }} has been for the past 1 month</div>
+            <div class="card">
+                <div class="card-header">List of Discussion Area</div>
                 <div class="card-body">
-                  <table id="taskdetailtable" class="table table-striped table-bordered table-responsive table-hover">
+                  <h5 class="card-title">Click the name to view scheduled events</h5>
+                  <table id="taskdetailtable" class="table table-striped table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">In</th>
-                        <th scope="col">Out</th>
-                        <th scope="col">Seat</th>
-                        <th scope="col">Location?</th>
-                        <th scope="col">Out Reason</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Location</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($activities as $acts)
+                      @foreach($data as $atask)
                       <tr>
-                        <td>{{ $acts->checkin_time }}</td>
-                        <td>{{ $acts->checkout_time }}</td>
-                        <td>{{ $acts->place->label }}</td>
-                        <td><a href="https://www.google.com/maps/search/?api=1&query={{ $acts->latitude . ',' . $acts->longitude }}" target="_blank">See In Map</a></td>
-                        <td>{{ $acts->remark }}</td>
+                        <td><a href="{{ route('area.cal', ['id' => $atask->id], false) }}">{{ $atask->label }}</a></td>
+                        <td>{{ $atask->building->floor_name . ', ' . $atask->building->building_name }}</td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -32,6 +28,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection
