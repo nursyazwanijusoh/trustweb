@@ -24,7 +24,7 @@
                   @else
                   <h5 class="card-title">List of Closed Feedback</h5>
                   @endif
-                  <table id="fblist" class="table table-striped table-hover">
+                  <table id="fblist" class="table table-striped table-hover table-responsive">
                     <thead>
                       <tr>
                         <th scope="col">Name</th>

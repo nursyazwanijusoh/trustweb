@@ -47,7 +47,7 @@
                 <div class="card-header"> </div>
                 <div class="card-body">
                   <h5 class="card-title">List of Meeting Rooms</h5>
-                  <table class="table table-striped table-hover">
+                  <table id="fblist" class="table table-striped table-hover table-responsive">
                     <thead>
                       <tr>
                         <th scope="col">Name</th>
@@ -143,5 +143,12 @@ $('#editCfgModal').on('show.bs.modal', function(e) {
     document.getElementById("edit-qrdata").value = qrdata;
     document.getElementById("edit-building").value = buildid;
 });
+</script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" defer>
+$(document).ready(function() {
+    $('#fblist').DataTable();
+} );
 </script>
 @stop
