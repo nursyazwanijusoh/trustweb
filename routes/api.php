@@ -107,6 +107,8 @@ $api->version('v1', [
 ], function ($api) {
   $api->post('/pg',  ['as' => 'api.pg', 'uses' => 'App\Api\V1\Controllers\UserController@pg']);
 
+  $api->post('/ValidateToken',  ['as' => 'api.validtoken', 'uses' => 'App\Api\V1\Controllers\UserController@validateToken']);
+
   $api->post('/buildingGetSummary',  ['as' => 'o.build.summary', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingGetSummary']);
   $api->get('/buildingAllSummary',  ['as' => 'o.build.allsummary', 'uses' => 'App\Api\V1\Controllers\InfraController@buildingAllSummary']);
   $api->post('/UserGetInfo',  ['as' => 'o.user.info', 'uses' => 'App\Api\V1\Controllers\UserController@getCustInfo']);

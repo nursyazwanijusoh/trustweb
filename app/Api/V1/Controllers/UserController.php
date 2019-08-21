@@ -24,6 +24,29 @@ class UserController extends Controller
       $this->bh = new BookingHelper;
     }
 
+    // validate token
+    public function validateToken(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_no' => ['required']
+  		];
+
+  		$validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $luser = $req->user();
+
+      if($luser->staff_no == $req->staff_no){
+        return $this->respond_json(200, 'Success', []);
+      }
+
+      return $this->respond_json(403, 'Missmatched token', []);
+
+    }
+
     // view info
     public function getCustInfo(Request $req){
       $input = app('request')->all();
