@@ -8,7 +8,7 @@
             <div class="card">
               <div class="card-header">Staff Home Page</div>
               <div class="card-body">
-                <h5 class="card-title">My Info</h5>
+                <h5 class="card-title">My Information</h5>
                 <p class="card-text text-monospace">
                   Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $user['name'] }}<br />
                   Division&nbsp;: {{ $user['unit'] }}<br />
