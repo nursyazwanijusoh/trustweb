@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class place extends Model
@@ -16,6 +17,16 @@ class place extends Model
 
   public function Occupant(){
     return $this->belongsTo('App\User', 'checkin_staff_id');
+  }
+
+  public function NearEvent(){
+
+    $stime = date('Y-m-d H:i:s', strtotime('30 minutes'));
+    $now = date('Y-m-d H:i:s');
+
+    return $this->hasMany('App\AreaEvent')->where('start_time', '<', $stime)
+      ->where('end_time', '>=', $now)
+      ->where('status', 'Active');
   }
 
 }

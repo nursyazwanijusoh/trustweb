@@ -17,4 +17,11 @@ class AreaEvent extends Model
   public function Location(){
     return $this->belongsTo('App\place', 'place_id');
   }
+
+  public function EvenAttToday(){
+    $now = date('Y-m-d');
+    return $this->hasOne('App\EventAttendance', 'area_event_id')
+      ->where('event_date', $now);
+  }
+
 }

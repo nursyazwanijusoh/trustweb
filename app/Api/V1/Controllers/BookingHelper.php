@@ -255,6 +255,24 @@ class BookingHelper extends Controller
       return $this->respond_json(401, 'building disabled', $thebuildi);
     }
 
+    // check for events
+    if($theseat->seat_type == 2){
+      $events = [];
+      // get current and upcoming event
+      $evs = $theseat->NearEvent;
+      if($evs){
+        foreach($evs as $onev){
+          $oet = $onev->EvenAttToday;
+          if($oet){
+            array_push($events, $oet);
+          }
+        }
+        unset($theseat['NearEvent']);
+        $theseat->event_att = $events;
+        return $this->respond_json(201, 'Have Event', $theseat);
+      }
+    }
+
     // OK. proceed
     return $this->respond_json(200, 'Seat available', $theseat);
   }
