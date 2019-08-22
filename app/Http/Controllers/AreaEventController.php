@@ -8,7 +8,7 @@ use App\place;
 use App\User;
 use App\AreaEvent;
 use App\EventAttendance;
-use Calendar;
+use \Calendar;
 use \DateTime;
 use \DateInterval;
 use \DatePeriod;
