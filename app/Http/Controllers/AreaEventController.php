@@ -175,6 +175,8 @@ class AreaEventController extends Controller
     $headers = ['Name', 'Email', 'Division'];
     $daycount = 0;
     $attendeelist = [];
+    $today = date('Y-m-d');
+    $reachedtoday = false;
 
     // find the attendance holder
     $eventdays = $aevent->EventDay;
@@ -232,11 +234,22 @@ class AreaEventController extends Controller
         $curatt = $oneuser->day_attended;
         // if count of marked day not equal to daycount, meaning this user doesnt attend today
         if(count($curatt) != $daycount){
-          // mark it as absence
-          array_push($curatt, 0);
+
+          if($reachedtoday == true){
+            array_push($curatt, 2);
+          } else {
+            // mark it as absence
+            array_push($curatt, 0);
+          }
+
           // assign it back to the user
           $oneuser->day_attended = $curatt;
         }
+      }
+
+      if($today == $oneventday->event_date){
+        $reachedtoday = true;
+        // dd('istoday');
       }
     }
 

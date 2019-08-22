@@ -38,6 +38,8 @@
                         <td>
                           @if($atteday == 0)
                           &#10060;
+                          @elseif($atteday == 2)
+                          &#10068;
                           @else
                           &#9989;
                           @endif
