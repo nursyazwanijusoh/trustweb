@@ -260,7 +260,7 @@ class BookingHelper extends Controller
       $events = [];
       // get current and upcoming event
       $evs = $theseat->NearEvent;
-      if($evs){
+      if($evs->count() != 0){
         foreach($evs as $onev){
           $oet = $onev->EvenAttToday;
           if($oet){
@@ -271,6 +271,8 @@ class BookingHelper extends Controller
         $theseat->event_att = $events;
         return $this->respond_json(201, 'Have Event', $theseat);
       }
+
+      unset($theseat['NearEvent']);
     }
 
     // OK. proceed
