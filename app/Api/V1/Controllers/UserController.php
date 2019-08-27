@@ -403,6 +403,7 @@ class UserController extends Controller
         'staff_id' => $staffdata->staff_id,
         'role' => $staffdata->role,
         'pushnoti_id' => $staffdata->pushnoti_id,
+        'avatar' => $staffdata->Avatar,
         'allowed_building' => json_decode($staffdata->allowed_building)
       ];
 

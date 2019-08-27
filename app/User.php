@@ -45,6 +45,10 @@ class User extends Authenticatable
       return $this->hasOne('App\Attendance', 'id', 'curr_attendance');
     }
 
+    public function Avatar(){
+      return $this->belongsTo('App\Avatar', 'avatar_rank', 'rank');
+    }
+
     public function divName(){
       if($this->isvendor == 1){
         return $this->Partner->comp_name;

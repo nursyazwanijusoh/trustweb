@@ -129,6 +129,11 @@ Route::post('/cfg/add', 'CommonConfigController@addedit')->name('cfg.add');
 Route::post('/cfg/edit', 'CommonConfigController@edit')->name('cfg.edit');
 Route::get('/cfg/del', 'CommonConfigController@del')->name('cfg.del');
 
+// avatars
+Route::get('/avatar/list', 'AvatarController@list')->name('avatar.list');
+Route::post('/avatar/add', 'AvatarController@addedit')->name('avatar.add');
+Route::get('/avatar/del', 'AvatarController@del')->name('avatar.del');
+
 // coordinate
 Route::get('/geo/list', 'OfficeController@list')->name('geo.list');
 Route::post('/geo/add', 'OfficeController@addedit')->name('geo.add');
