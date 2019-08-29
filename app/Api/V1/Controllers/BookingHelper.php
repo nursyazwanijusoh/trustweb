@@ -269,7 +269,7 @@ class BookingHelper extends Controller
         }
         unset($theseat['NearEvent']);
         $theseat->event_att = $events;
-        return $this->respond_json(201, 'Have Event', $theseat);
+        return $this->respond_json(200, 'Have Event', $theseat);
       }
 
       unset($theseat['NearEvent']);
