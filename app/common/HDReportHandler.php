@@ -77,6 +77,7 @@ class HDReportHandler
 
         // plug in the data
         $oseat->staff_no = $cuser->staff_no;
+        $oseat->divname = $cuser->divName();
         $oseat->name = $cuser->name;
         $oseat->type = $type;
         $occupied++;

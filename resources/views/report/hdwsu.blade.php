@@ -47,7 +47,7 @@
                         <td>{{ $atask->name }}</td>
                         <td>{{ $atask->label }}</td>
                         <td>{{ $atask->cin_time }}</td>
-                        <td>{{ $atask->User->divName() }}</td>
+                        <td>{{ $atask->divname }}</td>
                       </tr>
                       @endforeach
                     </tbody>
