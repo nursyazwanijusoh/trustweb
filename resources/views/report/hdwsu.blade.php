@@ -37,7 +37,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Seat Label</th>
                         <th scope="col">Check-In / Reserve Expire</th>
-                        <th scope="col">Type</th>
+                        <th scope="col">Division</th>
                       </tr>
                     </thead>
                     <tbody>
