@@ -17,7 +17,11 @@
                         <select class="form-control" id="build" name="build_id" onchange="event.preventDefault();
                                       document.getElementById('wsuform').submit();">
                           @foreach ($buildlist as $atask)
-                          <option value="{{ $atask->id }}" >{{ $atask->floor_name . '@' . $atask->building_name }}</option>
+                          <option value="{{ $atask->id }}"
+                            @if($selbuid == $atask->id)
+                            selected
+                            @endif
+                            >{{ $atask->floor_name . '@' . $atask->building_name }}</option>
                           @endforeach
                         </select>
                       </div>

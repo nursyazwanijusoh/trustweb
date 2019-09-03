@@ -71,6 +71,7 @@ class AdminReportController extends Controller
 
     if($req->filled('build_id')){
       $data = $this->hdrh->getFloorUsage($req->build_id);
+      $firstbuildid = $req->build_id;
     } else {
       if($buildlist->count() > 0){
         $data = $this->hdrh->getFloorUsage($firstbuildid);
@@ -81,6 +82,7 @@ class AdminReportController extends Controller
     }
 
     $data['buildlist'] = $buildlist;
+    $data['selbuid'] = $firstbuildid;
 
     return view('report.hdwsu', $data);
 
