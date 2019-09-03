@@ -47,7 +47,7 @@
                         <td>{{ $atask->name }}</td>
                         <td>{{ $atask->label }}</td>
                         <td>{{ $atask->cin_time }}</td>
-                        <td>{{ $atask->type }}</td>
+                        <td>{{ $atask->User->divName() }}</td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -57,7 +57,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Seat Label</th>
                         <th scope="col">Check-In / Reserve Expire</th>
-                        <th scope="col">Type</th>
+                        <th scope="col">Division</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -69,9 +69,25 @@
                 <div class="card-body">
                 @foreach($meetarea as $fs)
                   <h5 class="card-title">{{ $fs->label }}</h5>
-                  @foreach($fs->checkin as $onecekin)
-                  <div class="d-inline-flex flex-wrap border m1 px-2">{{ $onecekin->User->name }}</div>
-                  @endforeach
+                  <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Division</th>
+                        <th scope="col">Check-in Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($fs->checkin as $onecekin)
+                      <tr>
+                        <td>{{ $onecekin->User->name }}</td>
+                        <td>{{ $onecekin->User->divName() }}</td>
+                        <td>{{ $onecekin->checkin_time }}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                  <br />
                 @endforeach
                 </div>
               </div>
