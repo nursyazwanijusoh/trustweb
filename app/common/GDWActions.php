@@ -16,6 +16,7 @@ class GDWActions
     $act = new GwdActivity;
     $act->user_id = $staff_id;
     $act->activity_type_id = $req->acttype;
+    $act->task_category_id = $req->actcat;
     $act->title = $req->title;
     $act->hours_spent = $req->hours;
 

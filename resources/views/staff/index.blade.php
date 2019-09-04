@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-              <div class="card-header">Staff Home Page</div>
+              <div class="card-header">Staff Home Page - {{ $user['staff_no'] }}</div>
               <div class="card-body">
                 <h5 class="card-title">My Information</h5>
                 <p class="card-text text-monospace">

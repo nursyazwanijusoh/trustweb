@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\common\GDWActions;
 use App\ActivityType;
+use App\TaskCategory;
 use App\GwdActivity;
 use \Carbon\Carbon;
 
@@ -92,13 +93,14 @@ class GwdActivityController extends Controller
 
   public function form(Request $req){
     $actype = ActivityType::where('status', 1)->get();
+    $acats = TaskCategory::where('status', 1)->get();
     $today = date('Y-m-d');
 
     if($req->filled('alert')){
-      return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today, 'alert' => $req->alert]);
+      return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today, 'actcats' => $acats, 'alert' => $req->alert]);
     }
 
-    return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today]);
+    return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today, 'actcats' => $acats]);
   }
 
 }

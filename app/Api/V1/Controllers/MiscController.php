@@ -5,6 +5,7 @@ namespace App\Api\V1\Controllers;
 use Illuminate\Http\Request;
 use App\Feedback;
 use App\ActivityType;
+use App\TaskCategory;
 use App\common\GDWActions;
 
 class MiscController extends Controller
@@ -45,6 +46,7 @@ class MiscController extends Controller
 			'staff_id' => ['required'],
 			'hours' => ['required'],
 			'acttype' => ['required'],
+			'actcat' => ['required'],
 		];
 
 		$validator = app('validator')->make($input, $rules);
@@ -75,10 +77,12 @@ class MiscController extends Controller
 	}
 
 	function GwdGetActType(){
-
-
 		$redata = ActivityType::where('status', 1)->get();
+		return $this->respond_json(200, 'Success', $redata);
+	}
 
+	function GwdGetActCat(){
+		$redata = TaskCategory::where('status', 1)->get();
 		return $this->respond_json(200, 'Success', $redata);
 	}
 

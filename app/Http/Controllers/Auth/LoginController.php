@@ -63,7 +63,7 @@ class LoginController extends Controller
 
       session(['staffdata' => $logresp['user']]);
 
-      return redirect()->intended(route('staff'));
+      return redirect()->intended(route('staff', [], false));
 
     }
 

@@ -47,38 +47,42 @@
                 <div class="card-header"> </div>
                 <div class="card-body">
                   <h5 class="card-title">List of Meeting Rooms</h5>
-                  <table id="fblist" class="table table-striped table-hover table-responsive">
-                    <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Current Occupancies</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $atask)
-                      <tr>
-                        <td>{{ $atask->label }}</td>
-                        <td>{{ $atask->building->floor_name . ', ' . $atask->building->building_name }}</td>
-                        <td>{{ $atask->Checkin->count() }}</td>
-                        <td>
-                          <a href="{{ route('admin.getqr', ['seat_id' => $atask['id']], false) }}">
-                            <button type="button" class="btn btn-info btn-sm" title="View QR">Get QR</button>
-                          </a>
-                          <button id="btnedit" type="button" class="btn btn-warning btn-sm" title="Edit"
-                          data-toggle="modal" data-target="#editCfgModal"
-                          data-id="{{$atask['id']}}" data-name="{{$atask['label']}}"
-                          data-qrdata="{{$atask['qr_code']}}" data-buildid="{{$atask['building_id']}}"
-                          >Edit</button>
-                          <a href="{{ route('admin.meetroom.del', ['id' => $atask['id']], false) }}">
-                            <button type="button" class="btn btn-danger btn-sm" title="Delete">Delete</button>
-                          </a>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                  <div class="table-responsive">
+                    <table id="fblist" class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Location</th>
+                          <th scope="col">Current Occupancies</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($data as $atask)
+                        <tr>
+                          <td><a href="{{ route('area.cal', ['id' => $atask->id], false) }}">{{ $atask->label }}</a></td>
+                          <td>{{ $atask->building->floor_name . ', ' . $atask->building->building_name }}</td>
+                          <td>{{ $atask->Checkin->count() }}</td>
+                          <td>
+                            <a href="{{ route('admin.getqr', ['seat_id' => $atask['id']], false) }}">
+                              <button type="button" class="btn btn-info btn-sm" title="View QR">Get QR</button>
+                            </a>
+                            @if(!isset($atask->cannot_edit))
+                            <button id="btnedit" type="button" class="btn btn-warning btn-sm" title="Edit"
+                            data-toggle="modal" data-target="#editCfgModal"
+                            data-id="{{$atask['id']}}" data-name="{{$atask['label']}}"
+                            data-qrdata="{{$atask['qr_code']}}" data-buildid="{{$atask['building_id']}}"
+                            >Edit</button>
+                            <a href="{{ route('admin.meetroom.del', ['id' => $atask['id']], false) }}">
+                              <button type="button" class="btn btn-danger btn-sm" title="Delete">Delete</button>
+                            </a>
+                            @endif
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
             </div>
         </div>

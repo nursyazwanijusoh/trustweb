@@ -844,8 +844,21 @@ class TAdminController extends Controller
   // ===================================
   // manage meeting rooms
   public function meetroom(Request $req){
-    $buildlist = building::all();
+
     $meetrooms = place::where('seat_type', 2)->get();
+
+    if($req->user()->role == 0){
+      $buildlist = building::all();
+    } else {
+      $allowed = json_decode($req->user()->allowed_building);
+      $buildlist = building::whereIn('id', $allowed)->get();
+
+      foreach ($meetrooms as $key => $value) {
+        if(!in_array($value->building_id, $allowed)){
+          $value->cannot_edit = true;
+        }
+      }
+    }
 
     if($req->filled('alert')){
       return view('admin.meetroom', ['buildings' => $buildlist, 'data' => $meetrooms, 'alert' => $req->alert]);

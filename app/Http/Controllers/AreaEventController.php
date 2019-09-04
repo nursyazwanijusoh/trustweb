@@ -41,10 +41,13 @@ class AreaEventController extends Controller
     $today = date('Y-m-d');
     $stime = date('H:i');
     $etime = date('H:i', strtotime('1 hour'));
-    $evs = AreaEvent::where('place_id', $req->id)->whereDate('event_date', '>=', $lastmon)->get();
+    $evs = AreaEvent::where('place_id', $req->id)
+      ->whereDate('event_date', '>=', $lastmon)
+      ->where('status', 'Active')
+      ->get();
 
     $evlist = [];
-    $counter = 0;
+    $counter = rand(0, 12);
 
     foreach ($evs as $key => $value) {
       $counter++;
@@ -253,10 +256,33 @@ class AreaEventController extends Controller
       }
     }
 
+    // check if current user is admin
+    if($req->user()->role == 0){
+      $isadmin = true;
+    } elseif($req->user()->role == 1){
+      $floorid = $aevent->Location->building->id;
+      if(in_array($floorid, json_decode($req->user()->allowed_building))){
+        $isadmin = true;
+      } else {
+        $isadmin = false;
+      }
+    } else {
+      $isadmin = false;
+    }
+
+    // check if is owner of this event
+    if($aevent->organizer_id == $req->user()->id){
+      $isowner = true;
+    } else {
+      $isowner = false;
+    }
+
     return view('events.details', [
       'headers' => $headers,
       'attendees' => $attendeelist,
-      'eventinfo' => $aevent
+      'eventinfo' => $aevent,
+      'isadmin' => $isadmin,
+      'isowner' => $isowner
     ]);
   }
 
@@ -269,6 +295,46 @@ class AreaEventController extends Controller
     $evlist = AreaEvent::where('organizer_id', $uid)->get();
 
     return view('events.myevents', ['elist' => $evlist]);
+
+  }
+
+  public function cancelEvent(Request $req){
+    if(!$req->filled('id')){
+      abort(400);
+    }
+
+    $aevent = AreaEvent::findOrFail($req->id);
+
+    // double check if it's the owner
+    if($req->user()->id != $aevent->organizer_id){
+      abort(403);
+    }
+
+    $aevent->status = 'Cancelled';
+    $aevent->save();
+
+    return redirect(route('area.myevents', [], false));
+
+  }
+
+  public function rejectEvent(Request $req){
+    if(!$req->filled('id')){
+      abort(400);
+    }
+
+    $aevent = AreaEvent::findOrFail($req->id);
+
+    // double check if it's not admin
+    if($req->user()->role > 1){
+      abort(403);
+    }
+
+    $aevent->status = 'Rejected';
+    $aevent->admin_id = $req->user()->id;
+    $aevent->admin_remark = $req->remark;
+    $aevent->save();
+
+    return redirect(route('area.cal', ['id' => $aevent->Location->building_id], false));
 
   }
 

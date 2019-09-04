@@ -183,3 +183,5 @@ Route::get('/area/areacal', 'AreaEventController@areaEventCalendar')->name('area
 Route::get('/area/eventdetail', 'AreaEventController@areaEventDetail')->name('area.evdetail');
 Route::post('/area/addevent', 'AreaEventController@addEvent')->name('area.addevent');
 Route::get('/area/myevents', 'AreaEventController@myevents')->name('area.myevents');
+Route::post('/area/cancelevent', 'AreaEventController@cancelEvent')->name('area.cancelevent');
+Route::post('/area/rejectevent', 'AreaEventController@rejectEvent')->name('area.rejectevent');

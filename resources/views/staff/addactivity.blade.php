@@ -24,7 +24,17 @@
                       <div class="col-md-6">
                         <select class="form-control" id="acttype" name="acttype" required>
                           @foreach ($actlist as $act)
-                          <option value="{{ $act['id'] }}" >{{ $act['descr'] }}</option>
+                          <option value="{{ $act['id'] }}" title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="actcat" class="col-md-4 col-form-label text-md-right">Activity Type</label>
+                      <div class="col-md-6">
+                        <select class="form-control" id="actcat" name="actcat" required>
+                          @foreach ($actcats as $act)
+                          <option value="{{ $act['id'] }}" title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
                           @endforeach
                         </select>
                       </div>
