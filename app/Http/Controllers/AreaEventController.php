@@ -261,11 +261,16 @@ class AreaEventController extends Controller
       $isadmin = true;
     } elseif($req->user()->role == 1){
       $floorid = $aevent->Location->building->id;
-      if(in_array($floorid, json_decode($req->user()->allowed_building))){
-        $isadmin = true;
+      if(isset($req->user()->allowed_building)){
+        if(in_array($floorid, json_decode($req->user()->allowed_building))){
+          $isadmin = true;
+        } else {
+          $isadmin = false;
+        }
       } else {
         $isadmin = false;
       }
+
     } else {
       $isadmin = false;
     }

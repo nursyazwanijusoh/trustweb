@@ -39,7 +39,11 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
+                          @if(empty($buildings) === false)
                             <button type="submit" class="btn btn-primary">Add Room</button>
+                          @else
+                            <button type="button" class="btn btn-secondary">You're not assigned to any floor</button>
+                          @endif
                         </div>
                     </div>
                   </form>

@@ -851,13 +851,21 @@ class TAdminController extends Controller
       $buildlist = building::all();
     } else {
       $allowed = json_decode($req->user()->allowed_building);
-      $buildlist = building::whereIn('id', $allowed)->get();
+      if(isset($allowed)){
+        $buildlist = building::whereIn('id', $allowed)->get();
 
-      foreach ($meetrooms as $key => $value) {
-        if(!in_array($value->building_id, $allowed)){
+        foreach ($meetrooms as $key => $value) {
+          if(!in_array($value->building_id, $allowed)){
+            $value->cannot_edit = true;
+          }
+        }
+      } else {
+        $buildlist = [];
+        foreach ($meetrooms as $key => $value) {
           $value->cannot_edit = true;
         }
       }
+
     }
 
     if($req->filled('alert')){
