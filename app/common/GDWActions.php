@@ -17,7 +17,8 @@ class GDWActions
     $act->user_id = $staff_id;
     $act->activity_type_id = $req->acttype;
     $act->task_category_id = $req->actcat;
-    $act->title = $req->title;
+    // $act->title = $req->title;
+    $act->title = 'd';
     $act->hours_spent = $req->hours;
 
     // optionals
@@ -48,6 +49,12 @@ class GDWActions
     $act->save();
 
     return $act;
+
+  }
+
+  public static function updateAvatar($staff_id){
+    $curdate = date('Y-m-d');
+
 
   }
 

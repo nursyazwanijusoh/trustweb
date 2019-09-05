@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Add Activity</div>
+                <div class="card-header">Add Diary Entry</div>
                 @if(isset($alert))
                 <div class="alert alert-success" role="alert">Activity added</div>
                 @endif
@@ -30,7 +30,7 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="actcat" class="col-md-4 col-form-label text-md-right">Activity Type</label>
+                      <label for="actcat" class="col-md-4 col-form-label text-md-right">Activity Tag</label>
                       <div class="col-md-6">
                         <select class="form-control" id="actcat" name="actcat" required>
                           @foreach ($actcats as $act)
@@ -40,21 +40,15 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                        <label for="parent_no" class="col-md-4 col-form-label text-md-right">Parent Activity</label>
+                        <label for="parent_no" class="col-md-4 col-form-label text-md-right">ID / Name</label>
                         <div class="col-md-6">
                             <input id="parent_no" class="form-control" type="text" name="parent_no" placeholder="C#, PM#, Project ID, etc">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="title" class="col-md-4 col-form-label text-md-right">Title</label>
-                        <div class="col-md-6">
-                            <input id="title" class="form-control" type="text" name="title" placeholder="What you were doing" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Details</label>
                         <div class="col-md-6">
-                          <textarea rows="3" class="form-control" id="remark" name="details" placeholder="Anything you wish to elaborate regarding this activity"></textarea>
+                          <textarea rows="3" class="form-control" id="remark" name="details" placeholder="Anything you wish to elaborate regarding this activity" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">

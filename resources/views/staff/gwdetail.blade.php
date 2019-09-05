@@ -29,30 +29,30 @@
               <div class="card">
                 <div class="card-header">List of Activities</div>
                 <div class="card-body">
-                  <table id="taskdetailtable" class="table table-striped table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Parents</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Details</th>
-                        <th scope="col">Hours</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($activities as $acts)
-                      <tr>
-                        <td>{{ $acts->activity_date }}</td>
-                        <td>{{ $acts->ActType->descr }}</td>
-                        <td>{{ $acts->parent_number }}</td>
-                        <td>{{ $acts->title }}</td>
-                        <td>{{ $acts->details }}</td>
-                        <td>{{ $acts->hours_spent }}</td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                  <div class="table-responsive">
+                    <table id="taskdetailtable" class="table table-striped table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Type</th>
+                          <th scope="col">ID / Name</th>
+                          <th scope="col">Details</th>
+                          <th scope="col">Hours</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($activities as $acts)
+                        <tr>
+                          <td>{{ $acts->activity_date }}</td>
+                          <td>{{ $acts->ActType->descr }}</td>
+                          <td>{{ $acts->parent_number }}</td>
+                          <td>{{ $acts->details }}</td>
+                          <td>{{ $acts->hours_spent }}</td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
             </div>
         </div>

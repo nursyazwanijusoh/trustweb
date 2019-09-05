@@ -7,28 +7,30 @@
               <div class="card">
                 <div class="card-header">Where {{ $username }} has been for the past 1 month</div>
                 <div class="card-body">
-                  <table id="taskdetailtable" class="table table-striped table-bordered table-responsive table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">In</th>
-                        <th scope="col">Out</th>
-                        <th scope="col">Seat</th>
-                        <th scope="col">Location?</th>
-                        <th scope="col">Out Reason</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($activities as $acts)
-                      <tr>
-                        <td>{{ $acts->checkin_time }}</td>
-                        <td>{{ $acts->checkout_time }}</td>
-                        <td>{{ $acts->place->label }}</td>
-                        <td><a href="https://www.google.com/maps/search/?api=1&query={{ $acts->latitude . ',' . $acts->longitude }}" target="_blank">See In Map</a></td>
-                        <td>{{ $acts->remark }}</td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                  <div class="table-responsive">
+                    <table id="taskdetailtable" class="table table-striped table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">In</th>
+                          <th scope="col">Out</th>
+                          <th scope="col">Seat</th>
+                          <th scope="col">Location?</th>
+                          <th scope="col">Out Reason</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($activities as $acts)
+                        <tr>
+                          <td>{{ $acts->checkin_time }}</td>
+                          <td>{{ $acts->checkout_time }}</td>
+                          <td>{{ $acts->place->label }}</td>
+                          <td><a href="https://www.google.com/maps/search/?api=1&query={{ $acts->latitude . ',' . $acts->longitude }}" target="_blank">See In Map</a></td>
+                          <td>{{ $acts->remark }}</td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
             </div>
         </div>

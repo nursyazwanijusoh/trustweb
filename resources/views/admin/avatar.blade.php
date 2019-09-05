@@ -67,47 +67,49 @@
               <div class="card">
                 <div class="card-header">List of Avatars</div>
                 <div class="card-body">
-                  <table id="fblist" class="table table-striped table-hover table-responsive">
-                    <thead>
-                      <tr>
-                        <th scope="col">Rank</th>
-                        <th scope="col">Rank Name</th>
-                        <th scope="col">Min Hour</th>
-                        <th scope="col">Max Hour</th>
-                        <th scope="col">Image URL</th>
-                        <th scope="col">Image Credit</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $atask)
-                      <tr>
-                        <td>{{ $atask['rank'] }}</td>
-                        <td>{{ $atask['rank_name'] }}</td>
-                        <td>{{ $atask['min_hours'] }}</td>
-                        <td>{{ $atask['max_hours'] }}</td>
-                        <td>{{ $atask['image_url'] }}</td>
-                        <td>{{ $atask['image_credit'] }}</td>
-                        <td>
-                          <button id="btnedit" type="button" class="btn btn-warning btn-sm" title="Edit"
-                            data-toggle="modal" data-target="#editCfgModal"
-                            data-id="{{ $atask->id }}"
-                            data-rank="{{ $atask->rank }}"
-                            data-rank_name="{{ $atask->rank_name }}"
-                            data-min_hours="{{ $atask->min_hours }}"
-                            data-max_hours="{{ $atask->max_hours }}"
-                            data-image_url="{{ $atask->image_url }}"
-                            data-image_credit="{{ $atask->image_credit }}"
-                            >Edit
-                          </button>
-                          <a href="{{ route('avatar.del', ['id' => $atask['id']], false) }}">
-                            <button type="button" class="btn btn-danger btn-sm" title="Delete">Delete</button>
-                          </a>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                  <div class="table-responsive">
+                    <table id="fblist" class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Rank</th>
+                          <th scope="col">Rank Name</th>
+                          <th scope="col">Min Hour</th>
+                          <th scope="col">Max Hour</th>
+                          <th scope="col">Image URL</th>
+                          <th scope="col">Image Credit</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($data as $atask)
+                        <tr>
+                          <td>{{ $atask['rank'] }}</td>
+                          <td>{{ $atask['rank_name'] }}</td>
+                          <td>{{ $atask['min_hours'] }}</td>
+                          <td>{{ $atask['max_hours'] }}</td>
+                          <td>{{ $atask['image_url'] }}</td>
+                          <td>{{ $atask['image_credit'] }}</td>
+                          <td>
+                            <button id="btnedit" type="button" class="btn btn-warning btn-sm" title="Edit"
+                              data-toggle="modal" data-target="#editCfgModal"
+                              data-id="{{ $atask->id }}"
+                              data-rank="{{ $atask->rank }}"
+                              data-rank_name="{{ $atask->rank_name }}"
+                              data-min_hours="{{ $atask->min_hours }}"
+                              data-max_hours="{{ $atask->max_hours }}"
+                              data-image_url="{{ $atask->image_url }}"
+                              data-image_credit="{{ $atask->image_credit }}"
+                              >Edit
+                            </button>
+                            <a href="{{ route('avatar.del', ['id' => $atask['id']], false) }}">
+                              <button type="button" class="btn btn-danger btn-sm" title="Delete">Delete</button>
+                            </a>
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
             </div>
         </div>
