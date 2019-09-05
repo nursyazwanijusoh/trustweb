@@ -16,6 +16,7 @@ use \DateTimeZone;
 use \DateInterval;
 use App\common\HDReportHandler;
 use App\common\UserRegisterHandler;
+use App\common\GDWActions;
 
 class UserController extends Controller
 {
@@ -323,8 +324,24 @@ class UserController extends Controller
         $errc = 404;
       }
 
+      foreach ($data as $key => $value) {
+        $value->Avatar;
+      }
+
       return $this->respond_json($errc, 'Search result for ' . $req->input, $data);
 
+    }
+
+    public function getGwdRank(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required']
+  		];
+
+      // update the rank
+      $av = GDWActions::updateAvatar($req->staff_id);
+      return $this->respond_json(200, 'Currrent avatar', $av);
     }
 
 

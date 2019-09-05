@@ -58,6 +58,49 @@ class MiscController extends Controller
 		return $this->respond_json(200, 'Success', $act);
 	}
 
+	function GwdEditActivity(Request $req){
+		$input = app('request')->all();
+
+		$rules = [
+			'title' => ['required'],
+			'id' => ['required'],
+			'hours' => ['required'],
+			'acttype' => ['required'],
+			'actcat' => ['required'],
+		];
+
+		$validator = app('validator')->make($input, $rules);
+		if($validator->fails()){
+			return $this->respond_json(412, 'Invalid input', $input);
+		}
+
+		$act = GDWActions::editActivity($req, $req->staff_id);
+		if($act == '404'){
+			return $this->respond_json(404, 'gwd activity not found', $input);
+		}
+		return $this->respond_json(200, 'Success', $act);
+	}
+
+	function GwdDelActivity(Request $req){
+		$input = app('request')->all();
+
+		$rules = [
+			'id' => ['required'],
+		];
+
+		$validator = app('validator')->make($input, $rules);
+		if($validator->fails()){
+			return $this->respond_json(412, 'Invalid input', $input);
+		}
+
+		$act = GDWActions::deleteActivity($req->id);
+		if($act == '404'){
+			return $this->respond_json(404, 'gwd activity not found', $input);
+		}
+		return $this->respond_json(200, 'Deleted', []);
+
+	}
+
 	function GwdGetSummary(Request $req){
 		$input = app('request')->all();
 
@@ -72,6 +115,24 @@ class MiscController extends Controller
 		}
 
 		$redata = GDWActions::getActSummary($req->staff_id, $req->date);
+
+		return $this->respond_json(200, 'Success', $redata);
+	}
+
+	function GwdGetActivities(Request $req){
+		$input = app('request')->all();
+
+		$rules = [
+			'staff_id' => ['required'],
+			'date' => ['required']
+		];
+
+		$validator = app('validator')->make($input, $rules);
+		if($validator->fails()){
+			return $this->respond_json(412, 'Invalid input', $input);
+		}
+
+		$redata = GDWActions::getGwdActivities($req->staff_id, $req->date);
 
 		return $this->respond_json(200, 'Success', $redata);
 	}

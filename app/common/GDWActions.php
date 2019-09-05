@@ -7,6 +7,7 @@ use App\User;
 use App\GwdActivity;
 use \Carbon\Carbon;
 use App\ActivityType;
+use App\Avatar;
 use \DB;
 
 class GDWActions
@@ -18,10 +19,16 @@ class GDWActions
     $act->activity_type_id = $req->acttype;
     $act->task_category_id = $req->actcat;
     // $act->title = $req->title;
-    $act->title = 'd';
+
     $act->hours_spent = $req->hours;
 
     // optionals
+    if($req->filled('title')){
+      $act->title = $req->title;
+    } else {
+      $act->title = 'd';
+    }
+
     if($req->filled('parent_no')){
       $act->parent_number = $req->parent_no;
     }
@@ -48,14 +55,90 @@ class GDWActions
     $act->checkin_id = $user->curr_checkin;
     $act->save();
 
+    GDWActions::updateAvatar($staff_id);
+
     return $act;
 
+  }
+
+  public static function editActivity(Request $req){
+
+    $act = GwdActivity::find($req->id);
+    if(!$act){
+      return "404";
+    }
+
+    $act->activity_type_id = $req->acttype;
+    $act->task_category_id = $req->actcat;
+    $act->hours_spent = $req->hours;
+
+    // optionals
+    if($req->filled('title')){
+      $act->title = $req->title;
+    }
+
+    if($req->filled('parent_no')){
+      $act->parent_number = $req->parent_no;
+    }
+
+    if($req->filled('details')){
+      $act->details = $req->details;
+    }
+
+    if($req->filled('actdate')){
+      $act->activity_date = $req->actdate;
+    } else {
+      $act->activity_date = date('Y-m-d');
+    }
+
+    // get current checkin as well
+    $act->save();
+
+    GDWActions::updateAvatar($act->user_id);
+
+    return $act;
+
+  }
+
+  public static function deleteActivity($activityid){
+    $act = GwdActivity::find($activityid);
+    if(!$act){
+      return "404";
+    }
+
+    $staffid = $act->user_id;
+    $act->delete();
+    GDWActions::updateAvatar($staffid);
+
+    return "deleted";
   }
 
   public static function updateAvatar($staff_id){
     $curdate = date('Y-m-d');
 
+    $curhours = GwdActivity::where('user_id', $staff_id)
+      ->whereDate('activity_date', $curdate)
+      ->sum('hours_spent')
+      // ->get()
+      ;
 
+
+    $av = Avatar::where('min_hours', '<=', $curhours)
+      ->where('max_hours', '>=', $curhours)
+      ->orderBy('max_hours', 'DESC')
+      ->first();
+
+    $rank = 0;
+    if($av){
+      $rank = $av->rank;
+    }
+
+    $user = User::find($staff_id);
+    $user->avatar_rank = $rank;
+    $user->save();
+    $avta = $user->Avatar ;
+    $avta->curr_total_hours = $curhours;
+    return $avta;
   }
 
   public static function getActSummary($staff_id, $date){
@@ -96,6 +179,21 @@ class GDWActions
     return $info;
 
   }
+
+  public static function getGwdActivities($staff_id, $date){
+    $cdate = Carbon::parse($date);
+    $sdate = $cdate->startOfMonth()->toDateString();
+    $edate = $cdate->addMonths(1)->toDateString();
+
+    $actlist = GwdActivity::where('user_id', $staff_id)
+      ->whereDate('activity_date', '>=', $sdate)
+      ->whereDate('activity_date', '<', $edate)
+      ->get();
+
+    return $actlist;
+  }
+
+
 
   public static function getBgColor($i){
     $bgcolors = [

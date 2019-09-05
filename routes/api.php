@@ -79,6 +79,9 @@ $api->version('v1', function ($api) {
   $api->post('/gwd/summary',  ['as' => 'api.gwd.sum', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetSummary']);
   $api->get('/gwd/acttype',  ['as' => 'api.gwd.type', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetActType']);
   $api->get('/gwd/actcat',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetActCat']);
+  $api->post('/gwd/edit',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdEditActivity']);
+  $api->post('/gwd/delete',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdDelActivity']);
+  $api->post('/gwd/listacts',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetActivities']);
 
 
   // to be disabled once all tokens api go live
@@ -98,6 +101,9 @@ $api->version('v1', function ($api) {
   $api->get('/officeGetBuilding',  ['as' => 'office.b.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeBuilding']);
   $api->get('/officeGetFloor',  ['as' => 'office.f.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeFloor']);
   $api->get('/officeGetArea',  ['as' => 'office.area.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeArea']);
+
+  $api->post('/UserGetGwdRank',  ['as' => 'user.getGwdRank', 'uses' => 'App\Api\V1\Controllers\UserController@getGwdRank']);
+
 
 
 });
