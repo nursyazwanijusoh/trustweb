@@ -24,44 +24,46 @@
                   @else
                   <h5 class="card-title">List of Closed Feedback</h5>
                   @endif
-                  <table id="fblist" class="table table-striped table-hover table-responsive">
-                    <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Content</th>
-                        @if($type == 'active')
-                        <th scope="col">Created On</th>
-                        <th scope="col">Action</th>
-                        @else
-                        <th scope="col">Close Remark</th>
-                        <th scope="col">Closed By</th>
-                        <th scope="col">Close Date</th>
-                        @endif
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $atask)
-                      <tr title="{{ $atask->agent }}">
-                        @if($atask->staff_id == 0)
-                        <td>{{ $atask->name }}</td>
-                        @else
-                        <td><a title="{{ $atask->name }}" href="{{ route('staff', ['staff_id' => $atask->staff_id], false) }}">{{ $atask->staff_no }}</a></td>
-                        @endif
-                        <td>{{ $atask->title }}</td>
-                        <td>{{ $atask->content }}</td>
-                        @if($type == 'active')
-                        <td>{{ $atask->created_at }}</td>
-                        <td><a href="{{ route('feedback.close', ['id' => $atask->id], false) }}">Close</a></td>
-                        @else
-                        <td>{{ $atask->remark }}</td>
-                        <td><a title="{{ $atask->Closer->name }}" href="{{ route('staff', ['staff_id' => $atask->Closer->id], false) }}">{{ $atask->Closer->staff_no }}</a></td>
-                        <td>{{ $atask->updated_at }}</td>
-                        @endif
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                  <div class="table-responsive">
+                    <table id="fblist" class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Title</th>
+                          <th scope="col">Content</th>
+                          @if($type == 'active')
+                          <th scope="col">Created On</th>
+                          <th scope="col">Action</th>
+                          @else
+                          <th scope="col">Close Remark</th>
+                          <th scope="col">Closed By</th>
+                          <th scope="col">Close Date</th>
+                          @endif
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($data as $atask)
+                        <tr title="{{ $atask->agent }}">
+                          @if($atask->staff_id == 0)
+                          <td>{{ $atask->name }}</td>
+                          @else
+                          <td><a title="{{ $atask->name }}" href="{{ route('staff', ['staff_id' => $atask->staff_id], false) }}">{{ $atask->staff_no }}</a></td>
+                          @endif
+                          <td>{{ $atask->title }}</td>
+                          <td>{{ $atask->content }}</td>
+                          @if($type == 'active')
+                          <td>{{ $atask->created_at }}</td>
+                          <td><a href="{{ route('feedback.close', ['id' => $atask->id], false) }}">Close</a></td>
+                          @else
+                          <td>{{ $atask->remark }}</td>
+                          <td><a title="{{ $atask->Closer->name }}" href="{{ route('staff', ['staff_id' => $atask->Closer->id], false) }}">{{ $atask->Closer->staff_no }}</a></td>
+                          <td>{{ $atask->updated_at }}</td>
+                          @endif
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
             </div>
         </div>
