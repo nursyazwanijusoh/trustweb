@@ -64,7 +64,7 @@ class Controller extends BaseController
   function playground(Request $req){
 
     $nom = new LdapHelper;
-    return $nom->fetchUser($req->id, 'mail');
+    return $nom->fetchUser($req->id, 'cn');
 
   }
 

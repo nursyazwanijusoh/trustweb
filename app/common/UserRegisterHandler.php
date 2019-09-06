@@ -147,6 +147,12 @@ class UserRegisterHandler
 			$staffdata->role = 3;
 		}
 
+    if($ldapresp['data']['SUBUNIT'] == 'Vendors'){
+      $staffdata->isvendor = 1;
+    } else {
+      $staffdata->isvendor = 0;
+    }
+
 		$tmobile = strlen($ldapresp['data']['MOBILE_NO']) > 13 ? substr($ldapresp['data']['MOBILE_NO'], 0, 13) : $ldapresp['data']['MOBILE_NO'];
 		if(substr($tmobile, 0, 1) === '0'){
 			$tmobile = '6' . $tmobile;
@@ -230,6 +236,10 @@ class UserRegisterHandler
 
   public static function updateUserDiv($staffdata){
     // first, check if current division exist
+    if($staffdata->lob == 'Vendors'){
+      return;
+    }
+    
     $div = Unit::where('pporgunit', $staffdata->lob)->first();
     if($div){
       //

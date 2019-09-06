@@ -106,13 +106,23 @@ class LdapHelper extends Controller
             // $bcname = $this->findBC($costcenter);
             // $role = $this->getRole($stid);
 
+            if($ldapdata['0']['employeetype']['0'] == 'Vendors'){
+              $unit = $ldapdata['0']['ppdivision']['0'];
+              $subunit = 'Vendors';
+              $dept = 'Vendors';
+            } else {
+              $unit = $ldapdata['0']['pporgunitdesc']['0'];
+              $subunit = $ldapdata['0']['ppsuborgunitdesc']['0'];
+              $dept = $ldapdata['0']['pporgunit']['0'];
+            }
+
 
             $retdata = [
               'STAFF_NO' => $stid,
               'NAME' => $ldapdata['0']['fullname']['0'],
-              'UNIT' => $ldapdata['0']['pporgunitdesc']['0'],
-              'SUBUNIT' => $ldapdata['0']['ppsuborgunitdesc']['0'],
-              'DEPARTMENT' => $ldapdata['0']['pporgunit']['0'],
+              'UNIT' => $unit,
+              'SUBUNIT' => $subunit,
+              'DEPARTMENT' => $dept,
               'COST_CENTER' => $costcenter,
               'SAP_NUMBER' => $ldapdata['0']['employeenumber']['0'],
               // 'JOB_STATUS' => $ldapdata['0']['ppjobstatus']['0'],
