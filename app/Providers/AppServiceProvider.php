@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-      if(config('APP_ENV') === 'production') {
+      // if(config('APP_ENV') === 'production') {
           \URL::forceScheme('https');
-      }
+      // }
 
       \Response::macro('attachment', function ($content, $fname) {
           $headers = [
