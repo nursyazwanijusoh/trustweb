@@ -350,7 +350,7 @@ class InfraController extends Controller
         foreach ($oflist as $key => $value) {
           // dd($value->hasAsset($stype));
           $asset = $value->buildingWithAsset($stype);
-          if($asset->count() == 0){
+          if(empty($asset)) {
             unset($oflist[$key]);
           } else {
             // $value->floorcount = $asset->count();
