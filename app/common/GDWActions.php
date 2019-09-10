@@ -7,6 +7,7 @@ use App\User;
 use App\GwdActivity;
 use \Carbon\Carbon;
 use App\ActivityType;
+use App\TaskCategory;
 use App\Avatar;
 use \DB;
 
@@ -16,8 +17,25 @@ class GDWActions
 
     $act = new GwdActivity;
     $act->user_id = $staff_id;
-    $act->activity_type_id = $req->acttype;
-    $act->task_category_id = $req->actcat;
+
+    // get the TaskCategory
+    $taskcat = TaskCategory::where('descr', $req->actcat)->first();
+    if($taskcat){
+      $taskcat_id = $taskcat->id;
+    } else {
+      $taskcat_id = 0;
+    }
+
+    // get the activity type
+    $actttype = ActivityType::where('descr', $req->acttype)->first();
+    if($actttype){
+      $actttype_id = $actttype->id;
+    } else {
+      $actttype_id = 0;
+    }
+
+    $act->activity_type_id = $actttype_id;
+    $act->task_category_id = $taskcat_id;
     // $act->title = $req->title;
 
     $act->hours_spent = $req->hours;
