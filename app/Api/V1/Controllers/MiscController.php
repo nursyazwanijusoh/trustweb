@@ -139,11 +139,17 @@ class MiscController extends Controller
 
 	function GwdGetActType(){
 		$redata = ActivityType::where('status', 1)->get();
+		foreach ($redata as $key => $value) {
+			$value->value = $value->descr;
+		}
 		return $this->respond_json(200, 'Success', $redata);
 	}
 
 	function GwdGetActCat(){
 		$redata = TaskCategory::where('status', 1)->get();
+		foreach ($redata as $key => $value) {
+			$value->value = $value->descr;
+		}
 		return $this->respond_json(200, 'Success', $redata);
 	}
 
