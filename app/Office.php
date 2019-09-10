@@ -24,18 +24,20 @@ class Office extends Model
   public function buildingWithAsset($type){
     $blist = $this->building;
     $totalc = 0;
+    $fblist = [];
 
     foreach ($blist as $key => $value) {
       $asset = $value->Asset($type);
-      if($asset->count() == 0){
-        unset($blist[$key]);
-      } else {
+      if($asset->count() != 0){
         $totalc += $asset->count();
         $value->assetcount = $asset->count();
+
+        array_push($fblist, $value);
+
       }
     }
 
     $this->totalasset = $totalc;
-    return $blist;
+    return $fblist;
   }
 }
