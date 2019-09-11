@@ -418,8 +418,8 @@ class TAdminController extends Controller
     // delete old data first
     // $mylob = Session::get('staffdata')['lob'];
     $mylob = 3000;
-    Unit::where('lob', $mylob)->delete();
-    SubUnit::where('lob', $mylob)->delete();
+    // Unit::where('lob', $mylob)->delete();
+    // SubUnit::where('lob', $mylob)->delete();
 
     // then look for new data
     $lhelper = new LdapHelper;
@@ -434,9 +434,14 @@ class TAdminController extends Controller
             // dont create created unit
           } else {
             // create the units
-            $nuunit = new Unit;
+            $nuunit = Unit::where('pporgunit', $asubu['pporgunit'])->first();
+            if($nuunit){
+            } else {
+              $nuunit = new Unit;
+              $nuunit->pporgunit = $asubu['pporgunit'];
+            }
+
             $nuunit->lob = $mylob;
-            $nuunit->pporgunit = $asubu['pporgunit'];
             $nuunit->pporgunitdesc = $asubu['pporgunitdesc'];
             $nuunit->save();
 
@@ -444,15 +449,18 @@ class TAdminController extends Controller
           }
 
           // create the sub ubit
-          $subunit = new SubUnit;
+          $subunit = SubUnit::where('ppsuborg', $asubu['ppsuborg'])->first();
+          if($subunit){
+          } else {
+            $subunit = new SubUnit;
+            $subunit->ppsuborg = $asubu['ppsuborg'];
+          }
+
           $subunit->lob = $mylob;
           $subunit->pporgunit = $asubu['pporgunit'];
           $subunit->pporgunitdesc = $asubu['pporgunitdesc'];
-          $subunit->ppsuborg = $asubu['ppsuborg'];
           $subunit->ppsuborgunitdesc = $asubu['ppsuborgunitdesc'];
           $subunit->save();
-
-
       }
 
       return redirect(route('admin.lov', ['err' => 'Data loaded'], false));
