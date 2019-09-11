@@ -15,6 +15,7 @@ use App\SubUnit;
 use App\ActivityType;
 use App\Partner;
 use App\Api\V1\Controllers\BookingHelper;
+use App\GwdActivity;
 
 class ReportController extends Controller
 {
@@ -423,23 +424,32 @@ class ReportController extends Controller
       $tothrs = 0;
 
       // get distinct activity types within those date
-      $typelistdb = DB::table('activities')
-        ->join('tasks', 'tasks.id', '=', 'activities.task_id')
-        ->where('tasks.user_id', $staffdata->id)
-        ->whereBetween('activities.date', array($minus7days, $curdate))
-        ->select('activities.act_type', DB::raw('sum(activities.hours_spent) as tot_hrs'))
-        ->groupBy('activities.act_type')
+      // $typelistdb = DB::table('activities')
+      //   ->join('tasks', 'tasks.id', '=', 'activities.task_id')
+      //   ->where('tasks.user_id', $staffdata->id)
+      //   ->whereBetween('activities.date', array($minus7days, $curdate))
+      //   ->select('activities.act_type', DB::raw('sum(activities.hours_spent) as tot_hrs'))
+      //   ->groupBy('activities.act_type')
+      //   ->get();
+
+      $typelistdb = GwdActivity::where('user_id', $staffdata->id)
+        ->whereBetween('activity_date', array($minus7days, $curdate))
+        ->select('activity_type_id', DB::raw('sum(hours_spent) as tot_hrs'))
+        ->groupBy('activity_type_id')
         ->get();
+
+      // dd($typelistdb);
+
       // then load it into the container
       foreach($typelistdb as $tl){
         // get the name
-        $actype = ActivityType::find($tl->act_type);
+        $actype = ActivityType::find($tl->activity_type_id);
         $actname = 'Type Removed';
         if($actype){
           $actname = $actype->descr;
         }
 
-        array_push($typelist, $tl->act_type);
+        array_push($typelist, $tl->activity_type_id);
         array_push($typeHeader, $actname);
         array_push($typeFooter, $tl->tot_hrs);
         $tothrs += ($tl->tot_hrs * 10);
@@ -449,13 +459,11 @@ class ReportController extends Controller
       array_push($typeFooter, ($tothrs / 10));
 
       // then, get distinct days
-      $daylistdb = DB::table('activities')
-        ->join('tasks', 'tasks.id', '=', 'activities.task_id')
-        ->where('tasks.user_id', $staffdata->id)
-        ->whereBetween('activities.date', array($minus7days, $curdate))
-        ->select('activities.date', DB::raw('sum(activities.hours_spent) as tot_hrs'))
-        ->groupBy('activities.date')
-        ->orderBy('activities.date', 'ASC')
+      $daylistdb = GwdActivity::where('user_id', $staffdata->id)
+        ->whereBetween('activity_date', array($minus7days, $curdate))
+        ->select('activity_date', DB::raw('sum(hours_spent) as tot_hrs'))
+        ->groupBy('activity_date')
+        ->orderBy('activity_date', 'ASC')
         ->get();
 
       // dd($daylistdb);
@@ -465,24 +473,25 @@ class ReportController extends Controller
         // array_push($sdata, date('D d-m', strtotime($aday->date)));
         // get the sum hours for each type
         foreach($typelist as $tl){
-          $dsum = DB::table('activities')
-            ->join('tasks', 'tasks.id', '=', 'activities.task_id')
-            ->where('tasks.user_id', $staffdata->id)
-            ->where('activities.act_type', $tl)
-            ->where('activities.date', $aday->date)
-            ->sum('activities.hours_spent');
+          $dsum = GwdActivity::where('user_id', $staffdata->id)
+            ->whereDate('activity_date', $aday->activity_date)
+            ->where('activity_type_id', $tl)
+            ->sum('hours_spent');
+
           array_push($sdata, $dsum);
 
         }
         array_push($sdata, $aday->tot_hrs);
         $oneday = [
-          'ddate' => date('D d-m', strtotime($aday->date)),
-          'rdate' => $aday->date,
+          'ddate' => date('D d-m', strtotime($aday->activity_date)),
+          'rdate' => $aday->activity_date,
           'hours' => $sdata
         ];
         array_push($datalist, $oneday);
 
       }
+
+      // dd($datalist);
 
 
       // array_push($datalist, $typeFooter);
@@ -524,17 +533,13 @@ class ReportController extends Controller
     if($staffdata){
 
       // get the activities for that date
-      $activit = DB::table('activities')
-        ->join('tasks', 'tasks.id', '=', 'activities.task_id')
-        ->where('tasks.user_id', $staffdata->id)
-        ->where('activities.date',  $curdate)
-        ->select('activities.remark', 'tasks.id', 'tasks.name', 'activities.hours_spent')
-        ->orderBy('tasks.name', 'ASC')
+      $activit = GwdActivity::where('user_id', $staffdata->id)
+        ->whereDate('activity_date', $curdate)
         ->get();
 
       return view('report.userspecificday', [
         'name' => $staffdata->name,
-        'date' => $req->date,
+        'date' => $curdate,
         'data' => $activit
       ]);
     } else {

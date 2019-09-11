@@ -8,11 +8,20 @@
             <div class="card">
                 <div class="card-header">Report Menu</div>
                 <div class="card-body">
+                  <h5 class="card-title">System</h5>
                   <div class="list-group">
                     <a href="{{ route('reports.regstat', [], false) }}" class="list-group-item list-group-item-action">Registered User Statistic</a>
                     <a href="{{ route('reports.divcheckin', [], false) }}" class="list-group-item list-group-item-action">Check-in By Division</a>
-                    <a href="{{ route('reports.workhour', [], false) }}" class="list-group-item list-group-item-action">Work Hour?</a>
+                    <!-- <a href="{{ route('reports.workhour', [], false) }}" class="list-group-item list-group-item-action">Work Hour?</a> -->
                     <a href="{{ route('reports.depts', [], false) }}" class="list-group-item list-group-item-action">List of Departments?</a>
+                  </div>
+                  <br />
+
+                  <h5 class="card-title">Diary / GWD</h5>
+                  <div class="list-group">
+                    <a href="{{ route('report.gwd.summary', [], false) }}" class="list-group-item list-group-item-action">Summary</a>
+                    <a href="{{ route('report.gwd.entrystat', [], false) }}" class="list-group-item list-group-item-action">Entry Statistic</a>
+                    <a href="{{ route('report.gwd.detail', [], false) }}" class="list-group-item list-group-item-action">Details by Division</a>
                   </div>
 
                   @if($role <= 2)

@@ -92,6 +92,13 @@ Route::get('/user/activity', 'GwdActivityController@form')->name('staff.addact')
 Route::post('/user/addactivity', 'GwdActivityController@add')->name('staff.doaddact');
 Route::get('/user/activity/list', 'GwdActivityController@list')->name('staff.list');
 
+Route::get('/reports/gwd/summary', 'GwdReportController@summary')->name('report.gwd.summary');
+Route::post('/reports/gwd/summary', 'GwdReportController@summaryres')->name('report.gwd.summaryres');
+Route::get('/reports/gwd/entrystat', 'GwdReportController@entrystat')->name('report.gwd.entrystat');
+Route::post('/reports/gwd/entrystat', 'GwdReportController@entrystatres')->name('report.gwd.entrystatres');
+Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gwd.detail');
+// Route::post('/reports/gwd/detail', 'GwdReportController@detailres')->name('report.gwd.detailres');
+
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');
 Route::get('/reports/regstat', 'ReportController@registeredUser')->name('reports.regstat');

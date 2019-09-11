@@ -40,10 +40,8 @@
     <div id="app">
         <header id="header">
             <div class="container">
-
                 <div id="logo" class="pull-left">
-
-                    <a href="{{ route('welcome', [], false) }}"><img src="/welcome/img/TrustNew.png" height="60" width="80" alt="" title="" /></a>
+                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/TrustNew.png" height="60" width="80" alt="" title="" /></a>
                 </div>
 
                 <nav id="nav-menu-container">
@@ -53,7 +51,6 @@
                         <li class="menu-has-children"><a href="">Admin</a>
                           <ul>
                               <li><a class="dropdown-item" href="{{ route('admin', [], false) }}">Management</a></li>
-                              <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
 
                           </ul>
                         </li>
@@ -63,15 +60,21 @@
                               <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
                               <li><a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a></li>
                               <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
-                              <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li>
+                              <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li
+                              <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
 
                           </ul>
                         </li>
                         <li>
+                          @guest
+                          <a class="dropdown-item" href="{{ route('login', [], false) }}">Login</a>
+                          @else
                           <a class="dropdown-item" href="#" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
                               {{ __('Logout') }}
                           </a>
+                          @endguest
+
                         </li>
                         <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST"
                             style="display: none;">
@@ -95,7 +98,7 @@
 <script src="/welcome/lib/superfish/superfish.min.js"></script>
 <script src="/welcome/lib/wow/wow.min.js"></script>
 <script src="/welcome/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="/welcome/lib/sticky/sticky.js"></script>
+<!-- <script src="/welcome/lib/sticky/sticky.js"></script> -->
 
 <!-- Contact Form JavaScript File -->
 <script src="/welcome/contactform/contactform.js"></script>

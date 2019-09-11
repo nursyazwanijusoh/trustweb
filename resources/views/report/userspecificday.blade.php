@@ -8,19 +8,21 @@
             <div class="card">
                 <div class="card-header">Activities for {{ $name }} on {{ $date }}</div>
                 <div class="card-body">
-                  <table class="table table-striped table-hover">
+                  <table class="table table-striped table-hover table-bordered">
                     <thead>
                       <tr>
-                        <th scope="col">Task</th>
-                        <th scope="col">Activity</th>
-                        <th scope="col">Hours Spent</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">ID / Name</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Hours</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($data as $acts)
                       <tr>
-                        <td style="white-space:nowrap;"><a href="{{ route('staff.tdetail', ['task_id' => $acts->id], false) }}">{{ $acts->name }}</a></td>
-                        <td>{{ $acts->remark }}</td>
+                        <td>{{ $acts->ActType->descr }}</td>
+                        <td>{{ $acts->parent_number }}</td>
+                        <td>{{ $acts->details }}</td>
                         <td>{{ $acts->hours_spent }}</td>
                       </tr>
                       @endforeach
