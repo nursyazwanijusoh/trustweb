@@ -67,7 +67,7 @@ class GwdActivityController extends Controller
            ],
            'tooltips' => [
              'mode' => 'index',
-             'intersect' => false,
+             'intersect' => true,
            ],
            'hover' => [
              'mode' => 'nearest',

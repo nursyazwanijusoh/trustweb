@@ -60,7 +60,7 @@
                               <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
                               <li><a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a></li>
                               <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
-                              <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li
+                              <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li>
                               <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
 
                           </ul>
