@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="form-group row  {{ $gotunit }}">
-                      <label for="subunit" class="col-md-4 col-form-label text-md-right">Division</label>
+                      <label for="subunit" class="col-md-4 col-form-label text-md-right">Unit</label>
                       <div class="col-md-6">
                         <select class="form-control" id="subunit" name="subunit">
                           @foreach ($unitlist as $atask)
