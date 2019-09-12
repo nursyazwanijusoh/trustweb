@@ -115,8 +115,18 @@ class MiscController extends Controller
 		}
 
 		$redata = GDWActions::getActSummary($req->staff_id, $req->date);
+		$nuredata = [];
 
-		return $this->respond_json(200, 'Success', $redata);
+    // rearrange to new format for api
+    for($i = 0; $i < count($redata['label']); $i++) {
+      array_push($nuredata, [
+        'key' => $redata['label'][$i],
+        'value' => $redata['data'][$i],
+        'svg' => ['fill' => $redata['bg'][$i]],
+      ]);
+    }
+
+    return $this->respond_json(200, 'Success', $nuredata);
 	}
 
 	function GwdGetActivities(Request $req){
