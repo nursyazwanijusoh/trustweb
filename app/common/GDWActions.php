@@ -19,7 +19,7 @@ class GDWActions
     $act->user_id = $staff_id;
 
     // get the TaskCategory
-    $taskcat = TaskCategory::where('descr', $req->actcat)->first();
+    $taskcat = TaskCategory::where('descr', $req->actcat)->orderBy('status', 'DESC')->orderBy('created_at', 'DESC')->first();
     if($taskcat){
       $taskcat_id = $taskcat->id;
     } else {
@@ -27,7 +27,7 @@ class GDWActions
     }
 
     // get the activity type
-    $actttype = ActivityType::where('descr', $req->acttype)->first();
+    $actttype = ActivityType::where('descr', $req->acttype)->orderBy('status', 'DESC')->orderBy('created_at', 'DESC')->first();
     if($actttype){
       $actttype_id = $actttype->id;
     } else {
