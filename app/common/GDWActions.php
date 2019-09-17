@@ -218,8 +218,8 @@ class GDWActions
       'rgba(255, 99, 132, 0.5)',
       'rgba(255, 150, 5, 0.5)',
       'rgba(0, 255, 132, 0.5)',
-      'rgba(0, 0, 255, 0.5)',
       'rgba(100, 114, 104, 0.5)',
+      'rgba(0, 0, 255, 0.5)',
       'rgba(255, 0, 0, 0.5)',
       'rgba(0, 0, 0, 0.5)',
       'rgba(14, 170, 132, 0.5)',
@@ -231,6 +231,42 @@ class GDWActions
     ];
 
     return $bgcolors[$i % count($bgcolors)];
+  }
+
+  public static function setOnLeave($staff_id, $date, $remark){
+
+    // find if there is any existing leave on that day
+    $act = GwdActivity::where('user_id', $staff_id)
+      ->whereDate('activity_date', $date)
+      ->where('isleave', true)
+      ->first();
+
+    if($act){
+
+    } else {
+      $act = new GwdActivity;
+      $act->user_id = $staff_id;
+      $act->isleave = true;
+      $act->activity_date = $date;
+      $act->activity_type_id = 0;
+      $act->title = 'cuti';
+      $act->hours_spent = 0;
+
+      $user = $act->User;
+
+      if($user->isvendor == 1){
+        $act->partner_id = $user->partner_id;
+      } else {
+        $act->unit_id = $user->unit_id;
+      }
+
+    }
+
+    $act->leave_remark = $remark;
+    $act->save();
+
+    return $act;
+
   }
 
 }

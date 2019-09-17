@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">Add Diary Entry</div>
                 @if(isset($alert))
-                <div class="alert alert-success" role="alert">Activity added</div>
+                <div class="alert alert-success" role="alert">{{ $alert }}</div>
                 @endif
                 <div class="card-body">
                   <form method="POST" action="{{ route('staff.doaddact', [], false) }}">
@@ -66,6 +66,27 @@
                     </div>
                   </form>
                 </div>
+            </div> <br />
+            <div class="card">
+              <div class="card-header">Set as On Leave</div>
+              <div class="card-body">
+                <form method="POST" action="{{ route('staff.cuti', [], false) }}">
+                  @csrf
+                  <div class="form-group row">
+                      <label for="actdate" class="col-md-5 col-form-label text-md-right">Date</label>
+                      <div class="col-md-6">
+                        <input type="date" name="date" id="actdate" value="{{ $curdate }}"/>
+                      </div>
+                  </div>
+                  <div class="form-group row mb-0">
+                      <div class="col text-center">
+                          <button type="submit" class="btn btn-success" name="ctype" value="Half Day">Half Day</button>
+                          <button type="submit" class="btn btn-warning" name="ctype" value="Leave">AL / EL</button>
+                          <button type="submit" class="btn btn-danger" name="ctype" value="MC">Sick</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\common;
 
 use App\User;
 use App\Unit;
+use App\SubUnit;
 use App\Subordinate;
 use App\VerifyUser;
 use App\CommonConfig;
@@ -104,12 +105,15 @@ class UserRegisterHandler
           $errormsg = "Div not allowed";
         } else {
           // get the subords info
+
+          UserRegisterHandler::amISuperior($user->id, $user->name);
+
           if($isweb == 1){
-            $newsubs = $ldapherpel->getSubordinate($user->name);
-            if($newsubs['code'] == 200){
-              UserRegisterHandler::getSubords($user->id, $newsubs['data']);
-            }
-            UserRegisterHandler::amIsubords($user->id, $user->staff_no);
+            // $newsubs = $ldapherpel->getSubordinate($user->name);
+            // if($newsubs['code'] == 200){
+            //   UserRegisterHandler::getSubords($user->id, $newsubs['data']);
+            // }
+            // UserRegisterHandler::amIsubords($user->id, $user->staff_no);
             Auth::loginUsingId($user->id, false);
           }
         }
@@ -120,9 +124,6 @@ class UserRegisterHandler
       $user->pushnoti_id = $pushid;
       $user->save();
       $user['token'] = $user->createToken('trUSt')->accessToken;
-
-
-
     }
 
     return [
@@ -145,13 +146,17 @@ class UserRegisterHandler
 			$staffdata->staff_no = $ldapstaffid;
 			$staffdata->status = 1; // set it to inactive
 			$staffdata->role = 3;
-		}
+  		$staffdata->name = $ldapresp['data']['NAME'];
+  		$staffdata->lob = $ldapresp['data']['DEPARTMENT'];
+  		$staffdata->unit = $ldapresp['data']['UNIT'];
+  		$staffdata->subunit = $ldapresp['data']['SUBUNIT'];
 
-    if($ldapresp['data']['SUBUNIT'] == 'Vendors'){
-      $staffdata->isvendor = 1;
-    } else {
-      $staffdata->isvendor = 0;
-    }
+      if($ldapresp['data']['SUBUNIT'] == 'Vendors'){
+        $staffdata->isvendor = 1;
+      } else {
+        $staffdata->isvendor = 0;
+      }
+		}
 
 		$tmobile = strlen($ldapresp['data']['MOBILE_NO']) > 13 ? substr($ldapresp['data']['MOBILE_NO'], 0, 13) : $ldapresp['data']['MOBILE_NO'];
 		if(substr($tmobile, 0, 1) === '0'){
@@ -161,10 +166,6 @@ class UserRegisterHandler
 		// overwrite with ldap data
 		$staffdata->email = $ldapresp['data']['EMAIL'];
 		$staffdata->mobile_no = $tmobile;
-		$staffdata->name = $ldapresp['data']['NAME'];
-		$staffdata->lob = $ldapresp['data']['DEPARTMENT'];
-		$staffdata->unit = $ldapresp['data']['UNIT'];
-		$staffdata->subunit = $ldapresp['data']['SUBUNIT'];
 		$staffdata->save();
 
     return $staffdata;
@@ -225,6 +226,13 @@ class UserRegisterHandler
     }
   }
 
+  // update me as superior
+  private static function amISuperior($staff_id, $staffname){
+    Subordinate::where('superior_name', $staffname)
+      ->where('superior_id', 0)
+      ->update(['superior_id' => $staff_id]);
+  }
+
   private static function inactivateUser($staff_id){
     $user = User::find($staff_id);
     $user->status = 0;
@@ -239,7 +247,7 @@ class UserRegisterHandler
     if($staffdata->lob == 'Vendors'){
       return;
     }
-    
+
     $div = Unit::where('pporgunit', $staffdata->lob)->first();
     if($div){
       //
@@ -341,5 +349,83 @@ class UserRegisterHandler
 
     return $curratt;
   }
+
+  public static function updateStaffInfoFromJI($staffno, $staffname, $position, $reportingto, $div, $orgunit, $divid, $pporgunit){
+
+    // find if this staff is registered
+    $user = User::where('staff_no', $staffno)->first();
+    if($user){
+
+    } else {
+      $user = new User;
+      $user->staff_no = $staffno;
+      $user->status = 1;
+      $user->role = 3;
+      $user->verified = true;
+    }
+
+    $user->name = $staffname;
+    $user->jobtype = $position;
+    $user->unit = $div;
+    $user->subunit = $orgunit;
+    $user->lob = $pporgunit;
+    $user->unit_id = $divid;
+    $user->save();
+
+    // delete old subords info
+    Subordinate::where('sub_staff_no', $staffno)->delete();
+    $subobj = new Subordinate;
+    $subobj->superior_name = $reportingto;
+    $subobj->sub_staff_no = $staffno;
+    $subobj->sub_name = $staffname;
+    $subobj->subordinate_id = $user->id;
+
+    // find superior_id
+    $sup = User::where('name', $reportingto)->first();
+    if($sup){
+        $subobj->superior_id = $sup->id;
+    } else {
+      $subobj->superior_id = 0;
+    }
+
+    $subobj->save();
+
+  }
+
+  public static function getDivision($pporgunit, $divdesc){
+    $thatdiv = Unit::where('pporgunit', $pporgunit)->first();
+    if($thatdiv){
+
+    } else {
+      $thatdiv = new Unit;
+      $thatdiv->pporgunit = $pporgunit;
+      $thatdiv->allowed = true;
+    }
+
+    $thatdiv->pporgunitdesc = $divdesc;
+    $thatdiv->save();
+
+    return $thatdiv->id;
+  }
+
+  public static function getUnit($pporgunit, $divdesc, $ppsuborg, $unitdesc){
+    $thatunit = SubUnit::where('ppsuborg', $ppsuborg)->first();
+    if($thatunit){
+
+    } else {
+      $thatunit = new SubUnit;
+      $thatunit->lob = 3000;
+      $thatunit->ppsuborg = $ppsuborg;
+    }
+
+    $thatunit->pporgunit = $pporgunit;
+    $thatunit->pporgunitdesc = $divdesc;
+    $thatunit->ppsuborgunitdesc = $unitdesc;
+    $thatunit->save();
+
+    return $thatunit->id;
+  }
+
+
 
 }

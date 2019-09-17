@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -22,7 +21,6 @@
                     </div>
                   </form>
                   <br />
-                  {!! $chart->render() !!}
                 </div>
               </div>
               <br />
@@ -33,26 +31,19 @@
                     <table id="taskdetailtable" class="table table-striped table-bordered table-hover">
                       <thead>
                         <tr>
-                          <th scope="col">Date</th>
-                          <th scope="col">Type</th>
-                          <th scope="col">ID / Name</th>
-                          <th scope="col">Details</th>
-                          <th scope="col">Hours</th>
+                          <th scope="col">Division</th>
+                          <th scope="col">Total Registered</th>
+                          <th scope="col">Total Diary Hours</th>
+                          <th scope="col">Average Daily Hours Per Person</th>
                         </tr>
                       </thead>
                       <tbody>
                         @foreach($activities as $acts)
                         <tr>
                           <td>{{ $acts->activity_date }}</td>
-                          @if($acts->isleave)
-                          <td>On Leave</td>
-                          <td>{{ $acts->parent_number }}</td>
-                          <td>{{ $acts->leave_remark }}</td>
-                          @else
                           <td>{{ $acts->ActType->descr }}</td>
                           <td>{{ $acts->parent_number }}</td>
                           <td>{{ $acts->details }}</td>
-                          @endif
                           <td>{{ $acts->hours_spent }}</td>
                         </tr>
                         @endforeach

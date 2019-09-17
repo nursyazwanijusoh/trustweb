@@ -944,5 +944,80 @@ class TAdminController extends Controller
     return redirect(route('admin.meetroom', ['alert'=> 'Meeting room deleted']));
   }
 
+  public function loadji(Request $req){
+    return view('admin.loadji');
+  }
+
+  public function doloadji(Request $req){
+
+    $ifule = $req->file('infile');
+
+    $ufile = fopen($ifule->getRealPath(), 'r');
+
+    $header = fgetcsv($ufile, 0, ",");  // skip the header
+    $divlist = [];
+    $divids = [];
+    $divname = [];
+    $divcount = [];
+    $subunitlist = [];
+
+    while(($onelineofdata = fgetcsv($ufile, 0, ",")) !== false){
+      // check if this div is loaded
+      $divpos = array_search($onelineofdata[1], $divlist);
+      if($divpos !== false){
+        $divcount[$divpos]++;
+        $divid = $divids[$divpos];
+      } else {
+        // new. load it
+
+        if($onelineofdata[1] != '#N/A'){
+          $divid = UserRegisterHandler::getDivision($onelineofdata[1], $onelineofdata[2]);
+        } else {
+          $divid = 0;
+        }
+
+
+        array_push($divlist, $onelineofdata[1]);
+        array_push($divname, $onelineofdata[2]);
+        array_push($divcount, 1);
+        array_push($divids, $divid);
+      }
+
+      // also check if subunit is loaded
+      $unitpos = array_search($onelineofdata[4], $subunitlist);
+      if($unitpos !== false){
+      } else {
+        // create it
+        if($onelineofdata[1] != '#N/A' && $onelineofdata[3] != '#N/A'){
+          UserRegisterHandler::getUnit($onelineofdata[1], $onelineofdata[2], $onelineofdata[3], $onelineofdata[4]);
+        }
+        array_push($subunitlist, $onelineofdata[4]);
+      }
+
+      // update the user
+      UserRegisterHandler::updateStaffInfoFromJI($onelineofdata[13], $onelineofdata[11], $onelineofdata[7], $onelineofdata[8], $onelineofdata[2], $onelineofdata[4], $divid, $onelineofdata[1]);
+
+    }
+
+    $outlist = [];
+    foreach ($divlist as $key => $value) {
+      array_push($outlist, [
+        'div' => $divlist[$key] . ' - ' . $divname[$key],
+        'count' => $divcount[$key]
+      ]);
+    }
+
+    return view('admin.loadji', [
+      'alert' => 'Data loaded',
+      'loaded' => true,
+      'dataasummary' => $outlist
+    ]);
+
+  }
+
+  public function dlji(){
+    return \Storage::download('public/JI_GITD__Sept_2019_v2.csv', 'JI_GITD__Sept_2019_v2.csv');
+  }
+
 
 }

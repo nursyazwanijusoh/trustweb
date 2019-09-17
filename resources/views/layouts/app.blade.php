@@ -98,7 +98,7 @@
 <script src="/welcome/lib/superfish/superfish.min.js"></script>
 <script src="/welcome/lib/wow/wow.min.js"></script>
 <script src="/welcome/lib/owlcarousel/owl.carousel.min.js"></script>
-<!-- <script src="/welcome/lib/sticky/sticky.js"></script> -->
+<script src="/welcome/lib/sticky/sticky.js"></script>
 
 <!-- Contact Form JavaScript File -->
 <script src="/welcome/contactform/contactform.js"></script>

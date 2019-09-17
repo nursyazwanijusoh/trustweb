@@ -20,6 +20,14 @@ class GwdReportController extends Controller
 
   // show the overview summary, by month
   public function summary(Request $req){
+
+    $curdate = date('Y-m-d');
+    if($req->filled('date')){
+      $curdate = $req->date;
+    }
+
+    
+
     dd("under development");
   }
 

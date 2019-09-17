@@ -89,6 +89,7 @@ return array(
     'App\\VerifyUser' => $baseDir . '/app/VerifyUser.php',
     'App\\building' => $baseDir . '/app/building.php',
     'App\\common\\GDWActions' => $baseDir . '/app/common/GDWActions.php',
+    'App\\common\\GDWReports' => $baseDir . '/app/common/GDWReports.php',
     'App\\common\\HDReportHandler' => $baseDir . '/app/common/HDReportHandler.php',
     'App\\common\\UserRegisterHandler' => $baseDir . '/app/common/UserRegisterHandler.php',
     'App\\place' => $baseDir . '/app/place.php',

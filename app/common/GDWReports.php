@@ -10,6 +10,7 @@ use App\User;
 use App\Unit;
 use App\GwdActivity;
 use \DB;
+use \Carbon\Carbon;
 
 class GDWReports
 {
@@ -74,11 +75,13 @@ class GDWReports
         if($astaff->isvendor == 0){
           $dsum = GwdActivity::where('user_id', $astaff->id)
             ->where('unit_id', $unitid)
+            ->where('isleave', false)
             ->whereDate('activity_date', $onedate->format('Y-m-d'))
             ->sum('hours_spent');
         } else {
           $dsum = GwdActivity::where('user_id', $astaff->id)
             ->where('partner_id', $unitid)
+            ->where('isleave', false)
             ->whereDate('activity_date', $onedate->format('Y-m-d'))
             ->sum('hours_spent');
         }
@@ -106,6 +109,24 @@ class GDWReports
       'fromdate' => $fdate,
       'todate' => $todate
     ];
+
+  }
+
+  public static function getGwdSummary($inputdate){
+    $cdate = Carbon::parse($inputdate);
+    $imon = $cdate->format('m');
+    $iyea = $cdate->format('Y');
+    $monmon = $cdate->format('F Y');
+    $fdata = [];
+
+    // get summary for tm
+    $tmd = GwdActivity::whereNotNull('unit_id')
+      ->whereMonth('activity_date', $imon)
+      ->whereYear('activity_date', $iyea)
+      ->select('unit_id', DB::raw('sum(hours_spent) as tot_hrs'))
+      ->groupBy('unit_id')
+      ->get();
+
 
   }
 

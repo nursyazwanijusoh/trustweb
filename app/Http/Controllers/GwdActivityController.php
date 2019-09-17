@@ -23,6 +23,12 @@ class GwdActivityController extends Controller
     return redirect(route('staff.addact', ['alert' => 'Activity added']));
   }
 
+  public function cuti(Request $req){
+    $staffid = $req->session()->get('staffdata')['id'];
+    $act = GDWActions::setOnLeave($staffid, $req->date, $req->ctype);
+    return redirect(route('staff.addact', ['alert' => 'Cuti registered']));
+  }
+
   public function list(Request $req){
     // defaults
     $today = date('Y-m-d');

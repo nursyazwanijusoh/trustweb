@@ -74,6 +74,9 @@ Route::get('/admin/regapprove', 'TAdminController@regapprove')->name('admin.rega
 Route::post('/admin/regreject', 'TAdminController@regreject')->name('admin.regreject');
 Route::get('/admin/delstaff', 'TAdminController@delstaff')->name('admin.delstaff');
 
+Route::get('/admin/loadji', 'TAdminController@loadji')->name('admin.loadji');
+Route::post('/admin/loadji', 'TAdminController@doloadji')->name('admin.doloadji');
+Route::get('/admin/DlSampleJi', 'TAdminController@dlji')->name('admin.dlji');
 
 // normal users
 Route::get('/user', 'TStaffController@index')->name('staff');
@@ -91,9 +94,10 @@ Route::get('/user/lochist', 'TStaffController@locHistory')->name('staff.lochist'
 Route::get('/user/activity', 'GwdActivityController@form')->name('staff.addact');
 Route::post('/user/addactivity', 'GwdActivityController@add')->name('staff.doaddact');
 Route::get('/user/activity/list', 'GwdActivityController@list')->name('staff.list');
+Route::post('/user/addleave', 'GwdActivityController@cuti')->name('staff.cuti');
 
 Route::get('/reports/gwd/summary', 'GwdReportController@summary')->name('report.gwd.summary');
-Route::post('/reports/gwd/summary', 'GwdReportController@summaryres')->name('report.gwd.summaryres');
+// Route::post('/reports/gwd/summary', 'GwdReportController@summaryres')->name('report.gwd.summaryres');
 Route::get('/reports/gwd/entrystat', 'GwdReportController@entrystat')->name('report.gwd.entrystat');
 Route::post('/reports/gwd/entrystat', 'GwdReportController@entrystatres')->name('report.gwd.entrystatres');
 Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gwd.detail');

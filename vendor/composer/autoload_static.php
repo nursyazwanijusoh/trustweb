@@ -593,6 +593,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\VerifyUser' => __DIR__ . '/../..' . '/app/VerifyUser.php',
         'App\\building' => __DIR__ . '/../..' . '/app/building.php',
         'App\\common\\GDWActions' => __DIR__ . '/../..' . '/app/common/GDWActions.php',
+        'App\\common\\GDWReports' => __DIR__ . '/../..' . '/app/common/GDWReports.php',
         'App\\common\\HDReportHandler' => __DIR__ . '/../..' . '/app/common/HDReportHandler.php',
         'App\\common\\UserRegisterHandler' => __DIR__ . '/../..' . '/app/common/UserRegisterHandler.php',
         'App\\place' => __DIR__ . '/../..' . '/app/place.php',
