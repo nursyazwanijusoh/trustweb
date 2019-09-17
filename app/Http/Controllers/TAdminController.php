@@ -995,7 +995,7 @@ class TAdminController extends Controller
       }
 
       // update the user
-      UserRegisterHandler::updateStaffInfoFromJI($onelineofdata[13], $onelineofdata[11], $onelineofdata[7], $onelineofdata[8], $onelineofdata[2], $onelineofdata[4], $divid, $onelineofdata[1]);
+      UserRegisterHandler::updateStaffInfoFromJI($onelineofdata[13], $onelineofdata[11], $onelineofdata[7], $onelineofdata[9], $onelineofdata[2], $onelineofdata[4], $divid, $onelineofdata[1]);
 
     }
 
