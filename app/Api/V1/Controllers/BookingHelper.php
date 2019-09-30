@@ -279,7 +279,7 @@ class BookingHelper extends Controller
     return $this->respond_json(200, 'Seat available', $theseat);
   }
 
-  private function clearReservation($user){
+  public function clearReservation($user){
     if(isset($user->curr_reserve)){
       // find the place id of this reservation
       $resv = reservation::where('id', $user->curr_reserve)->first();
