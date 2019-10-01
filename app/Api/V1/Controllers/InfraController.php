@@ -347,18 +347,20 @@ class InfraController extends Controller
         $stype = $req->type == 'seat' ? 1 : 2;
 
         $oflist = Office::all();
+        $retdata = [];
         foreach ($oflist as $key => $value) {
           // dd($value->hasAsset($stype));
           $asset = $value->buildingWithAsset($stype);
           if(empty($asset)) {
-            unset($oflist[$key]);
+            // unset($oflist[$key]);
           } else {
             // $value->floorcount = $asset->count();
             unset($value['building']);
+            array_push($retdata, $value);
           }
         }
 
-        return $this->respond_json(200, 'Office building with asset ' . $req->type, $oflist);
+        return $this->respond_json(200, 'Office building with asset ' . $req->type, $retdata);
 
       }
 
