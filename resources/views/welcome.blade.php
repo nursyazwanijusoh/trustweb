@@ -531,7 +531,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <a href="https://trust.tm.com.my/app/get?type=apk"><img
+                                    <a href="{{ route('app.down', ['type' => 'apk'], false) }}"><img
                                             src="/welcome/img/download_android.png" height="80" width="100%" alt=""
                                             title="" /></a>
 
