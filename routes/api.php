@@ -67,7 +67,7 @@ $api->version('v1', function ($api) {
   $api->post('/UserLogin',  ['as' => 'user.login', 'uses' => 'App\Api\V1\Controllers\LoginController@doLogin']);
   $api->post('/UserJustLogin',  ['as' => 'user.j.login', 'uses' => 'App\Api\V1\Controllers\LoginController@justLogin']);
 
-  $api->post('/ReserveSeat',  ['as' => 'user.reserve', 'uses' => 'App\Api\V1\Controllers\UserController@ReserveSeat']);
+  $api->post('/ReserveSeat',  ['as' => 'user.reserve', 'uses' => 'App\Api\V1\Controllers\UserController@ReserveSeatV2']);
   $api->post('/ReserveCancel',  ['as' => 'user.reservec', 'uses' => 'App\Api\V1\Controllers\UserController@ReserveCancel']);
   $api->post('/CheckinFromReserve',  ['as' => 'user.checkin.res', 'uses' => 'App\Api\V1\Controllers\UserController@CheckinFromReserve']);
 
@@ -82,6 +82,7 @@ $api->version('v1', function ($api) {
   $api->post('/gwd/edit',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdEditActivity']);
   $api->post('/gwd/delete',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdDelActivity']);
   $api->post('/gwd/listacts',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetActivities']);
+  $api->post('/gwd/monthsummary',  ['as' => 'api.gwd.msum', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetMonthSummary']);
 
 
   // to be disabled once all tokens api go live

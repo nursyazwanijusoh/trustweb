@@ -106,6 +106,55 @@ class UserController extends Controller
 
     }
 
+    public function ReserveSeatV2(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required'],
+        'seat_id' => ['required'],
+        'start_time' => ['required'],
+        'end_time' => ['required']
+  		];
+
+  		$validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      // find this staff
+      $thisstaff = User::where('id', $req->staff_id)->first();
+      if($thisstaff){
+        // release old reservation if any
+        if(isset($thisstaff->curr_reserve)){
+          return $this->respond_json(401, 'Already have previous reservation', $this->bh->getReserveInfo($thisstaff->curr_reserve));
+        }
+
+      } else {
+        return $this->respond_json(404, 'staff 404', $input);
+      }
+
+      if($this->bh->checkOverlapReservation($req->seat_id, $req->start_time, $req->end_time)){
+        return $this->respond_json(401, 'Overlap with another reservation', []);
+      }
+
+      // create the reservation record
+      $reserve = new reservation;
+      $reserve->place_id = $req->seat_id;
+      $reserve->user_id = $req->staff_id;
+      $reserve->expire_time = $req->end_time;
+      $reserve->start_time = $req->start_time;
+      $reserve->end_time = $req->end_time;
+      $reserve->status = 1;
+      $reserve->save();
+
+      // update back to the user
+      $thisstaff->curr_reserve = $reserve->id;
+      $thisstaff->save();
+
+      // return $this->respond_json(200, 'seat reserved', $reserve);
+      return $this->respond_json(200, 'seat reserved', $this->bh->getReserveInfo($reserve->id));
+
+    }
 
     // reserve seat
     public function ReserveSeat(Request $req){
@@ -130,7 +179,7 @@ class UserController extends Controller
         return $this->respond_json(404, 'staff 404', $input);
       }
 
-      $checkseat = $this->bh->checkSeat($req->seat_id);
+      $checkseat = $this->bh->checkSeat($req->seat_id, 'id', $req->staff_id);
 
       if($checkseat['code'] != 200){
         return $checkseat;
@@ -219,6 +268,8 @@ class UserController extends Controller
         }
 
         // proceed with checkin
+        $theresv->status = 0;
+        $theresv->save();
         $cekin = $this->bh->checkIn($theuser, $theresv->place_id);
         return $this->respond_json(200, 'Checkin successful', $cekin);
       } else {
@@ -242,7 +293,7 @@ class UserController extends Controller
   		}
 
       // just in case, check the status
-      $seatstatys = $this->bh->checkSeat($req->seat_id);
+      $seatstatys = $this->bh->checkSeat($req->seat_id, 'id', $req->staff_id);
 
       if($seatstatys['code'] != 200 && $seatstatys['code'] != 201){
         return $seatstatys;

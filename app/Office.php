@@ -22,7 +22,7 @@ class Office extends Model
   }
 
   public function buildingWithAsset($type){
-    $blist = $this->building;
+    $blist = $this->building->sortBy('floor_name');
     $totalc = 0;
     $fblist = [];
 

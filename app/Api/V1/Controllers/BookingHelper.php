@@ -87,7 +87,7 @@ class BookingHelper extends Controller
     $time->setTimezone(new DateTimeZone('+0800'));
 
     // clear the reservation
-    $this->clearReservation($staff);
+    // $this->clearReservation($staff);
     // check out from current, if exist
     $this->checkOut($staff->id, 'checking in elsewhere');
 
@@ -219,30 +219,41 @@ class BookingHelper extends Controller
     ];
   }
 
-  public function checkSeat($seat_id, $key = 'id'){
+  public function checkSeat($seat_id, $key = 'id', $req_id = 0){
     // check if the seat is available
     $theseat = place::where($key, $seat_id)->first();
     if($theseat){
       if($theseat->status == 0){
         return $this->respond_json(401, 'seat disabled', $theseat);
-      } elseif ($theseat->status == 2) {
-        // reserved. check if still valid
-        $time = new DateTime('NOW');
-        $time->setTimezone(new DateTimeZone('+0800'));
-        if($time < $theseat->reserve_expire){
-          return $this->respond_json(401, 'seat reserved by others', $theseat);
-        } else {
-          // the reservation already expired. remove it
-          $oldstaff = User::where('id', $theseat->reserve_staff_id)->first();
-          $this->clearReservation($oldstaff);
-
-          $theseat->reserve_expire = null;
-          $theseat->reserve_staff_id = null;
-          $theseat->save();
-        }
       } elseif ($theseat->status == 3) {
         $theseat->Occupant;
         return $this->respond_json(401, 'seat occupied', $theseat);
+      } elseif ($theseat->status == 2 && $theseat->reserve_staff_id != $req_id) {
+        return $this->respond_json(402, 'seat reserved', $theseat);
+      } else {
+
+        $time = date('Y-m-d H:i:s');
+        // seat is free. check for upcoming booking
+        $todayd = date('Y-m-d');
+        $bookinglist = reservation::where('status', 1)
+          ->whereDate('start_time', $todayd)
+          ->where('end_time', '>', $time)
+          ->whereNot('user_id', $req_id)->get();
+
+        foreach($bookinglist as $buk){
+          if($buk->start_time < $time && $buk->end_time > $time){
+            // currently being booked but not update the status yet
+            $theseat->status = 2;
+            $theseat->reserve_staff_id = $buk->user_id;
+            $theseat->save();
+            return $this->respond_json(402, 'seat reserved', $theseat);
+          }
+        }
+
+        if(sizeof($bookinglist) != 0){
+          $theseat->upcoming_booking = $bookinglist;
+          return $this->respond_json(200, 'upcoming booking', $theseat);
+        }
       }
 
     } else {
@@ -309,6 +320,26 @@ class BookingHelper extends Controller
       ->get();
 
     return $cekins;
+  }
+
+  public function checkOverlapReservation($seat_id, $stime, $etime){
+
+    $olapres = reservation::where('status', 1)
+      ->where('place_id', $seat_id)
+      ->where('start_time', '<', $etime)
+      ->where('end_time', '>', $stime)
+      ->count();
+
+    // $temp = [
+    //   'seat' => $seat_id,
+    //   'stime' => $stime,
+    //   'etime' => $etime,
+    //   'count' => $olapres
+    // ];
+    //
+    // dd($temp);
+
+    return $olapres != 0;
   }
 
 
