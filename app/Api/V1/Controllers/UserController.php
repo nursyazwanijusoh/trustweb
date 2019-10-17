@@ -293,7 +293,7 @@ class UserController extends Controller
   		}
 
       // just in case, check the status
-      $seatstatys = $this->bh->checkSeat($req->seat_id, 'id', $req->staff_id);
+      $seatstatys = $this->bh->checkSeat($req->seat_id, 'id', $req->staff_id, true);
 
       if($seatstatys['code'] != 200 && $seatstatys['code'] != 201){
         return $seatstatys;

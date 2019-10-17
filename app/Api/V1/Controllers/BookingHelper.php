@@ -219,7 +219,7 @@ class BookingHelper extends Controller
     ];
   }
 
-  public function checkSeat($seat_id, $key = 'id', $req_id = 0){
+  public function checkSeat($seat_id, $key = 'id', $req_id = 0, $forcheckin = false){
     // check if the seat is available
     $theseat = place::where($key, $seat_id)->first();
     if($theseat){
@@ -237,15 +237,25 @@ class BookingHelper extends Controller
         $todayd = date('Y-m-d');
         $bookinglist = reservation::where('status', 1)
           ->whereDate('start_time', $todayd)
-          ->where('end_time', '>', $time)
-          ->whereNot('user_id', $req_id)->get();
+          ->where('end_time', '>', $time)->get();
 
         foreach($bookinglist as $buk){
           if($buk->start_time < $time && $buk->end_time > $time){
             // currently being booked but not update the status yet
-            $theseat->status = 2;
+            // $theseat->status = 2;
             $theseat->reserve_staff_id = $buk->user_id;
             $theseat->save();
+
+            if($forcheckin){
+              if($buk->user_id == $req_id){
+                $buk->status = 0;
+                $buk->save();
+                $theseat->reserve_staff_id = null;
+                $theseat->save();
+                return $this->respond_json(200, 'Seat available', $theseat);
+              }
+            }
+
             return $this->respond_json(402, 'seat reserved', $theseat);
           }
         }
