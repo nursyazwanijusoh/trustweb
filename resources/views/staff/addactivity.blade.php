@@ -20,20 +20,20 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label for="acttype" class="col-md-4 col-form-label text-md-right">Activity Type</label>
+                      <label for="actcat" class="col-md-4 col-form-label text-md-right">Activity Tag</label>
                       <div class="col-md-6">
-                        <select class="form-control" id="acttype" name="acttype" required>
-                          @foreach ($actlist as $act)
+                        <select class="form-control" id="actcat" name="actcat" required>
+                          @foreach ($actcats as $act)
                           <option value="{{ $act['descr'] }}" title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
                           @endforeach
                         </select>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="actcat" class="col-md-4 col-form-label text-md-right">Activity Tag</label>
+                      <label for="acttype" class="col-md-4 col-form-label text-md-right">Activity Type</label>
                       <div class="col-md-6">
-                        <select class="form-control" id="actcat" name="actcat" required>
-                          @foreach ($actcats as $act)
+                        <select class="form-control" id="acttype" name="acttype" required>
+                          @foreach ($actlist as $act)
                           <option value="{{ $act['descr'] }}" title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
                           @endforeach
                         </select>
@@ -53,11 +53,14 @@
                     </div>
                     <div class="form-group row">
                         <label for="hours" class="col-md-4 col-form-label text-md-right">Hours Spent</label>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <input type="range" class="custom-range" id="hours"
-                          oninput="displaysliderval()" name="hours" min="0" max="8" step="0.1" value="1"/>
+                          oninput="displaysliderval()" name="hourss" min="0" max="8" step="0.1" value="1"/>
                         </div>
-                        <label for="hours" class="col-md-1 col-form-label text-md-right" id="hourisid">1</label>
+                        <div class="col-md-2">
+                          <input type="number" class="form-control" name="hours" value="1" min="0" max="8" step="0.01" id="hourisid" onchange="updateSlider()" />
+                        </div>
+                        <!-- <label for="hours" class="col-md-1 col-form-label text-md-right">1</label> -->
                     </div>
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
@@ -66,27 +69,6 @@
                     </div>
                   </form>
                 </div>
-            </div> <br />
-            <div class="card">
-              <div class="card-header">Set as On Leave</div>
-              <div class="card-body">
-                <form method="POST" action="{{ route('staff.cuti', [], false) }}">
-                  @csrf
-                  <div class="form-group row">
-                      <label for="actdate" class="col-md-5 col-form-label text-md-right">Date</label>
-                      <div class="col-md-6">
-                        <input type="date" name="date" id="actdate" value="{{ $curdate }}"/>
-                      </div>
-                  </div>
-                  <div class="form-group row mb-0">
-                      <div class="col text-center">
-                          <button type="submit" class="btn btn-success" name="ctype" value="Half Day">Half Day</button>
-                          <button type="submit" class="btn btn-warning" name="ctype" value="Leave">AL / EL</button>
-                          <button type="submit" class="btn btn-danger" name="ctype" value="MC">Sick</button>
-                      </div>
-                  </div>
-                </form>
-              </div>
             </div>
         </div>
     </div>
@@ -96,7 +78,14 @@
 function displaysliderval() {
   var slider = document.getElementById("hours");
   var output = document.getElementById("hourisid");
-  output.innerHTML = slider.value;
+  output.value = slider.value;
 }
+
+function updateSlider() {
+  var slider = document.getElementById("hours");
+  var output = document.getElementById("hourisid");
+  slider.value = output.value;
+}
+
 </script>
 @endsection

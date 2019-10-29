@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\building;
+use App\reservation;
 use App\Office;
 use App\place;
 
@@ -308,6 +309,17 @@ class InfraController extends Controller
         }
 
         $seats = place::where('building_id', $req->building_id)->where('seat_type', 1)->get();
+
+        $tom = date("Y-m-d",strtotime("tomorrow"));
+        foreach($seats as $ast){
+          // check for tomorrow's reservation
+          $bukaun = reservation::whereDate('start_time', $tom)
+            ->where('status', 1)
+            ->where('place_id', $ast->id)
+            ->count();
+
+          $ast->book_count = $bukaun;
+        }
 
         return $this->respond_json(200, 'seat list', $seats);
 

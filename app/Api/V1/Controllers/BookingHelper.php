@@ -157,11 +157,11 @@ class BookingHelper extends Controller
 
     // just in case, search for occupied seats
 
-    $allseats = place::where('status', '>', '1')->get();
+    $allseats = place::where('status', '>', '2')->get();
     foreach ($allseats as $oneseat) {
       $oneseat->status = 1;
-      $oneseat->reserve_staff_id = null;
-      $oneseat->reserve_expire = null;
+      // $oneseat->reserve_staff_id = null;
+      // $oneseat->reserve_expire = null;
       $oneseat->checkin_staff_id = null;
       $oneseat->save();
       $counter++;

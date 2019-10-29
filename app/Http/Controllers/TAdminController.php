@@ -17,6 +17,7 @@ use App\User;
 use App\Unit;
 use App\SubUnit;
 use App\Feedback;
+use App\Checkin;
 use App\common\UserRegisterHandler;
 use Session;
 use App\Api\V1\Controllers\LdapHelper;
@@ -813,6 +814,10 @@ class TAdminController extends Controller
     $rj->action = $req->act;
     $rj->rejected_by = Session::get('staffdata')['id'];
     $rj->save();
+
+    // remove this user's checkin
+    Checkin::where('user_id', $user->id)->delete();
+
     $user->delete();
 
     \Mail::to($rj->email)->send(new RegRejected($rj));

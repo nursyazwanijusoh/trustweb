@@ -157,6 +157,18 @@ Route::post('/skillcat/add', 'SkillCategoryController@addedit')->name('sc.add');
 Route::post('/skillcat/edit', 'SkillCategoryController@edit')->name('sc.edit');
 Route::get('/skillcat/del', 'SkillCategoryController@del')->name('sc.del');
 
+// public holiday
+Route::get('/ph/list', 'PublicHolidayController@list')->name('ph.list');
+Route::post('/ph/add', 'PublicHolidayController@add')->name('ph.add');
+Route::post('/ph/edit', 'PublicHolidayController@edit')->name('ph.edit');
+Route::get('/ph/del', 'PublicHolidayController@del')->name('ph.del');
+
+// SAP leave type
+Route::get('/leave/list', 'PublicHolidayController@list')->name('leave.list');
+Route::post('/leave/add', 'PublicHolidayController@add')->name('leave.add');
+Route::post('/leave/edit', 'PublicHolidayController@edit')->name('leave.edit');
+Route::get('/leave/del', 'PublicHolidayController@del')->name('leave.del');
+
 // common / shared skillset
 Route::get('/sharedskill/list', 'SkillCategoryController@sslist')->name('ss.list');
 Route::post('/sharedskill/add', 'SkillCategoryController@ssaddedit')->name('ss.add');

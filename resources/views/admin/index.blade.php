@@ -36,14 +36,15 @@
                   <br />
                   <h5 class="card-title">LOV Management</h5>
                   <div class="list-group">
-                    <a href="{{ route('admin.at', [], false) }}" class="list-group-item list-group-item-action">Activity Type List</a>
                     <a href="{{ route('admin.tt', [], false) }}" class="list-group-item list-group-item-action">Activity Category List</a>
-                    <a href="{{ route('sc.list', [], false) }}" class="list-group-item list-group-item-action">Skill Category</a>
-                    <a href="{{ route('ss.list', [], false) }}" class="list-group-item list-group-item-action">Shared Skillset List</a>
-                    <a href="{{ route('partner.list', [], false) }}" class="list-group-item list-group-item-action">Partner / Vendor List</a>
+                    <a href="{{ route('admin.at', [], false) }}" class="list-group-item list-group-item-action">Activity Type List</a>
+                    <a href="{{ route('avatar.list', [], false) }}" class="list-group-item list-group-item-action">Avatar List</a>
                     <a href="{{ route('cfg.list', [], false) }}" class="list-group-item list-group-item-action">Common Configs</a>
                     <a href="{{ route('admin.lov', [], false) }}" class="list-group-item list-group-item-action">Department LOVs</a>
-                    <a href="{{ route('avatar.list', [], false) }}" class="list-group-item list-group-item-action">Avatar List</a>
+                    <a href="{{ route('partner.list', [], false) }}" class="list-group-item list-group-item-action">Partner / Vendor List</a>
+                    <a href="{{ route('ph.list', [], false) }}" class="list-group-item list-group-item-action">Public Holidays</a>
+                    <a href="{{ route('ss.list', [], false) }}" class="list-group-item list-group-item-action">Shared Skillset List</a>
+                    <a href="{{ route('sc.list', [], false) }}" class="list-group-item list-group-item-action">Skill Category</a>
                   </div>
                 </div>
             </div>
