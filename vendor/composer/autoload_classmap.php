@@ -25,6 +25,7 @@ return array(
     'App\\CommonConfig' => $baseDir . '/app/CommonConfig.php',
     'App\\CommonSkillset' => $baseDir . '/app/CommonSkillset.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
+    'App\\DailyPerformance' => $baseDir . '/app/DailyPerformance.php',
     'App\\EventAttendance' => $baseDir . '/app/EventAttendance.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Feedback' => $baseDir . '/app/Feedback.php',

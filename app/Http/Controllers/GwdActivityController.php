@@ -101,12 +101,17 @@ class GwdActivityController extends Controller
     $actype = ActivityType::where('status', 1)->get();
     $acats = TaskCategory::where('status', 1)->get();
     $today = date('Y-m-d');
+    $mindate = new Carbon($today);
+    $mindate->subDays(7);
 
     if($req->filled('alert')){
-      return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today, 'actcats' => $acats, 'alert' => $req->alert]);
+      return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today,
+        'actcats' => $acats, 'alert' => $req->alert,
+        'mindate' => $mindate->format('Y-m-d')
+      ]);
     }
 
-    return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today, 'actcats' => $acats]);
+    return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today, 'actcats' => $acats, 'mindate' => $mindate->format('Y-m-d')]);
   }
 
 }

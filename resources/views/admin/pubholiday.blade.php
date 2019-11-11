@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('page-css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+@endsection
 
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-11">
@@ -61,9 +64,9 @@
                               data-name="{{ $atask->name }}"
                               >Edit
                             </button>
-                            <!-- <a href="{{ route('ph.del', ['id' => $atask['id']], false) }}">
+                            <a href="{{ route('ph.del', ['id' => $atask->id], false) }}">
                               <button type="button" class="btn btn-danger btn-sm" title="Delete">Delete</button>
-                            </a> -->
+                            </a>
                           </td>
                         </tr>
                         @endforeach
@@ -71,6 +74,12 @@
                     </table>
                   </div>
                 </div>
+            </div><br />
+            <div class="card">
+              <div class="card-header">Holiday Calendar</div>
+              <div class="card-body">
+                {!! $cal->calendar() !!}
+              </div>
             </div>
         </div>
         <div class="modal fade" id="editCfgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -82,33 +91,17 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form method="POST" action="{{ route('avatar.add', [], false) }}">
+            <form method="POST" action="{{ route('ph.edit', [], false) }}">
               @csrf
               <div class="modal-body">
                 <input type="hidden" value="0" name="id" id="edit-id" />
                 <div class="form-group row">
-                  <label for="edit-rank" class="col-sm-4 col-form-label text-sm-right">Rank:</label>
-                  <input type="number" step="1" class="form-control col-sm-6" id="edit-rank" name="rank" value="test" required>
+                  <label for="edit-edate" class="col-sm-4 col-form-label text-sm-right">Event Date:</label>
+                  <input type="date" step="1" class="form-control col-sm-6" id="edit-edate" name="event_date" value="test" required>
                 </div>
                 <div class="form-group row">
-                  <label for="edit-rank_name" class="col-sm-4 col-form-label text-sm-right">Rank name:</label>
-                  <input type="text" class="form-control col-sm-6" id="edit-rank_name" name="rank_name" required>
-                </div>
-                <div class="form-group row">
-                  <label for="edit-min_hours" class="col-sm-4 col-form-label text-sm-right">Min Hours:</label>
-                  <input type="number" class="form-control col-sm-6" id="edit-min_hours" name="min_hours" value="test" required>
-                </div>
-                <div class="form-group row">
-                  <label for="edit-max_hours" class="col-sm-4 col-form-label text-sm-right">Max Hours:</label>
-                  <input type="text" class="form-control col-sm-6" id="edit-max_hours" name="max_hours" required>
-                </div>
-                <div class="form-group row">
-                  <label for="edit-image_url" class="col-sm-4 col-form-label text-sm-right">Image URL:</label>
-                  <input type="text" class="form-control col-sm-6" id="edit-image_url" name="image_url" value="test" required>
-                </div>
-                <div class="form-group row">
-                  <label for="edit-image_credit" class="col-sm-4 col-form-label text-sm-right">Image Credit:</label>
-                  <input type="text" class="form-control col-sm-6" id="edit-image_credit" name="image_credit" required>
+                  <label for="edit-rank_name" class="col-sm-4 col-form-label text-sm-right">Event Name:</label>
+                  <input type="text" class="form-control col-sm-6" id="edit-rank_name" name="name" required>
                 </div>
               </div>
               <div class="modal-footer">
@@ -137,22 +130,18 @@ $('#editCfgModal').on('show.bs.modal', function(e) {
 
     //get data-id attribute of the clicked element
     var id = $(e.relatedTarget).data('id');
-    var rank = $(e.relatedTarget).data('rank');
-    var rank_name = $(e.relatedTarget).data('rank_name');
-    var min_hours = $(e.relatedTarget).data('min_hours');
-    var max_hours = $(e.relatedTarget).data('max_hours');
-    var image_url = $(e.relatedTarget).data('image_url');
-    var image_credit = $(e.relatedTarget).data('image_credit');
+    var rank = $(e.relatedTarget).data('event_date');
+    var rank_name = $(e.relatedTarget).data('name');
 
     //populate the textbox
     $(e.currentTarget).find('input[name="id"]').val(id);
-    $(e.currentTarget).find('input[name="rank"]').val(rank);
-    $(e.currentTarget).find('input[name="rank_name"]').val(rank_name);
-    $(e.currentTarget).find('input[name="min_hours"]').val(min_hours);
-    $(e.currentTarget).find('input[name="max_hours"]').val(max_hours);
-    $(e.currentTarget).find('input[name="image_url"]').val(image_url);
-    $(e.currentTarget).find('input[name="image_credit"]').val(image_credit);
-    $(e.currentTarget).find('input[name="rank"]').focus();
+    $(e.currentTarget).find('input[name="event_date"]').val(rank);
+    $(e.currentTarget).find('input[name="name"]').val(rank_name);
+    $(e.currentTarget).find('input[name="name"]').focus();
 });
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+{!! $cal->script() !!}
 @stop

@@ -9,11 +9,21 @@ use \Carbon\Carbon;
 use App\ActivityType;
 use App\TaskCategory;
 use App\Avatar;
+use App\DailyPerformance;
+use App\PublicHoliday;
 use \DB;
 
 class GDWActions
 {
   public static function addActivity(Request $req, $staff_id){
+
+    if($req->filled('actdate')){
+      $indate = $req->actdate;
+    } else {
+      $indate = date('Y-m-d');
+    }
+
+    $dp = GDWActions::GetDailyPerfObj($staff_id, $indate);
 
     $act = new GwdActivity;
     $act->user_id = $staff_id;
@@ -55,12 +65,7 @@ class GDWActions
       $act->details = $req->details;
     }
 
-    if($req->filled('actdate')){
-      $act->activity_date = $req->actdate;
-    } else {
-      $act->activity_date = date('Y-m-d');
-    }
-
+    $act->activity_date = $indate;
     $user = $act->User;
 
     if($user->isvendor == 1){
@@ -71,7 +76,13 @@ class GDWActions
 
     // get current checkin as well
     $act->checkin_id = $user->curr_checkin;
+
+    // tie to daily perf
+    $act->daily_performance_id = $dp->id;
     $act->save();
+
+    // update the daily perf hours
+    $dp->addHours($req->hours);
 
     GDWActions::updateAvatar($staff_id);
 
@@ -86,8 +97,31 @@ class GDWActions
       return "404";
     }
 
+    $currdp = $act->DailyPerf;
+
     $act->activity_type_id = $req->acttype;
     $act->task_category_id = $req->actcat;
+
+
+
+
+    if($req->filled('actdate')){
+      $act->activity_date = $req->actdate;
+
+      // day changed
+      $nudp = GDWActions::GetDailyPerfObj($act->user_id, $req->actdate);
+      $nudp->addHours($act->hours_spent);
+      $act->daily_performance_id = $nudp->id;
+
+      // reduce the hours from the old daily perf
+      $currdp->addHours(0 - $act->hours_spent);
+
+    } else {
+      // get the diff in hours
+      $hoursdiff = $req->hours - $act->hours_spent;
+      $currdp->addHours($hoursdiff);
+    }
+
     $act->hours_spent = $req->hours;
 
     // optionals
@@ -103,13 +137,6 @@ class GDWActions
       $act->details = $req->details;
     }
 
-    if($req->filled('actdate')){
-      $act->activity_date = $req->actdate;
-    } else {
-      $act->activity_date = date('Y-m-d');
-    }
-
-    // get current checkin as well
     $act->save();
 
     GDWActions::updateAvatar($act->user_id);
@@ -123,6 +150,10 @@ class GDWActions
     if(!$act){
       return "404";
     }
+
+    // take out the hours from daily perf
+    $currdp = $act->DailyPerf;
+    $currdp->addHours(0 - $act->hours_spent);
 
     $staffid = $act->user_id;
     $act->delete();
@@ -215,19 +246,17 @@ class GDWActions
 
   public static function getBgColor($i){
     $bgcolors = [
-      'rgba(255, 99, 132, 0.5)',
+      'rgba(255, 99, 132, 0.8)',
       'rgba(255, 150, 5, 0.5)',
       'rgba(0, 255, 132, 0.5)',
-      'rgba(100, 114, 104, 0.5)',
       'rgba(0, 0, 255, 0.5)',
       'rgba(255, 0, 0, 0.5)',
-      'rgba(0, 0, 0, 0.5)',
+      'rgba(0, 0, 0, 0.8)',
       'rgba(14, 170, 132, 0.5)',
-      'rgba(108, 68, 229, 0.5)',
-      'rgba(215, 215, 44, 0.5)',
-      'rgba(255, 0, 255, 0.5)',
-      'rgba(24, 38, 6, 0.5)',
-      'rgba(255,255,255, 0.5)',
+      'rgba(108, 68, 229, 0.7)',
+      'rgba(215, 215, 44, 0.8)',
+      'rgba(255, 0, 255, 0.8)',
+      'rgba(24, 38, 6, 0.8)',
     ];
 
     return $bgcolors[$i % count($bgcolors)];
@@ -267,6 +296,59 @@ class GDWActions
 
     return $act;
 
+  }
+
+  public static function GetExpectedHours($date, DailyPerformance $dpp = null, $exclude = null){
+    // first, check if it's a public holiday
+    if($exclude){
+      $ph = PublicHoliday::whereDate('event_date', $date)
+        ->where('id', '!=', $exclude)->first();
+    } else {
+      $ph = PublicHoliday::whereDate('event_date', $date)->first();
+    }
+
+
+    if($ph){
+
+      if($dpp){
+        $dpp->is_public_holiday = true;
+        $dpp->public_holiday_id = $ph->id;
+      }
+
+      return 0;
+    }
+
+    // not a public holiday. check day of the week
+    $carbond = new Carbon($date);
+    $dow = $carbond->dayOfWeekIso;
+
+    if($dow == 5){
+      return 7.5;
+    } elseif($dow > 5){
+      return 0;
+    } else {
+      return 8;
+    }
+
+  }
+
+  public static function GetDailyPerfObj($user_id, $date){
+    $dp = DailyPerformance::where('user_id', $user_id)
+      ->whereDate('record_date', $date)
+      ->first();
+
+    if($dp){
+
+    } else {
+      // no record. create new
+      $dp = new DailyPerformance;
+      $dp->user_id = $user_id;
+      $dp->record_date = $date;
+      $dp->expected_hours = GDWActions::GetExpectedHours($date, $dp);
+      $dp->save();
+    }
+
+    return $dp;
   }
 
 }

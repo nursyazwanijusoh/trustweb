@@ -529,6 +529,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\CommonConfig' => __DIR__ . '/../..' . '/app/CommonConfig.php',
         'App\\CommonSkillset' => __DIR__ . '/../..' . '/app/CommonSkillset.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\DailyPerformance' => __DIR__ . '/../..' . '/app/DailyPerformance.php',
         'App\\EventAttendance' => __DIR__ . '/../..' . '/app/EventAttendance.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Feedback' => __DIR__ . '/../..' . '/app/Feedback.php',

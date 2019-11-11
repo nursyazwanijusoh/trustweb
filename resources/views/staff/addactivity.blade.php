@@ -16,7 +16,7 @@
                     <div class="form-group row">
                         <label for="actdate" class="col-md-4 col-form-label text-md-right">Date</label>
                         <div class="col-md-6">
-                          <input type="date" name="actdate" id="actdate" value="{{ $curdate }}"/>
+                          <input type="date" name="actdate" id="actdate" value="{{ $curdate }}" min="{{ $mindate }}" max="{{ $curdate }}"/>
                         </div>
                     </div>
                     <div class="form-group row">

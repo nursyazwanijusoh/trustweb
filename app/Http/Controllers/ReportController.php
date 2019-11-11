@@ -54,9 +54,9 @@ class ReportController extends Controller
       array_push($value, $aunit->total);
 
       if(($counter % 2) == 1){
-        array_push($bgcolor, 'rgba(255, 99, 132, 0.2)');
+        array_push($bgcolor, 'rgba(255, 99, 132, 0.6)');
       } else {
-        array_push($bgcolor, 'rgba(75, 192, 192, 0.2)');
+        array_push($bgcolor, 'rgba(75, 192, 192, 0.6)');
       }
     }
 
@@ -67,9 +67,9 @@ class ReportController extends Controller
       array_push($label, $prtn->comp_name);
       array_push($value, $prtn->staff_count);
       if(($counter % 2) == 1){
-        array_push($bgcolor, 'rgba(255, 99, 132, 0.2)');
+        array_push($bgcolor, 'rgba(255, 99, 132, 0.6)');
       } else {
-        array_push($bgcolor, 'rgba(75, 192, 192, 0.2)');
+        array_push($bgcolor, 'rgba(75, 192, 192, 0.6)');
       }
     }
 
@@ -141,20 +141,20 @@ class ReportController extends Controller
     $datasets = array([
           'label' => 'Free',
           'data' => $frees,
-          'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
-          'borderColor' => 'rgba(255, 99, 132, 0.7)',
+          'backgroundColor' => 'rgba(255, 99, 132, 0.5)',
+          'borderColor' => 'rgba(255, 40, 132, 0.7)',
         ],
         [
           'label' => 'Reserved',
           'data' => $resv,
-          'backgroundColor' => "rgba(255, 255, 0, 0.2)",
-          'borderColor' => "rgba(255, 255, 0, 0.7)",
+          'backgroundColor' => "rgba(255, 255, 0, 0.5)",
+          'borderColor' => "rgba(255, 199, 0, 0.7)",
         ],
         [
           'label' => 'Occupied',
           'data' => $occp,
-          'backgroundColor' => "rgba(38, 185, 154, 0.2)",
-          'borderColor' => "rgba(38, 185, 154, 0.7)",
+          'backgroundColor' => "rgba(38, 185, 154, 0.5)",
+          'borderColor' => "rgba(38, 100, 154, 0.7)",
         ]
       );
 
