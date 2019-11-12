@@ -11,6 +11,7 @@ use App\place;
 use App\User;
 use \DateTime;
 use \DateTimeZone;
+use App\common\NotifyHelper;
 
 /**
  * class to manage all booking related activities
@@ -78,6 +79,14 @@ class BookingHelper extends Controller
       // clear the checkin
       $staff->curr_checkin = null;
       $staff->save();
+
+      if($remark != 'manual'){
+        $resp = NotifyHelper::SendPushNoti(
+          $staff->pushnoti_id,
+          'Checked out from seat ' . $place->label,
+          'Check out reason: ' . $remark);
+      }
+
     }
 
   }
@@ -236,6 +245,7 @@ class BookingHelper extends Controller
         // seat is free. check for upcoming booking
         $todayd = date('Y-m-d');
         $bookinglist = reservation::where('status', 1)
+          ->where('place_id', $theseat->id)
           ->whereDate('start_time', $todayd)
           ->where('end_time', '>', $time)->get();
 

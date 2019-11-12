@@ -13,6 +13,7 @@
         "dingo/api": "2.0.0-beta1",
         "fideloper/proxy": "^4.0",
         "fx3costa/laravelchartjs": "^2.5",
+        "guzzlehttp/guzzle": "~6.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",

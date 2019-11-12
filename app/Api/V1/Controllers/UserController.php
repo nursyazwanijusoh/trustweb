@@ -11,12 +11,15 @@ use App\ActivityType;
 use App\Activity;
 use App\CommonConfig;
 use App\EventAttendance;
+use App\ResourceRequest;
 use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
 use App\common\HDReportHandler;
 use App\common\UserRegisterHandler;
 use App\common\GDWActions;
+use App\common\NotifyHelper;
+use App\Api\V1\Controllers\BookingHelper;
 
 class UserController extends Controller
 {
@@ -453,6 +456,157 @@ class UserController extends Controller
 
     }
 
+    public function requestSeatAccess(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required'],
+        'seat_id' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $theseat = place::find($req->seat_id);
+      $time = date('Y-m-d H:i:s');
+
+      if($theseat){
+        //check current occupant of that seat
+        if(isset($theseat->checkin_staff_id)){
+          $req_to_id = User::find($theseat->checkin_staff_id);
+          $reqstatus = 'Checkin';
+          $body = 'Another staff is requesting you to release the seat that currently occupied by you';
+        } else {
+          // not checked in yet. check for booking
+          $curbook = reservation::where('status', 1)
+            ->where('place_id', $theseat->id)
+            ->where('start_time', '<=', $time)
+            ->where('end_time', '>=', $time)->first();
+
+          if($curbook){
+            // is a reservation
+            $req_to_id = User::find($curbook->user_id);
+            $reqstatus = 'reservation';
+            $body = 'Another staff is requesting you to release the seat that is currently booked by you';
+          } else {
+            // no booking either. meaning the seat is actually free
+            return $this->respond_json(401, 'seat actually free', $theseat);
+          }
+
+        }
+
+        $req_by = User::find($req->staff_id);
+        // create the resource request
+        $res_req = new ResourceRequest;
+        $res_req->request_by = $req_by->id;
+        $res_req->request_to = $req_to_id->id;
+        $res_req->resource_model = 'place';
+        $res_req->resource_id = $theseat->id;
+        $res_req->request_time = $time;
+        $res_req->status = $reqstatus;
+        $res_req->save();
+
+        // send the notification
+        $resp = NotifyHelper::SendPushNoti(
+          $req_to_id->pushnoti_id,
+          'Seat Request: ' . $theseat->label,
+          $body,
+          ['req_id' => $res_req->id, 'action' => 'seat request']
+        );
+
+        return $this->respond_json(200, 'Alert sent', $resp);
+
+      } else {
+        return $this->respond_json(404, 'seat not found', $input);
+      }
+    }
+
+    public function denySeatRequest(Request $req){
+      $input = app('request')->all();
+  		$rules = [
+  			'req_id' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $resreq = ResourceRequest::find($req->req_id);
+      $time = date('Y-m-d H:i:s');
+
+      if($resreq){
+        $theseat = place::find($resreq->resource_id);
+        $reqer = User::find($resreq->request_by);
+        $resreq->response_time = $time;
+        $resreq->status = 'denied';
+        $resreq->save();
+
+        // respond
+        $resp = NotifyHelper::SendPushNoti(
+          $reqer->pushnoti_id,
+          'Seat Request Denied: ' . $theseat->label,
+          'Your request for this seat has been denied by current occupant'
+        );
+
+        return $this->respond_json(200, 'request denied', $resp);
+
+
+      } else {
+        return $this->respond_json(404, 'Request ID not found', $input);
+      }
+
+    }
+
+    public function acceptSeatRequest(Request $req){
+      $input = app('request')->all();
+  		$rules = [
+  			'req_id' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $resreq = ResourceRequest::find($req->req_id);
+      $time = date('Y-m-d H:i:s');
+      if($resreq){
+        $theseat = place::find($resreq->resource_id);
+        $curstat = $resreq->status;
+
+        $reqer = User::find($resreq->request_by);
+        $reqto = User::find($resreq->request_to);
+        $resreq->response_time = $time;
+        $resreq->status = 'seat released';
+        $resreq->save();
+
+        $tbh = new BookingHelper;
+        if($curstat == 'reservation'){
+          // release the reservation
+          $tbh->clearReservation($reqto);
+        } else {
+          // check out
+          $tbh->checkOut($resreq, 'Release seat to others');
+        }
+
+        // notify the requestor about the seat availability
+        $resp = NotifyHelper::SendPushNoti(
+          $reqer->pushnoti_id,
+          'Seat is now available: ' . $theseat->label,
+          'The previous occupant has released this seat'
+        );
+
+        return $this->respond_json(200, 'Seat released', $resp);
+
+      } else {
+        return $this->respond_json(404, 'Request ID not found', $input);
+      }
+
+    }
+
 
     // internal functions ======================
 
@@ -510,5 +664,24 @@ class UserController extends Controller
 
     public function pg(Request $req){
       return $req->user();
+    }
+
+    public function testNotify(Request $req){
+      if($req->filled('s')){
+        $user = User::where('staff_no', $req->s)
+          ->whereNotNull('pushnoti_id')->first();
+
+        if($user){
+
+          $data = [
+            'req_id' => 1
+          ];
+
+          return NotifyHelper::SendPushNoti($user->pushnoti_id, 'Tajuk', 'Isi dalam', $data);
+        }
+
+      }
+
+      return 'hi';
     }
 }

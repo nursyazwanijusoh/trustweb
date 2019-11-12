@@ -24,6 +24,7 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
   $api->get('/',            ['as' => 'api.home',   'uses' => 'App\Api\V1\Controllers\Controller@home']);
   $api->get('/pg',            ['as' => 'api.pg',   'uses' => 'App\Api\V1\Controllers\Controller@playground']);
+  $api->get('/alert',            ['as' => 'api.alert',   'uses' => 'App\Api\V1\Controllers\UserController@testNotify']);
 
   // actually used
   $api->get('/massKickOut',  ['as' => 'check.kick.all', 'uses' => 'App\Api\V1\Controllers\InfraController@massKickOut']);
@@ -105,7 +106,9 @@ $api->version('v1', function ($api) {
 
   $api->post('/UserGetGwdRank',  ['as' => 'user.getGwdRank', 'uses' => 'App\Api\V1\Controllers\UserController@getGwdRank']);
 
-
+  $api->post('/SeatReq',  ['as' => 'seat.request', 'uses' => 'App\Api\V1\Controllers\UserController@requestSeatAccess']);
+  $api->post('/SeatReqDeny',  ['as' => 'seat.deny', 'uses' => 'App\Api\V1\Controllers\UserController@denySeatRequest']);
+  $api->post('/SeatReqAccept',  ['as' => 'seat.req.accept', 'uses' => 'App\Api\V1\Controllers\UserController@acceptSeatRequest']);
 
 });
 
