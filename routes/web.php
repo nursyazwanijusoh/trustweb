@@ -164,10 +164,10 @@ Route::post('/ph/edit', 'PublicHolidayController@edit')->name('ph.edit');
 Route::get('/ph/del', 'PublicHolidayController@del')->name('ph.del');
 
 // SAP leave type
-Route::get('/leave/list', 'PublicHolidayController@list')->name('leave.list');
-Route::post('/leave/add', 'PublicHolidayController@add')->name('leave.add');
-Route::post('/leave/edit', 'PublicHolidayController@edit')->name('leave.edit');
-Route::get('/leave/del', 'PublicHolidayController@del')->name('leave.del');
+Route::get('/leave/list', 'LeaveTypeController@list')->name('leave.list');
+Route::post('/leave/add', 'LeaveTypeController@add')->name('leave.add');
+Route::post('/leave/edit', 'LeaveTypeController@edit')->name('leave.edit');
+Route::get('/leave/del', 'LeaveTypeController@del')->name('leave.del');
 
 // common / shared skillset
 Route::get('/sharedskill/list', 'SkillCategoryController@sslist')->name('ss.list');

@@ -41,6 +41,7 @@
                     <a href="{{ route('avatar.list', [], false) }}" class="list-group-item list-group-item-action">Avatar List</a>
                     <a href="{{ route('cfg.list', [], false) }}" class="list-group-item list-group-item-action">Common Configs</a>
                     <a href="{{ route('admin.lov', [], false) }}" class="list-group-item list-group-item-action">Department LOVs</a>
+                    <a href="{{ route('leave.list', [], false) }}" class="list-group-item list-group-item-action">Leave Types</a>
                     <a href="{{ route('partner.list', [], false) }}" class="list-group-item list-group-item-action">Partner / Vendor List</a>
                     <a href="{{ route('ph.list', [], false) }}" class="list-group-item list-group-item-action">Public Holidays</a>
                     <a href="{{ route('ss.list', [], false) }}" class="list-group-item list-group-item-action">Shared Skillset List</a>
