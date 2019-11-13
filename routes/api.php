@@ -109,6 +109,7 @@ $api->version('v1', function ($api) {
   $api->post('/SeatReq',  ['as' => 'seat.request', 'uses' => 'App\Api\V1\Controllers\UserController@requestSeatAccess']);
   $api->post('/SeatReqDeny',  ['as' => 'seat.deny', 'uses' => 'App\Api\V1\Controllers\UserController@denySeatRequest']);
   $api->post('/SeatReqAccept',  ['as' => 'seat.req.accept', 'uses' => 'App\Api\V1\Controllers\UserController@acceptSeatRequest']);
+  $api->post('/floorTomorrowStatus',  ['as' => 'infra.esok.status', 'uses' => 'App\Api\V1\Controllers\InfraController@getTomorrowAvailability']);
 
 });
 

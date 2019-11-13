@@ -37,6 +37,10 @@ class HomeController extends Controller
       return view('welcome');
     }
 
+    function booking_faq(){
+      return view('booking_faq');
+    }
+
     public function listAdmins(){
       $adminlist = User::where('role', '<=', 2)->get();
       return view('adminlist', ['admins' => $adminlist]);

@@ -7,6 +7,7 @@ use App\building;
 use App\reservation;
 use App\Office;
 use App\place;
+use \Carbon\Carbon;
 
 /**
  * Controller for buildings / tables
@@ -441,6 +442,46 @@ class InfraController extends Controller
           }
 
           return $this->respond_json(200, 'Area for ' . $floor->floor_name, $rooms);
+        } else {
+          return $this->respond_json(404, 'Floor not found', $input);
+        }
+
+      }
+
+      public function getTomorrowAvailability(Request $req){
+        $input = app('request')->all();
+
+        $rules = [
+          'floor_id' => ['required']
+        ];
+
+        $validator = app('validator')->make($input, $rules);
+        if($validator->fails()){
+          return $this->respond_json(412, 'Invalid input', $input);
+        }
+
+        $tflor = building::find($req->floor_id);
+
+        if($tflor){
+          $tomo = Carbon::tomorrow();
+          $seatlist = $tflor->place;
+
+          foreach ($seatlist as $key => $value) {
+            // check whether this seat is booked tomorrow
+            $bcount = reservation::where('place_id', $value->id)
+              ->where('status', 1)
+              ->whereDate('start_time', $tomo->format('Y-m-d'))
+              ->count();
+
+            if($bcount == 0){
+              $value->gotbooking = false;
+            } else {
+              $value->gotbooking = true;
+            }
+          }
+
+          return $this->respond_json(200, 'tomorrow seat status', $seatlist);
+
         } else {
           return $this->respond_json(404, 'Floor not found', $input);
         }

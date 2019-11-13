@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \DB;
 use App\Unit;
+use App\CompGroup;
+use \Carbon\Carbon;
 use App\common\GDWReports;
 
 class GwdReportController extends Controller
@@ -21,14 +23,16 @@ class GwdReportController extends Controller
   // show the overview summary, by month
   public function summary(Request $req){
 
+    $grplist = CompGroup::all();
     $curdate = date('Y-m-d');
-    if($req->filled('date')){
-      $curdate = $req->date;
-    }
+    $lastweek = date('Y-m-d', strtotime('-1 week'));
 
-    
 
-    dd("under development");
+    return view('report.rptgrpsummary', [
+      'glist' => $grplist,
+      'sdate' => $lastweek,
+      'edate' => $curdate
+    ]);
   }
 
   public function summaryres(Request $req){
@@ -128,6 +132,63 @@ class GwdReportController extends Controller
   }
 
   public function detailres(Request $req){
+
+  }
+
+  public function doGrpSummary(Request $req){
+
+    $cgrp = CompGroup::find($req->gid);
+    if($cgrp){
+
+    } else {
+      return redirect()->back()->withInput()->withErrors(['gid' => 'Selected group no longer exist']);
+    }
+
+    // date validation?
+
+
+    $daterange = new DatePeriod(
+      new DateTime($fdate),
+      DateInterval::createFromDateString('1 day'),
+      new DateTime($todate)
+    );
+
+    foreach ($cgrp->Members as $onemember) {
+      $staffcount = $onemember->Staffs->count();
+
+      foreach ($daterange as $adate) {
+        $dperfs = $onemember->PerfEntryOnDate($adate);
+
+        // $sumExp = 
+
+      }
+
+
+    }
+
+
+
+
+
+
+
+
+
+    $grplist = CompGroup::all();
+    foreach ($grplist as $key => $value) {
+      if($value->id == $req->gid){
+        $value->selected = 'selected';
+      }
+    }
+
+    $curdate = $req->tdate;
+    $lastweek = $req->fdate;
+
+    return view('report.rptgrpsummary', [
+      'glist' => $grplist,
+      'sdate' => $lastweek,
+      'edate' => $curdate
+    ]);
 
   }
 

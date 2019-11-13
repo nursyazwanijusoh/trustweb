@@ -41,12 +41,36 @@
         <header id="header">
             <div class="container">
                 <div id="logo" class="pull-left">
-                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/TrustNew.png" height="60" width="80" alt="" title="" /></a>
+                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/TrustNew.png" height="40" width="60" alt="" title="" /></a>
                 </div>
 
                 <nav id="nav-menu-container">
-                    <ul class="nav-menu">
-                        <li><a href="{{ route('staff', [], false) }}">Home</a></li>
+                      <ul class="nav-menu">
+                        <li class="menu-has-children"><a href="">Guide</a>
+                          <ul>
+                            <li class="menu-has-children"><a href="">trUSt</a>
+                              <ul>
+                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
+                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li>
+                              </ul>
+                            </li>
+                            <li class="menu-has-children"><a href="">Workspace Booking</a>
+                              <ul>
+                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
+                                  <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">FAQ</a></li>
+                              </ul>
+                            </li>
+                            <li class="menu-has-children"><a href="">Diary (GWD)</a>
+                              <ul>
+                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
+                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        @guest
+                        @else
+                        <!-- <li><a href="{{ route('staff', [], false) }}">Home</a></li> -->
                         @if (Session::get('staffdata')['role'] <= 1)
                         <li class="menu-has-children"><a href="">Admin</a>
                           <ul>
@@ -58,13 +82,13 @@
                         <li class="menu-has-children"><a href="">Menu</a>
                           <ul>
                               <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
-                              <li><a class="dropdown-item" href="{{ route('home', [], false) }}">Quick Guide</a></li>
                               <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
                               <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li>
                               <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
 
                           </ul>
                         </li>
+                        @endif
                         <li>
                           @guest
                           <a class="dropdown-item" href="{{ route('login', [], false) }}">Login</a>

@@ -22,6 +22,8 @@ Route::get('/resend', 'HomeController@resend')->name('verification.resend');
 Route::get('/delete', 'HomeController@troll')->name('troll');
 Route::get('/info', 'HomeController@info')->name('info');
 
+Route::get('/booking_faq', 'HomeController@booking_faq')->name('booking_faq');
+
 // ============ admins ================
 Route::get('/admin', 'TAdminController@index')->name('admin');
 // admin task type
@@ -102,6 +104,8 @@ Route::get('/reports/gwd/entrystat', 'GwdReportController@entrystat')->name('rep
 Route::post('/reports/gwd/entrystat', 'GwdReportController@entrystatres')->name('report.gwd.entrystatres');
 Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gwd.detail');
 // Route::post('/reports/gwd/detail', 'GwdReportController@detailres')->name('report.gwd.detailres');
+// Route::get('/reports/gwd/gsum', 'GwdReportController@grpSummary')->name('reports.gwd.gsum');
+Route::post('/reports/gwd/gsum', 'GwdReportController@doGrpSummary')->name('reports.gwd.dogsum');
 
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');
@@ -115,6 +119,10 @@ Route::get('/reports/staffspecificdayrpt', 'ReportController@staffSpecificDayRpt
 Route::get('/reports/floorutildetail', 'ReportController@floorUtilDetail')->name('reports.fud');
 Route::post('/reports/floorutildetailr', 'ReportController@floorUtilDetailRes')->name('reports.fudr');
 Route::get('/reports/divcheckin', 'ReportController@checkinByDiv')->name('reports.divcheckin');
+
+
+
+
 
 // hot desking reports
 Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->name('hdreports.dbdf');
@@ -208,3 +216,12 @@ Route::post('/area/addevent', 'AreaEventController@addEvent')->name('area.addeve
 Route::get('/area/myevents', 'AreaEventController@myevents')->name('area.myevents');
 Route::post('/area/cancelevent', 'AreaEventController@cancelEvent')->name('area.cancelevent');
 Route::post('/area/rejectevent', 'AreaEventController@rejectEvent')->name('area.rejectevent');
+
+// public holiday
+Route::get('/cgrp/list', 'CompGroupController@list')->name('cgrp.list');
+Route::post('/cgrp/add', 'CompGroupController@add')->name('cgrp.add');
+Route::post('/cgrp/edit', 'CompGroupController@edit')->name('cgrp.edit');
+Route::post('/cgrp/del', 'CompGroupController@del')->name('cgrp.del');
+Route::get('/cgrp/view', 'CompGroupController@view')->name('cgrp.view');
+Route::post('/cgrp/take', 'CompGroupController@take')->name('cgrp.take');
+Route::post('/cgrp/remove', 'CompGroupController@remove')->name('cgrp.remove');

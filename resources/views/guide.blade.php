@@ -10,7 +10,7 @@
                         </div>
                         <div class="card-body">
                                 <div class="row"><div class="col-md-10"> <label for="disabledSelect"><a href="#1"> 1. Installation Trust App</a></label></div></div>
-                                <div class="row"><div class="col-xs-5"><div class="col-xs-5"> <label for="disabledSelect"> <a href="#1.1"> 1.1. IOS Verified App </a></label></div></div></div>
+                                <div class="row"><div class="col-md-10"><label for="disabledSelect"> <a href="#1.1"> 1.1. IOS Verified App </a></label></div></div>
                                 <div class="row"><div class="col-md-10"> <label for="disabledSelect"><a href="#2"> 2. Login Trust </a></label></div></div>
                                 <div class="row"><div class="col-md-10"> <label for="disabledSelect"><a href="#3"> 3. Clock IN </a></label></div></div>
                                 <div class="row"><div class="col-md-10"> <label for="disabledSelect"><a href="#4"> 4. Space Check In </a></label></div></div>
@@ -143,6 +143,7 @@
                             <B>2. Login Trust </B>
                         </div>
                         <div class="card-body">
+                          <div class="row">
                         <div class="col-md-3">
                                 <div class="thumbnail">
                                 <img class="card-img-top" src="/trustimg/2_001.jpeg" alt="2_001" style="width:100%">
@@ -175,6 +176,7 @@
                                     </div>
                                 </div>
                             </div>
+                          </div>
                         </div>
                         <!-- /.card-body -->
                     </div><br />

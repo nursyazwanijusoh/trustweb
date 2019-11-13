@@ -19,7 +19,7 @@
 
                   <h5 class="card-title">Diary / GWD</h5>
                   <div class="list-group">
-                    <a href="{{ route('report.gwd.summary', [], false) }}" class="list-group-item list-group-item-action">Summary</a>
+                    <a href="{{ route('report.gwd.summary', [], false) }}" class="list-group-item list-group-item-action">Group Summary</a>
                     <a href="{{ route('report.gwd.entrystat', [], false) }}" class="list-group-item list-group-item-action">Entry Statistic</a>
                     <a href="{{ route('report.gwd.detail', [], false) }}" class="list-group-item list-group-item-action">Details by Division</a>
                   </div>
