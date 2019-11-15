@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Feedback;
 use App\ActivityType;
 use App\TaskCategory;
+use App\User;
+use App\DailyPerformance;
 use App\common\GDWActions;
 
 class MiscController extends Controller
@@ -106,7 +108,8 @@ class MiscController extends Controller
 
 		$rules = [
 			'staff_id' => ['required'],
-			'date' => ['required']
+			'start_date' => ['required'],
+			'end_date' => ['required'],
 		];
 
 		$validator = app('validator')->make($input, $rules);
@@ -114,19 +117,36 @@ class MiscController extends Controller
 			return $this->respond_json(412, 'Invalid input', $input);
 		}
 
-		$redata = GDWActions::getActSummary($req->staff_id, $req->date);
-		$nuredata = [];
+		$eetime = new \DateTime($req->end_date);
+		$eetime->setTime(0,0,1);
 
-    // rearrange to new format for api
-    for($i = 0; $i < count($redata['label']); $i++) {
-      array_push($nuredata, [
-        'key' => $redata['label'][$i],
-        'value' => $redata['data'][$i],
-        'svg' => ['fill' => $redata['bg'][$i]],
-      ]);
-    }
+		$daterange = new \DatePeriod(
+      new \DateTime($req->start_date),
+      \DateInterval::createFromDateString('1 day'),
+      $eetime
+    );
+		$seed = rand(0, 12);
+		$fretdata = [];
+		foreach ($daterange as $ondete) {
+			$redata = GDWActions::getActInfoOnDate($req->staff_id, $ondete, $seed);
+			$nuredata = [];
 
-    return $this->respond_json(200, 'Success', $nuredata);
+	    // rearrange to new format for api
+	    for($i = 0; $i < count($redata['label']); $i++) {
+	      array_push($nuredata, [
+	        'key' => $redata['label'][$i],
+	        'value' => $redata['data'][$i],
+	        'svg' => ['fill' => $redata['bg'][$i]],
+	      ]);
+	    }
+
+			array_push($fretdata, [
+				'date' => $ondete->format('Y-m-d'),
+				'data' => $nuredata
+			]);
+		}
+
+    return $this->respond_json(200, 'Success', $fretdata);
 	}
 
 	function GwdGetActivities(Request $req){
@@ -161,6 +181,44 @@ class MiscController extends Controller
 			$value->value = $value->descr;
 		}
 		return $this->respond_json(200, 'Success', $redata);
+	}
+
+	public function GwdCreateDayPerf(Request $req){
+		if($req->filled('date')){
+			$ddate = $req->date;
+		} else {
+			$ddate = date('Y-m-d');
+		}
+		$counter = 0;
+
+		$userrs = User::whereNotNull('lob')
+			->whereRaw('LENGTH(lob) > 6')
+			->get();
+
+		foreach ($userrs as $key => $value) {
+			$gdata = DailyPerformance::where('user_id', $value->id)
+				->whereDate('record_date', $ddate)
+				->first();
+			if($gdata){
+				// got data. do nothing
+			} else {
+				// no data. create new
+				if(isset($value->lob) && strlen($value->lob) > 6){
+					$dp = new DailyPerformance;
+		      $dp->user_id = $value->id;
+		      $dp->record_date = $ddate;
+		      $dp->unit_id = $value->lob;
+		      $dp->expected_hours = GDWActions::GetExpectedHours($ddate, $dp);
+		      $dp->save();
+
+					$counter++;
+				}
+
+			}
+		}
+
+		return $this->respond_json(200, $counter . ' records created', []);
+
 	}
 
 }

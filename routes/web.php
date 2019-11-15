@@ -45,6 +45,7 @@ Route::get('/admin/delaseat', 'TAdminController@delaseat')->name('admin.delaseat
 Route::get('/admin/delallseat', 'TAdminController@delallseat')->name('admin.delallseat');
 Route::get('/admin/buildetail', 'TAdminController@buildetail')->name('admin.buildetail');
 Route::get('/admin/getallqr', 'TAdminController@getallqr')->name('admin.getallqr');
+Route::get('/admin/seatToggle', 'TAdminController@seatToggle')->name('admin.seat.toggle');
 
 // meeting rooms
 Route::get('/admin/meetroom', 'TAdminController@meetroom')->name('admin.meetroom');

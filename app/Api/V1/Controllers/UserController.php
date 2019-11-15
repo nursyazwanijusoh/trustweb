@@ -34,7 +34,8 @@ class UserController extends Controller
       $input = app('request')->all();
 
   		$rules = [
-  			'staff_no' => ['required']
+  			'staff_no' => ['required'],
+        'pushnoti_id' => ['required']
   		];
 
   		$validator = app('validator')->make($input, $rules);
@@ -45,6 +46,9 @@ class UserController extends Controller
       $luser = $req->user();
 
       if(strcasecmp($luser->staff_no, $req->staff_no) == 0){
+        $luser->pushnoti_id = $req->pushnoti_id;
+        $luser->save();
+
         return $this->respond_json(200, 'Success', []);
       }
 
@@ -513,7 +517,10 @@ class UserController extends Controller
           $req_to_id->pushnoti_id,
           'Seat Request: ' . $theseat->label,
           $body,
-          ['req_id' => $res_req->id, 'action' => 'seat request']
+          [
+            'req_id' => $res_req->id,
+            'action' => 'seat request',
+            'msg' => "$req_by->name requested to sit at $theseat->label"]
         );
 
         return $this->respond_json(200, 'Alert sent', $resp);

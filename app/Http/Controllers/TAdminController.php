@@ -635,6 +635,16 @@ class TAdminController extends Controller
     return redirect(route('admin.buildetail', ['build_id' => $buildid], false));
   }
 
+  public function seatToggle(Request $req){
+    $seat = place::findOrFail($req->seat_id);
+
+    $seat->bookable = !$seat->bookable;
+    $seat->save();
+
+    return redirect(route('admin.buildetail', ['build_id' => $seat->building_id], false));
+  }
+
+
   public function delallseat(Request $req){
     $bh = new BookingHelper;
 

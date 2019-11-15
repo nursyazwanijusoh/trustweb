@@ -14,7 +14,7 @@
                       <div class="col-md-6">
                         <select class="form-control{{ $errors->has('gid') ? ' is-invalid' : '' }}" id="gid" name="gid" required>
                           @foreach ($glist as $atask)
-                          <option value="{{ $atask->id }}" selected="{{ $atask->selected }}" >{{ $atask->name }}</option>
+                          <option value="{{ $atask->id }}" {{ $atask->selected }} >{{ $atask->name }}</option>
                           @endforeach
                         </select>
                         @if ($errors->has('gid'))
@@ -60,7 +60,7 @@
               <div class="card">
                 <div class="card-header">Summary</div>
                 <div class="card-body">
-
+                  {!! $sumchart->render() !!}
                 </div>
             </div>
             @endif
@@ -70,5 +70,5 @@
 @endsection
 
 @section('page-js')
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 @stop

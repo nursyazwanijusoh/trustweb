@@ -464,7 +464,7 @@ class InfraController extends Controller
 
         if($tflor){
           $tomo = Carbon::tomorrow();
-          $seatlist = $tflor->place;
+          $seatlist = $tflor->bookable;
 
           foreach ($seatlist as $key => $value) {
             // check whether this seat is booked tomorrow

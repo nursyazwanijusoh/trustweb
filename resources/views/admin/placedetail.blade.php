@@ -119,6 +119,7 @@
                       <tr>
                         <th scope="col">Label</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Bookable</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
@@ -134,10 +135,18 @@
                         </td>
                         @endif
                         <td>
+                          @if($atask->bookable)
+                          &#9745;
+                          @else
+                          &#9747;
+                          @endif
+                        </td>
+                        <td>
                           <a href="{{ route('admin.getqr', ['seat_id' => $atask['id']], false) }}">Get QR</a>
                           @if($canedit == true)
                           &nbsp;
-                          <a href="{{ route('admin.delaseat', ['seat_id' => $atask['id']], false) }}">Delete</a>
+                          <a href="{{ route('admin.delaseat', ['seat_id' => $atask['id']], false) }}">Delete</a>&nbsp;
+                          <a href="{{ route('admin.seat.toggle', ['seat_id' => $atask['id']], false) }}">Toggle Bookable</a>
                           @endif
                         </td>
                       @endforeach

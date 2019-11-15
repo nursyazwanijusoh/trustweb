@@ -14,6 +14,10 @@ class building extends Model
     return $this->hasMany('App\place')->where('seat_type', 1);
   }
 
+  public function bookable(){
+    return $this->hasMany('App\place')->where('seat_type', 1)->where('bookable', true);
+  }
+
   public function MeetingRooms(){
     return $this->hasMany('App\place')->where('seat_type', 2);
   }

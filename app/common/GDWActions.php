@@ -229,6 +229,36 @@ class GDWActions
 
   }
 
+  public static function getActInfoOnDate($staff_id, $date, $startrnd){
+    $label = [];
+    $data = [];
+    $bgs = [];
+    // get the list of act type
+    $actype = ActivityType::where('status', 1)->get();
+    $counter = $startrnd;
+    foreach ($actype as $key => $value) {
+      $counter++;
+      array_push($label, $value->descr);
+      array_push($bgs, GDWActions::getBgColor($counter));
+      // get the sum of hours for this activity type
+      $hrs = GwdActivity::where('user_id', $staff_id)
+        ->where('activity_type_id', $value->id)
+        ->whereDate('activity_date', '=', $date)
+        ->sum('hours_spent');
+      array_push($data, $hrs);
+    }
+
+    $info = [
+      'label' => $label,
+      'data' => $data,
+      'bg' => $bgs
+    ];
+
+    // dd($info);
+    return $info;
+
+  }
+
   public static function getGwdActivities($staff_id, $date){
     $cdate = Carbon::parse($date);
     $sdate = $cdate->startOfMonth()->toDateString();

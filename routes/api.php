@@ -30,6 +30,7 @@ $api->version('v1', function ($api) {
   $api->get('/massKickOut',  ['as' => 'check.kick.all', 'uses' => 'App\Api\V1\Controllers\InfraController@massKickOut']);
   $api->get('/reserveExpired',  ['as' => 'reserve.expired', 'uses' => 'App\Api\V1\Controllers\InfraController@reserveExpired']);
   $api->get('/CCGet',  ['as' => 'lov.cc.get', 'uses' => 'App\Api\V1\Controllers\LovController@ccGet']);
+  $api->get('/GwdCreateDaily',  ['as' => 'gwd.create.daily.perf', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdCreateDayPerf']);
 
   // ==========================
   // might not even be used lol
