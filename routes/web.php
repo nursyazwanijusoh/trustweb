@@ -106,7 +106,7 @@ Route::post('/reports/gwd/entrystat', 'GwdReportController@entrystatres')->name(
 Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gwd.detail');
 // Route::post('/reports/gwd/detail', 'GwdReportController@detailres')->name('report.gwd.detailres');
 // Route::get('/reports/gwd/gsum', 'GwdReportController@grpSummary')->name('reports.gwd.gsum');
-Route::post('/reports/gwd/gsum', 'GwdReportController@doGrpSummary')->name('reports.gwd.dogsum');
+// Route::post('/reports/gwd/gsum', 'GwdReportController@doGrpSummary')->name('reports.gwd.dogsum');
 
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');

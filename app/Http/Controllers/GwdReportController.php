@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use \DB;
 use App\Unit;
 use App\CompGroup;
+use App\DailyPerformance;
 use \Carbon\Carbon;
 use App\common\GDWReports;
+use App\common\ExcelHandler;
+use App\common\GDWActions;
 
 class GwdReportController extends Controller
 {
@@ -18,21 +21,6 @@ class GwdReportController extends Controller
 
   public function index(){
 
-  }
-
-  // show the overview summary, by month
-  public function summary(Request $req){
-
-    $grplist = CompGroup::all();
-    $curdate = date('Y-m-d');
-    $lastweek = date('Y-m-d', strtotime('-1 week'));
-
-
-    return view('report.rptgrpsummary', [
-      'glist' => $grplist,
-      'sdate' => $lastweek,
-      'edate' => $curdate
-    ]);
   }
 
   public function summaryres(Request $req){
@@ -135,7 +123,231 @@ class GwdReportController extends Controller
 
   }
 
-  public function doGrpSummary(Request $req){
+  // show the overview summary, by month
+  public function summary(Request $req){
+
+    if($req->filled('action')){
+
+      if(!$req->filled('fdate')){
+        return redirect()->back()->withInput()->withErrors(['fdate' => 'From date is required']);
+      }
+
+      if(!$req->filled('tdate')){
+        return redirect()->back()->withInput()->withErrors(['tdate' => 'To date is required']);
+      }
+
+      if($req->action == 'graph'){
+        return $this->doGrpSummary($req);
+      } elseif ($req->action == 'excel') {
+        return $this->doGrpExcel($req);
+      }
+    }
+
+    $grplist = CompGroup::all();
+    $curdate = date('Y-m-d');
+    $lastweek = date('Y-m-d', strtotime('-1 week'));
+
+
+    return view('report.rptgrpsummary', [
+      'glist' => $grplist,
+      'sdate' => $lastweek,
+      'edate' => $curdate
+    ]);
+  }
+
+  private function doGrpExcel(Request $req){
+    $cdate = new Carbon($req->tdate);
+    $ldate = new Carbon($req->fdate);
+    $cdate->addSecond();
+
+    $cgrp = CompGroup::find($req->gid);
+    if($cgrp){
+    } else {
+      return redirect()->back()->withInput()->withErrors(['gid' => 'Selected group no longer exist']);
+    }
+
+    $noww = Carbon::now();
+
+    $fname = 'diary_'
+      . $ldate->format('Ymd') . '_' . $cdate->format('Ymd')
+      . '_' . str_replace(' ', '', $cgrp->name)
+      . '_' . $noww->format('Ymd_His') . '.xlsx';
+
+    $headers = ['Name', 'Staff No', 'Division', 'Section'];
+
+    $hrsdata = [];
+    $mandaydata = [];
+    $dayinfo = [];
+
+    $daterange = new \DatePeriod(
+      $ldate,
+      \DateInterval::createFromDateString('1 day'),
+      $cdate
+    );
+
+
+    foreach ($daterange as $key => $value) {
+      array_push($headers, $value->format('d (D)'));
+
+      $dtype = GDWActions::GetDayType($value->format('Y-m-d'));
+      $expthrs = GDWActions::GetExpectedHours($value->format('Y-m-d'));
+      switch($dtype){
+        case GDWActions::DT_NW:
+          $bgcolor = ExcelHandler::BG_NORMAL;
+          break;
+        case GDWActions::DT_PH:
+          $bgcolor = ExcelHandler::BG_PH;
+          break;
+        case GDWActions::DT_WK:
+          $bgcolor = ExcelHandler::BG_WEEKEND;
+          break;
+        default:
+          $bgcolor = ExcelHandler::BG_NORMAL;
+      }
+
+      array_push($dayinfo, [
+        'date' => $value->format('Y-m-d'),
+        'type' => $dtype,
+        'bgcolor' => $bgcolor,
+        'exhrs' => $expthrs
+      ]);
+    }
+
+    // dd($dayinfo);
+
+    array_push($headers, 'Actual');
+    array_push($headers, 'Expected');
+
+    // prep the excel handler
+    $eksel = new ExcelHandler($fname);
+
+    // get the list of divs under this group
+    foreach ($cgrp->Members as $onemember) {
+      foreach ($onemember->Staffs as $value) {
+        $expectedentry = 0;
+        $expectedmd = 0;
+        $expectedhrs = 0;
+        $sumentry = 0;
+        $sumhrs = 0;
+        $summd = 0;
+
+        $datmd = [
+          ['v' => $value->name, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->staff_no, 't' => ExcelHandler::BG_INFO],
+          ['v' => $onemember->pporgunitdesc, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->subunit, 't' => ExcelHandler::BG_INFO]
+        ];
+
+        $dathrs = [
+          ['v' => $value->name, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->staff_no, 't' => ExcelHandler::BG_INFO],
+          ['v' => $onemember->pporgunitdesc, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->subunit, 't' => ExcelHandler::BG_INFO]
+        ];
+
+        foreach ($dayinfo as $odt) {
+          $dpu = DailyPerformance::where('user_id', $value->id)
+            ->whereDate('record_date', $odt['date'])
+            ->first();
+
+          $dbg = $odt['bgcolor'];
+          $hrs = 0;
+
+          if($dpu){
+            // check for off day
+            if($dpu->is_off_day){
+              $dbg = ExcelHandler::BG_LEAVE;
+            }
+
+            if($dpu->expected_hours > 0){
+              $expectedentry++;
+              $expectedmd++;
+              $expectedhrs += $dpu->expected_hours;
+            }
+
+            if($dpu->actual_hours > 0){
+              $sumentry++;
+              $sumhrs += $dpu->actual_hours;
+              $hrs = $dpu->actual_hours;
+            }
+
+
+
+          } else {
+            // no entry for that date. so just in case, load default values
+            if($odt['type'] == GDWActions::DT_NW){
+              $expectedentry++;
+              $expectedmd++;
+              $expectedhrs += $odt['exhrs'];
+            }
+
+          }
+
+          $md = $hrs / ($odt['exhrs'] == 0 ? 8 : $odt['exhrs']);
+          $summd += $md;
+          // populate today's data
+          array_push($datmd, ['v' => $md, 't' => $dbg]);
+          array_push($dathrs, ['v' => $hrs, 't' => $dbg]);
+        }
+
+        // populate the final sums for md
+        array_push($datmd, ['v' => $summd, 't' => ExcelHandler::BG_INFO]);
+        array_push($datmd, ['v' => $expectedmd, 't' => ExcelHandler::BG_INFO]);
+
+        // push the MD data to main array
+        array_push($mandaydata, $datmd);
+
+        // final sums for hours
+        array_push($dathrs, ['v' => $sumhrs, 't' => ExcelHandler::BG_INFO]);
+        array_push($dathrs, ['v' => $expectedhrs, 't' => ExcelHandler::BG_INFO]);
+        array_push($dathrs, ['v' => $sumentry, 't' => ExcelHandler::BG_INFO]);
+        array_push($dathrs, ['v' => $expectedentry, 't' => ExcelHandler::BG_INFO]);
+
+        // calc the productivity
+        $pdtivity = $sumhrs / ($expectedhrs == 0 ? 1 : $expectedhrs) * 100;
+        if($pdtivity < 50){
+          $pdgrp = 'x < 50%';
+          $pbg = ExcelHandler::PD_GA;
+        } elseif($pdtivity < 80){
+          $pdgrp = '50% <= x < 80%';
+          $pbg = ExcelHandler::PD_GB;
+        } elseif($pdtivity <= 100){
+          $pdgrp = '80% <= x <= 100%';
+          $pbg = ExcelHandler::PD_GC;
+        } else {
+          $pdgrp = 'x > 100%';
+          $pbg = ExcelHandler::PD_GD;
+        }
+
+        array_push($dathrs, ['v' => $pdtivity, 't' => $pbg]);
+        array_push($dathrs, ['v' => $pdgrp, 't' => ExcelHandler::BG_NORMAL]);
+
+        // push hours to main array
+        array_push($hrsdata, $dathrs);
+
+      }
+    }
+
+    //
+    // $eksel->addSheet('By Entry', [], ['t1', 't2']);
+    // $eksel->addSheet('By Productivity', [], []);
+    // $eksel->addSheet('By Div Productivity', [], []);
+    //
+    $eksel->addSheet('By Man-Days', $mandaydata, $headers);
+
+    array_push($headers, 'Actual entry');
+    array_push($headers, 'Expected entry');
+    array_push($headers, 'Productivity');
+    array_push($headers, 'Range');
+    $eksel->addSheet('By Hours',$hrsdata, $headers);
+
+
+
+    return $eksel->download();
+
+  }
+
+  private function doGrpSummary(Request $req){
 
     $curdate = $req->tdate;
     $lastweek = $req->fdate;
@@ -147,14 +359,13 @@ class GwdReportController extends Controller
     }
 
     // date validation?
+    $cdate = new Carbon($curdate);
+    $ldate = new Carbon($lastweek);
 
+    if($ldate->gt($cdate)){
+      return redirect()->back()->withInput()->withErrors(['fdate' => 'From date is after to date']);
+    }
 
-
-    // $daterange = new DatePeriod(
-    //   new DateTime($fdate),
-    //   DateInterval::createFromDateString('1 day'),
-    //   new DateTime($todate)
-    // );
 
     $lbl = [];
     $tierA = [];

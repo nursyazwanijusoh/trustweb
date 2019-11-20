@@ -21,13 +21,13 @@ class Office extends Model
     return $this->hasOne('App\User', 'modified_by');
   }
 
-  public function buildingWithAsset($type){
+  public function buildingWithAsset($type, $canbook = 0){
     $blist = $this->building->sortBy('floor_name');
     $totalc = 0;
     $fblist = [];
 
     foreach ($blist as $key => $value) {
-      $asset = $value->Asset($type);
+      $asset = $value->Asset($type, $canbook);
       if($asset->count() != 0){
         $totalc += $asset->count();
         $value->assetcount = $asset->count();

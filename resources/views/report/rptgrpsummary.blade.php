@@ -7,8 +7,7 @@
             <div class="card">
                 <div class="card-header">Select group and time range</div>
                 <div class="card-body">
-                  <form method="POST" action="{{ route('reports.gwd.dogsum', [], false) }}">
-                    @csrf
+                  <form method="GET" action="{{ route('report.gwd.summary', [], false) }}">
                     <div class="form-group row">
                       <label for="gid" class="col-md-4 col-form-label text-md-right">Group</label>
                       <div class="col-md-6">
@@ -27,7 +26,7 @@
                     <div class="form-group row">
                         <label for="fdate" class="col-md-4 col-form-label text-md-right">From</label>
                         <div class="col-md-6">
-                          <input type="date" class="form-control{{ $errors->has('fdate') ? ' is-invalid' : '' }}" name="fdate" id="fdate" value="{{ $sdate }}" required />
+                          <input type="date" class="form-control{{ $errors->has('fdate') ? ' is-invalid' : '' }}" name="fdate" id="fdate" value="{{ old('fdate', $sdate) }}" required />
                           @if ($errors->has('fdate'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('fdate') }}</strong>
@@ -38,7 +37,7 @@
                     <div class="form-group row">
                         <label for="tdate" class="col-md-4 col-form-label text-md-right">To</label>
                         <div class="col-md-6">
-                          <input type="date" class="form-control{{ $errors->has('tdate') ? ' is-invalid' : '' }}" name="tdate" id="tdate" value="{{ $edate }}" required />
+                          <input type="date" class="form-control{{ $errors->has('tdate') ? ' is-invalid' : '' }}" name="tdate" id="tdate" value="{{ old('tdate', $edate) }}" required />
                           @if ($errors->has('tdate'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('tdate') }}</strong>
@@ -47,8 +46,9 @@
                         </div>
                     </div>
                     <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">Generate Report</button>
+                        <div class="col text-center">
+                            <button type="submit" name="action" value="graph" class="btn btn-primary">Get Sumamry</button>
+                            <button type="submit" name="action" value="excel" class="btn btn-primary">Download Details</button>
                         </div>
                     </div>
                   </form>

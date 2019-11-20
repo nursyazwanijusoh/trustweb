@@ -207,11 +207,36 @@ class BookingHelper extends Controller
     return $counter;
   }
 
-  public function getBuildingStat($building_id){
-    $totalcount = place::where('building_id', $building_id)->where('status', '!=', 0)->where('seat_type', 1)->count();
-    $freecount = place::where('building_id', $building_id)->where('status', 1)->where('seat_type', 1)->count();
-    $reservedcount = place::where('building_id', $building_id)->where('status', 2)->where('seat_type', 1)->count();
-    $occupiedcount = place::where('building_id', $building_id)->where('status', 3)->where('seat_type', 1)->count();
+  public function getBuildingStat($building_id, $canbook = 0){
+
+    if($canbook == 0){
+      $totalcount = place::where('building_id', $building_id)->where('status', '!=', 0)->where('seat_type', 1)->count();
+      $freecount = place::where('building_id', $building_id)->where('status', 1)->where('seat_type', 1)->count();
+      $reservedcount = place::where('building_id', $building_id)->where('status', 2)->where('seat_type', 1)->count();
+      $occupiedcount = place::where('building_id', $building_id)->where('status', 3)->where('seat_type', 1)->count();
+    } else {
+      $totalcount = place::where('building_id', $building_id)
+        ->where('status', '!=', 0)
+        ->where('bookable', true)
+        ->where('seat_type', 1)
+        ->count();
+
+      $freecount = place::where('building_id', $building_id)
+        ->where('status', 1)
+        ->where('bookable', true)
+        ->where('seat_type', 1)->count();
+
+      $reservedcount = place::where('building_id', $building_id)
+        ->where('status', 2)
+        ->where('bookable', true)
+        ->where('seat_type', 1)->count();
+
+      $occupiedcount = place::where('building_id', $building_id)
+        ->where('status', 3)
+        ->where('bookable', true)
+        ->where('seat_type', 1)->count();
+    }
+
     $persen = $totalcount > 0 ? ($totalcount - $freecount) / $totalcount * 100 : 0;
 
     $thebuild = $this->getBuildingInfo($building_id);

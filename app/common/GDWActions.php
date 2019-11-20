@@ -15,6 +15,12 @@ use \DB;
 
 class GDWActions
 {
+
+  const DT_NW = 0; // normal working day
+  const DT_WK = 1; // weekend
+  const DT_PH = 2; // public holiday
+
+
   public static function addActivity(Request $req, $staff_id){
 
     if($req->filled('actdate')){
@@ -325,6 +331,25 @@ class GDWActions
     $act->save();
 
     return $act;
+
+  }
+
+  public static function GetDayType($date){
+    $ph = PublicHoliday::whereDate('event_date', $date)->first();
+
+    if($ph){
+      return self::DT_PH;
+    }
+
+    // not a public holiday. check day of the week
+    $carbond = new Carbon($date);
+    $dow = $carbond->dayOfWeekIso;
+
+    if($dow > 5){
+      return self::DT_WK;
+    } else {
+      return self::DT_NW;
+    }
 
   }
 

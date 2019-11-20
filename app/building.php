@@ -22,9 +22,14 @@ class building extends Model
     return $this->hasMany('App\place')->where('seat_type', 2);
   }
 
-  public function Asset($type){
+  public function Asset($type, $canbook = 0){
     if($type == 1){
-      $asset = $this->place;
+      if($canbook == 0){
+        $asset = $this->place;
+      } else {
+        $asset = $this->place->where('bookable', true);
+      }
+
       unset($this['place']);
     } else {
       $asset = $this->MeetingRooms;

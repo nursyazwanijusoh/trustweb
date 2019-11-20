@@ -358,12 +358,13 @@ class InfraController extends Controller
         }
 
         $stype = $req->type == 'seat' ? 1 : 2;
+        $buk = $req->filled('book') ? 1 : 0;
 
         $oflist = Office::all();
         $retdata = [];
         foreach ($oflist as $key => $value) {
           // dd($value->hasAsset($stype));
-          $asset = $value->buildingWithAsset($stype);
+          $asset = $value->buildingWithAsset($stype, $buk);
           if(empty($asset)) {
             // unset($oflist[$key]);
           } else {
@@ -392,15 +393,16 @@ class InfraController extends Controller
 
         $bookh = new BookingHelper;
         $stype = $req->type == 'seat' ? 1 : 2;
+        $buk = $req->filled('book') ? 1 : 0;
 
         $ofc = Office::find($req->office_id);
         if($ofc){
 
           if($stype == 1){
             $ret = [];
-            $buildlist = $ofc->buildingWithAsset($stype);
+            $buildlist = $ofc->buildingWithAsset($stype, $buk);
             foreach ($buildlist as $abuild) {
-              array_push($ret, $bookh->getBuildingStat($abuild->id));
+              array_push($ret, $bookh->getBuildingStat($abuild->id, $buk));
             }
 
             return $this->respond_json(200, 'Floor with asset ' . $req->type, $ret);
