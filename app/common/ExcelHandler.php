@@ -34,16 +34,17 @@ class ExcelHandler {
 
   public function addSheet($sheetname, $content, $header = []){
     $cursheet = new Worksheet($this->spreadsheet, $sheetname);
+    $this->spreadsheet->addSheet($cursheet);
 
     // first, populatae the header
     $colcount = 1;
     $rowcount = 1;
     foreach($header as $head){
       $cursheet->setCellValueByColumnAndRow($colcount, $rowcount, $head);
-      // $cstyle = $cursheet->getStyleByColumnAndRow($colcount, $rowcount);
-      // $cstyle->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-      //  ->getStartColor()->setARGB(self::BG_HEADER);
-      // $cstyle->getFont()->getColor()->setARGB('ffffff');
+      $cstyle = $cursheet->getStyleByColumnAndRow($colcount, $rowcount);
+      $cstyle->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+       ->getStartColor()->setARGB(self::BG_HEADER);
+      $cstyle->getFont()->getColor()->setARGB('ffffff');
       $colcount++;
     }
     $rowcount++;
@@ -54,19 +55,17 @@ class ExcelHandler {
       foreach ($value as $oncel) {
         $cursheet->setCellValueByColumnAndRow($colcount, $rowcount, $oncel['v']);
 
-        // if($oncel['t'] != self::BG_NORMAL){
-        //   $cstyle = $cursheet->getStyleByColumnAndRow($colcount, $rowcount);
-        //   $cstyle->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        //     ->getStartColor()->setARGB($oncel['t']);
-        //
-        // }
+        if($oncel['t'] != self::BG_NORMAL){
+          $cstyle = $cursheet->getStyleByColumnAndRow($colcount, $rowcount);
+          $cstyle->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setARGB($oncel['t']);
+
+        }
 
         $colcount++;
       }
       $rowcount++;
     }
-
-    $this->spreadsheet->addSheet($cursheet);
   }
 
   public function download(){
