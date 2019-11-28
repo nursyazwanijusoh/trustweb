@@ -372,6 +372,7 @@ class GwdReportController extends Controller
     $tierB = [];
     $tierC = [];
     $tierD = [];
+    $normaldistgraphs = [];
 
     foreach ($cgrp->Members as $onemember) {
       $ca = 0;
@@ -390,6 +391,11 @@ class GwdReportController extends Controller
           DB::raw('sum(actual_hours) as act_hrs')
         )->groupBy('user_id')
         ->get();
+
+      $psAverage = $perstaff->average('act_hrs');
+      $psCount = $perstaff->count();
+      $psSumVar = 0;
+
 
       foreach ($perstaff as $maybeonestaff) {
 
@@ -413,7 +419,22 @@ class GwdReportController extends Controller
           }
         }
 
+        $psSumVar += pow(($maybeonestaff->act_hrs), 2);
+
       }
+
+      if($psCount > 3){
+        $psStdDev = sqrt($psSumVar / $psCount);
+
+        // calculate the normal distribution for each staff
+        foreach ($perstaff as $maybeonestaff) {
+
+        }
+
+
+      }
+
+
 
       array_push($tierA, $ca);
       array_push($tierB, $cb);
@@ -468,6 +489,12 @@ class GwdReportController extends Controller
 
   }
 
+  private function getNormDist($x, $mean, $stddev){
+    $exp = pow($x - $mean, 2) / (2 * $stddev * $stddev) * -1;
+    $bot = $stddev * sqrt(2 * M_PI);
+    return 1 / $bot * pow(M_PI, $exp);
+  }
+
   private function getStackBarChart($label, $datasets, $title){
     $schart = app()->chartjs
          ->name('barChartTest')
@@ -495,12 +522,54 @@ class GwdReportController extends Controller
                'stacked' => true,
                'scaleLabel' => [
                  'display' => true,
-                 'LabelString' => 'Time',
+                 'LabelString' => 'Division',
                ]
              ]],
              'yAxes' => [[
                'display' => true,
                'stacked' => true,
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Staff Count',
+               ]
+             ]]
+           ]
+         ]);
+
+    return $schart;
+  }
+
+  private function getScatterGraph($id, $title, $datasets ){
+    $schart = app()->chartjs
+         ->name('scgraph' . $id)
+         ->type('scatter')
+         ->size(['width' => 400, 'height' => 250])
+         // ->labels($label)
+         ->datasets($datasets)
+         ->options([
+           'responsive' => true,
+           'title' => [
+             'display' => true,
+             'text' => $title,
+           ],
+           'tooltips' => [
+             'mode' => 'index',
+             'intersect' => false,
+           ],
+           'hover' => [
+             'mode' => 'nearest',
+             'intersect' => true,
+           ],
+           'scales' => [
+             'xAxes' => [[
+               'display' => true,
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Time',
+               ]
+             ]],
+             'yAxes' => [[
+               'display' => true,
                'scaleLabel' => [
                  'display' => true,
                  'LabelString' => 'Seat Count',

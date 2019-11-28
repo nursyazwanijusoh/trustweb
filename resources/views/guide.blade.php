@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<button class="back-to-top btn " onclick="backToTopFunc()">Top</button>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-xl-12">

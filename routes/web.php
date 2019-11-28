@@ -226,3 +226,8 @@ Route::post('/cgrp/del', 'CompGroupController@del')->name('cgrp.del');
 Route::get('/cgrp/view', 'CompGroupController@view')->name('cgrp.view');
 Route::post('/cgrp/take', 'CompGroupController@take')->name('cgrp.take');
 Route::post('/cgrp/remove', 'CompGroupController@remove')->name('cgrp.remove');
+
+// blast notifications
+Route::get('/pushalert', 'PushAnnouncementController@showForm')->name('pn.form');
+Route::post('/pushalert/send', 'PushAnnouncementController@registerReq')->name('pn.reg');
+Route::get('/pushalert/getstatus', 'PushAnnouncementController@doSend')->name('pn.dosend');

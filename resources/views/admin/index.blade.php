@@ -24,6 +24,7 @@
                     <span class="badge badge-info">{{ $fbc }}</span>
                     @endif
                     </a>
+                    <a href="{{ route('pn.form', [], false) }}" class="list-group-item list-group-item-action">Blast Push Notification</a>
                   </div>
                   <br />
                   <h5 class="card-title">Infrastructure Management</h5>

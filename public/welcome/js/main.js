@@ -44,14 +44,14 @@ jQuery(document).ready(function ($) {
   });
 
 
- 
+
   // Mobile Navigation
   if ($('#nav-menu-container').length) {
-    
+
     var $mobile_nav = $('#nav-menu-container').clone().prop({
       id: 'mobile-nav'
     });
-   
+
     $mobile_nav.find('> ul').attr({
       'class': '',
       'id': ''
@@ -76,15 +76,15 @@ jQuery(document).ready(function ($) {
       $('body').toggleClass('mobile-nav-active');
       $('#mobile-nav-toggle i').toggleClass('fa-times fa-bars');
       $('#mobile-body-overly').toggle();
-      
+
     });
 
     $(document).click(function (e) {
       var container = $("#mobile-nav, #mobile-nav-toggle");
       if (!container.is(e.target) && container.has(e.target).length === 0) {
-       
+
         if ($('body').hasClass('mobile-nav-active')) {
-               
+
           $('body').removeClass('mobile-nav-active');
           $('#mobile-nav-toggle i').toggleClass('fa-times fa-bars');
           $('#mobile-body-overly').fadeOut();
@@ -107,14 +107,14 @@ jQuery(document).ready(function ($) {
 
   // Smooth scroll for the menu and links with .scrollto classes
   $('.nav-menu a,#mobile-nav a, .scrollto').on('click', function () {
-   
+
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       var target = $(this.hash);
-      
+
       if (target.length) {
         var top_space = 0;
 
-        
+
 
         if ($('#header').length) {
           top_space = $('#header').outerHeight();
@@ -200,3 +200,9 @@ jQuery(document).ready(function ($) {
 
 
 });
+
+
+function backToTopFunc() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}

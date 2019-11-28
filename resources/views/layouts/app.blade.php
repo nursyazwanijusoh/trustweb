@@ -46,21 +46,21 @@
 
                 <nav id="nav-menu-container">
                       <ul class="nav-menu">
-                        <li class="menu-has-children"><a href="">Guide</a>
+                        <li class="menu-has-children"><a href="#">Guide</a>
                           <ul>
-                            <li class="menu-has-children"><a href="">trUSt</a>
+                            <li class="menu-has-children"><a href="#">trUSt</a>
                               <ul>
                                   <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
                                   <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li>
                               </ul>
                             </li>
-                            <li class="menu-has-children"><a href="">Workspace Booking</a>
+                            <li class="menu-has-children"><a href="#">Workspace Booking</a>
                               <ul>
                                   <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
                                   <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">FAQ</a></li>
                               </ul>
                             </li>
-                            <li class="menu-has-children"><a href="">Diary (GWD)</a>
+                            <li class="menu-has-children"><a href="#">Diary (GWD)</a>
                               <ul>
                                   <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
                                   <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li>
@@ -72,14 +72,14 @@
                         @else
                         <!-- <li><a href="{{ route('staff', [], false) }}">Home</a></li> -->
                         @if (Session::get('staffdata')['role'] <= 1)
-                        <li class="menu-has-children"><a href="">Admin</a>
+                        <li class="menu-has-children"><a href="#">Admin</a>
                           <ul>
                               <li><a class="dropdown-item" href="{{ route('admin', [], false) }}">Management</a></li>
 
                           </ul>
                         </li>
                         @endif
-                        <li class="menu-has-children"><a href="">Menu</a>
+                        <li class="menu-has-children"><a href="#">Menu</a>
                           <ul>
                               <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
                               <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
