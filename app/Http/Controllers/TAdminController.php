@@ -51,9 +51,11 @@ class TAdminController extends Controller
 
   // add the submitted task type, then redirect back to showTaskManagement
   public function doTaskMgmtAdd(Request $req){
+    // dd($req->all());
     $tt = new TaskCategory;
     $tt->descr = $req->descr;
     $tt->remark = $req->remark;
+    $tt->is_pbe = $req->filled('is_pbe');
     $tt->status = 1;
 
     $tt->save();

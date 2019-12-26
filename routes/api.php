@@ -26,11 +26,15 @@ $api->version('v1', function ($api) {
   $api->get('/pg',            ['as' => 'api.pg',   'uses' => 'App\Api\V1\Controllers\Controller@playground']);
   $api->get('/alert',            ['as' => 'api.alert',   'uses' => 'App\Api\V1\Controllers\UserController@testNotify']);
 
+
   // actually used
+  $api->get('/CCGet',  ['as' => 'lov.cc.get', 'uses' => 'App\Api\V1\Controllers\LovController@ccGet']);
+
+  // BATCH
   $api->get('/massKickOut',  ['as' => 'check.kick.all', 'uses' => 'App\Api\V1\Controllers\InfraController@massKickOut']);
   $api->get('/reserveExpired',  ['as' => 'reserve.expired', 'uses' => 'App\Api\V1\Controllers\InfraController@reserveExpired']);
-  $api->get('/CCGet',  ['as' => 'lov.cc.get', 'uses' => 'App\Api\V1\Controllers\LovController@ccGet']);
   $api->get('/GwdCreateDaily',  ['as' => 'gwd.create.daily.perf', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdCreateDayPerf']);
+  $api->get('/loadEmplProfile',  ['as' => 'sap.load.prof', 'uses' => 'App\Api\V1\Controllers\BatchController@loadEmplProfile']);
 
   // ==========================
   // might not even be used lol

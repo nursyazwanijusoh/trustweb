@@ -263,10 +263,13 @@ class GwdReportController extends Controller
               $expectedentry++;
               $expectedmd++;
               $expectedhrs += $dpu->expected_hours;
+
+              if($dpu->actual_hours > 0){
+                $sumentry++;
+              }
             }
 
             if($dpu->actual_hours > 0){
-              $sumentry++;
               $sumhrs += $dpu->actual_hours;
               $hrs = $dpu->actual_hours;
             }

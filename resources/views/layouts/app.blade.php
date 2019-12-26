@@ -81,10 +81,16 @@
                         @endif
                         <li class="menu-has-children"><a href="#">Menu</a>
                           <ul>
-                              <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
-                              <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
+                              <li><a class="dropdown-item" href="{{ route('staff', [], false) }}">Home</a></li>
                               <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li>
                               <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
+
+                          </ul>
+                        </li>
+                        <li class="menu-has-children"><a href="#">Help</a>
+                          <ul>
+                              <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
+                              <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
 
                           </ul>
                         </li>

@@ -69,14 +69,16 @@ class ExcelHandler {
   }
 
   public function download(){
-    $writer = new Writer\Xls($this->spreadsheet);
+    $writer = new Writer\Xlsx($this->spreadsheet);
 
     $response =  new StreamedResponse(
         function () use ($writer) {
             $writer->save('php://output');
         }
     );
-    $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+    // $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+
+    $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     $response->headers->set('Content-Disposition', 'attachment;filename="'.$this->filename.'"');
     $response->headers->set('Cache-Control','max-age=0');
     return $response;

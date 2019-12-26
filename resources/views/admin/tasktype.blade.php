@@ -24,6 +24,12 @@
                           <textarea rows="3" class="form-control" id="remark" name="remark"></textarea>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-md-6 offset-md-4">
+                          <input class="form-check-input" name="is_pbe" type="checkbox" value="yup" id="defaultCheck1">
+                          <label class="form-check-label" for="defaultCheck1">Use Assigned P/BE</label>
+                        </div>
+                    </div>
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-primary">Add Activity Category</button>
@@ -39,6 +45,7 @@
                       <tr>
                         <th scope="col">Description</th>
                         <th scope="col">Remark</th>
+                        <th scope="col">Is PBE</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -47,6 +54,7 @@
                       <tr>
                         <td>{{ $atask['descr'] }}</td>
                         <td>{{ $atask['remark'] }}</td>
+                        <td>{{ $atask['is_pbe'] }}</td>
                         <td><a href="{{ route('admin.deltt', ['taskid' => $atask['id']], false) }}">Remove</a></td>
                       </tr>
                       @endforeach

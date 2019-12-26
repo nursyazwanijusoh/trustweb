@@ -11,7 +11,7 @@ class CommonSkillset extends Model
   }
 
   public function PersonalSkillset(){
-    return $this->hasMany('App\PersonalSkillset', 'common_skill_id');
+    return $this->hasMany('App\PersonalSkillset', 'common_skill_id')->where('level','!=', 0);
   }
 
   public function CurrentPS($staff_id){

@@ -18,9 +18,10 @@ class GwdActivityController extends Controller
 
   public function add(Request $req){
     $staffid = $req->session()->get('staffdata')['id'];
+    // dd($req->all());
     $act = GDWActions::addActivity($req, $staffid);
 
-    return redirect(route('staff.addact', ['alert' => 'Activity added']));
+    return redirect(route('staff.addact', []))->with(['alert' => 'Diary entry added', 'a_type' => 'success']);
   }
 
   public function cuti(Request $req){
@@ -100,18 +101,32 @@ class GwdActivityController extends Controller
   public function form(Request $req){
     $actype = ActivityType::where('status', 1)->get();
     $acats = TaskCategory::where('status', 1)->get();
+
+
+
     $today = date('Y-m-d');
     $mindate = new Carbon($today);
     $mindate->subDays(7);
 
-    if($req->filled('alert')){
-      return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today,
-        'actcats' => $acats, 'alert' => $req->alert,
-        'mindate' => $mindate->format('Y-m-d')
-      ]);
+    $activities = GwdActivity::where('user_id', $req->user()->id)
+      ->whereDate('activity_date', '>=', $mindate->toDateString())
+      ->get();
+
+    $tagref = [];
+    foreach ($acats as $key => $value) {
+      if($value->is_pbe){
+        array_push($tagref, $value->descr);
+      }
     }
 
-    return view('staff.addactivity', ['actlist' => $actype, 'curdate' => $today, 'actcats' => $acats, 'mindate' => $mindate->format('Y-m-d')]);
+    return view('staff.addactivity', [
+      'actlist' => $actype,
+      'curdate' => $today,
+      'actcats' => $acats,
+      'pbes'    => $activities,
+      'mindate' => $mindate->format('Y-m-d'),
+      'tagref'  => json_encode($tagref)
+    ]);
   }
 
 }

@@ -12,8 +12,6 @@ use App\common\GDWActions;
 
 class MiscController extends Controller
 {
-
-
 	function sendFeedback(Request $req){
 		$input = app('request')->all();
 
@@ -153,8 +151,7 @@ class MiscController extends Controller
 		$input = app('request')->all();
 
 		$rules = [
-			'staff_id' => ['required'],
-			'date' => ['required']
+			'staff_id' => ['required']
 		];
 
 		$validator = app('validator')->make($input, $rules);
@@ -162,7 +159,7 @@ class MiscController extends Controller
 			return $this->respond_json(412, 'Invalid input', $input);
 		}
 
-		$redata = GDWActions::getGwdActivities($req->staff_id, $req->date);
+		$redata = GDWActions::getGwdActivities($req->staff_id);
 
 		return $this->respond_json(200, 'Success', $redata);
 	}

@@ -11,6 +11,7 @@ use App\TaskCategory;
 use App\Avatar;
 use App\DailyPerformance;
 use App\PublicHoliday;
+use App\CommonConfig;
 use \DB;
 
 class GDWActions
@@ -265,14 +266,30 @@ class GDWActions
 
   }
 
-  public static function getGwdActivities($staff_id, $date){
-    $cdate = Carbon::parse($date);
-    $sdate = $cdate->startOfMonth()->toDateString();
-    $edate = $cdate->addMonths(1)->toDateString();
+  public static function getGwdActivities($staff_id, $date = null){
+    // $cdate = Carbon::parse($date);
+    // $sdate = $cdate->startOfMonth()->toDateString();
+    // $edate = $cdate->addMonths(1)->toDateString();
+    //
+    // $actlist = GwdActivity::where('user_id', $staff_id)
+    //   ->whereDate('activity_date', '>=', $sdate)
+    //   ->whereDate('activity_date', '<', $edate)
+    //   ->get();
+
+    $cconfig = CommonConfig::where('key', 'diary_act_list_size')->first();
+    if($cconfig){
+
+    } else {
+      $cconfig = new CommonConfig;
+      $cconfig->key = 'diary_act_list_size';
+      $cconfig->value = 50;
+      $cconfig->save();
+    }
+
 
     $actlist = GwdActivity::where('user_id', $staff_id)
-      ->whereDate('activity_date', '>=', $sdate)
-      ->whereDate('activity_date', '<', $edate)
+      ->orderBy('activity_date', 'DESC')
+      ->take($cconfig->value)
       ->get();
 
     return $actlist;
