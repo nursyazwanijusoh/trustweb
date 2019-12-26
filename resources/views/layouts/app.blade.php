@@ -51,19 +51,19 @@
                             <li class="menu-has-children"><a href="#">trUSt</a>
                               <ul>
                                   <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
-                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li>
+                                  <!-- <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li> -->
                               </ul>
                             </li>
                             <li class="menu-has-children"><a href="#">Workspace Booking</a>
                               <ul>
-                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
+                                  <!-- <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li> -->
                                   <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">FAQ</a></li>
                               </ul>
                             </li>
                             <li class="menu-has-children"><a href="#">Diary (GWD)</a>
                               <ul>
-                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
-                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li>
+                                  <li><a class="dropdown-item" href="#">Guide under development</a></li>
+                                  <!-- <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li> -->
                               </ul>
                             </li>
                           </ul>
