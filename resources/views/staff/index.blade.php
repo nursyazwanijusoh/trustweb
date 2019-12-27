@@ -29,7 +29,7 @@
                     <a href="{{ route('staff.addact', [], false) }}">
                       <div class="card text-center text-white bg-success">
                         <div class="card-body">
-                          <p class="card-text">Update Diary</p>
+                          <p class="card-text"><i class="fa fa-pencil-square-o"></i> Update Diary</p>
                         </div>
                       </div>
                     </a>
@@ -38,7 +38,7 @@
                     <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-info">
                         <div class="card-body">
-                          <p class="card-text">My Monthly Activities</p>
+                          <p class="card-text"><i class="fa fa-list-alt"></i> My Monthly Activities</p>
                         </div>
                       </div>
                     </a>
@@ -47,7 +47,7 @@
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-info">
                         <div class="card-body">
-                          <p class="card-text">Where I've Been</p>
+                          <p class="card-text"><i class="fa fa-map-marker"></i> Where I've Been</p>
                         </div>
                       </div>
                     </a>
@@ -56,7 +56,7 @@
                     <a href="{{ route('area.myevents', ['id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-secondary">
                         <div class="card-body">
-                          <p class="card-text">My Events</p>
+                          <p class="card-text"><i class="fa fa-user-times"></i> My Events</p>
                         </div>
                       </div>
                     </a>
