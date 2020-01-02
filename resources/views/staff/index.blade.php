@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('page-css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+@endsection
+
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <div class="container-fluid">
@@ -71,6 +75,13 @@
                 {!! $chart->render() !!}
               </div>
             </div><br />
+            <div class="card">
+              <div class="card-header">Daily Hours?</div>
+              <div class="card-body">
+                <!-- <h5 class="card-title"></h5> -->
+                {!! $cds->calendar() !!}
+              </div>
+            </div><br />
             @if($subords->count() > 0)
             <div class="card">
               <div class="card-header">My Subordinate</div>
@@ -102,4 +113,10 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page-js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+{!! $cds->script() !!}
 @endsection

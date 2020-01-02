@@ -18,6 +18,7 @@ class ExcelHandler {
   const BG_INFO = 'c34bfa';
 
   // productivity group colors
+  const PD_G0 = '808080';  // > 100
   const PD_GA = 'ede907';  // < 50
   const PD_GB = '47539e';  // 50-80
   const PD_GC = '3e8f36';  // 80-100

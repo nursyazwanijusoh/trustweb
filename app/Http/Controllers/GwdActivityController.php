@@ -24,6 +24,23 @@ class GwdActivityController extends Controller
     return redirect(route('staff.addact', []))->with(['alert' => 'Diary entry added', 'a_type' => 'success']);
   }
 
+  public function delete(Request $req){
+    $staffid = $req->session()->get('staffdata')['id'];
+
+    $taccccc = GwdActivity::find($req->actid);
+    if($taccccc){
+      if($taccccc->user_id != $staffid){
+        return redirect()->back()->with(['alert' => 'Not allowed to delete the entry of another person', 'a_type' => 'danger']);
+      }
+    }
+
+
+    // dd($req->all());
+    $act = GDWActions::deleteActivity($req->actid);
+
+    return redirect(route('staff.list', []))->with(['alert' => 'Diary entry ' . $act, 'a_type' => 'warning']);
+  }
+
   public function cuti(Request $req){
     $staffid = $req->session()->get('staffdata')['id'];
     $act = GDWActions::setOnLeave($staffid, $req->date, $req->ctype);
@@ -34,9 +51,10 @@ class GwdActivityController extends Controller
     // defaults
     $today = date('Y-m-d');
     $staffid = $req->session()->get('staffdata')['id'];
-
+    $isvisitor = false;
 
     if($req->filled('staff_id')){
+      $isvisitor = ($staffid != $req->staff_id);
       $staffid = $req->staff_id;
     }
 
@@ -88,12 +106,15 @@ class GwdActivityController extends Controller
       ->whereDate('activity_date', '<', $edate)
       ->get();
 
+      // dd($isvisitor);
+
     return view('staff.gwdetail', [
       'damon' => $monmon,
       'staffid' => $staffid,
       'activities' => $activities,
       'curdate' => $today,
-      'chart' => $schart
+      'chart' => $schart,
+      'isvisitor' => $isvisitor
     ]);
 
   }

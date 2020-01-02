@@ -6,8 +6,15 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
+
                 <div class="card-header">Activity Summary for month {{ $damon }}</div>
                 <div class="card-body">
+                  @if (session()->has('alert'))
+                  <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{ session()->get('alert') }}</strong>
+                  </div>
+                  @endif
                   <form method="GET" action="{{ route('staff.list', [], false) }}">
                     <!-- @csrf -->
                     <input type="hidden" name="staff_id" value="{{ $staffid }}" >
@@ -38,6 +45,9 @@
                           <th scope="col">ID / Name</th>
                           <th scope="col">Details</th>
                           <th scope="col">Hours</th>
+                          @if($isvisitor == false)
+                          <th scope="col">Delete?</th>
+                          @endif
                         </tr>
                       </thead>
                       <tbody>
@@ -54,6 +64,16 @@
                           <td>{{ $acts->details }}</td>
                           @endif
                           <td>{{ $acts->hours_spent }}</td>
+                          @if($isvisitor == false)
+                          <td>
+                            <form action="{{ route('staff.delact', [], false)}}"
+                              method="post">
+                              <input type="hidden" name="actid" value="{{ $acts->id }}" />
+                              @csrf
+                              <button type="submit" class="btn btn-warning">Delete</button>
+                            </form>
+                          </td>
+                          @endif
                         </tr>
                         @endforeach
                       </tbody>

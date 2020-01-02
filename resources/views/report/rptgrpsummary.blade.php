@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group row mb-0">
                         <div class="col text-center">
-                            <button type="submit" name="action" value="graph" class="btn btn-primary">Get Sumamry</button>
+                            <button type="submit" name="action" value="graph" class="btn btn-primary">Get Summary</button>
                             <button type="submit" name="action" value="excel" class="btn btn-primary">Download Details</button>
                         </div>
                     </div>

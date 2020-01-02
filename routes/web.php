@@ -96,6 +96,7 @@ Route::get('/user/lochist', 'TStaffController@locHistory')->name('staff.lochist'
 
 Route::get('/user/activity', 'GwdActivityController@form')->name('staff.addact');
 Route::post('/user/addactivity', 'GwdActivityController@add')->name('staff.doaddact');
+Route::post('/user/dekactivity', 'GwdActivityController@delete')->name('staff.delact');
 Route::get('/user/activity/list', 'GwdActivityController@list')->name('staff.list');
 Route::post('/user/addleave', 'GwdActivityController@cuti')->name('staff.cuti');
 

@@ -308,14 +308,17 @@ class GwdReportController extends Controller
 
         // calc the productivity
         $pdtivity = $sumhrs / ($expectedhrs == 0 ? 1 : $expectedhrs) * 100;
-        if($pdtivity < 50){
-          $pdgrp = 'x < 50%';
-          $pbg = ExcelHandler::PD_GA;
-        } elseif($pdtivity < 80){
-          $pdgrp = '50% <= x < 80%';
+        if($pdtivity == 0){
+          $pdgrp = 'x = 0%';
+          $pbg = ExcelHandler::PD_G0;
+        } elseif($pdtivity < 50){
+          $pdgrp = '0% < x < 50%';
+          $pbg = ExcelHandler::PD_GB;
+        } elseif($pdtivity < 70){
+          $pdgrp = '50% <= x < 70%';
           $pbg = ExcelHandler::PD_GB;
         } elseif($pdtivity <= 100){
-          $pdgrp = '80% <= x <= 100%';
+          $pdgrp = '70% <= x <= 100%';
           $pbg = ExcelHandler::PD_GC;
         } else {
           $pdgrp = 'x > 100%';

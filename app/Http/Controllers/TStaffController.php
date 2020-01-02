@@ -11,6 +11,8 @@ use App\ActivityType;
 use App\User;
 use App\Activity;
 use App\Subordinate;
+use App\DailyPerformance;
+use App\PublicHoliday;
 use App\common\GDWActions;
 use App\Api\V1\Controllers\BookingHelper;
 
@@ -75,6 +77,42 @@ class TStaffController extends Controller
          ]);
 
 
+    // calendar
+    $evlist = [];
+    $counter = rand(0, 12);
+
+    // first load the public holiday
+    $allph = PublicHoliday::all();
+    foreach ($allph as $key => $value) {
+     $evlist[] = \Calendar::event(
+       $value->name,
+       true,
+       new \DateTime($value->event_date),
+       new \DateTime($value->event_date),
+       $value->id,[
+         'color' => 'rgba(153, 0, 0, 0.3)'
+       ]
+     );
+    }
+
+    // then the daily summary
+    $daysim = DailyPerformance::where('user_id', $s_staff_id)
+      ->get();
+    foreach ($daysim as $key => $value) {
+     $counter++;
+     $onleave = isset($value->leave_type_id) ? 'On Leave : ' : '';
+     $evlist[] = \Calendar::event(
+       $onleave . $value->actual_hours . ' hours',
+       true,
+       new \DateTime($value->record_date),
+       new \DateTime($value->record_date),
+       $value->id,[
+         'color' => GDWActions::getBgColor($counter)
+       ]
+     );
+    }
+
+    $cds = \Calendar::addEvents($evlist);
 
     $final = [
       'staff_id' => $s_staff_id,
@@ -82,7 +120,8 @@ class TStaffController extends Controller
       'subords' => $sublist,
       'user' => $user,
       'cuser' => $c_staff_id,
-      'currcekin' => $lastloc
+      'currcekin' => $lastloc,
+      'cds' => $cds
     ];
     // dd($final);
 
