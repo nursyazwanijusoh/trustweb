@@ -128,9 +128,11 @@ class MiscController extends Controller
 		foreach ($daterange as $ondete) {
 			$redata = GDWActions::getActInfoOnDate($req->staff_id, $ondete, $seed);
 			$nuredata = [];
+			$totaldatday = 0;
 
 	    // rearrange to new format for api
 	    for($i = 0; $i < count($redata['label']); $i++) {
+				$totaldatday += $redata['data'][$i];
 	      array_push($nuredata, [
 	        'key' => $redata['label'][$i],
 	        'value' => $redata['data'][$i],
@@ -140,6 +142,7 @@ class MiscController extends Controller
 
 			array_push($fretdata, [
 				'date' => $ondete->format('Y-m-d'),
+				'total_hours' => $totaldatday,
 				'data' => $nuredata
 			]);
 		}
@@ -151,7 +154,8 @@ class MiscController extends Controller
 		$input = app('request')->all();
 
 		$rules = [
-			'staff_id' => ['required']
+			'staff_id' => ['required'],
+			'date' => ['required']
 		];
 
 		$validator = app('validator')->make($input, $rules);
@@ -159,7 +163,7 @@ class MiscController extends Controller
 			return $this->respond_json(412, 'Invalid input', $input);
 		}
 
-		$redata = GDWActions::getGwdActivities($req->staff_id);
+		$redata = GDWActions::getGwdActivities($req->staff_id, $req->date);
 
 		return $this->respond_json(200, 'Success', $redata);
 	}

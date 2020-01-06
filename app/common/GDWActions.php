@@ -4,6 +4,7 @@ namespace App\common;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Unit;
 use App\GwdActivity;
 use \Carbon\Carbon;
 use App\ActivityType;
@@ -276,24 +277,97 @@ class GDWActions
     //   ->whereDate('activity_date', '<', $edate)
     //   ->get();
 
-    $cconfig = CommonConfig::where('key', 'diary_act_list_size')->first();
-    if($cconfig){
+    // $cconfig = CommonConfig::where('key', 'diary_act_list_size')->first();
+    // if($cconfig){
+    //
+    // } else {
+    //   $cconfig = new CommonConfig;
+    //   $cconfig->key = 'diary_act_list_size';
+    //   $cconfig->value = 50;
+    //   $cconfig->save();
+    // }
 
-    } else {
-      $cconfig = new CommonConfig;
-      $cconfig->key = 'diary_act_list_size';
-      $cconfig->value = 50;
-      $cconfig->save();
-    }
 
+    // $actlist = GwdActivity::where('user_id', $staff_id)
+    //   ->orderBy('activity_date', 'DESC')
+    //   ->take($cconfig->value)
+    //   ->get();
 
     $actlist = GwdActivity::where('user_id', $staff_id)
-      ->orderBy('activity_date', 'DESC')
-      ->take($cconfig->value)
+      ->whereDate('activity_date', $date)
       ->get();
+
+    foreach ($actlist as $value) {
+      $value->acts_type = $value->ActType->descr;
+      $value->acts_cat = $value->ActCat->descr;
+
+    }
 
     return $actlist;
   }
+
+  public static function getGroupSummary($unitdiv_id){
+    $retd = [];
+    $label = [];
+    $tfillp = [];
+    $tperfp = [];
+    $yfillp = [];
+    $yperfp = [];
+
+    $yest = date('Y-m-d',strtotime("-1 days"));
+    $tod = date('Y-m-d');
+    // get the group this div belongs to
+    $cdiv = Unit::find($unitdiv_id);
+
+    if($cdiv){
+      $grplist = $cdiv->Group->Members;
+
+      // get staff count
+      foreach ($grplist as $key => $value) {
+        $scount = $value->Staffs->count();
+
+        if($scount > 0){
+          array_push($label, $value->pporgunitdesc);
+          // get yesterday
+          $dps = $value->PerfEntryOnDateRange($yest, $yest);
+          $actual = $dps->sum('actual_hours');
+          $expct = $dps->sum('expected_hours');
+          if($expct == 0){
+            $perf = $actual > 0 ? 120 : 0;
+          } else {
+            $perf = $actual / $expct * 100;
+          }
+          array_push($yperfp, $perf);
+          array_push($yfillp, $dps->where('actual_hours', '!=', 0)->count() / $scount * 100);
+
+          // then today
+          $dps = $value->PerfEntryOnDateRange($tod, $tod);
+          $actual = $dps->sum('actual_hours');
+          $expct = $dps->sum('expected_hours');
+          if($expct == 0){
+            $perf = $actual > 0 ? 120 : 0;
+          } else {
+            $perf = $actual / $expct * 100;
+          }
+          array_push($tperfp, $perf);
+          array_push($tfillp, $dps->where('actual_hours', '!=', 0)->count() / $scount * 100);
+        }
+
+      }
+
+      $retd = [
+        'label' => $label,
+        'yesterday_count' => $yfillp,
+        'yesterday_perf' => $yperfp,
+        'today_count' => $tfillp,
+        'today_perf' => $tperfp
+      ];
+
+    }
+
+    return $retd;
+  }
+
 
 
 
@@ -309,7 +383,7 @@ class GDWActions
       'rgba(108, 68, 229, 0.7)',
       'rgba(215, 215, 44, 0.8)',
       'rgba(255, 0, 255, 0.8)',
-      'rgba(24, 38, 6, 0.8)',
+      'rgba(94, 38, 6, 0.2)',
     ];
 
     return $bgcolors[$i % count($bgcolors)];

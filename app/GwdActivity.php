@@ -22,6 +22,10 @@ class GwdActivity extends Model
     return $this->belongsTo('App\ActivityType', 'activity_type_id');
   }
 
+  public function ActCat(){
+    return $this->belongsTo('App\TaskCategory', 'task_category_id');
+  }
+
   public function DailyPerf(){
     return $this->belongsTo(DailyPerformance::class, 'daily_performance_id');
   }

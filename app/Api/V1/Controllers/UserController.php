@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Unit;
 use App\place;
 use App\building;
 use App\reservation;
@@ -12,6 +13,7 @@ use App\Activity;
 use App\CommonConfig;
 use App\EventAttendance;
 use App\ResourceRequest;
+use App\DailyPerformance;
 use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
@@ -397,8 +399,34 @@ class UserController extends Controller
   			'staff_id' => ['required']
   		];
 
+
       // update the rank
-      $av = GDWActions::updateAvatar($req->staff_id);
+      $av = [
+        'rank' => GDWActions::updateAvatar($req->staff_id)
+      ];
+
+
+      // get which div this user belongs to
+      $cuser = User::find($req->staff_id);
+      if($cuser){
+        // get best staff in that div
+        $topdp = DailyPerformance::where('unit_id', $cuser->lob)
+          ->whereDate('record_date', date('Y-m-d'))
+          ->orderBy('actual_hours', 'DESC')
+          ->first();
+
+        if($topdp){
+          $av['top_in_div'] = [
+            'staff' => $topdp->User->name,
+            'hours' => $topdp->actual_hours
+          ];
+        }
+
+        $av['grp_stats_percentage'] = GDWActions::getGroupSummary($cuser->unit_id);
+
+      }
+
+
       return $this->respond_json(200, 'Currrent avatar', $av);
     }
 

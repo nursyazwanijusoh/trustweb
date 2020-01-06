@@ -50,7 +50,7 @@ class TStaffController extends Controller
     $schart = app()->chartjs
          ->name('barChartTest')
          ->type('doughnut')
-         ->size(['width' => 400, 'height' => 150])
+         // ->size(['width' => 400, 'height' => 400])
          ->labels($gdata['label'])
          ->datasets([
              [
@@ -62,6 +62,7 @@ class TStaffController extends Controller
          ])
          ->options([
            'responsive' => true,
+           // 'maintainAspectRatio' => true,
            'title' => [
              'display' => true,
              'text' => 'Number of hours spent this month',
@@ -90,7 +91,7 @@ class TStaffController extends Controller
        new \DateTime($value->event_date),
        new \DateTime($value->event_date),
        $value->id,[
-         'color' => 'rgba(153, 0, 0, 0.3)'
+         'color' => 'rgba(94, 38, 6, 0.2)'
        ]
      );
     }
@@ -100,14 +101,26 @@ class TStaffController extends Controller
       ->get();
     foreach ($daysim as $key => $value) {
      $counter++;
-     $onleave = isset($value->leave_type_id) ? 'On Leave : ' : '';
+     $onleave = '';
+     $bgcollll = 'rgba(0, 0, 255, 0.5)';
+     if(isset($value->leave_type_id)){
+       $bgcollll = 'rgba(215, 215, 44, 0.8)';
+       $onleave = $value->LeaveType->descr . ': ';
+     } else {
+       if($value->expected_hours == 0 && $value->actual_hours > 0){
+         $bgcollll = 'rgba(0, 255, 132, 0.5)';
+       } elseif($value->expected_hours > 0 && $value->actual_hours == 0){
+         $bgcollll = 'rgba(255, 0, 0, 0.5)';
+       }
+     }
+
      $evlist[] = \Calendar::event(
-       $onleave . $value->actual_hours . ' hours',
+       $onleave . $value->actual_hours . ' / ' . $value->expected_hours . ' hours',
        true,
        new \DateTime($value->record_date),
        new \DateTime($value->record_date),
        $value->id,[
-         'color' => GDWActions::getBgColor($counter)
+         'color' => $bgcollll
        ]
      );
     }

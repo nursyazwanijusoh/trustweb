@@ -70,9 +70,12 @@
             </div><br />
             <div class="card">
               <div class="card-header">Summary</div>
-              <div class="card-body">
+              <div class="card-body text-center">
                 <!-- <h5 class="card-title"></h5> -->
-                {!! $chart->render() !!}
+                <!-- <div class="table-responsive text-center"> -->
+                  {!! $chart->render() !!}
+                <!-- </div> -->
+
               </div>
             </div><br />
             <div class="card">
