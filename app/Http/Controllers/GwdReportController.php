@@ -374,6 +374,7 @@ class GwdReportController extends Controller
 
 
     $lbl = [];
+    $tier0 = [];
     $tierA = [];
     $tierB = [];
     $tierC = [];
@@ -381,6 +382,7 @@ class GwdReportController extends Controller
     $normaldistgraphs = [];
 
     foreach ($cgrp->Members as $onemember) {
+      $c0 = 0;
       $ca = 0;
       $cb = 0;
       $cc = 0;
@@ -414,9 +416,11 @@ class GwdReportController extends Controller
 
         } else {
           $pers = $maybeonestaff->act_hrs / $maybeonestaff->exp_hrs * 100;
-          if($pers < 50){
+          if($pers == 0){
+            $c0++;
+          } elseif($pers < 50){
             $ca++;
-          } elseif ($pers < 80) {
+          } elseif ($pers < 70) {
             $cb++;
           } elseif ($pers <= 100) {
             $cc++;
@@ -425,23 +429,24 @@ class GwdReportController extends Controller
           }
         }
 
-        $psSumVar += pow(($maybeonestaff->act_hrs), 2);
+        // $psSumVar += pow(($maybeonestaff->act_hrs), 2);
 
       }
 
-      if($psCount > 3){
-        $psStdDev = sqrt($psSumVar / $psCount);
+      // if($psCount > 3){
+      //   $psStdDev = sqrt($psSumVar / $psCount);
+      //
+      //   // calculate the normal distribution for each staff
+      //   foreach ($perstaff as $maybeonestaff) {
+      //
+      //   }
+      //
+      //
+      // }
 
-        // calculate the normal distribution for each staff
-        foreach ($perstaff as $maybeonestaff) {
-
-        }
 
 
-      }
-
-
-
+      array_push($tier0, $c0);
       array_push($tierA, $ca);
       array_push($tierB, $cb);
       array_push($tierC, $cc);
@@ -451,19 +456,24 @@ class GwdReportController extends Controller
     // dd($lbl);
 
     $datasets = array([
-          'label' => '< 50%',
+          'label' => '0%',
+          'data' => $tier0,
+          'backgroundColor' => "rgba(88, 88, 88, 0.5)",
+          'borderColor' => "rgba(100, 100, 100, 0.7)",
+        ],[
+          'label' => '0% - 50%',
           'data' => $tierA,
           'backgroundColor' => "rgba(255, 255, 0, 0.5)",
           'borderColor' => "rgba(255, 199, 0, 0.7)",
         ],
         [
-          'label' => '50% - 80%',
+          'label' => '50% - 70%',
           'data' => $tierB,
           'backgroundColor' => "rgba(51, 51, 204, 0.5)",
           'borderColor' => "rgba(51, 51, 204, 0.7)",
         ],
         [
-          'label' => '80% - 100%',
+          'label' => '70% - 100%',
           'data' => $tierC,
           'backgroundColor' => 'rgba(51, 204, 51, 0.5)',
           'borderColor' => 'rgba(51, 204, 51, 0.7)',
