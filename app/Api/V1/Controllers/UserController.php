@@ -392,12 +392,33 @@ class UserController extends Controller
 
     }
 
+    public function getMonthlyCalDots(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required'],
+        'date' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      return $this->respond_json(200, 'Month Calendar Dot', GDWActions::getMonthlyCal($req->staff_id, $req->date));
+    }
+
     public function getGwdRank(Request $req){
       $input = app('request')->all();
 
   		$rules = [
   			'staff_id' => ['required']
   		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
 
 
       // update the rank

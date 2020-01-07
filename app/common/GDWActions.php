@@ -27,6 +27,11 @@ class GDWActions
 
     if($req->filled('actdate')){
       $indate = $req->actdate;
+      $today = new Carbon(date('Y-m-d'));
+      $inpd = new Carbon($indate);
+      if($inpd->gt($today)){
+        return 'future date';
+      }
     } else {
       $indate = date('Y-m-d');
     }
@@ -264,6 +269,45 @@ class GDWActions
 
     // dd($info);
     return $info;
+
+  }
+
+  public static function getMonthlyCal($staff_id, $date){
+    $cdate = Carbon::parse($date);
+    $sdate = $cdate->startOfMonth()->toDateString();
+    $edate = $cdate->addMonths(1)->toDateString();
+
+    $dailyperf = DailyPerformance::where('user_id', $staff_id)
+      ->whereDate('record_date', '>=', $sdate)
+      ->whereDate('record_date', '<', $edate)
+      ->where('actual_hours', '>', 0)
+      ->get();
+
+    $retval = [];
+
+    foreach ($dailyperf as $key => $value) {
+      if($value->expected_hours == 0){
+        $dotcol = 'red';
+      } else {
+        $perc = $value->actual_hours / $value->expected_hours * 100;
+        if($perc < 50){
+          $dotcol = 'yellow';
+        } elseif($perc < 70){
+          $dotcol = 'blue';
+        } elseif($perc <= 100){
+          $dotcol = 'green';
+        } else {
+          $dotcol = 'red';
+        }
+      }
+
+      $retval[$value->record_date] = [
+        'marked' => true,
+        'dotColor' => $dotcol
+      ];
+    }
+
+    return $retval;
 
   }
 

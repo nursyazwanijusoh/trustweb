@@ -89,6 +89,8 @@ $api->version('v1', function ($api) {
   $api->post('/gwd/delete',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdDelActivity']);
   $api->post('/gwd/listacts',  ['as' => 'api.gwd.cat', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetActivities']);
   $api->post('/gwd/monthsummary',  ['as' => 'api.gwd.msum', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetMonthSummary']);
+  $api->post('/gwd/monthcaldot',  ['as' => 'api.gwd.mcaldot', 'uses' => 'App\Api\V1\Controllers\UserController@getMonthlyCalDots']);
+
 
 
   // to be disabled once all tokens api go live
