@@ -12,7 +12,7 @@ use App\LeaveType;
 class BatchHelper
 {
 
-  public static loadCutiData($staff_id = 1){
+  public static function loadCutiData($staff_id = 1){
     $cutis = SapLeaveInfo::where('load_status', 'N')->get();
 
     foreach($cutis as $c){
@@ -25,7 +25,7 @@ class BatchHelper
           $leavetype = new LeaveType;
           $leavetype->code = $c->leave_code;
           $leavetype->descr = $c->leave_describtion;
-          $leavetype->hours_value = 8;
+          $leavetype->hours_value = 8;  // default
           $leavetype->created_by = 1;
           $leavetype->save();
         }
@@ -43,10 +43,38 @@ class BatchHelper
         if($curcuti){
           // entry already exist. check if it's for reject or withdrawn
           if($c->status == 'REJECTED' || $c->status == 'WITHDRAWN'){
+            // reverse the cuti
+            $curcuti->reverseCuti();
+            // then delete the cuti
+            $curcuti->delete();
+            $c->load_status = 'S';
+          } else {
+            // most likely duplicate. ignore
+            $c->load_status = 'D';
+          }
+        } else {
+          // not exist. create new
+          if($c->status == 'REJECTED' || $c->status == 'WITHDRAWN'){
+            // no need to create new for this one lol
+            $c->load_status = 'I';
 
+          } else {
+            $curcuti = new StaffLeave;
+            $curcuti->user_id = $user->id;
+            $curcuti->start_date = $c->date_start;
+            $curcuti->end_date = $c->date_end;
+            $curcuti->leave_type_id = $leavetype->id;
+            $curcuti->save();
+
+            $curcuti->createCuti();
+            $c->load_status = 'S';
           }
         }
+      } else {
+        $c->load_status = 'U';
       }
+
+      $c->save();
     }
   }
 

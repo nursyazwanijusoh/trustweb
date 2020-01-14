@@ -8,6 +8,7 @@ use App\User;
 use App\StaffPersMap;
 use App\SapEmpProfile;
 use App\SapLeaveInfo;
+use App\common\BatchHelper;
 
 class SapLoadController extends Controller
 {
@@ -63,7 +64,7 @@ class SapLoadController extends Controller
 
   public function loadDataCuti(Request $req){
     set_time_limit(0);
-    
+    BatchHelper::loadCutiData($req->user()->id);
 
   }
 }
