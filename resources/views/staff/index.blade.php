@@ -29,6 +29,7 @@
                 <!-- <h5 class="card-title">Action</h5> -->
 
                 <div class="row">
+                  @if($isvisitor == false)
                   <div class="col-sm-4 mb-3">
                     <a href="{{ route('staff.addact', [], false) }}">
                       <div class="card text-center text-white bg-success">
@@ -38,6 +39,7 @@
                       </div>
                     </a>
                   </div>
+                  @endif
                   <div class="col-sm-4 mb-3">
                     <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-info">
@@ -69,6 +71,13 @@
               </div>
             </div><br />
             <div class="card">
+              <div class="card-header">My Diary Calendar</div>
+              <div class="card-body">
+                <!-- <h5 class="card-title"></h5> -->
+                {!! $cds->calendar() !!}
+              </div>
+            </div><br />
+            <div class="card mb-3">
               <div class="card-header">Summary</div>
               <div class="card-body text-center">
                 <!-- <h5 class="card-title"></h5> -->
@@ -77,14 +86,7 @@
                 <!-- </div> -->
 
               </div>
-            </div><br />
-            <div class="card">
-              <div class="card-header">Daily Hours?</div>
-              <div class="card-body">
-                <!-- <h5 class="card-title"></h5> -->
-                {!! $cds->calendar() !!}
-              </div>
-            </div><br />
+            </div>
             @if($subords->count() > 0)
             <div class="card">
               <div class="card-header">My Subordinate</div>

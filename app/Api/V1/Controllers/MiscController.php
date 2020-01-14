@@ -62,11 +62,7 @@ class MiscController extends Controller
 		$input = app('request')->all();
 
 		$rules = [
-			'title' => ['required'],
 			'id' => ['required'],
-			'hours' => ['required'],
-			'acttype' => ['required'],
-			'actcat' => ['required'],
 		];
 
 		$validator = app('validator')->make($input, $rules);

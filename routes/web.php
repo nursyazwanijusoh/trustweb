@@ -46,6 +46,10 @@ Route::get('/admin/delallseat', 'TAdminController@delallseat')->name('admin.dela
 Route::get('/admin/buildetail', 'TAdminController@buildetail')->name('admin.buildetail');
 Route::get('/admin/getallqr', 'TAdminController@getallqr')->name('admin.getallqr');
 Route::get('/admin/seatToggle', 'TAdminController@seatToggle')->name('admin.seat.toggle');
+Route::get('/admin/loadsap', 'SapLoadController@showSummaryPage')->name('admin.loadsapform');
+Route::get('/admin/loadsapom', 'SapLoadController@processOM')->name('admin.processOM');
+Route::get('/admin/loadsappersno', 'SapLoadController@mapPersNo')->name('admin.updatePersno');
+Route::get('/admin/loadsapcuti', 'SapLoadController@loadDataCuti')->name('admin.loadDataCuti');
 
 // meeting rooms
 Route::get('/admin/meetroom', 'TAdminController@meetroom')->name('admin.meetroom');
@@ -97,6 +101,9 @@ Route::get('/user/lochist', 'TStaffController@locHistory')->name('staff.lochist'
 Route::get('/user/activity', 'GwdActivityController@form')->name('staff.addact');
 Route::post('/user/addactivity', 'GwdActivityController@add')->name('staff.doaddact');
 Route::post('/user/dekactivity', 'GwdActivityController@delete')->name('staff.delact');
+Route::post('/user/editactivity', 'GwdActivityController@edit')->name('staff.editact');
+Route::get('/user/activity/info', 'GwdActivityController@actinfo')->name('staff.act.info');
+Route::get('/user/activity/dayinfo', 'GwdActivityController@actdayinfo')->name('staff.act.dayinfo');
 Route::get('/user/activity/list', 'GwdActivityController@list')->name('staff.list');
 Route::post('/user/addleave', 'GwdActivityController@cuti')->name('staff.cuti');
 

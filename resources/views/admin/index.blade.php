@@ -13,7 +13,7 @@
                     <!-- <a href="{{ route('admin.sr', [], false) }}" class="list-group-item list-group-item-action">Assign Floor Access By Division</a> -->
                     <a href="{{ route('admin.list', [], false) }}" class="list-group-item list-group-item-action">Admin List</a>
                     <a href="{{ route('admin.st', [], false) }}" class="list-group-item list-group-item-action">Edit Staff (TM)</a>
-                    <a href="{{ route('admin.loadji', [], false) }}" class="list-group-item list-group-item-action">Load TM Staff profile (JI from SAP?)</a>
+                    <a href="{{ route('admin.loadsapform', [], false) }}" class="list-group-item list-group-item-action">Manual trigger SAP data load</a>
                     <a href="{{ route('admin.reglist', [], false) }}" class="list-group-item list-group-item-action">Vendor Users
                     @if($prc > 0)
                     <span class="badge badge-warning">{{ $prc }}</span>

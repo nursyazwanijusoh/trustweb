@@ -15,6 +15,7 @@ use App\DailyPerformance;
 use App\PublicHoliday;
 use App\common\GDWActions;
 use App\Api\V1\Controllers\BookingHelper;
+use \Carbon\Carbon;
 
 class TStaffController extends Controller
 {
@@ -25,11 +26,16 @@ class TStaffController extends Controller
 
   // staff homepage
   public function index(Request $rq){
-    $c_staff_id = Session::get('staffdata')['id'];
+    $c_staff_id = $rq->user()->id;
+    $isvisitor = false;
+
     if($rq->filled('staff_id')){
       $s_staff_id = $rq->staff_id;
+      if($s_staff_id != $c_staff_id){
+        $isvisitor = true;
+      }
     } else {
-      $s_staff_id = Session::get('staffdata')['id'];
+      $s_staff_id = $rq->user()->id;
     }
 
     // get subordinates
@@ -81,6 +87,8 @@ class TStaffController extends Controller
     // calendar
     $evlist = [];
     $counter = rand(0, 12);
+    $last3month = new Carbon();
+    $last3month->subMonths(3);
 
     // first load the public holiday
     $allph = PublicHoliday::all();
@@ -120,7 +128,8 @@ class TStaffController extends Controller
        new \DateTime($value->record_date),
        new \DateTime($value->record_date),
        $value->id,[
-         'color' => $bgcollll
+         'color' => $bgcollll,
+         'url' => route('staff.addact', ['dfid' => $value->id], false)
        ]
      );
     }
@@ -134,7 +143,8 @@ class TStaffController extends Controller
       'user' => $user,
       'cuser' => $c_staff_id,
       'currcekin' => $lastloc,
-      'cds' => $cds
+      'cds' => $cds,
+      'isvisitor' => $isvisitor
     ];
     // dd($final);
 

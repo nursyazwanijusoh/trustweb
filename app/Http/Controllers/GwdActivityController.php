@@ -7,6 +7,7 @@ use App\common\GDWActions;
 use App\ActivityType;
 use App\TaskCategory;
 use App\GwdActivity;
+use App\DailyPerformance;
 use \Carbon\Carbon;
 
 class GwdActivityController extends Controller
@@ -39,6 +40,53 @@ class GwdActivityController extends Controller
     $act = GDWActions::deleteActivity($req->actid);
 
     return redirect(route('staff.list', []))->with(['alert' => 'Diary entry ' . $act, 'a_type' => 'warning']);
+  }
+
+  public function edit(Request $req){
+    $act = GwdActivity::find($req->id);
+    if($act){
+      if($act->user_id != $req->user()->id){
+        return redirect()->back()->with(['alert' => 'Cannot edit diary that belongs to other person', 'a_type' => 'danger']);
+      }
+
+      $currdp = $act->DailyPerf;
+      $hoursdiff = $req->hours - $act->hours_spent;
+      $currdp->addHours($hoursdiff);
+
+      $act->details = $req->details;
+      $act->hours_spent = $req->hours;
+      $act->save();
+
+      return redirect(route('staff.addact', ['dfid' => $act->daily_performance_id]))->with(['alert' => 'Diary entry for ' . $act->parent_number . ' updated', 'a_type' => 'success']);
+
+    } else {
+      return redirect()->back()->with(['alert' => 'Diary entry not found', 'a_type' => 'danger']);
+    }
+  }
+
+  public function actinfo(Request $req){
+    $act = GwdActivity::find($req->actid);
+    if($act){
+      return [
+        'id' => $act->id,
+        'at' => $act->ActCat->descr,
+        'idn' => $act->parent_number,
+        'ac' => $act->ActType->descr,
+        'remark' => $act->details,
+        'hours' => $act->hours_spent
+      ];
+    } else {
+      abort(404);
+    }
+  }
+
+  public function actdayinfo(Request $req){
+    $seldf = GDWActions::GetDailyPerfObj($req->user()->id, $req->indate);
+    if($seldf){
+      return redirect(route('staff.addact', ['dfid' => $seldf->id]));
+    } else {
+      abort(404);
+    }
   }
 
   public function cuti(Request $req){
@@ -80,7 +128,7 @@ class GwdActivityController extends Controller
              [
                  'label' => 'Hours Spent',
                  'backgroundColor' => $gdata['bg'],
-                 'borderColor' => '#000',
+                 // 'borderColor' => '#000',
                  'data' => $gdata['data']
              ]
          ])
@@ -123,14 +171,40 @@ class GwdActivityController extends Controller
     $actype = ActivityType::where('status', 1)->get();
     $acats = TaskCategory::where('status', 1)->get();
 
-
+    $cuserid = $req->user()->id;
+    $isvisitor = false;
 
     $today = date('Y-m-d');
     $mindate = new Carbon($today);
     $mindate->subDays(7);
 
-    $activities = GwdActivity::where('user_id', $req->user()->id)
-      ->whereDate('activity_date', '>=', $mindate->toDateString())
+    $indate = date('Y-m-d');
+    $tothrs = 0;
+    $acttlist = [];
+
+    if($req->filled('dfid')){
+      $seldf = DailyPerformance::find($req->dfid);
+      if($seldf){
+        $indate = $seldf->record_date;
+
+        if($seldf->user_id != $cuserid){
+          $isvisitor = true;
+          $cuserid = $seldf->user_id;
+        }
+      } else {
+        abort(404);
+      }
+    } else {
+      $seldf = GDWActions::GetDailyPerfObj($cuserid, $today);
+    }
+
+    $cindate = new Carbon($indate);
+    if($cindate->lt($mindate)){
+      $isvisitor = true;
+    }
+
+    $activities = GwdActivity::where('user_id', $cuserid)
+      ->whereDate('activity_date', $indate)
       ->get();
 
     $tagref = [];
@@ -144,9 +218,13 @@ class GwdActivityController extends Controller
       'actlist' => $actype,
       'curdate' => $today,
       'actcats' => $acats,
-      'pbes'    => $activities,
+      'recdate' => $indate,
+      'todayacts'    => $activities,
+      'isvisitor' => $isvisitor,
+      'pbes'    => [],
       'mindate' => $mindate->format('Y-m-d'),
-      'tagref'  => json_encode($tagref)
+      'tagref'  => json_encode($tagref),
+      'dfobj' => $seldf
     ]);
   }
 

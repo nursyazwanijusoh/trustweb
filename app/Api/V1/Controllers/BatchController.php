@@ -19,4 +19,17 @@ class BatchController extends Controller
 
 	}
 
+	public function loadEmplLeave(){
+		// just in case it takes too long
+		set_time_limit(0);
+
+		$toprocess = SapLeaveInfo::where('load_status', 'N')->get();
+		foreach($toprocess as $cuti){
+
+		}
+
+		return $toprocess->count();
+
+	}
+
 }

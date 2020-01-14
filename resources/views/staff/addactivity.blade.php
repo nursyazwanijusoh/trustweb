@@ -5,21 +5,22 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card">
+          @if($isvisitor == false)
+            <div class="card mb-3">
                 <div class="card-header">Add Diary Entry</div>
-                @if (session()->has('alert'))
-                <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
-                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                  <strong>{{ session()->get('alert') }}</strong>
-                </div>
-                @endif
                 <div class="card-body">
+                  @if (session()->has('alert'))
+                  <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{ session()->get('alert') }}</strong>
+                  </div>
+                  @endif
                   <form method="POST" action="{{ route('staff.doaddact', [], false) }}">
                     @csrf
                     <div class="form-group row">
                         <label for="actdate" class="col-md-4 col-form-label text-md-right">Date</label>
                         <div class="col-md-6">
-                          <input type="date" name="actdate" id="actdate" value="{{ $curdate }}" min="{{ $mindate }}" max="{{ $curdate }}"/>
+                          <input type="date" name="actdate" id="actdate" value="{{ $recdate }}" min="2020-01-01" max="{{ $curdate }}" onchange="loadActListForDate()"/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -28,16 +29,6 @@
                         <select class="form-control" id="actcat" name="actcat" required onchange="setTitleInput()">
                           @foreach ($actcats as $act)
                           <option value="{{ $act['descr'] }}" title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="acttype" class="col-md-4 col-form-label text-md-right">Activity Type</label>
-                      <div class="col-md-6">
-                        <select class="form-control" id="acttype" name="acttype" required>
-                          @foreach ($actlist as $act)
-                          <option value="{{ $act['descr'] }}"  title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -54,6 +45,16 @@
                             @endforeach
                           </select>
                         </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="acttype" class="col-md-4 col-form-label text-md-right">Activity Type</label>
+                      <div class="col-md-6">
+                        <select class="form-control" id="acttype" name="acttype" required>
+                          @foreach ($actlist as $act)
+                          <option value="{{ $act['descr'] }}"  title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
+                          @endforeach
+                        </select>
+                      </div>
                     </div>
                     <div class="form-group row">
                         <label for="remark" class="col-md-4 col-form-label text-md-right">Details</label>
@@ -75,15 +76,144 @@
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-primary">Add Activity</button>
+                            <a href="{{ route('staff', [], false) }}"><button type="button" class="btn btn-success" title="Being unable to navigate on one's own is never a sin">Back to Dashboard</button></a>
                         </div>
                     </div>
                   </form>
                 </div>
             </div>
+            @endif
+            <div class="card mb-3">
+              <div class="card-header">Entry for {{ $recdate }}. Total hours: {{ $dfobj->actual_hours }}</div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="taskdetailtable" class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Date Entered</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">ID / Name</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Hours</th>
+                        @if($isvisitor == false)
+                        <th scope="col">Action</th>
+                        @endif
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($todayacts as $acts)
+                      <tr>
+                        <td>{{ $acts->created_at }}</td>
+                        @if($acts->isleave)
+                        <td>On Leave</td>
+                        <td>{{ $acts->parent_number }}</td>
+                        <td>{{ $acts->leave_remark }}</td>
+                        @else
+                        <td>{{ $acts->ActType->descr }}</td>
+                        <td>{{ $acts->parent_number }}</td>
+                        <td>{{ $acts->details }}</td>
+                        @endif
+                        <td>{{ $acts->hours_spent }}</td>
+                        @if($isvisitor == false)
+                        <td>
+                          @if($acts->isleave)
+                          &nbsp;
+                          @else
+                          <form action="{{ route('staff.delact', [], false)}}"
+                            method="post">
+                            <input type="hidden" name="actid" value="{{ $acts->id }}" />
+                            @csrf
+                            <button type="button" class="btn btn-sm btn-warning" title="Edit" data-toggle="modal" data-target="#editCfgModal"
+                            data-id="{{ $acts->id }}"><i class="fa fa-pencil"></i></button>
+                            <button type="submit" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></button>
+                          </form>
+                          @endif
+                        </td>
+                        @endif
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
         </div>
+        <div class="modal fade" id="editCfgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Amend Diary Entry</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" action="{{ route('staff.editact', [], false) }}">
+              @csrf
+              <div class="modal-body">
+                <input type="hidden" value="0" name="id" id="edit-id" />
+                <div class="form-group row">
+                  <label for="edit-name" class="col-sm-4 col-form-label text-sm-right">Activity Tag</label>
+                  <input type="text" class="form-control col-sm-6" id="edit-at"  disabled>
+                </div>
+                <div class="form-group row">
+                  <label for="edit-name" class="col-sm-4 col-form-label text-sm-right">ID / Name</label>
+                  <input type="text" class="form-control col-sm-6" id="edit-idn"  disabled>
+                </div>
+                <div class="form-group row">
+                  <label for="edit-name" class="col-sm-4 col-form-label text-sm-right">Activity Category</label>
+                  <input type="text" class="form-control col-sm-6" id="edit-ac"  disabled>
+                </div>
+                <div class="form-group row">
+                  <label for="edit-name" class="col-sm-4 col-form-label text-sm-right">Details</label>
+                  <textarea rows="3" class="form-control col-sm-6" id="edit-remark" name="details" placeholder="Anything you wish to elaborate regarding this activity" required></textarea>
+                </div>
+                <div class="form-group row">
+                  <label for="edit-name" class="col-sm-4 col-form-label text-sm-right">Hours Spent</label>
+                  <input type="number" class="form-control col-sm-3" name="hours" value="1" min="0" max="24" step="0.01" id="edit-hours" />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
+@endsection
+
+@section('page-js')
 <script>
+
+$('#editCfgModal').on('show.bs.modal', function(e) {
+
+    //get data-id attribute of the clicked element
+    var id = $(e.relatedTarget).data('id');
+
+    var baseeurl='{{ route("staff.act.info") }}';
+
+    $.ajax({
+      url: baseeurl + "?actid=" + id ,
+      type: "GET",
+      success: function(resp) {
+        // alert(resp);
+        document.getElementById("edit-id").value = resp.id;
+        document.getElementById("edit-at").value = resp.at;
+        document.getElementById("edit-idn").value = resp.idn;
+        document.getElementById("edit-ac").value = resp.ac;
+        document.getElementById("edit-remark").value = resp.remark;
+        document.getElementById("edit-hours").value = resp.hours;
+      },
+      error: function(err) {
+        $('#editCfgModal').modal('hide');
+        alert(err);
+      }
+    });
+
+});
+
 // document.getElementById('actdate').value = new Date().toDateInputValue();
 function displaysliderval() {
   var slider = document.getElementById("hours");
@@ -117,6 +247,14 @@ function setTitleInput() {
     document.getElementById("pbe_sel").disabled = true;
   }
 
+}
+
+function loadActListForDate(){
+
+  var indate = document.getElementById("actdate").value;
+  var baseeurl='{{ route("staff.act.dayinfo") }}';
+
+  window.location = baseeurl + "?indate=" + indate;
 }
 
 $(document).ready(function() {

@@ -35,6 +35,7 @@ $api->version('v1', function ($api) {
   $api->get('/reserveExpired',  ['as' => 'reserve.expired', 'uses' => 'App\Api\V1\Controllers\InfraController@reserveExpired']);
   $api->get('/GwdCreateDaily',  ['as' => 'gwd.create.daily.perf', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdCreateDayPerf']);
   $api->get('/loadEmplProfile',  ['as' => 'sap.load.prof', 'uses' => 'App\Api\V1\Controllers\BatchController@loadEmplProfile']);
+  $api->get('/loadEmplLeave',  ['as' => 'sap.load.cuti', 'uses' => 'App\Api\V1\Controllers\BatchController@loadEmplLeave']);
 
   // ==========================
   // might not even be used lol

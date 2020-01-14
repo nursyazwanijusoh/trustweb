@@ -112,12 +112,6 @@ class GDWActions
 
     $currdp = $act->DailyPerf;
 
-    $act->activity_type_id = $req->acttype;
-    $act->task_category_id = $req->actcat;
-
-
-
-
     if($req->filled('actdate')){
       $act->activity_date = $req->actdate;
 
