@@ -51,7 +51,7 @@ class PushAnnouncementController extends Controller
   }
 
   public function doSend(Request $req){
-
+    set_time_limit(0);
     $status = 'Failed';
     $count = 0;
     $msg = '';
