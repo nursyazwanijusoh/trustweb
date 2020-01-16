@@ -12,6 +12,7 @@ use App\User;
 use App\Activity;
 use App\Subordinate;
 use App\DailyPerformance;
+use App\StaffLeave;
 use App\PublicHoliday;
 use App\common\GDWActions;
 use App\Api\V1\Controllers\BookingHelper;
@@ -106,30 +107,44 @@ class TStaffController extends Controller
 
     // then the daily summary
     $daysim = DailyPerformance::where('user_id', $s_staff_id)
+      ->whereDate('record_date', '>', $last3month)
       ->get();
+
     foreach ($daysim as $key => $value) {
      $counter++;
-     $onleave = '';
      $bgcollll = 'rgba(0, 0, 255, 0.5)';
-     if(isset($value->leave_type_id)){
-       $bgcollll = 'rgba(215, 215, 44, 0.8)';
-       $onleave = $value->LeaveType->descr . ': ';
-     } else {
-       if($value->expected_hours == 0 && $value->actual_hours > 0){
-         $bgcollll = 'rgba(0, 255, 132, 0.5)';
-       } elseif($value->expected_hours > 0 && $value->actual_hours == 0){
-         $bgcollll = 'rgba(255, 0, 0, 0.5)';
-       }
+
+     if($value->expected_hours == 0 && $value->actual_hours > 0){
+       $bgcollll = 'rgba(0, 255, 132, 0.5)';
+     } elseif($value->expected_hours > 0 && $value->actual_hours == 0){
+       $bgcollll = 'rgba(255, 0, 0, 0.5)';
      }
 
      $evlist[] = \Calendar::event(
-       $onleave . $value->actual_hours . ' / ' . $value->expected_hours . ' hours',
+       $value->actual_hours . ' / ' . $value->expected_hours . ' hours',
        true,
        new \DateTime($value->record_date),
        new \DateTime($value->record_date),
        $value->id,[
          'color' => $bgcollll,
          'url' => route('staff.addact', ['dfid' => $value->id], false)
+       ]
+     );
+    }
+
+    // then load the personal cuti info,
+    $personalcuti = StaffLeave::where('user_id', $s_staff_id)
+      ->whereDate('start_date', '>', $last3month)
+      ->get();
+
+    foreach ($personalcuti as $key => $value) {
+     $evlist[] = \Calendar::event(
+       $value->LeaveType->descr,
+       true,
+       new \DateTime($value->start_date),
+       new \DateTime($value->end_date),
+       $value->id,[
+         'color' => 'rgba(215, 215, 44, 0.8)'
        ]
      );
     }
