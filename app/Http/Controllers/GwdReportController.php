@@ -156,6 +156,7 @@ class GwdReportController extends Controller
   }
 
   private function doGrpExcel(Request $req){
+    set_time_limit(0);
     $cdate = new Carbon($req->tdate);
     $ldate = new Carbon($req->fdate);
     $cdate->addSecond();
