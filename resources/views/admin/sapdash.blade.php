@@ -47,14 +47,14 @@
   function loadOM(){
     document.getElementById("btnOM").disabled = true;
     document.getElementById("pbar").style = "display: block";
-    document.getElementById("pbari").text = "Updating OM info";
+    document.getElementById("pbari").innerHTML = "Updating OM info";
 
   }
 
   function updatePersno(){
     document.getElementById("btnPersno").disabled = true;
     document.getElementById("pbar").style = "display: block";
-    document.getElementById("pbari").text = "mapping persno to staffs";
+    document.getElementById("pbari").innerHTML = "mapping persno to staffs";
 
     var url = '{{ route("admin.updatePersno", [], false) }}';
     var aftercount = 0;

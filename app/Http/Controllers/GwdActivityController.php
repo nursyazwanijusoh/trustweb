@@ -199,9 +199,9 @@ class GwdActivityController extends Controller
     }
 
     $cindate = new Carbon($indate);
-    if($cindate->lt($mindate)){
-      $isvisitor = true;
-    }
+    // if($cindate->lt($mindate)){
+    //   $isvisitor = true;
+    // }
 
     $activities = GwdActivity::where('user_id', $cuserid)
       ->whereDate('activity_date', $indate)
