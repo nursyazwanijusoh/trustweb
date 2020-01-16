@@ -138,11 +138,15 @@ class TStaffController extends Controller
       ->get();
 
     foreach ($personalcuti as $key => $value) {
+
+      $eeeedate = new Carbon($value->end_date);
+      $eeeedate->addDay();
+
      $evlist[] = \Calendar::event(
        $value->LeaveType->descr,
        true,
        new \DateTime($value->start_date),
-       new \DateTime($value->end_date),
+       new \DateTime($eeeedate),
        $value->id,[
          'color' => 'rgba(215, 215, 44, 0.8)'
        ]
