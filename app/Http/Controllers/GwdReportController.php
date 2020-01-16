@@ -257,7 +257,12 @@ class GwdReportController extends Controller
           if($dpu){
             // check for off day
             if($dpu->is_off_day){
-              $dbg = ExcelHandler::BG_LEAVE;
+              if($dpu->expected_hours < 5){
+                $dbg = ExcelHandler::BG_LEAVE0;
+              } else {
+                $dbg = ExcelHandler::BG_LEAVE;
+              }
+
             }
 
             if($dpu->expected_hours > 0){
