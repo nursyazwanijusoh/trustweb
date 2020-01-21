@@ -115,7 +115,7 @@
                         @endif
                         <td>{{ $acts->hours_spent }}</td>
                         @if($isvisitor == false)
-                        <td>
+                        <td class="text-center">
                           @if($acts->isleave)
                           &nbsp;
                           @else

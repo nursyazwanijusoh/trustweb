@@ -64,6 +64,10 @@ class PushAnnouncementController extends Controller
         if($pn->user_id == $req->user()->id){
 
           if($pn->status == 'N'){
+
+            $pn->status = 'P';
+            $pn->save();
+
             if($pn->is_global){
               // send for everyone
               $stafflist = User::whereNotNull('pushnoti_id')->get();
@@ -78,7 +82,7 @@ class PushAnnouncementController extends Controller
               foreach ($pn->Groups as $grp) {
                 // dd($grp->TheGroup);
                 foreach($grp->Divisions() as $ondiv){
-                  $stafflist = $ondiv->Staffs->where('pushnoti_id', '!=', null);
+                  $stafflist = $ondiv->Staffs->whereNotNull('pushnoti_id');
                   foreach($stafflist->all() as $onestaff){
                     if(strlen(trim($onestaff->pushnoti_id)) > 8){
                       $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
@@ -93,6 +97,7 @@ class PushAnnouncementController extends Controller
             $msg = 'Notification sent';
 
             $pn->status = 'C';
+            $pn->rec_count = $count;
             $pn->save();
           } else {
             $msg = 'Notification already sent';

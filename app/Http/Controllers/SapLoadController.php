@@ -45,21 +45,9 @@ class SapLoadController extends Controller
   }
 
   public function processOM(Request $req){
-    $dat = SapEmpProfile::find($req->id);
-    if($dat){
-      if($dat->load_status != 'N'){
-        return "already loaded with status " . $dat->load_status;
-      }
+    set_time_limit(0);
+    BatchHelper::loadOMData();
 
-      // check if the persno is already there in users
-      $user = User::where('persno', $dat->persno)->first();
-      if($user){
-
-      } else {
-        // no user with this
-      }
-
-    }
   }
 
   public function loadDataCuti(Request $req){

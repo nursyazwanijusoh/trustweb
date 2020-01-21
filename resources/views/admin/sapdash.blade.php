@@ -38,7 +38,8 @@
         location.reload();
       },
       error: function(err) {
-        alert(err.toString());
+        alert(err.responseText);
+        location.reload();
       }
     });
 
@@ -49,6 +50,20 @@
     document.getElementById("pbar").style = "display: block";
     document.getElementById("pbari").innerHTML = "Updating OM info";
 
+    var url = '{{ route("admin.processOM", [], false) }}';
+    var aftercount = 0;
+
+    $.ajax({
+      url: url ,
+      type: "GET",
+      success: function(resp) {
+        location.reload();
+      },
+      error: function(err) {
+        alert(err.responseText);
+        location.reload();
+      }
+    });
   }
 
   function updatePersno(){
@@ -66,7 +81,8 @@
         location.reload();
       },
       error: function(err) {
-        alert(err.message);
+        alert(err.responseText);
+        location.reload();
       }
     });
 

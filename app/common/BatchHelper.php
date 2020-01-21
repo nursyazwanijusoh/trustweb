@@ -8,6 +8,8 @@ use App\SapEmpProfile;
 use App\SapLeaveInfo;
 use App\StaffLeave;
 use App\LeaveType;
+use App\Unit;
+use App\SubUnit;
 
 class BatchHelper
 {
@@ -75,6 +77,95 @@ class BatchHelper
       }
 
       $c->save();
+    }
+  }
+
+  public static function loadOMData(){
+    $omdata = SapEmpProfile::where('load_status', 'N')->get();
+
+    foreach ($omdata as $key => $value) {
+      // find this user
+      $user = User::where('persno', $value->personel_no)->first();
+      if($user){
+
+      } else {
+        // user not found. try to find using staffno instead
+        $usermap = StaffPersMap::where('persno', $value->personel_no)->first();
+        if($usermap){
+          $user = User::where('staff_no', $usermap->staff_no)->first();
+          if($user){
+
+          } else {
+            // user still not found.
+
+            if($value->status == 'Inactive'){
+              // skip if for inactive
+              continue;
+            }
+
+            // create new
+            $user = new User;
+            $user->staff_no = $usermap->staff_no;
+            $user->persno = $value->personel_no;
+            $user->isvendor = false;
+          }
+        } else {
+          // user not found. skip
+          continue;
+        }
+      }
+
+      if($value->status == 'Inactive'){
+        // skip if for inactive
+        $user->status = 0;
+        $user->save();
+        $value->load_status = 'D';
+        $value->save();
+        continue;
+      }
+
+      // begin update the data
+      $user->name = $value->name;
+      $user->cost_center = $value->cost_center;
+      $user->position = $value->position_name;
+      $user->lob = $value->group_no;
+      $user->report_to = $value->reportingto_no;
+
+      // find the division
+      $unit = Unit::where('pporgunit', $value->group_no)->first();
+      if($unit){
+
+      } else {
+        $unit = new Unit;
+        $unit->lob = 3000;
+        $unit->pporgunit = $value->group_no;
+      }
+
+      $unit->pporgunitdesc = $value->group_name;
+      $unit->save();
+      $user->unit_id = $unit->id;
+
+      // then the subdiv
+      $subu = SubUnit::where('ppsuborg', $value->unit_no)->first();
+      if($subu){
+      } else {
+        $subu = new SubUnit;
+        $subu->lob = 3000;
+        $subu->ppsuborg = $value->unit_no;
+      }
+
+      $subu->ppsuborgunitdesc = $value->unit_name;
+      $subu->pporgunit = $value->group_no;
+      $subu->pporgunitdesc = $value->group_name;
+      $subu->save();
+
+      $user->unit = $value->group_name;
+      $user->subunit = $value->unit_name;
+
+      $user->save();
+      $value->load_status = 'D';
+      $value->save();
+
     }
   }
 

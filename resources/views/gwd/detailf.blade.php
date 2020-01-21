@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('page-css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -59,4 +63,17 @@
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('page-js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#pporgunit').select2();
+    $('#subunit').select2();
+
+});
+
+</script>
 @endsection

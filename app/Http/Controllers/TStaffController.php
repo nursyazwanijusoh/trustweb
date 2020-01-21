@@ -39,10 +39,12 @@ class TStaffController extends Controller
       $s_staff_id = $rq->user()->id;
     }
 
-    // get subordinates
-    $sublist = Subordinate::where('superior_id', $s_staff_id)->get();
-
     $user = User::find($s_staff_id);
+
+    // get subordinates
+    $sublist = User::where('report_to', $user->persno)->get();
+
+
     if(isset($user->curr_checkin)){
       $bh = new BookingHelper;
       $lastloc = $bh->getCheckinMinimal($user->curr_checkin);

@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -93,20 +92,20 @@
               <div class="card-body">
                 <div class="card-columns">
                   @foreach($subords as $asub)
-                  @if(isset($asub['subordinate_id']))
-                  <div class="card text-center text-white bg-dark">
-                    <a href="{{ route('staff', ['staff_id' => $asub['subordinate_id']], false) }}">
+                  @if($asub->status != 0)
+                  <div class="card text-center">
+                    <a href="{{ route('staff', ['staff_id' => $asub->id], false) }}">
                     <div class="card-body">
-                      <h5 class="card-title">{{ $asub['sub_staff_no'] }}</h5>
-                      <p class="card-text">{{ $asub['sub_name'] }}</p>
+                      <h5 class="card-title">{{ $asub->staff_no }}</h5>
+                      <p class="card-text">{{ $asub->name }}</p>
                     </div>
                     </a>
                   </div>
                   @else
-                  <div class="card text-center">
+                  <div class="card text-center text-white bg-secondary">
                     <div class="card-body">
-                      <h5 class="card-title">{{ $asub['sub_staff_no'] }}</h5>
-                      <p class="card-text">{{ $asub['sub_name'] }}</p>
+                      <h5 class="card-title">{{ $asub->staff_no }}</h5>
+                      <p class="card-text">{{ $asub->name }}</p>
                     </div>
                   </div>
                   @endif
@@ -121,6 +120,7 @@
 @endsection
 
 @section('page-js')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
 {!! $cds->script() !!}

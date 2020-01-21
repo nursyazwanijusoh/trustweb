@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\SapEmpProfile;
 use App\SapLeaveInfo;
+use App\common\BatchHelper;
 
 class BatchController extends Controller
 {
@@ -13,9 +14,9 @@ class BatchController extends Controller
 		// just in case it takes too long
 		set_time_limit(0);
 
-		$toprocess = SapEmpProfile::where('load_status', 'N')->get();
+		BatchHelper::loadOMData();
 
-		return $toprocess->count();
+		return "completed";
 
 	}
 
@@ -23,12 +24,9 @@ class BatchController extends Controller
 		// just in case it takes too long
 		set_time_limit(0);
 
-		$toprocess = SapLeaveInfo::where('load_status', 'N')->get();
-		foreach($toprocess as $cuti){
+		BatchHelper::loadCutiData();
 
-		}
-
-		return $toprocess->count();
+		return "completed";
 
 	}
 
