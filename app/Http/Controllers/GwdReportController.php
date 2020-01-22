@@ -174,7 +174,7 @@ class GwdReportController extends Controller
       . '_' . str_replace(' ', '', $cgrp->name)
       . '_' . $noww->format('Ymd_His') . '.xlsx';
 
-    $headers = ['Name', 'Staff No', 'Division', 'Section'];
+    $headers = ['Name', 'Staff No', 'Division', 'Section', 'Email'];
 
     $hrsdata = [];
     $mandaydata = [];
@@ -236,14 +236,16 @@ class GwdReportController extends Controller
           ['v' => $value->name, 't' => ExcelHandler::BG_INFO],
           ['v' => $value->staff_no, 't' => ExcelHandler::BG_INFO],
           ['v' => $onemember->pporgunitdesc, 't' => ExcelHandler::BG_INFO],
-          ['v' => $value->subunit, 't' => ExcelHandler::BG_INFO]
+          ['v' => $value->subunit, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->email, 't' => ExcelHandler::BG_INFO]
         ];
 
         $dathrs = [
           ['v' => $value->name, 't' => ExcelHandler::BG_INFO],
           ['v' => $value->staff_no, 't' => ExcelHandler::BG_INFO],
           ['v' => $onemember->pporgunitdesc, 't' => ExcelHandler::BG_INFO],
-          ['v' => $value->subunit, 't' => ExcelHandler::BG_INFO]
+          ['v' => $value->subunit, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->email, 't' => ExcelHandler::BG_INFO]
         ];
 
         foreach ($dayinfo as $odt) {

@@ -87,32 +87,48 @@ class BatchHelper
       // find this user
       $user = User::where('persno', $value->personel_no)->first();
       if($user){
-
+        // user already exist. use it
       } else {
-        // user not found. try to find using staffno instead
-        $usermap = StaffPersMap::where('persno', $value->personel_no)->first();
-        if($usermap){
-          $user = User::where('staff_no', $usermap->staff_no)->first();
+        // no existing user with that persno. try to check if the staff_no is provided
+        if(isset($value->staff_id) && $value->staff_id != 0){
+          $trimmedstaffno = str_replace(' ', '', $value->staff_id);
+          $user = User::where('staff_no', $trimmedstaffno)->first();
           if($user){
-
+            // user found. use it
           } else {
-            // user still not found.
-
-            if($value->status == 'Inactive'){
-              // skip if for inactive
-              continue;
-            }
-
-            // create new
+            // not exist. create new
             $user = new User;
-            $user->staff_no = $usermap->staff_no;
+            $user->staff_no = $trimmedstaffno;
             $user->persno = $value->personel_no;
             $user->isvendor = false;
           }
         } else {
-          // user not found. skip
-          continue;
+          // try to find the staff_no - persno mapping in the mapping table
+          $usermap = StaffPersMap::where('persno', $value->personel_no)->first();
+          if($usermap){
+            $user = User::where('staff_no', $usermap->staff_no)->first();
+            if($user){
+
+            } else {
+              // user still not found.
+
+              if($value->status == 'Inactive'){
+                // skip for inactive
+                continue;
+              }
+
+              // create new
+              $user = new User;
+              $user->staff_no = $usermap->staff_no;
+              $user->persno = $value->personel_no;
+              $user->isvendor = false;
+            }
+          } else {
+            // user not found. skip
+            continue;
+          }
         }
+
       }
 
       if($value->status == 'Inactive'){
