@@ -42,7 +42,7 @@ class TStaffController extends Controller
     $user = User::find($s_staff_id);
 
     // get subordinates
-    $sublist = User::where('report_to', $user->persno)->get();
+    $sublist = GDWActions::GetSubordsPerf($s_staff_id);
 
 
     if(isset($user->curr_checkin)){

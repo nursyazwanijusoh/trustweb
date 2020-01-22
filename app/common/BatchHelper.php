@@ -143,9 +143,10 @@ class BatchHelper
       // begin update the data
       $user->name = $value->name;
       $user->cost_center = $value->cost_center;
-      $user->position = $value->position_name;
+      $user->position = $value->postion_name;
       $user->lob = $value->group_no;
       $user->report_to = $value->reportingto_no;
+      $user->status = 1;
 
       // find the division
       $unit = Unit::where('pporgunit', $value->group_no)->first();
@@ -177,6 +178,7 @@ class BatchHelper
 
       $user->unit = $value->group_name;
       $user->subunit = $value->unit_name;
+      // $user->jobtype = $value->postion_name;
 
       $user->save();
       $value->load_status = 'D';

@@ -86,26 +86,29 @@
 
               </div>
             </div>
-            @if($subords->count() > 0)
+            @if(sizeof($subords) > 0)
             <div class="card">
               <div class="card-header">My Subordinate</div>
               <div class="card-body">
                 <div class="card-columns">
                   @foreach($subords as $asub)
-                  @if($asub->status != 0)
+                  @if($asub['status'] != 0)
                   <div class="card text-center">
-                    <a href="{{ route('staff', ['staff_id' => $asub->id], false) }}">
+                    <a href="{{ route('staff', ['staff_id' => $asub['staff_id']], false) }}">
                     <div class="card-body">
-                      <h5 class="card-title">{{ $asub->staff_no }}</h5>
-                      <p class="card-text">{{ $asub->name }}</p>
+                      <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
+                      <p class="card-text">{{ $asub['name'] }}</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                      Yesterday: {{ $asub['yesterday_act'] }} / {{ $asub['yesterday_exp'] }}. Today: {{ $asub['today_act'] }} / {{ $asub['today_exp'] }}
                     </div>
                     </a>
                   </div>
                   @else
                   <div class="card text-center text-white bg-secondary">
                     <div class="card-body">
-                      <h5 class="card-title">{{ $asub->staff_no }}</h5>
-                      <p class="card-text">{{ $asub->name }}</p>
+                      <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
+                      <p class="card-text">{{ $asub['name'] }}</p>
                     </div>
                   </div>
                   @endif

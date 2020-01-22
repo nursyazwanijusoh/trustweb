@@ -444,9 +444,9 @@ class UserController extends Controller
         }
 
         $av['grp_stats_percentage'] = GDWActions::getGroupSummary($cuser->unit_id);
+        $av['subords'] = GDWActions::GetSubordsPerf($cuser->id);
 
       }
-
 
       return $this->respond_json(200, 'Currrent avatar', $av);
     }

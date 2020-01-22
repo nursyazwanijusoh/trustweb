@@ -537,4 +537,34 @@ class GDWActions
     return $dp;
   }
 
+  public static function GetSubordsPerf($user_id){
+    $today = new Carbon();
+    $yesturday = new Carbon();
+    $yesturday->subDay();
+    $retval = [];
+
+    // get the list of subs
+    $curuser = User::find($user_id);
+    if($curuser){
+      $subs = User::where('report_to', $curuser->persno)->get();
+      foreach($subs as $ones){
+        $ydpf = GDWActions::GetDailyPerfObj($ones->id, $yesturday);
+        $tdpf = GDWActions::GetDailyPerfObj($ones->id, $today);
+        $retval[] = [
+          'staff_id' => $ones->id,
+          'staff_no' => $ones->staff_no,
+          'name' => $ones->name,
+          'status' => $ones->status,
+          'position' => $ones->position,
+          'yesterday_exp' => $ydpf->expected_hours,
+          'yesterday_act' => $ydpf->actual_hours,
+          'today_exp' => $tdpf->expected_hours,
+          'today_act' => $tdpf->actual_hours
+        ];
+      }
+    }
+
+    return $retval;
+  }
+
 }

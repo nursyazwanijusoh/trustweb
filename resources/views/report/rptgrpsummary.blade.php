@@ -57,13 +57,19 @@
               </div>
               <br />
               @if(isset($rptdata))
-              <div class="card">
+              <div class="card mb-3">
+                <div class="card-header">Summary</div>
+                <div class="card-body">
+                  
+                </div>
+              </div>
+              <div class="card mb-3">
                 <div class="card-header">Summary</div>
                 <div class="card-body">
                   {!! $sumchart->render() !!}
                 </div>
-            </div>
-            @endif
+              </div>
+              @endif
         </div>
     </div>
 </div>
