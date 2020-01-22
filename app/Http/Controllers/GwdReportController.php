@@ -397,6 +397,7 @@ class GwdReportController extends Controller
     $tierC = [];
     $tierD = [];
     $normaldistgraphs = [];
+    $sumtable = [];
 
     foreach ($cgrp->Members as $onemember) {
       $c0 = 0;
@@ -468,6 +469,18 @@ class GwdReportController extends Controller
       array_push($tierB, $cb);
       array_push($tierC, $cc);
       array_push($tierD, $cd);
+
+      $sumtable[] = [
+        'div_id' => $onemember->id,
+        'div_name' => $onemember->pporgunitdesc,
+        't_0' => $c0,
+        't_A' => $ca,
+        't_B' => $cb,
+        't_C' => $cc,
+        't_D' => $cd,
+        'total' => ($c0 + $ca + $cb + $cc + $cd)
+      ];
+
     }
 
     // dd($lbl);
@@ -517,7 +530,8 @@ class GwdReportController extends Controller
       'sdate' => $lastweek,
       'edate' => $curdate,
       'rptdata' => true,
-      'sumchart' => $this->getStackBarChart($lbl, $datasets, $cgrp->name . ' performance between ' . $lastweek . ' and ' . $curdate)
+      'sumchart' => $this->getStackBarChart($lbl, $datasets, $cgrp->name . ' performance between ' . $lastweek . ' and ' . $curdate),
+      'sumtable' => $sumtable
     ]);
 
   }

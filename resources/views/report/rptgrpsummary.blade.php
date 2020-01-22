@@ -58,13 +58,40 @@
               <br />
               @if(isset($rptdata))
               <div class="card mb-3">
-                <div class="card-header">Summary</div>
+                <div class="card-header">Performance Summary</div>
                 <div class="card-body">
-                  
+                  <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">Division</th>
+                          <th scope="col">0</th>
+                          <th scope="col">1 - 49</th>
+                          <th scope="col">50 - 69</th>
+                          <th scope="col">70 - 100</th>
+                          <th scope="col">100+</th>
+                          <th scope="col">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($sumtable as $acts)
+                        <tr>
+                          <td>{{ $acts['div_name'] }}</td>
+                          <td>{{ $acts['t_0'] }}</td>
+                          <td>{{ $acts['t_A'] }}</td>
+                          <td>{{ $acts['t_B'] }}</td>
+                          <td>{{ $acts['t_C'] }}</td>
+                          <td>{{ $acts['t_D'] }}</td>
+                          <td>{{ $acts['total'] }}</td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
               <div class="card mb-3">
-                <div class="card-header">Summary</div>
+                <div class="card-header">Infographic</div>
                 <div class="card-body">
                   {!! $sumchart->render() !!}
                 </div>
