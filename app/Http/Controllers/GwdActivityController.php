@@ -22,7 +22,7 @@ class GwdActivityController extends Controller
     // dd($req->all());
     $act = GDWActions::addActivity($req, $staffid);
 
-    return redirect(route('staff.addact', []))->with(['alert' => 'Diary entry added', 'a_type' => 'success']);
+    return redirect(route('staff.addact', ['dfid' => $act->daily_performance_id]))->with(['alert' => 'Diary entry added', 'a_type' => 'success']);
   }
 
   public function delete(Request $req){
