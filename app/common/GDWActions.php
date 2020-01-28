@@ -545,7 +545,7 @@ class GDWActions
 
     // get the list of subs
     $curuser = User::find($user_id);
-    if($curuser){
+    if($curuser && isset($curuser->persno)){
       $subs = User::where('report_to', $curuser->persno)->get();
       foreach($subs as $ones){
         $ydpf = GDWActions::GetDailyPerfObj($ones->id, $yesturday);
