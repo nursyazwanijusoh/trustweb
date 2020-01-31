@@ -82,7 +82,7 @@ class PushAnnouncementController extends Controller
               foreach ($pn->Groups as $grp) {
                 // dd($grp->TheGroup);
                 foreach($grp->Divisions() as $ondiv){
-                  $stafflist = $ondiv->Staffs->whereNotNull('pushnoti_id');
+                  $stafflist = $ondiv->StaffWithNotiID;
                   foreach($stafflist->all() as $onestaff){
                     if(strlen(trim($onestaff->pushnoti_id)) > 8){
                       $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);

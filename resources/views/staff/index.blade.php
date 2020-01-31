@@ -57,7 +57,7 @@
                       </div>
                     </a>
                   </div>
-                  <div class="col-sm-4 mb-3">
+                  <!-- <div class="col-sm-4 mb-3">
                     <a href="{{ route('area.myevents', ['id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-secondary">
                         <div class="card-body">
@@ -65,7 +65,7 @@
                         </div>
                       </div>
                     </a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div><br />

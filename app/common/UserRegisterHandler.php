@@ -350,45 +350,55 @@ class UserRegisterHandler
     return $curratt;
   }
 
-  public static function updateStaffInfoFromJI($staffno, $staffname, $position, $reportingto, $div, $orgunit, $divid, $pporgunit){
+  public static function updateStaffInfoFromJI($staffno, $staffname, $position, $reportingto, $div, $orgunit, $divid, $pporgunit, $persno, $reportpersno){
+
+    $trimmedstaffno = str_replace(' ', '', $staffno);
 
     // find if this staff is registered
-    $user = User::where('staff_no', $staffno)->first();
+    $user = User::where('staff_no', $trimmedstaffno)->first();
     if($user){
 
     } else {
-      $user = new User;
-      $user->staff_no = $staffno;
-      $user->status = 1;
-      $user->role = 3;
-      $user->verified = true;
+      // try to find by persno
+      $user = User::where('persno', $persno)->first();
+      if($user){
+        $user->staff_no = $trimmedstaffno;
+      } else {
+        $user = new User;
+        $user->staff_no = $trimmedstaffno;
+        $user->status = 1;
+        $user->role = 3;
+        $user->verified = true;
+      }
     }
 
+    $user->persno = $persno;
     $user->name = $staffname;
     $user->jobtype = $position;
     $user->unit = $div;
     $user->subunit = $orgunit;
     $user->lob = $pporgunit;
     $user->unit_id = $divid;
+    $user->report_to = $reportpersno;
     $user->save();
 
     // delete old subords info
-    Subordinate::where('sub_staff_no', $staffno)->delete();
-    $subobj = new Subordinate;
-    $subobj->superior_name = $reportingto;
-    $subobj->sub_staff_no = $staffno;
-    $subobj->sub_name = $staffname;
-    $subobj->subordinate_id = $user->id;
-
-    // find superior_id
-    $sup = User::where('name', $reportingto)->first();
-    if($sup){
-        $subobj->superior_id = $sup->id;
-    } else {
-      $subobj->superior_id = 0;
-    }
-
-    $subobj->save();
+    // Subordinate::where('sub_staff_no', $staffno)->delete();
+    // $subobj = new Subordinate;
+    // $subobj->superior_name = $reportingto;
+    // $subobj->sub_staff_no = $staffno;
+    // $subobj->sub_name = $staffname;
+    // $subobj->subordinate_id = $user->id;
+    //
+    // // find superior_id
+    // $sup = User::where('name', $reportingto)->first();
+    // if($sup){
+    //     $subobj->superior_id = $sup->id;
+    // } else {
+    //   $subobj->superior_id = 0;
+    // }
+    //
+    // $subobj->save();
 
   }
 

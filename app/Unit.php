@@ -10,6 +10,10 @@ class Unit extends Model
     return $this->hasMany(User::class, 'lob', 'pporgunit');
   }
 
+  public function StaffWithNotiID(){
+    return $this->hasMany(User::class, 'lob', 'pporgunit')->whereNotNull('pushnoti_id');
+  }
+
   public function Group(){
     return $this->belongsTo(CompGroup::class, 'comp_group_id');
   }
