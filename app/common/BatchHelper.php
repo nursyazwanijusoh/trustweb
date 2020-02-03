@@ -96,6 +96,13 @@ class BatchHelper
           if($user){
             // user found. use it
           } else {
+            if($value->status == 'Inactive' || $value->status == 'Withdrawn'){
+              // skip for inactive
+              $value->load_status = 'D';
+              $value->save();
+              continue;
+            }
+            
             // not exist. create new
             $user = new User;
             $user->staff_no = $trimmedstaffno;
@@ -114,6 +121,8 @@ class BatchHelper
 
               if($value->status == 'Inactive' || $value->status == 'Withdrawn'){
                 // skip for inactive
+                $value->load_status = 'D';
+                $value->save();
                 continue;
               }
 
@@ -125,6 +134,8 @@ class BatchHelper
             }
           } else {
             // user not found. skip
+            $value->load_status = '4';
+            $value->save();
             continue;
           }
         }
