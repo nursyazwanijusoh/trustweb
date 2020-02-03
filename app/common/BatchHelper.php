@@ -112,7 +112,7 @@ class BatchHelper
             } else {
               // user still not found.
 
-              if($value->status == 'Inactive'){
+              if($value->status == 'Inactive' || $value->status == 'Withdrawn'){
                 // skip for inactive
                 continue;
               }
@@ -131,7 +131,7 @@ class BatchHelper
 
       }
 
-      if($value->status == 'Inactive'){
+      if($value->status == 'Inactive' || $value->status == 'Withdrawn'){
         // skip if for inactive
         $user->status = 0;
         $user->save();
