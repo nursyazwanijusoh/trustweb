@@ -43,7 +43,11 @@
                     <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-info">
                         <div class="card-body">
+                          @if($isvisitor == false)
                           <p class="card-text"><i class="fa fa-list-alt"></i> My Monthly Activities</p>
+                          @else
+                          <p class="card-text"><i class="fa fa-list-alt"></i> Monthly Activities</p>
+                          @endif
                         </div>
                       </div>
                     </a>
@@ -52,7 +56,11 @@
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-info">
                         <div class="card-body">
+                          @if($isvisitor == false)
                           <p class="card-text"><i class="fa fa-map-marker"></i> Where I've Been</p>
+                          @else
+                          <p class="card-text"><i class="fa fa-map-marker"></i> Where This Person Has Been</p>
+                          @endif
                         </div>
                       </div>
                     </a>

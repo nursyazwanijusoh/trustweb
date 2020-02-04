@@ -1,19 +1,28 @@
 @extends('layouts.app')
 
+@section('page-css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Select group and time range</div>
+                <div class="card-header">Select division and time range</div>
                 <div class="card-body">
-                  <form method="GET" action="{{ route('report.gwd.summary', [], false) }}">
+                  <form method="GET" action="{{ route('report.gwd.divsum', [], false) }}">
                     <div class="form-group row">
-                      <label for="gid" class="col-md-4 col-form-label text-md-right">Group</label>
+                      <label for="divid" class="col-md-4 col-form-label text-md-right">Division</label>
                       <div class="col-md-6">
-                        <select class="form-control{{ $errors->has('gid') ? ' is-invalid' : '' }}" id="gid" name="gid" required>
-                          @foreach ($glist as $atask)
-                          <option value="{{ $atask->id }}" {{ $atask->selected }} >{{ $atask->name }}</option>
+                        <select id="divid" class="form-control{{ $errors->has('did') ? ' is-invalid' : '' }}" name="did" required>
+                          @foreach ($dlist as $atask)
+                          @if(isset($seldiv) && $atask->id == $seldiv->id)
+                          <option value="{{ $atask->id }}" selected>{{ $atask->pporgunit }} - {{ $atask->pporgunitdesc }}</option>
+                          @else
+                          <option value="{{ $atask->id }}" >{{ $atask->pporgunit }} - {{ $atask->pporgunitdesc }}</option>
+                          @endif
                           @endforeach
                         </select>
                         @if ($errors->has('gid'))
@@ -56,44 +65,36 @@
                 </div>
               </div>
               <br />
-              @if(isset($rptdata))
+              @if(isset($seldiv))
               <div class="card mb-3">
-                <div class="card-header">Performance Summary</div>
+                <div class="card-header">Performance Summary for {{ $seldiv->pporgunitdesc }}</div>
+                <div class="card-body">
+                  {!! $sumchart->render() !!}
+                </div>
+              </div>
+              <div class="card mb-3">
+                <div class="card-header">Zero Performers</div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered">
+                    <table id="taskdetailtable" class="table table-striped table-hover table-bordered">
                       <thead>
                         <tr>
-                          <th scope="col">Division</th>
-                          <th scope="col">0</th>
-                          <th scope="col">1 - 49</th>
-                          <th scope="col">50 - 69</th>
-                          <th scope="col">70 - 100</th>
-                          <th scope="col">100+</th>
-                          <th scope="col">Total</th>
+                          <th scope="col">Staff No</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Email</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($sumtable as $acts)
+                        @foreach($problemdudes as $acts)
                         <tr>
-                          <td><a href="{{ route('report.gwd.divsum', ['did' => $acts['div_id'], 'fdate' => $sdate, 'tdate' => $edate, 'action' => 'graph'], false) }}">{{ $acts['div_name'] }}</a></td>
-                          <td>{{ $acts['t_0'] }}</td>
-                          <td>{{ $acts['t_A'] }}</td>
-                          <td>{{ $acts['t_B'] }}</td>
-                          <td>{{ $acts['t_C'] }}</td>
-                          <td>{{ $acts['t_D'] }}</td>
-                          <td>{{ $acts['total'] }}</td>
+                          <td><a  href="{{ route('staff', ['staff_id' => $acts->id], false) }}">{{ $acts->staff_no }}</a></td>
+                          <td>{{ $acts->name }}</td>
+                          <td>{{ $acts->email }}</td>
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
                   </div>
-                </div>
-              </div>
-              <div class="card mb-3">
-                <div class="card-header">Infographic</div>
-                <div class="card-body">
-                  {!! $sumchart->render() !!}
                 </div>
               </div>
               @endif
@@ -104,4 +105,26 @@
 
 @section('page-js')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-@stop
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js "></script>
+
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#divid').select2();
+
+    $('#taskdetailtable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel'
+        ]
+    });
+
+});
+
+</script>
+@endsection

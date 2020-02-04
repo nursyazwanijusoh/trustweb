@@ -107,9 +107,9 @@ Route::get('/user/activity/dayinfo', 'GwdActivityController@actdayinfo')->name('
 Route::get('/user/activity/list', 'GwdActivityController@list')->name('staff.list');
 Route::post('/user/addleave', 'GwdActivityController@cuti')->name('staff.cuti');
 
-Route::get('/reports/gwd/summary', 'GwdReportController@summary')->name('report.gwd.summary');
+Route::get('/reports/gwd/gsummary', 'GwdReportController@summary')->name('report.gwd.summary');
 // Route::post('/reports/gwd/summary', 'GwdReportController@summaryres')->name('report.gwd.summaryres');
-Route::get('/reports/gwd/entrystat', 'GwdReportController@entrystat')->name('report.gwd.entrystat');
+Route::get('/reports/gwd/divsummary', 'GwdReportController@divsum')->name('report.gwd.divsum');
 Route::post('/reports/gwd/entrystat', 'GwdReportController@entrystatres')->name('report.gwd.entrystatres');
 Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gwd.detail');
 // Route::post('/reports/gwd/detail', 'GwdReportController@detailres')->name('report.gwd.detailres');

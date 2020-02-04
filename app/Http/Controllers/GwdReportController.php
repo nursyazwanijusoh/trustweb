@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \DB;
 use App\Unit;
+use App\User;
 use App\CompGroup;
 use App\DailyPerformance;
 use \Carbon\Carbon;
@@ -27,11 +28,360 @@ class GwdReportController extends Controller
 
   }
 
-  // maybe to show who didnt key in diaries
-  public function entrystat(Request $req){
-    dd("under development");
+  public function divsum(Request $req){
+
+    if($req->filled('action')){
+
+      if(!$req->filled('fdate')){
+        return redirect()->back()->withInput()->withErrors(['fdate' => 'From date is required']);
+      }
+
+      if(!$req->filled('tdate')){
+        return redirect()->back()->withInput()->withErrors(['tdate' => 'To date is required']);
+      }
+
+      if($req->action == 'graph'){
+        return $this->doDivSum($req);
+      } elseif ($req->action == 'excel') {
+        return $this->doDivExcel($req);
+      }
+    }
+
+    $divlist = Unit::all();
+    $curdate = date('Y-m-d');
+    $lastweek = date('Y-m-d', strtotime('-1 week'));
+
+    return view('report.rptdivsummary', [
+      'dlist' => $divlist,
+      'sdate' => $lastweek,
+      'edate' => $curdate
+    ]);
+
   }
 
+  public function doDivSum(Request $req){
+    $curdate = $req->tdate;
+    $lastweek = $req->fdate;
+    $divv = Unit::find($req->did);
+    if($divv){
+
+    } else {
+      return redirect()->back()->withInput()->withErrors(['did' => 'Selected division no longer exist']);
+    }
+
+    // date validation?
+    $cdate = new Carbon($curdate);
+    $ldate = new Carbon($lastweek);
+
+    if($ldate->gt($cdate)){
+      return redirect()->back()->withInput()->withErrors(['fdate' => 'From date is after to date']);
+    }
+
+    $c0 = 0;
+    $ca = 0;
+    $cb = 0;
+    $cc = 0;
+    $cd = 0;
+
+    $perfedata = $divv->PerfEntryOnDateRange($lastweek, $curdate);
+    $perstaff = $perfedata->select(
+        'user_id',
+        DB::raw('sum(expected_hours) as exp_hrs'),
+        DB::raw('sum(actual_hours) as act_hrs')
+      )->groupBy('user_id')
+      ->get();
+
+    // dd($perstaff);
+    $problemlist = [];
+
+    foreach ($perstaff as $maybeonestaff) {
+      if($maybeonestaff->exp_hrs == 0){
+        if($maybeonestaff->act_hrs == 0){
+          $cc++;
+        } else {
+          $cd++;
+        }
+
+      } else {
+        $pers = $maybeonestaff->act_hrs / $maybeonestaff->exp_hrs * 100;
+        if($pers == 0){
+          $c0++;
+          array_push($problemlist, $maybeonestaff->user_id);
+        } elseif($pers < 50){
+          $ca++;
+        } elseif ($pers < 70) {
+          $cb++;
+        } elseif ($pers <= 100) {
+          $cc++;
+        } else {
+          $cd++;
+        }
+      }
+    }
+
+    $schart = app()->chartjs
+         ->name('barChartTest')
+         ->type('doughnut')
+         // ->size(['width' => 400, 'height' => 400])
+         ->labels(['0%', '0% - 50%', '50% - 70%', '70% - 100%', '100% +'])
+         ->datasets([
+             [
+                 'label' => 'Hours Spent',
+                 'backgroundColor' => [
+                   'rgba(88, 88, 88, 0.5)',
+                   'rgba(255, 255, 0, 0.5)',
+                   'rgba(51, 51, 204, 0.5)',
+                   'rgba(51, 204, 51, 0.5)',
+                   'rgba(255, 99, 132, 0.5)'
+                 ],
+                 'borderColor' => '#000',
+                 'data' => [$c0, $ca, $cb, $cc, $cd]
+             ]
+         ])
+         ->options([
+           'responsive' => true,
+           // 'maintainAspectRatio' => true,
+           'title' => [
+             'display' => true,
+             'text' => 'Division Performance',
+           ],
+           'tooltips' => [
+             'mode' => 'index',
+             'intersect' => true,
+           ],
+           'hover' => [
+             'mode' => 'nearest',
+             'intersect' => true,
+           ],
+         ]);
+
+    $problemstudents = User::find($problemlist);
+    $divlist = Unit::all();
+
+    return view('report.rptdivsummary', [
+      'dlist' => $divlist,
+      'sdate' => $lastweek,
+      'edate' => $curdate,
+      'seldiv' => $divv,
+      'problemdudes' => $problemstudents,
+      'sumchart' => $schart
+    ]);
+
+  }
+
+  public function doDivExcel(Request $req){
+    set_time_limit(0);
+    $cdate = new Carbon($req->tdate);
+    $ldate = new Carbon($req->fdate);
+    $cdate->addSecond();
+
+    $onemember = Unit::find($req->did);
+    if($onemember){
+    } else {
+      return redirect()->back()->withInput()->withErrors(['did' => 'Selected group no longer exist']);
+    }
+
+    $noww = Carbon::now();
+
+    $fname = 'diary_'
+      . $ldate->format('Ymd') . '_' . $cdate->format('Ymd')
+      . '_' . str_replace(' ', '', $onemember->pporgunit)
+      . '_' . $noww->format('Ymd_His') . '.xlsx';
+
+    $headers = ['Name', 'Staff No', 'Division', 'Section', 'Email'];
+
+    $hrsdata = [];
+    $mandaydata = [];
+    $dayinfo = [];
+
+    $daterange = new \DatePeriod(
+      $ldate,
+      \DateInterval::createFromDateString('1 day'),
+      $cdate
+    );
+
+
+    foreach ($daterange as $key => $value) {
+      array_push($headers, $value->format('d (D)'));
+
+      $dtype = GDWActions::GetDayType($value->format('Y-m-d'));
+      $expthrs = GDWActions::GetExpectedHours($value->format('Y-m-d'));
+      switch($dtype){
+        case GDWActions::DT_NW:
+          $bgcolor = ExcelHandler::BG_NORMAL;
+          break;
+        case GDWActions::DT_PH:
+          $bgcolor = ExcelHandler::BG_PH;
+          break;
+        case GDWActions::DT_WK:
+          $bgcolor = ExcelHandler::BG_WEEKEND;
+          break;
+        default:
+          $bgcolor = ExcelHandler::BG_NORMAL;
+      }
+
+      array_push($dayinfo, [
+        'date' => $value->format('Y-m-d'),
+        'type' => $dtype,
+        'bgcolor' => $bgcolor,
+        'exhrs' => $expthrs
+      ]);
+    }
+
+    // dd($dayinfo);
+
+    array_push($headers, 'Actual');
+    array_push($headers, 'Expected');
+
+    // prep the excel handler
+    $eksel = new ExcelHandler($fname);
+
+    // get the list of divs under this group
+    // foreach ($cgrp->Members as $onemember) {
+      foreach ($onemember->Staffs as $value) {
+        $expectedentry = 0;
+        $expectedmd = 0;
+        $expectedhrs = 0;
+        $sumentry = 0;
+        $sumhrs = 0;
+        $summd = 0;
+
+        $datmd = [
+          ['v' => $value->name, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->staff_no, 't' => ExcelHandler::BG_INFO],
+          ['v' => $onemember->pporgunitdesc, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->subunit, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->email, 't' => ExcelHandler::BG_INFO]
+        ];
+
+        $dathrs = [
+          ['v' => $value->name, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->staff_no, 't' => ExcelHandler::BG_INFO],
+          ['v' => $onemember->pporgunitdesc, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->subunit, 't' => ExcelHandler::BG_INFO],
+          ['v' => $value->email, 't' => ExcelHandler::BG_INFO]
+        ];
+
+        foreach ($dayinfo as $odt) {
+          $dpu = DailyPerformance::where('user_id', $value->id)
+            ->whereDate('record_date', $odt['date'])
+            ->first();
+
+          $dbg = $odt['bgcolor'];
+          $hrs = 0;
+
+          if($dpu){
+            // check for off day
+            if($dpu->is_off_day){
+              if($dpu->expected_hours < 5){
+                $dbg = ExcelHandler::BG_LEAVE0;
+              } else {
+                $dbg = ExcelHandler::BG_LEAVE;
+              }
+
+            }
+
+            if($dpu->expected_hours > 0){
+              $expectedentry++;
+              $expectedmd++;
+              $expectedhrs += $dpu->expected_hours;
+
+              if($dpu->actual_hours > 0){
+                $sumentry++;
+              }
+            }
+
+            if($dpu->actual_hours > 0){
+              $sumhrs += $dpu->actual_hours;
+              $hrs = $dpu->actual_hours;
+            }
+
+
+
+          } else {
+            // no entry for that date. so just in case, load default values
+            if($odt['type'] == GDWActions::DT_NW){
+              $expectedentry++;
+              $expectedmd++;
+              $expectedhrs += $odt['exhrs'];
+            }
+
+          }
+
+          $md = $hrs / ($odt['exhrs'] == 0 ? 8 : $odt['exhrs']);
+          $summd += $md;
+          // populate today's data
+          array_push($datmd, ['v' => $md, 't' => $dbg]);
+          array_push($dathrs, ['v' => $hrs, 't' => $dbg]);
+        }
+
+        // populate the final sums for md
+        array_push($datmd, ['v' => $summd, 't' => ExcelHandler::BG_INFO]);
+        array_push($datmd, ['v' => $expectedmd, 't' => ExcelHandler::BG_INFO]);
+
+        // push the MD data to main array
+        array_push($mandaydata, $datmd);
+
+        // final sums for hours
+        array_push($dathrs, ['v' => $sumhrs, 't' => ExcelHandler::BG_INFO]);
+        array_push($dathrs, ['v' => $expectedhrs, 't' => ExcelHandler::BG_INFO]);
+        array_push($dathrs, ['v' => $sumentry, 't' => ExcelHandler::BG_INFO]);
+        array_push($dathrs, ['v' => $expectedentry, 't' => ExcelHandler::BG_INFO]);
+
+        // calc the productivity
+        if($expectedhrs == 0){
+          if($sumhrs > 0){
+            $pdtivity = $sumhrs * 100;
+          } else {
+            $pdtivity = 100;
+          }
+        } else {
+          $pdtivity = $sumhrs / $expectedhrs * 100;
+          if($pdtivity == 0){
+            $pdgrp = '0%';
+            $pbg = ExcelHandler::PD_G0;
+          } elseif($pdtivity < 50){
+            $pdgrp = '1% - 49%';
+            $pbg = ExcelHandler::PD_GB;
+          } elseif($pdtivity < 70){
+            $pdgrp = '50% - 69%';
+            $pbg = ExcelHandler::PD_GB;
+          } elseif($pdtivity <= 100){
+            $pdgrp = '70% - 100%';
+            $pbg = ExcelHandler::PD_GC;
+          } else {
+            $pdgrp = '101% +';
+            $pbg = ExcelHandler::PD_GD;
+          }
+        }
+
+
+        array_push($dathrs, ['v' => number_format($pdtivity, 2), 't' => $pbg]);
+        array_push($dathrs, ['v' => $pdgrp, 't' => ExcelHandler::BG_NORMAL]);
+
+        // push hours to main array
+        array_push($hrsdata, $dathrs);
+
+      }
+    // }
+
+    //
+    // $eksel->addSheet('By Entry', [], ['t1', 't2']);
+    // $eksel->addSheet('By Productivity', [], []);
+    // $eksel->addSheet('By Div Productivity', [], []);
+    //
+    $eksel->addSheet('By Man-Days', $mandaydata, $headers);
+
+    array_push($headers, 'Actual entry');
+    array_push($headers, 'Expected entry');
+    array_push($headers, 'Productivity');
+    array_push($headers, 'Range');
+    $eksel->addSheet('By Hours',$hrsdata, $headers);
+
+
+
+    return $eksel->download();
+  }
   public function entrystatres(Request $req){
 
   }
@@ -375,6 +725,7 @@ class GwdReportController extends Controller
     $curdate = $req->tdate;
     $lastweek = $req->fdate;
     $cgrp = CompGroup::find($req->gid);
+    $grocount = 1;
     if($cgrp){
 
     } else {
@@ -400,6 +751,7 @@ class GwdReportController extends Controller
     $sumtable = [];
 
     foreach ($cgrp->Members as $onemember) {
+      $grocount++;
       $c0 = 0;
       $ca = 0;
       $cb = 0;
@@ -524,13 +876,45 @@ class GwdReportController extends Controller
       }
     }
 
+    $schart = app()->chartjs
+         ->name('barChartTest')
+         ->type('horizontalBar')
+         ->size(['width' => 400, 'height' => $grocount * 30 + 40])
+         ->labels($lbl)
+         ->datasets($datasets)
+         ->options([
+           'responsive' => true,
+           'tooltips' => [
+             'mode' => 'index',
+             'intersect' => false,
+           ],
+           'hover' => [
+             'mode' => 'nearest',
+             'intersect' => true,
+           ],
+           'scales' => [
+             'xAxes' => [[
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Staff Count',
+               ]
+             ]],
+             'yAxes' => [[
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Division',
+               ]
+             ]]
+           ]
+         ]);
+
 
     return view('report.rptgrpsummary', [
       'glist' => $grplist,
       'sdate' => $lastweek,
       'edate' => $curdate,
       'rptdata' => true,
-      'sumchart' => $this->getStackBarChart($lbl, $datasets, $cgrp->name . ' performance between ' . $lastweek . ' and ' . $curdate),
+      'sumchart' => $schart,
       'sumtable' => $sumtable
     ]);
 

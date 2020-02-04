@@ -189,6 +189,8 @@ class MiscController extends Controller
 		$counter = 0;
 
 		$userrs = User::whereNotNull('lob')
+			->where('status', 1)
+			->where('isvendor', false)
 			->whereRaw('LENGTH(lob) > 6')
 			->get();
 
