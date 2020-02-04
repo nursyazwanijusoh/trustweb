@@ -70,24 +70,53 @@ class PushAnnouncementController extends Controller
 
             if($pn->is_global){
               // send for everyone
-              $stafflist = User::whereNotNull('pushnoti_id')->get();
-
+              $stafflist = User::whereNotNull('pushnoti_id')->where('status', 1)->get();
+              $psize = 0;
+              $idlist = [];
               foreach($stafflist as $onestaff){
                 if(strlen(trim($onestaff->pushnoti_id)) > 8){
-                  $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
+                  array_push($idlist, $onestaff->pushnoti_id);
                   $count++;
+                  $psize++;
+
+                  if($psize == 50){
+                    $psize = 0;
+                    $aaa = NotifyHelper::SendPushNoti($idlist, $pn->title, $pn->body);
+                    $idlist = [];
+                  }
                 }
+              }
+
+              if($psize > 0){
+                $psize = 0;
+                $aaa = NotifyHelper::SendPushNoti($idlist, $pn->title, $pn->body);
+                $idlist = [];
               }
             } else {
               foreach ($pn->Groups as $grp) {
                 // dd($grp->TheGroup);
                 foreach($grp->Divisions() as $ondiv){
                   $stafflist = $ondiv->StaffWithNotiID;
+                  $psize = 0;
+                  $idlist = [];
+
                   foreach($stafflist->all() as $onestaff){
-                    if(strlen(trim($onestaff->pushnoti_id)) > 8){
-                      $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
+                    if(strlen(trim($onestaff->pushnoti_id)) > 8 && $onestaff->status = 1){
+                      array_push($idlist, $onestaff->pushnoti_id);
                       $count++;
+                      $psize++;
+
+                      if($psize == 50){
+                        $psize = 0;
+                        $aaa = NotifyHelper::SendPushNoti($idlist, $pn->title, $pn->body);
+                        $idlist = [];
+                      }
                     }
+                  }
+                  if($psize > 0){
+                    $psize = 0;
+                    $aaa = NotifyHelper::SendPushNoti($idlist, $pn->title, $pn->body);
+                    $idlist = [];
                   }
                 }
               }
