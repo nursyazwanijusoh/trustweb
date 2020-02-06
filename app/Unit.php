@@ -32,7 +32,7 @@ class Unit extends Model
         DB::raw('sum(actual_hours) as act_hrs'))
       ->groupBy('user_id')
       ->whereDate('record_date', '>=', $sdate)
-      ->whereDate('record_date', '<=', $edate);
+      ->whereDate('record_date', '<=', $edate)
       ->where('unit_id', $this->pporgunit)
       ->get();
   }
