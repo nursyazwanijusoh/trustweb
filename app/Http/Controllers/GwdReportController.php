@@ -94,7 +94,7 @@ class GwdReportController extends Controller
     $perstaff = $divv->PerfEntrySummary($lastweek, $curdate);
 
     // dd($perstaff);
-    return $perstaff;
+    // return $perstaff;
     $problemlist = [];
 
     foreach ($perstaff as $maybeonestaff) {
@@ -110,7 +110,7 @@ class GwdReportController extends Controller
         if($maybeonestaff->act_hrs == 0){
           array_push($problemlist, $maybeonestaff->user_id);
         }
-        
+
         if($pers == 0){
           $c0++;
 
