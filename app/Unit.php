@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \DB;
 
 class Unit extends Model
 {
@@ -25,7 +26,7 @@ class Unit extends Model
   }
 
   public function PerfEntrySummary($sdate, $edate){
-    return \DB::table('daily_performances')
+    return DB::table('daily_performances')
       ->select('user_id',
         DB::raw('sum(expected_hours) as exp_hrs'),
         DB::raw('sum(actual_hours) as act_hrs'))
