@@ -94,7 +94,7 @@ class GwdReportController extends Controller
     $perstaff = $divv->PerfEntrySummary($lastweek, $curdate);
 
     // dd($perstaff);
-    // return $perstaff;
+    return $perstaff;
     $problemlist = [];
 
     foreach ($perstaff as $maybeonestaff) {
