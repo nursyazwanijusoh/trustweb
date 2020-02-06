@@ -91,7 +91,7 @@ class GwdReportController extends Controller
       )->groupBy('user_id')
       ->get();
 
-    // dd($perstaff);
+    dd($perstaff);
     $problemlist = [];
 
     foreach ($perstaff as $maybeonestaff) {
