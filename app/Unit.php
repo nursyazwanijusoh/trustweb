@@ -24,6 +24,16 @@ class Unit extends Model
       ->whereDate('record_date', '<=', $edate);
   }
 
+  public function PerfEntrySummary($sdate, $edate){
+    return \DB::table('daily_performances')
+      ->select('user_id',
+        DB::raw('sum(expected_hours) as exp_hrs'),
+        DB::raw('sum(actual_hours) as act_hrs'))
+      ->groupBy('user_id')
+      ->where('unit_id', $this->pporgunit)
+      ->get();
+  }
+
   public function shortName(){
     $nlist = explode(" ", $this->pporgunitdesc);
     $sf = "";

@@ -84,14 +84,17 @@ class GwdReportController extends Controller
     $cd = 0;
 
     $perfedata = $divv->PerfEntryOnDateRange($lastweek, $curdate);
-    $perstaff = $perfedata->select(
-        'user_id',
-        DB::raw('sum(expected_hours) as exp_hrs'),
-        DB::raw('sum(actual_hours) as act_hrs')
-      )->groupBy('user_id')
-      ->get();
+    // $perstaff = $perfedata->select(
+    //     'user_id',
+    //     DB::raw('sum(expected_hours) as exp_hrs'),
+    //     DB::raw('sum(actual_hours) as act_hrs')
+    //   )->groupBy('user_id')
+    //   ->get();
 
-    dd($perstaff);
+    $perstaff = $divv->PerfEntrySummary($lastweek, $curdate);
+
+    // dd($perstaff);
+    return $perstaff;
     $problemlist = [];
 
     foreach ($perstaff as $maybeonestaff) {
@@ -104,9 +107,13 @@ class GwdReportController extends Controller
 
       } else {
         $pers = $maybeonestaff->act_hrs / $maybeonestaff->exp_hrs * 100;
+        if($maybeonestaff->act_hrs == 0){
+          array_push($problemlist, $maybeonestaff->user_id);
+        }
+        
         if($pers == 0){
           $c0++;
-          array_push($problemlist, $maybeonestaff->user_id);
+
         } elseif($pers < 50){
           $ca++;
         } elseif ($pers < 70) {
