@@ -340,9 +340,11 @@ class GwdReportController extends Controller
         if($expectedhrs == 0){
           if($sumhrs > 0){
             $pdtivity = $sumhrs * 100;
+            $pdgrp = '101% +';
             $pbg = ExcelHandler::PD_GD;
           } else {
             $pdtivity = 100;
+            $pdgrp = '70% - 100%';
             $pbg = ExcelHandler::PD_GC;
           }
         } else {
@@ -687,9 +689,11 @@ class GwdReportController extends Controller
         if($expectedhrs == 0){
           if($sumhrs > 0){
             $pdtivity = $sumhrs * 100;
+            $pdgrp = '101% +';
             $pbg = ExcelHandler::PD_GD;
           } else {
             $pdtivity = 100;
+            $pdgrp = '70% - 100%';
             $pbg = ExcelHandler::PD_GC;
           }
         } else {
