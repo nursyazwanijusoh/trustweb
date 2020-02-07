@@ -8,6 +8,7 @@ use App\Unit;
 use App\User;
 use App\CompGroup;
 use App\DailyPerformance;
+use App\BatchJob;
 use \Carbon\Carbon;
 use App\common\GDWReports;
 use App\common\ExcelHandler;
@@ -94,7 +95,7 @@ class GwdReportController extends Controller
     $perstaff = $divv->PerfEntrySummary($lastweek, $curdate);
 
     // dd($perstaff);
-    return $perstaff;
+    // return $perstaff;
     $problemlist = [];
 
     foreach ($perstaff as $maybeonestaff) {
@@ -339,8 +340,10 @@ class GwdReportController extends Controller
         if($expectedhrs == 0){
           if($sumhrs > 0){
             $pdtivity = $sumhrs * 100;
+            $pbg = ExcelHandler::PD_GD;
           } else {
             $pdtivity = 100;
+            $pbg = ExcelHandler::PD_GC;
           }
         } else {
           $pdtivity = $sumhrs / $expectedhrs * 100;
@@ -389,6 +392,7 @@ class GwdReportController extends Controller
 
     return $eksel->download();
   }
+
   public function entrystatres(Request $req){
 
   }
@@ -500,15 +504,23 @@ class GwdReportController extends Controller
       }
     }
 
+
+
     $grplist = CompGroup::all();
     $curdate = date('Y-m-d');
     $lastweek = date('Y-m-d', strtotime('-1 week'));
+
+    $rpthist = BatchJob::where('job_type', 'Group Diary Report')
+      ->orderBy('created_at', 'DESC')
+      ->limit(100)
+      ->get();
 
 
     return view('report.rptgrpsummary', [
       'glist' => $grplist,
       'sdate' => $lastweek,
-      'edate' => $curdate
+      'edate' => $curdate,
+      'rpthist' => $rpthist
     ]);
   }
 
@@ -675,8 +687,10 @@ class GwdReportController extends Controller
         if($expectedhrs == 0){
           if($sumhrs > 0){
             $pdtivity = $sumhrs * 100;
+            $pbg = ExcelHandler::PD_GD;
           } else {
             $pdtivity = 100;
+            $pbg = ExcelHandler::PD_GC;
           }
         } else {
           $pdtivity = $sumhrs / $expectedhrs * 100;
@@ -922,7 +936,8 @@ class GwdReportController extends Controller
       'edate' => $curdate,
       'rptdata' => true,
       'sumchart' => $schart,
-      'sumtable' => $sumtable
+      'sumtable' => $sumtable,
+      'rpthist' => []
     ]);
 
   }
