@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-6">
           @if($isvisitor == false)
             <div class="card mb-3">
                 <div class="card-header">Add Diary Entry</div>
@@ -73,16 +73,16 @@
                         </div>
                         <!-- <label for="hours" class="col-md-1 col-form-label text-md-right">1</label> -->
                     </div>
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">Add Activity</button>
-                            <a href="{{ route('staff', [], false) }}"><button type="button" class="btn btn-success" title="Being unable to navigate on one's own is never a sin">Back to Dashboard</button></a>
-                        </div>
+                    <div class="form-group row mb-0 justify-content-center">
+                            <button type="submit" class="btn btn-primary m-3">Add Activity</button>
+                            <a href="{{ route('staff', [], false) }}"><button type="button" class="btn btn-success m-3" title="Being unable to navigate on one's own is never a sin">Back to Dashboard</button></a>
                     </div>
                   </form>
                 </div>
             </div>
+          </div>
             @endif
+          <div class="col-md-6">
             <div class="card mb-3">
               <div class="card-header">Entry for {{ $recdate }}. Total hours: {{ $dfobj->actual_hours }}</div>
               <div class="card-body">
