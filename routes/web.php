@@ -108,6 +108,7 @@ Route::get('/user/activity/list', 'GwdActivityController@list')->name('staff.lis
 Route::post('/user/addleave', 'GwdActivityController@cuti')->name('staff.cuti');
 
 Route::get('/reports/gwd/gsummary', 'GwdReportController@summary')->name('report.gwd.summary');
+Route::post('/reports/gwd/gsummdl', 'GwdReportController@dlgsummary')->name('report.gwd.gsummdl');
 // Route::post('/reports/gwd/summary', 'GwdReportController@summaryres')->name('report.gwd.summaryres');
 Route::get('/reports/gwd/divsummary', 'GwdReportController@divsum')->name('report.gwd.divsum');
 Route::post('/reports/gwd/entrystat', 'GwdReportController@entrystatres')->name('report.gwd.entrystatres');

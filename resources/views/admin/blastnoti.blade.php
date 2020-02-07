@@ -1,29 +1,11 @@
 @extends('layouts.app')
 
-@section('page-css')
-<style>
-.loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>
-@endsection
-
 @section('content')
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
+        <div class="col-md-12">
+            <div class="card mb-3">
                 <div class="card-header">Blast Push Notification</div>
                 <div class="card-body">
                   <form method="POST" action="{{ route('pn.reg', [], false) }}">
@@ -72,17 +54,37 @@
                   </form>
                 </div>
             </div>
-            @if(session()->has('pn_id'))
-            <br />
             <div class="card">
-                <div class="card-header">Notification Blast Result</div>
+                <div class="card-header">Notification Blast History</div>
                 <div class="card-body text-center">
-                  <div id="nrest">
-                     <div class="loader">In progress..</div>
-                  </div>
+                  <div class="table-responsive">
+                  <table id="taskdetailtable" class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Date Submitted</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Submitted By</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Body</th>
+                        <th scope="col">Sent Count</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($pnlist as $acts)
+                      <tr>
+                        <td>{{ $acts->created_at }}</td>
+                        <td>{{ $acts->status }}</td>
+                        <td>{{ $acts->PushAnn->creator->name }}</td>
+                        <td>{{ $acts->PushAnn->title }}</td>
+                        <td>{{ $acts->PushAnn->body }}</td>
+                        <td>{{ $acts->PushAnn->rec_count }}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
                 </div>
             </div>
-            @endif
         </div>
     </div>
 </div>
@@ -90,43 +92,16 @@
 
 @section('page-js')
 
-@if(session()->has('pn_id'))
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
-
-  // alert('{{ route("pn.dosend", ["pn_id" => session()->get("pn_id")]) }}');
-  const url='{{ route("pn.dosend", ["pn_id" => session()->get("pn_id")]) }}';
-
-  $.ajax({
-    url: url ,
-    type: "GET",
-    success: function(resp) {
-      updateResp(resp);
-    },
-    error: function(err) {
-      updateResp(err);
-    }
-  });
-
-
+  $('#taskdetailtable').DataTable({
+      "order": [[ 0, "desc" ]]
+    });
 } );
 
-function updateResp(respjson){
-  // var out = '<code>' + JSON.stringify(respjson) + '</code>'
-  var out = '<pre>Status: ' + respjson.status
-    + '<br />Message: ' + respjson.msg
-    + '<br />Recipient count: ' + respjson.rcount
-    + '</pre>';
-  document.getElementById("nrest").innerHTML  = out;
-}
-
-
-
-</script>
-@endif
-
-<script type="text/javascript">
 function rbselected(){
   if(document.getElementById("isglubal").checked == true){
     document.getElementById("grpselector").className  = "form-group row d-none";
@@ -134,6 +109,7 @@ function rbselected(){
     document.getElementById("grpselector").className  = "form-group row";
   }
 }
-</script>
 
+
+</script>
 @endsection

@@ -70,6 +70,10 @@ class ExcelHandler {
     }
   }
 
+  public function getBinary(){
+    return base64_encode(serialize($this->spreadsheet));
+  }
+
   public function download(){
     $writer = new Writer\Xlsx($this->spreadsheet);
 
@@ -82,6 +86,23 @@ class ExcelHandler {
 
     $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     $response->headers->set('Content-Disposition', 'attachment;filename="'.$this->filename.'"');
+    $response->headers->set('Cache-Control','max-age=0');
+    return $response;
+  }
+
+  public static function DownloadFromBin($datafromdb, $fname){
+    $unserialize_sp = unserialize(base64_decode($datafromdb));
+    $writer = new Writer\Xlsx($unserialize_sp);
+
+    $response =  new StreamedResponse(
+        function () use ($writer) {
+            $writer->save('php://output');
+        }
+    );
+    // $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+
+    $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    $response->headers->set('Content-Disposition', 'attachment;filename="'.$fname.'"');
     $response->headers->set('Cache-Control','max-age=0');
     return $response;
   }

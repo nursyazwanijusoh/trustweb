@@ -180,44 +180,4 @@ class MiscController extends Controller
 		return $this->respond_json(200, 'Success', $redata);
 	}
 
-	public function GwdCreateDayPerf(Request $req){
-		if($req->filled('date')){
-			$ddate = $req->date;
-		} else {
-			$ddate = date('Y-m-d');
-		}
-		$counter = 0;
-
-		$userrs = User::whereNotNull('lob')
-			->where('status', 1)
-			->where('isvendor', false)
-			->whereRaw('LENGTH(lob) > 6')
-			->get();
-
-		foreach ($userrs as $key => $value) {
-			$gdata = DailyPerformance::where('user_id', $value->id)
-				->whereDate('record_date', $ddate)
-				->first();
-			if($gdata){
-				// got data. do nothing
-			} else {
-				// no data. create new
-				if(isset($value->lob) && strlen($value->lob) > 6){
-					$dp = new DailyPerformance;
-		      $dp->user_id = $value->id;
-		      $dp->record_date = $ddate;
-		      $dp->unit_id = $value->lob;
-		      $dp->expected_hours = GDWActions::GetExpectedHours($ddate, $dp);
-		      $dp->save();
-
-					$counter++;
-				}
-
-			}
-		}
-
-		return $this->respond_json(200, $counter . ' records created', []);
-
-	}
-
 }

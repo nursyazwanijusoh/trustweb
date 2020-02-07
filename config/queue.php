@@ -13,7 +13,9 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'sync'),
+    // 'default' => env('QUEUE_CONNECTION', 'database'),
+    'default' => 'database',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +40,7 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            'retry_after' => 7200,
         ],
 
         'beanstalkd' => [

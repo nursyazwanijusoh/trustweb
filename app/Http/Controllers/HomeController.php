@@ -30,7 +30,21 @@ class HomeController extends Controller
     }
 
     function playground(){
-      return version('v1')->route('api.home', [], false);
+      // $eksel = new \App\common\ExcelHandler('test.xlsx');
+      // $eksel->addSheet('kosong', [], []);
+      //
+      // $bjob = new \App\BatchJob;
+      // $bjob->job_type = 'contoh';
+      // $bjob->status = 'New';
+      // $bjob->attachment = $eksel->getBinary();
+      // $bjob->save();
+      //
+      // dd($bjob);
+
+      $bjob = \App\BatchJob::find(11);
+
+
+      return \App\common\ExcelHandler::DownloadFromBin($bjob->attachment, 'nom.xlsx');
     }
 
     function welcome(){

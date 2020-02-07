@@ -3,10 +3,10 @@
 @section('content')
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+    <div class="row justify-content-center no-gutters">
           @if($isvisitor == false)
-            <div class="card mb-3">
+          <div class="col-lg-5">
+            <div class="card m-1">
                 <div class="card-header">Add Diary Entry</div>
                 <div class="card-body">
                   @if (session()->has('alert'))
@@ -20,12 +20,12 @@
                     <div class="form-group row">
                         <label for="actdate" class="col-md-4 col-form-label text-md-right">Date</label>
                         <div class="col-md-6">
-                          <input type="date" name="actdate" id="actdate" value="{{ $recdate }}" min="2020-01-01" max="{{ $curdate }}" onchange="loadActListForDate()"/>
+                          <input type="date" class="form-control" name="actdate" id="actdate" value="{{ $recdate }}" min="2020-01-01" max="{{ $curdate }}" onchange="loadActListForDate()"/>
                         </div>
                     </div>
                     <div class="form-group row">
                       <label for="actcat" class="col-md-4 col-form-label text-md-right">Activity Tag</label>
-                      <div class="col-md-6">
+                      <div class="col-md-8">
                         <select class="form-control" id="actcat" name="actcat" required onchange="setTitleInput()">
                           @foreach ($actcats as $act)
                           <option value="{{ $act['descr'] }}" title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
@@ -35,10 +35,10 @@
                     </div>
                     <div class="form-group row">
                         <label id="lbl_title" for="parent_no" class="col-md-4 col-form-label text-md-right">Nom</label>
-                        <div class="col-md-6" id="inp_title1">
+                        <div class="col-md-8" id="inp_title1">
                             <input id="parent_no" class="form-control" type="text" name="parent_no" placeholder="High level activity info">
                         </div>
-                        <div class="col-md-6" id="inp_title2">
+                        <div class="col-md-8" id="inp_title2">
                           <select class="form-control" id="pbe_sel" name="pbe_id" required>
                             @foreach ($pbes as $pbe)
                             <option value="{{ $pbe->id }}"  title="{{ $pbe->title }}" >{{ $pbe->title }}</option>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group row">
                       <label for="acttype" class="col-md-4 col-form-label text-md-right">Activity Type</label>
-                      <div class="col-md-6">
+                      <div class="col-md-8">
                         <select class="form-control" id="acttype" name="acttype" required>
                           @foreach ($actlist as $act)
                           <option value="{{ $act['descr'] }}"  title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
@@ -57,33 +57,35 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                        <label for="remark" class="col-md-4 col-form-label text-md-right">Details</label>
-                        <div class="col-md-6">
-                          <textarea rows="3" class="form-control" id="remark" name="details" placeholder="Anything you wish to elaborate regarding this activity" required></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label for="hours" class="col-md-4 col-form-label text-md-right">Hours Spent</label>
                         <!-- <div class="col-md-4">
                           <input type="range" class="custom-range" id="hours"
                           oninput="displaysliderval()" name="hourss" min="0" max="8" step="0.1" value="1"/>
                         </div> -->
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                           <input type="number" class="form-control" name="hours" value="1" min="0" max="24" step="0.01" id="hourisid" onchange="updateSlider()" />
                         </div>
                         <!-- <label for="hours" class="col-md-1 col-form-label text-md-right">1</label> -->
                     </div>
+                    <div class="form-group row">
+                        <label for="remark" class="col-md-3 col-form-label text-md-right">Details</label>
+                        <div class="col-md-9">
+                          <textarea rows="3" class="form-control" id="remark" name="details" placeholder="Anything you wish to elaborate regarding this activity" required></textarea>
+                        </div>
+                    </div>
                     <div class="form-group row mb-0 justify-content-center">
-                            <button type="submit" class="btn btn-primary m-3">Add Activity</button>
-                            <a href="{{ route('staff', [], false) }}"><button type="button" class="btn btn-success m-3" title="Being unable to navigate on one's own is never a sin">Back to Dashboard</button></a>
+                            <button type="submit" class="btn btn-primary m-1">Add Activity</button>
+                            <a href="{{ route('staff', [], false) }}"><button type="button" class="btn btn-success m-1" title="Being unable to navigate on one's own is never a sin">Back to Dashboard</button></a>
                     </div>
                   </form>
                 </div>
             </div>
           </div>
+          <div class="col-lg-7">
+            @else
+          <div class="col-lg-12">
             @endif
-          <div class="col-md-6">
-            <div class="card mb-3">
+            <div class="card m-1">
               <div class="card-header">Entry for {{ $recdate }}. Total hours: {{ $dfobj->actual_hours }}</div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -240,7 +242,7 @@ function setTitleInput() {
     document.getElementById("parent_no").disabled = true;
     document.getElementById("pbe_sel").disabled = false;
   } else {
-    document.getElementById("lbl_title").innerHTML = "Title";
+    document.getElementById("lbl_title").innerHTML = "ID / Title";
     document.getElementById("inp_title1").style.display = "block";
     document.getElementById("inp_title2").style.display = "none";
     document.getElementById("parent_no").disabled = false;

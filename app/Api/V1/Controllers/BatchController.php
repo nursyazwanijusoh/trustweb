@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\User;
 use App\SapEmpProfile;
 use App\SapLeaveInfo;
+use App\BatchJob;
 use App\common\BatchHelper;
+use App\Jobs\CreateDailyPerformance;
 
 class BatchController extends Controller
 {
@@ -27,6 +29,31 @@ class BatchController extends Controller
 		BatchHelper::loadCutiData();
 
 		return "completed";
+
+	}
+
+
+
+	public function GwdCreateDayPerf(Request $req){
+		if($req->filled('date')){
+			$ddate = $req->date;
+		} else {
+			$ddate = date('Y-m-d');
+		}
+
+		$curjob = BatchJob::where('job_type', 'Create daily performance')
+			->whereDate('from_date', $ddate)
+			->whereIn('status', ['New', 'Processing', 'Completed'])
+			->first();
+
+		if($curjob){
+			// already got the job
+			return $this->respond_json(200, 'Job already exist', []);
+		} else {
+			CreateDailyPerformance::dispatch($ddate);
+		}
+
+		return $this->respond_json(200, 'Job Scheduled', []);
 
 	}
 

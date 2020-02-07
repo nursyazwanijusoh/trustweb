@@ -8,6 +8,8 @@ use App\PushAnnouncementGroup;
 use App\CompGroup;
 use App\common\NotifyHelper;
 use App\User;
+use App\BatchJob;
+use App\Jobs\BlastPushNotify;
 
 class PushAnnouncementController extends Controller
 {
@@ -21,8 +23,14 @@ class PushAnnouncementController extends Controller
     // get list of groups
     $grplist = CompGroup::all();
 
+    $pushistory = BatchJob::where('job_type', 'Blast Notification')
+      ->orderBy('created_at', 'DESC')
+      ->limit(100)
+      ->get();
+
     return view('admin.blastnoti', [
-      'group' => $grplist
+      'group' => $grplist,
+      'pnlist' => $pushistory
     ]);
   }
 
@@ -46,6 +54,8 @@ class PushAnnouncementController extends Controller
         $pag->save();
       }
     }
+
+    BlastPushNotify::dispatch($pa->id);
 
     return redirect(route('pn.form', [], false))->with(['pn_id' => $pa->id]);
   }
