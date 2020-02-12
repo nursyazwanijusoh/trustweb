@@ -137,7 +137,7 @@ Route::get('/reports/divcheckin', 'ReportController@checkinByDiv')->name('report
 // hot desking reports
 Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->name('hdreports.dbdf');
 Route::get('/hdreports/WorkSpaceUsage', 'AdminReportController@WorkSpaceUsage')->name('hdreports.wsu');
-Route::get('/find/staff', 'AdminReportController@rptFindStaff')->name('staff.find');
+Route::get('/find/staff', 'TStaffController@rptFindStaff')->name('staff.find');
 
 // feedback
 Route::get('/feedback', 'FeedbackController@sform')->name('feedback');

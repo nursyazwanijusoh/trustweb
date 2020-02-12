@@ -24,15 +24,17 @@
                     </div>
                   </form>
                 </div>
+              </div>
                 @if($result != 'empty')
-
+              <div class="card">
                 @if($result == '404')
                 <div class="alert alert-error" role="alert">No result</div>
                 @else
                 <div class="card-header"> </div>
                 <div class="card-body">
                   <!-- <h5 class="card-title">List of task type</h5> -->
-                  <table class="table table-striped table-hover">
+                  <div class="table-responsive">
+                  <table id="taskdetailtable" class="table table-striped table-hover">
                     <thead>
                       <tr>
                         <th scope="col">Staff ID</th>
@@ -60,11 +62,26 @@
                       </tr>
                     </tfoot>
                   </table>
+                  </div>
                 </div>
                 @endif
+              </div>
                 @endif
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@if($result != 'empty' && $result != '404')
+@section('page-js')
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" defer>
+$(document).ready(function() {
+    $('#taskdetailtable').DataTable();
+} );
+</script>
+@endsection
+@endif

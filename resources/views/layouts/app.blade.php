@@ -82,6 +82,7 @@
                         <li class="menu-has-children"><a href="#">Menu</a>
                           <ul>
                               <li><a class="dropdown-item" href="{{ route('staff', [], false) }}">Home</a></li>
+                              <li><a class="dropdown-item" href="{{ route('staff.find', [], false) }}">Staff Finder</a></li>
                               <!-- li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li -->
                               <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
 

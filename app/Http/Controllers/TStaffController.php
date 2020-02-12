@@ -342,4 +342,42 @@ class TStaffController extends Controller
 
   }
 
+  public function rptFindStaff(Request $req){
+    if($req->filled('input')){
+      $hdrh = new \App\common\HDReportHandler;
+      $data = $hdrh->findStaff($req->input);
+
+      // dd($data);
+
+      if($data->count() == 1){
+        $auser = $data->shift();
+
+        return redirect(route('staff', ['staff_id' => $auser->id], false));
+      } elseif($data->count() == 0){
+        return view('staff.find', ['result' => '404']);
+      } else {
+        return view('staff.find', ['result' => $data]);
+      }
+
+      /*
+      if($data['type'] == 'no'){
+        return redirect(route('staff', ['staff_id' => $data['data']->id], false));
+      } else {
+        if($data['data']->count() == 0){
+          return view('staff.find', ['result' => '404']);
+        } elseif ($data['data']->count() == 1) {
+          $astaff = $data['data']->shift();
+          return redirect(route('staff', ['staff_id' => $astaff->id], false));
+        } else {
+          return view('staff.find', ['result' => $data['data']]);
+        }
+
+      }
+      */
+
+    } else {
+      return view('staff.find', ['result' => 'empty']);
+    }
+  }
+
 }

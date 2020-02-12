@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
+@section('page-css')
+<link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -135,9 +138,15 @@
 @endsection
 
 @section('page-js')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js "></script>
+
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript">
 
 $('#editCfgModal').on('show.bs.modal', function(e) {
@@ -168,7 +177,13 @@ $('#editCfgModal').on('show.bs.modal', function(e) {
 });
 
 $(document).ready(function() {
-    $('#taskdetailtable').DataTable();
+    $('#taskdetailtable').DataTable({
+        paging: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel'
+        ]
+    });
 } );
 </script>
 @stop
