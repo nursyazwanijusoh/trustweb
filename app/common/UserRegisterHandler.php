@@ -98,6 +98,7 @@ class UserRegisterHandler
 
         // update the division info
         UserRegisterHandler::updateUserDiv($user);
+        UserRegisterHandler::createOneWeekDF($user->id);
 
         // check if my division is not allowed
         $cconfig = CommonConfig::where('key', 'lock_division')->first();
@@ -130,6 +131,24 @@ class UserRegisterHandler
       'user' => $user,
       'msg' => $errormsg
     ];
+  }
+
+  private static function createOneWeekDF($staff_id){
+    $cdate = new Carbon();
+    $ldate = new Carbon();
+
+    $daterange = new \DatePeriod(
+      $cdate->subDays(7),
+      \DateInterval::createFromDateString('1 day'),
+      $ldate
+    );
+
+    // dd($daterange);
+
+    foreach($daterange as $indate){
+      GDWActions::GetDailyPerfObj($staff_id, $indate);
+    }
+
   }
 
   private static function updateFromLdap($ldapresp){
