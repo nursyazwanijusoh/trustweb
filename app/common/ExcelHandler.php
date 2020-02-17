@@ -74,6 +74,11 @@ class ExcelHandler {
     return base64_encode(serialize($this->spreadsheet));
   }
 
+  public function saveToPerStorage(){
+    $writer = new Writer\Xlsx($this->spreadsheet);
+    $writer->save('storage/app/reports/' . $this->filename);
+  }
+
   public function download(){
     $writer = new Writer\Xlsx($this->spreadsheet);
 
@@ -105,5 +110,16 @@ class ExcelHandler {
     $response->headers->set('Content-Disposition', 'attachment;filename="'.$fname.'"');
     $response->headers->set('Cache-Control','max-age=0');
     return $response;
+  }
+
+  public static function DownloadFromPerStorage($fname){
+    // dd($fname);
+    if(\Storage::exists('reports/'.$fname)){
+      // dd('ada');
+      \Storage::download('reports/'.$fname, $fname);
+    } else {
+      return "report 404";
+    }
+
   }
 }

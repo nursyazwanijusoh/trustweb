@@ -549,7 +549,8 @@ class GwdReportController extends Controller
       $bj = BatchJob::find($req->bjid);
 
       if($bj){
-        return ExcelHandler::DownloadFromBin($bj->attachment, $bj->extra_info);
+        // return ExcelHandler::DownloadFromBin($bj->attachment, $bj->extra_info);
+        return ExcelHandler::DownloadFromPerStorage($bj->extra_info);
       } else {
         return redirect()->back()->withInput()->with([
           'alert' => 'Report no longer exist',

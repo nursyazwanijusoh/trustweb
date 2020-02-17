@@ -278,9 +278,10 @@ class DiaryGroupReportGen implements ShouldQueue
         array_push($headers, 'Productivity');
         array_push($headers, 'Range');
         $eksel->addSheet('By Hours',$hrsdata, $headers);
+        $eksel->saveToPerStorage();
 
         $bjob->status = 'Completed';
-        $bjob->attachment = $eksel->getBinary();
+        // $bjob->attachment = $eksel->getBinary();
         $bjob->extra_info = $fname;
         $bjob->completed_at = now();
         $bjob->save();
