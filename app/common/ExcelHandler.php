@@ -116,7 +116,12 @@ class ExcelHandler {
     // dd($fname);
     if(\Storage::exists('reports/'.$fname)){
       // dd('ada');
-      \Storage::download('reports/'.$fname, $fname);
+      return response()->download(storage_path("app/reports/".$fname));
+      // \Storage::download('reports/'.$fname, $fname, [
+      //   'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      //   'Content-Disposition' => 'attachment;filename="'.$fname.'"',
+      //   'Cache-Control' => 'max-age=0'
+      // ]);
     } else {
       return "report 404";
     }
