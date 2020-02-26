@@ -51,7 +51,7 @@ class TStaffController extends Controller
     $daterange = new \DatePeriod(
       $cdate->subDays(7),
       \DateInterval::createFromDateString('1 day'),
-      $ldate
+      $ldate->addDay()
     );
 
     $gdata = GDWActions::GetStaffRecentPerf($s_staff_id, $daterange);
@@ -72,7 +72,8 @@ class TStaffController extends Controller
                  'label' => 'Productivity %',
                  'backgroundColor' => 'rgba(0, 255, 132, 0.5)',
                  'borderColor' => '#000',
-                 'data' => $gdata
+                 'data' => $gdata,
+                 'lineTension' => 0
              ]
          ])
          ->options([
@@ -87,21 +88,21 @@ class TStaffController extends Controller
            ],
            'hover' => [
              'mode' => 'nearest',
-             'intersect' => true,
+             'intersect' => false,
            ],
            'scales' => [
              'xAxes' => [[
                'display' => true,
                'scaleLabel' => [
                  'display' => true,
-                 'LabelString' => 'Time',
+                 'LabelString' => 'Date',
                ]
              ]],
              'yAxes' => [[
                'display' => true,
                'scaleLabel' => [
                  'display' => true,
-                 'LabelString' => 'Seat Count',
+                 'LabelString' => '%',
                ]
              ]]
            ]

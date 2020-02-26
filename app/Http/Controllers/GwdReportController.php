@@ -911,7 +911,7 @@ class GwdReportController extends Controller
     $daterange = new \DatePeriod(
       $cdate->subDays(7),
       \DateInterval::createFromDateString('1 day'),
-      $ldate
+      $ldate->addDay()
     );
 
     $this->getSubsInfo($user->persno, $daterange, $sunitid);
