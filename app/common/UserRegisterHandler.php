@@ -184,6 +184,7 @@ class UserRegisterHandler
 
 		// overwrite with ldap data
 		$staffdata->email = $ldapresp['data']['EMAIL'];
+    $staffdata->job_grade = $ldapresp['data']['JOB_GRADE'];
 		$staffdata->mobile_no = $tmobile;
 		$staffdata->save();
 

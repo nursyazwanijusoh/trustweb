@@ -44,46 +44,67 @@ class TStaffController extends Controller
     // get subordinates
     $sublist = GDWActions::GetSubordsPerf($s_staff_id);
 
+    // build the graph lul
+    $cdate = new Carbon();
+    $ldate = new Carbon();
 
-    if(isset($user->curr_checkin)){
-      $bh = new BookingHelper;
-      $lastloc = $bh->getCheckinMinimal($user->curr_checkin);
-      // dd($lastloc);
-    } else {
-      $lastloc = 'N/A';
+    $daterange = new \DatePeriod(
+      $cdate->subDays(7),
+      \DateInterval::createFromDateString('1 day'),
+      $ldate
+    );
+
+    $gdata = GDWActions::GetStaffRecentPerf($s_staff_id, $daterange);
+
+    $graphlabel = [];
+    foreach ($daterange as $satudate) {
+      array_push($graphlabel, date_format($satudate, 'j M'));
     }
 
-    // build the graph lul
-    $gdata = GDWActions::getActSummary($s_staff_id, date('Y-m-d'));
     // dd($gdata);
     $schart = app()->chartjs
          ->name('barChartTest')
-         ->type('doughnut')
+         ->type('line')
          // ->size(['width' => 400, 'height' => 400])
-         ->labels($gdata['label'])
+         ->labels($graphlabel)
          ->datasets([
              [
-                 'label' => 'Hours Spent',
-                 'backgroundColor' => $gdata['bg'],
+                 'label' => 'Productivity %',
+                 'backgroundColor' => 'rgba(0, 255, 132, 0.5)',
                  'borderColor' => '#000',
-                 'data' => $gdata['data']
+                 'data' => $gdata
              ]
          ])
          ->options([
            'responsive' => true,
-           // 'maintainAspectRatio' => true,
            'title' => [
              'display' => true,
-             'text' => 'Number of hours spent this month',
+             'text' => 'Recent Performance',
            ],
            'tooltips' => [
              'mode' => 'index',
-             'intersect' => true,
+             'intersect' => false,
            ],
            'hover' => [
              'mode' => 'nearest',
              'intersect' => true,
            ],
+           'scales' => [
+             'xAxes' => [[
+               'display' => true,
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Time',
+               ]
+             ]],
+             'yAxes' => [[
+               'display' => true,
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Seat Count',
+               ]
+             ]]
+           ]
          ]);
 
 
@@ -155,7 +176,21 @@ class TStaffController extends Controller
      );
     }
 
+    $superi = User::where('persno', $user->report_to)->first();
+
     $cds = \Calendar::addEvents($evlist);
+    $todaydf = GDWActions::GetDailyPerfObj($s_staff_id, $ldate);
+    $todayperc = 0;
+    if($todaydf->expected_hours == 0){
+      if($todaydf->actual_hours > 0){
+        $todayperc = 120;
+      } else {
+        $todayperc = 120;
+      }
+    } else {
+      $calcperf = $todaydf->actual_hours / $todaydf->expected_hours * 100;
+      $todayperc = intval($calcperf);
+    }
 
     $final = [
       'staff_id' => $s_staff_id,
@@ -163,9 +198,11 @@ class TStaffController extends Controller
       'subords' => $sublist,
       'user' => $user,
       'cuser' => $c_staff_id,
-      'currcekin' => $lastloc,
+      'superior' => $superi,
       'cds' => $cds,
-      'isvisitor' => $isvisitor
+      'isvisitor' => $isvisitor,
+      'todaydf' => $todaydf,
+      'todayperc' => $todayperc
     ];
     // dd($final);
 

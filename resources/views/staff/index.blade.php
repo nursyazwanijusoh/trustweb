@@ -7,9 +7,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-11">
+        <div class="col">
           <div class="row">
-            <div class="col-sm-6 mb-3">
+            <div class="col-lg-6 mb-3">
             <div class="card">
               <div class="card-header">Staff Home Page - {{ $user['staff_no'] }}</div>
               <div class="card-body">
@@ -20,11 +20,13 @@
                   Unit : {{ $user['subunit'] }}<br />
                   Email : {{ $user['email'] }}<br />
                   Mobile : {{ $user['mobile_no'] }}<br />
-                  Current Check-in : {{ $currcekin }}<br />
+                  @if(isset($superior))
+                  Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}">{{ $superior->name }}</a><br />
+                  @endif
                 </p>
               </div>
             </div></div><br />
-            <div class="col-sm-6 mb-3">
+            <div class="col-lg-6 mb-3">
             <div class="card">
               <div class="card-header">Action</div>
               <div class="card-body">
@@ -37,6 +39,17 @@
                       <div class="card text-center text-white bg-success">
                         <div class="card-body">
                           <p class="card-text"><i class="fa fa-pencil-square-o"></i> Update Diary</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  @endif
+                  @if($user->job_grade == '3')
+                  <div class="col-xl-6 mb-3">
+                    <a href="{{ route('report.agm.recent', ['agm_id' => $user->id ], false) }}">
+                      <div class="card text-center text-white bg-primary">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-people"></i> Team Summary</p>
                         </div>
                       </div>
                     </a>
@@ -80,24 +93,60 @@
                 </div>
               </div>
             </div></div>
-          </div><br />
-            <div class="card">
+          </div>
+          <div class="card mb-3">
+            <div class="card-header">Summary</div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card ">
+                    <div class="card-header bg-info text-white">Today's Productivity</div>
+                    <div class="card-body">
+                      <div class="row text-center">
+                        <div class="col-4 border-right">
+                          <h1 class="card-title">{{ $todaydf->actual_hours }}</h1>
+                          <p class="card-text">
+                            Total Actual Hours
+                          </p>
+                        </div>
+                        <div class="col-4 border-right">
+                          <h1 class="card-title">{{ $todaydf->expected_hours }}</h1>
+                          <p class="card-text">
+                            Expected Hours
+                          </p>
+                        </div>
+                        <div class="col-4">
+                          <h1 class="card-title">{{ $todayperc }}%</h1>
+                          <p class="card-text">
+                            Productivity
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer bg-info"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card ">
+                    {!! $chart->render() !!}
+                  </div>
+                </div>
+              </div>
+              <!-- <h5 class="card-title"></h5> -->
+              <!-- <div class="table-responsive text-center"> -->
+
+              <!-- </div> -->
+
+            </div>
+          </div>
+            <div class="card mb-3">
               <div class="card-header">My Diary Calendar</div>
               <div class="card-body">
                 <!-- <h5 class="card-title"></h5> -->
                 {!! $cds->calendar() !!}
               </div>
-            </div><br />
-            <div class="card mb-3">
-              <div class="card-header">Summary</div>
-              <div class="card-body text-center">
-                <!-- <h5 class="card-title"></h5> -->
-                <!-- <div class="table-responsive text-center"> -->
-                  {!! $chart->render() !!}
-                <!-- </div> -->
-
-              </div>
             </div>
+
             @if(sizeof($subords) > 0)
             <div class="card">
               <div class="card-header">My Subordinate</div>

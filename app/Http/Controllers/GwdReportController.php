@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \DB;
 use App\Unit;
+use App\SubUnit;
 use App\User;
 use App\CompGroup;
 use App\DailyPerformance;
@@ -17,6 +18,9 @@ use App\Jobs\DiaryGroupReportGen;
 
 class GwdReportController extends Controller
 {
+
+  private $team_member;
+
   public function __construct()
   {
       $this->middleware('auth');
@@ -870,6 +874,72 @@ class GwdReportController extends Controller
          ]);
 
     return $schart;
+  }
+
+  // get latest diary for this AGM staffs
+  public function agmrecent(Request $req){
+    if($req->filled('agm_id')){
+      $user = User::find($req->agm_id);
+      if($user){
+
+      } else {
+        dd('user not found');
+      }
+    } else {
+      $user = $req->user();
+    }
+
+    if($user->job_grade != '3'){
+      dd('user is not an AGM');
+    }
+
+    $sunitid = 0;
+    // find my section id
+    $subunit = SubUnit::where('ppsuborgunitdesc', $user->subunit)->first();
+    if($subunit){
+      $sunitid = $subunit->id;
+    }
+    // update my section id
+    $user->section_id = $sunitid;
+    $user->save();
+
+    // reset
+    $this->team_member = [];
+    $cdate = new Carbon();
+    $ldate = new Carbon();
+
+    $daterange = new \DatePeriod(
+      $cdate->subDays(7),
+      \DateInterval::createFromDateString('1 day'),
+      $ldate
+    );
+
+    $this->getSubsInfo($user->persno, $daterange, $sunitid);
+
+    return view('gwd.agmrecent', [
+      's_name' => $user->subunit,
+      'daterange' => $daterange,
+      'sdata' => $this->team_member
+    ]);
+  }
+
+  private function getSubsInfo($persno, $daterange, $sunitid){
+    $staffs = User::where('report_to', $persno)->get();
+
+    foreach($staffs as $ast){
+      $ast->section_id = $sunitid;
+      $ast->save();
+      // add this staff info
+      array_push($this->team_member, [
+        'id' => $ast->id,
+        'name' => $ast->name,
+        'unit' => $ast->subunit,
+        'recent_perf' => GDWActions::GetStaffRecentPerf($ast->id, $daterange)
+      ]);
+
+      // then find this person's subs
+      $this->getSubsInfo($ast->persno, $daterange, $sunitid);
+    }
   }
 
 }

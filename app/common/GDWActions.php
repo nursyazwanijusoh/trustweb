@@ -567,4 +567,29 @@ class GDWActions
     return $retval;
   }
 
+  // get 7 days worth of data
+  public static function GetStaffRecentPerf($user_id, $daterange){
+    
+
+    $retarr = [];
+
+    // dd($daterange);
+
+    foreach($daterange as $indate){
+      $tdf = GDWActions::GetDailyPerfObj($user_id, $indate);
+      if($tdf->expected_hours == 0){
+        if($tdf->actual_hours > 0){
+          array_push($retarr, 120);
+        } else {
+          array_push($retarr, 100);
+        }
+      } else {
+        $calcperf = $tdf->actual_hours / $tdf->expected_hours * 100;
+        array_push($retarr, intval($calcperf));
+      }
+    }
+
+    return $retarr;
+  }
+
 }
