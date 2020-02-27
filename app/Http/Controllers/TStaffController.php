@@ -180,13 +180,13 @@ class TStaffController extends Controller
     $superi = User::where('persno', $user->report_to)->first();
 
     $cds = \Calendar::addEvents($evlist);
-    $todaydf = GDWActions::GetDailyPerfObj($s_staff_id, $ldate);
+    $todaydf = GDWActions::GetDailyPerfObj($s_staff_id, new Carbon());
     $todayperc = 0;
     if($todaydf->expected_hours == 0){
       if($todaydf->actual_hours > 0){
         $todayperc = 120;
       } else {
-        $todayperc = 120;
+        $todayperc = 100;
       }
     } else {
       $calcperf = $todaydf->actual_hours / $todaydf->expected_hours * 100;
