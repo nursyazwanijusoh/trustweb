@@ -914,12 +914,92 @@ class GwdReportController extends Controller
       $ldate->addDay()
     );
 
+    $perfarr = GDWActions::GetStaffRecentPerf($user->id, $daterange);
+    $perfavg = array_sum($perfarr)/count($perfarr);
+
+    array_push($this->team_member, [
+      'id' => $user->id,
+      'name' => $user->name,
+      'unit' => $user->subunit,
+      'recent_perf' => $perfarr,
+      'avg' => $perfavg
+    ]);
+
     $this->getSubsInfo($user->persno, $daterange, $sunitid);
+
+    // get average perf for alll
+    $scount = 0;
+    $tperf = 0;
+    $lbl = [];
+    $val = [];
+    $targ = [];
+
+    foreach($this->team_member as $apers){
+      $scount++;
+      $tperf += $apers['avg'];
+      array_push($lbl, $apers['name']);
+      array_push($val, $apers['avg']);
+      array_push($targ, 75);
+    }
+
+    if($scount == 0){
+      $avgperf = 0;
+    } else {
+      $avgperf = $tperf / $scount;
+    }
+
+
+    $schart = app()->chartjs
+         ->name('barChartTest')
+         ->type('bar')
+         ->size(['width' => 400, 'height' => 200])
+         ->labels($lbl)
+         ->datasets(array(
+           [
+             'label' => 'Productivity %',
+             'data' => $val,
+             'backgroundColor' => "rgba(255, 255, 0, 0.5)",
+             'borderColor' => "rgba(51, 51, 204, 0.7)"
+           ], [
+             'label' => 'Target',
+             'data' => $targ,
+             'type' => 'line',
+             'borderColor' => "rgba(100, 100, 100, 0.7)"
+           ]
+         ))
+         ->options([
+           'responsive' => true,
+           'tooltips' => [
+             'mode' => 'index',
+             'intersect' => false,
+           ],
+           'hover' => [
+             'mode' => 'nearest',
+             'intersect' => true,
+           ],
+           'scales' => [
+             'xAxes' => [[
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Staff Count',
+               ]
+             ]],
+             'yAxes' => [[
+               'scaleLabel' => [
+                 'display' => true,
+                 'LabelString' => 'Division',
+               ]
+             ]]
+           ]
+         ]);
+
 
     return view('gwd.agmrecent', [
       's_name' => $user->subunit,
       'daterange' => $daterange,
-      'sdata' => $this->team_member
+      'sdata' => $this->team_member,
+      'tavg' => $avgperf,
+      'chart' => $schart
     ]);
   }
 
@@ -930,11 +1010,15 @@ class GwdReportController extends Controller
       $ast->section_id = $sunitid;
       $ast->save();
       // add this staff info
+
+      $perfarr = GDWActions::GetStaffRecentPerf($ast->id, $daterange);
+      $perfavg = array_sum($perfarr)/count($perfarr);
       array_push($this->team_member, [
         'id' => $ast->id,
         'name' => $ast->name,
         'unit' => $ast->subunit,
-        'recent_perf' => GDWActions::GetStaffRecentPerf($ast->id, $daterange)
+        'recent_perf' => $perfarr,
+        'avg' => $perfavg
       ]);
 
       // then find this person's subs

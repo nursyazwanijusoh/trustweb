@@ -99,7 +99,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
-                  <div class="card ">
+                  <div class="card mb-3">
                     <div class="card-header bg-info text-white">Today's Productivity</div>
                     <div class="card-body">
                       <div class="row text-center">
@@ -123,7 +123,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="card-footer bg-info"></div>
                   </div>
                 </div>
                 <div class="col-md-6">
