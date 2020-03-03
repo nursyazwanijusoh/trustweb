@@ -113,6 +113,7 @@ class TStaffController extends Controller
     $evlist = [];
     $counter = rand(0, 12);
     $last3month = new Carbon();
+    $tuday = new Carbon();
     $last3month->subMonths(3);
 
     // first load the public holiday
@@ -132,6 +133,7 @@ class TStaffController extends Controller
     // then the daily summary
     $daysim = DailyPerformance::where('user_id', $s_staff_id)
       ->whereDate('record_date', '>', $last3month)
+      ->whereDate('record_date', '<=', $tuday)
       ->get();
 
     foreach ($daysim as $key => $value) {
