@@ -36,7 +36,7 @@
                     <div class="form-group row">
                         <label id="lbl_title" for="parent_no" class="col-md-4 col-form-label text-md-right">Nom</label>
                         <div class="col-md-8" id="inp_title1">
-                            <input id="parent_no" class="form-control" type="text" name="parent_no" placeholder="High level activity info">
+                            <input id="parent_no" class="form-control" type="text" name="parent_no" placeholder="High level activity info" required>
                         </div>
                         <div class="col-md-8" id="inp_title2">
                           <select class="form-control" id="pbe_sel" name="pbe_id" required>

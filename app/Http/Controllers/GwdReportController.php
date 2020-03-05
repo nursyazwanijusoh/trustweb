@@ -889,6 +889,43 @@ class GwdReportController extends Controller
       $user = $req->user();
     }
 
+    $todayyy = new Carbon();
+
+    // check if date is passed
+    if($req->filled('sdate')){
+      if($req->filled('edate')){
+        // check if date range is valid
+        $cdate = new Carbon($req->sdate);
+        $ldate = new Carbon($req->edate);
+
+        if($cdate->gt($ldate)){
+          return redirect()->back()->withInput()->withErrors([
+            'edate' => 'To date is before start date'
+          ]);
+        }
+
+        if($cdate->diffInDays($ldate) > 7){
+          return redirect()->back()->withInput()->withErrors([
+            'sdate' => 'Date range is more than 7 days'
+          ]);
+        }
+
+      } else {
+        return redirect()->back()->withInput()->withErrors([
+          'edate' => 'To date is not set'
+        ]);
+      }
+    } else {
+      // no date given. get current week cycle
+      $ldate = new Carbon();
+      if($ldate->dayOfWeek == 5){
+        $ldate->subDay();
+      }
+
+      $cdate = new Carbon($ldate);
+      $cdate->subDays($cdate->dayOfWeek)->subDays(2);
+    }
+
     if($user->job_grade != '3'){
       dd('user is not an AGM');
     }
@@ -905,17 +942,15 @@ class GwdReportController extends Controller
 
     // reset
     $this->team_member = [];
-    $cdate = new Carbon();
-    $ldate = new Carbon();
 
     $daterange = new \DatePeriod(
-      $cdate->subDays(7),
+      $cdate,
       \DateInterval::createFromDateString('1 day'),
-      $ldate->addDay()
+      (new Carbon($ldate))->addDay()
     );
 
     $perfarr = GDWActions::GetStaffRecentPerf($user->id, $daterange);
-    $perfavg = array_sum($perfarr)/count($perfarr);
+    $perfavg = GDWActions::GetStaffAvgPerf($user->id, $cdate, $ldate);
 
     array_push($this->team_member, [
       'id' => $user->id,
@@ -925,27 +960,29 @@ class GwdReportController extends Controller
       'avg' => $perfavg
     ]);
 
-    $this->getSubsInfo($user->persno, $daterange, $sunitid);
+    $this->getSubsInfo($user->persno, $daterange, $sunitid, $cdate, $ldate);
 
     // get average perf for alll
     $scount = 0;
-    $tperf = 0;
+    $tact = 0;
+    $texp = 0;
     $lbl = [];
     $val = [];
     $targ = [];
 
     foreach($this->team_member as $apers){
       $scount++;
-      $tperf += $apers['avg'];
+      $tact += $apers['avg']['actual'];
+      $texp += $apers['avg']['expected'];
       array_push($lbl, $apers['name']);
-      array_push($val, $apers['avg']);
+      array_push($val, $apers['avg']['perc']);
       array_push($targ, 75);
     }
 
-    if($scount == 0){
-      $avgperf = 0;
+    if($texp == 0){
+      $avgperf = $tact > 0 ? 120 : 100;
     } else {
-      $avgperf = $tperf / $scount;
+      $avgperf = $tact / $texp;
     }
 
 
@@ -999,11 +1036,14 @@ class GwdReportController extends Controller
       'daterange' => $daterange,
       'sdata' => $this->team_member,
       'tavg' => $avgperf,
-      'chart' => $schart
+      'chart' => $schart,
+      'agm_id' => $user->id,
+      's_date' => $cdate->toDateString(),
+      'e_date' => $ldate->toDateString()
     ]);
   }
 
-  private function getSubsInfo($persno, $daterange, $sunitid){
+  private function getSubsInfo($persno, $daterange, $sunitid, $cdate, $ldate){
     $staffs = User::where('report_to', $persno)->get();
 
     foreach($staffs as $ast){
@@ -1012,7 +1052,7 @@ class GwdReportController extends Controller
       // add this staff info
 
       $perfarr = GDWActions::GetStaffRecentPerf($ast->id, $daterange);
-      $perfavg = array_sum($perfarr)/count($perfarr);
+      $perfavg = GDWActions::GetStaffAvgPerf($ast->id, $cdate, $ldate);
       array_push($this->team_member, [
         'id' => $ast->id,
         'name' => $ast->name,
@@ -1022,7 +1062,7 @@ class GwdReportController extends Controller
       ]);
 
       // then find this person's subs
-      $this->getSubsInfo($ast->persno, $daterange, $sunitid);
+      $this->getSubsInfo($ast->persno, $daterange, $sunitid, $cdate, $ldate);
     }
   }
 

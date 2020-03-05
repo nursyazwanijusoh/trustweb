@@ -55,6 +55,10 @@ class TStaffController extends Controller
     );
 
     $gdata = GDWActions::GetStaffRecentPerf($s_staff_id, $daterange);
+    $pgdata = [];
+    foreach ($gdata as $key => $value) {
+      $pgdata[] = $value['perc'];
+    }
 
     $graphlabel = [];
     foreach ($daterange as $satudate) {
@@ -72,7 +76,7 @@ class TStaffController extends Controller
                  'label' => 'Productivity %',
                  'backgroundColor' => 'rgba(0, 255, 132, 0.5)',
                  'borderColor' => '#000',
-                 'data' => $gdata,
+                 'data' => $pgdata,
                  'lineTension' => 0
              ]
          ])

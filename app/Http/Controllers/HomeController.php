@@ -30,8 +30,35 @@ class HomeController extends Controller
     }
 
     function playground(){
-      $lh = new \App\Api\V1\Controllers\LdapHelper;
-      return $lh->fetchUser('S53788');
+      // $lh = new \App\Api\V1\Controllers\LdapHelper;
+      // return $lh->fetchUser('S53788');
+      dd(date('Y-m-d'));
+
+      $ldate = new \Carbon\Carbon();
+      if($ldate->dayOfWeek == 5){
+        $ldate->subDay();
+      }
+
+      $cdate = new \Carbon\Carbon($ldate);
+      $cdate->subDays($cdate->dayOfWeek)->subDays(2);
+
+      $daterange = new \DatePeriod(
+        $cdate,
+        \DateInterval::createFromDateString('1 day'),
+        (new \Carbon\Carbon($ldate))->addDay()
+      );
+
+      dd($ldate);
+
+      $pd = [];
+      foreach($daterange as $od){
+        $pd[] = date_format($od, 'Y-m-d');
+      }
+
+      dd($pd);
+
+      return \App\common\GDWActions::GetStaffAvgPerf(1, $cdate, $ldate);
+
     }
 
     function welcome(){

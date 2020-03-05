@@ -578,18 +578,44 @@ class GDWActions
     foreach($daterange as $indate){
       $tdf = GDWActions::GetDailyPerfObj($user_id, $indate);
       if($tdf->expected_hours == 0){
-        if($tdf->actual_hours > 0){
-          array_push($retarr, 120);
-        } else {
-          array_push($retarr, 100);
-        }
+        $perc = $tdf->actual_hours > 0 ? 120 : 100;
       } else {
         $calcperf = $tdf->actual_hours / $tdf->expected_hours * 100;
-        array_push($retarr, intval($calcperf));
+        $perc = intval($calcperf);
       }
+
+      array_push($retarr, [
+        'actual' => $tdf->actual_hours,
+        'expected' => $tdf->expected_hours,
+        'perc' => $perc,
+        'isonleave' => $tdf->is_off_day
+      ]);
     }
 
     return $retarr;
+  }
+
+  public static function GetStaffAvgPerf($user_id, $fromdate, $todate){
+
+
+    $dfobjs = DailyPerformance::where('user_id', $user_id)
+      ->whereDate('record_date', '>=', $fromdate)
+      ->whereDate('record_date', '<=', $todate)
+      ->get();
+
+    $actotal = $dfobjs->sum('actual_hours');
+    $expotal = $dfobjs->sum('expected_hours');
+    if($expotal == 0){
+      $perc = $actotal > 0 ? 120 : 100;
+    } else {
+      $perc = $actotal / $expotal * 100;
+    }
+
+    return [
+      'actual' => $actotal,
+      'expected' => $expotal,
+      'perc' => round($perc, 2)
+    ];
   }
 
 }
