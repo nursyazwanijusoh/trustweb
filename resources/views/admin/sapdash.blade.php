@@ -7,9 +7,9 @@
       <div class="card mb-3">
         <div class="card-header">Load Data from SAP</div>
         <div class="card-body">
-          <button id="btnPersno" type="button" class="btn btn-xl btn-info" onclick="updatePersno()">Null SAP Persno: {{ $nullpersno }}</button>
-          <button id="btnOM" type="button" class="btn btn-xl btn-info" onclick="loadOM()">OM Data: {{ $eplist }}</button>
-          <button id="btnCuti" type="button" class="btn btn-xl btn-info" onclick="loadCuti()">Leave Data: {{ $cuticount }}</button>
+          <!-- <button id="btnPersno" type="button" class="btn btn-xl btn-info m-3" onclick="updatePersno()">Null SAP Persno: {{ $nullpersno }}</button> -->
+          <button id="btnOM" type="button" class="btn btn-xl btn-info m-3" onclick="loadOM()">OM Data: {{ $eplist }}</button>
+          <button id="btnCuti" type="button" class="btn btn-xl btn-info m-3" onclick="loadCuti()">Leave Data: {{ $cuticount }}</button>
           <div id="pbar" class="progress m-3" style="display: none">
             <div id="pbari" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%;">load persno</div>
           </div>
