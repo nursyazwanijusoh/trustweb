@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('page-css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -121,6 +125,7 @@
 @section('page-js')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 <script type="text/javascript">
 
     function expertlevel(){
@@ -181,6 +186,7 @@
 
     $(document).ready(function() {
       $('#perfsameri').DataTable();
+      $('#csid').select2();
     } );
 </script>
 
