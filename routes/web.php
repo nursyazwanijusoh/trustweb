@@ -41,6 +41,8 @@ Route::get('/admin/delbuild', 'TAdminController@delBuilding')->name('admin.delbu
 Route::post('/admin/modbuild', 'TAdminController@modBuilding')->name('admin.modbuild');
 Route::post('/admin/genseats', 'TAdminController@genSeats')->name('admin.genseats');
 Route::get('/admin/getqr', 'TAdminController@getqr')->name('admin.getqr');
+Route::get('/admin/usercompare', 'TAdminController@CompareStaffData')->name('admin.usercompare');
+Route::post('/admin/updateuserdata', 'TAdminController@UpdateStaffData')->name('admin.updateuserdata');
 Route::get('/admin/delaseat', 'TAdminController@delaseat')->name('admin.delaseat');
 Route::get('/admin/delallseat', 'TAdminController@delallseat')->name('admin.delallseat');
 Route::get('/admin/buildetail', 'TAdminController@buildetail')->name('admin.buildetail');

@@ -110,10 +110,17 @@ class LdapHelper extends Controller
               $unit = $ldapdata['0']['ppdivision']['0'];
               $subunit = 'Vendors';
               $dept = 'Vendors';
+              $eprsno = '';
             } else {
               $unit = $ldapdata['0']['pporgunitdesc']['0'];
               $subunit = $ldapdata['0']['ppsuborgunitdesc']['0'];
               $dept = $ldapdata['0']['pporgunit']['0'];
+              $eprsno = $ldapdata['0']['employeenumber']['0'];
+              if(strlen($eprsno) > 7){
+                $eprsno = substr($eprsno, -7) + 0;
+              }
+
+
             }
 
 
@@ -132,7 +139,10 @@ class LdapHelper extends Controller
               'NIRC' => $ldapdata['0']['ppnewic']['0'],
               'EMAIL' => $ldapdata['0']['mail']['0'],
               'MOBILE_NO' => $ldapdata['0']['mobile']['0'],
-              'SUPERIOR' => $ldapdata['0']['ppreporttoname']['0']
+              'SUPERIOR' => $ldapdata['0']['ppreporttoname']['0'],
+              'SP_PERSNO' => $ldapdata['0']['ppreportto']['0'] + 0,
+              'PERSNO' => $eprsno
+
             ];
 
             //$retdata = $ldapdata;

@@ -154,9 +154,22 @@ class UserRegisterHandler
   private static function updateFromLdap($ldapresp){
     // get the username
 		$ldapstaffid = $ldapresp['data']['STAFF_NO'];
+    $ldappersno = $ldapresp['data']['PERSNO'];
+    $staffdata = false;
 
-		// find from User table
-		$staffdata = User::where('staff_no', $ldapstaffid)->first();
+    // find from User table
+    if(isset($ldappersno) && strlen($ldappersno) > 0){
+      $staffdata = User::where('persno', $ldappersno)->first();
+    }
+
+    if($staffdata){
+      $staffdata->staff_no = $ldapstaffid;
+    } else {
+      $staffdata = User::where('staff_no', $ldapstaffid)->first();
+      if($staffdata){
+        $staffdata->persno = $ldappersno;
+      }
+    }
 
 		if($staffdata){
 		} else {
@@ -174,6 +187,7 @@ class UserRegisterHandler
         $staffdata->isvendor = 1;
       } else {
         $staffdata->isvendor = 0;
+        $staffdata->persno = $ldappersno;
       }
 		}
 

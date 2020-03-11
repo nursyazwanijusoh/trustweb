@@ -1036,5 +1036,78 @@ class TAdminController extends Controller
     return \Storage::download('public/JI_GITD__Sept_2019_v2.csv', 'JI_GITD__Sept_2019_v2.csv');
   }
 
+  public function CompareStaffData(Request $req){
+
+    if($req->filled('staff_no')){
+      $user = User::where('staff_no', $req->staff_no)->first();
+      if($user){
+
+        // find user in ldap
+        $lh = new LdapHelper;
+        $ldata = $lh->fetchUser($req->staff_no);
+
+        if($ldata['code'] != 200){
+          return redirect()->back()->withInput()->with([
+            'alert' => 'User not found in LDAP',
+            'a_type' => 'warning'
+          ]);
+        }
+
+        $rto_persno = 0;
+        $rto_name = 'N/A';
+        if(isset($user->report_to)){
+          $rptto = User::where('persno', $user->report_to)->first();
+          if($rptto){
+            $rto_persno = $rptto->persno;
+            $rto_name = $rptto->name;
+          }
+        }
+
+        // populate the data
+        $tdata = [
+          'staff_no' => $user->staff_no,
+          'name' => $user->name,
+          'persno' => $user->persno,
+          'pporgunit' => $user->lob,
+          'pporgunitdesc' => $user->unit,
+          'report_to' => $rto_persno,
+          'report_name' => $rto_name
+        ];
+
+        $lmdata = [
+          'staff_no' => $user->staff_no,
+          'name' => $ldata['data']['NAME'],
+          'persno' => $ldata['data']['PERSNO'],
+          'pporgunit' => $ldata['data']['DEPARTMENT'],
+          'pporgunitdesc' => $ldata['data']['UNIT'],
+          'report_to' => $ldata['data']['SP_PERSNO'],
+          'report_name' => $ldata['data']['SUPERIOR']
+        ];
+
+        return view('admin.staffcompare', [
+          'result' => true,
+          'tdata' => $tdata,
+          'ldata' => $lmdata,
+          'uid' => $user->id,
+          'staff_no' => $req->staff_no
+        ]);
+
+
+
+      } else {
+        return redirect()->back()->withInput()->with([
+          'alert' => 'User not found in trUSt',
+          'a_type' => 'warning'
+        ]);
+      }
+    } else {
+      return view('admin.staffcompare');
+    }
+  }
+
+  public function UpdateStaffData(Request $req){
+    dd('Under Development');
+  }
+
 
 }
