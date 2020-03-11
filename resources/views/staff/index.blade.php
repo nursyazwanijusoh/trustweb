@@ -69,8 +69,17 @@
                     </a>
                   </div>
                   <div class="col-xl-6 mb-3">
+                    <a href="{{ route('ps.list', ['staff_id' => $staff_id ], false) }}">
+                      <div class="card text-center text-dark bg-warning">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-wheelchair-alt"></i> Skill Competency</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-xl-6 mb-3">
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
-                      <div class="card text-center text-white bg-info">
+                      <div class="card text-center text-white bg-secondary">
                         <div class="card-body">
                           @if($isvisitor == false)
                           <p class="card-text"><i class="fa fa-map-marker"></i> Where I've Been</p>

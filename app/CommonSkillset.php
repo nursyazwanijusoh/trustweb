@@ -10,6 +10,10 @@ class CommonSkillset extends Model
     return $this->belongsTo('App\SkillCategory', 'skill_category_id');
   }
 
+  public function SkillType(){
+    return $this->belongsTo(SkillType::class, 'skill_type_id');
+  }
+
   public function PersonalSkillset(){
     return $this->hasMany('App\PersonalSkillset', 'common_skill_id')->where('level','!=', 0);
   }

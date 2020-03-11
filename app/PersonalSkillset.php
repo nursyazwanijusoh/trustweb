@@ -6,5 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class PersonalSkillset extends Model
 {
-    //
+  public function CommonSkill(){
+    return $this->belongsTo(CommonSkillset::class, 'common_skill_id');
+  }
+
+  public function slevel(){
+    if($this->level == 1){
+      return "Beginner";
+    } elseif($this->level == 2){
+      return "Intermediate";
+    } elseif ($this->level == 3) {
+      return "Expert";
+    }
+
+    return $this->level . " - Unranked";
+  }
+
+  public function sStatus(){
+    if($this->status == "N"){
+      return "New";
+    } elseif($this->status == "A"){
+      return "Approved";
+    } elseif ($this->status == "C") {
+      return "Changed";
+    }
+  }
 }

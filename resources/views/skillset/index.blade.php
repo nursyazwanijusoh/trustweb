@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">Common Skillset for Staffname</div>
                 @if(isset($alert))
                 <div class="alert alert-success" role="alert">{{ $alert }}</div>

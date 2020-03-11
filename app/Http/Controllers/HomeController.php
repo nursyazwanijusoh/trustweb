@@ -32,7 +32,10 @@ class HomeController extends Controller
     function playground(){
       // $lh = new \App\Api\V1\Controllers\LdapHelper;
       // return $lh->fetchUser('S53788');
-      dd(date('Y-m-d'));
+
+      return [
+        'test' => \App\common\UserRegisterHandler::isInReportingLine(1, 48505)
+        ];
 
       $ldate = new \Carbon\Carbon();
       if($ldate->dayOfWeek == 5){

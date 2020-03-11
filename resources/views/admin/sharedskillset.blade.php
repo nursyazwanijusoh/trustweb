@@ -5,15 +5,18 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">Shared Skillset Management</div>
                 <div class="card-body">
-                  @if(isset($alert))
-                  <div class="alert alert-info" role="alert">{{ $alert }}</div>
+                  @if (session()->has('alert'))
+                  <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{ session()->get('alert') }}</strong>
+                  </div>
                   @endif
                   <form method="POST" action="{{ route('ss.add', [], false) }}">
                     @csrf
-                    <h5 class="card-title">Add new skill category?</h5>
+                    <h5 class="card-title">Add new skill</h5>
                     <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">Skill Name</label>
                         <div class="col-md-6">
@@ -30,15 +33,32 @@
                           </select>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="skill_type" class="col-md-4 col-form-label text-md-right">Skill Type</label>
+                        <div class="col-md-6">
+                          <select class="form-control" id="skill_type" name="skill_type" required>
+                            @foreach ($skilltypes as $atask)
+                            <option value="{{ $atask['id'] }}" >{{ $atask['name'] }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                    </div>
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">Add Skill Category</button>
+                            <button type="submit" class="btn btn-primary">Add Skill</button>
                         </div>
                     </div>
                   </form>
                 </div>
-                <div class="card-header"> </div>
+              </div>
+              <div class="card mb-3">
+                @if($cat == 'm')
+                <div class="card-header">List of Custom Skillset created by the staff</div>
+                @else
+                <div class="card-header">List of Predefined Skillset</div>
+                @endif
+
                 <div class="card-body">
                   <div class="row mb-0">
                       <div class="col-md-6 offset-md-4">
@@ -51,17 +71,13 @@
                           @endif
                       </div>
                   </div>
-                  <br />
-                  @if($cat == 'm')
-                  <h5 class="card-title">List of Custom Skillset created by the staff</h5>
-                  @else
-                  <h5 class="card-title">List of Predefined Skillset</h5>
-                  @endif
+
                   <table id="taskdetailtable" class="table table-striped table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">Name</th>
                         <th scope="col">Category</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Name</th>
                         <th scope="col">User Count</th>
                         <th scope="col">Action</th>
                       </tr>
@@ -69,8 +85,9 @@
                     <tbody>
                       @foreach($data as $atask)
                       <tr>
-                        <td>{{ $atask->name }}</td>
                         <td>{{ $atask->SkillCategory->name }}</td>
+                        <td>{{ $atask->SkillType->name }}</td>
+                        <td>{{ $atask->name }}</td>
                         <td>{{ $atask->PersonalSkillset->count() }}</td>
                         <td>
                           <button id="btnedit" type="button" class="btn btn-warning btn-sm" title="Edit"

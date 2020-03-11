@@ -475,6 +475,23 @@ class UserRegisterHandler
     return $thatunit->id;
   }
 
+  public static function isInReportingLine($subs_id, $boss_id){
+    $cuser = User::find($subs_id);
+    if($cuser){
+      // find the owner of report_to persno
+      if(isset($cuser->report_to) && $cuser->report_to != 0){
+        $superior = User::where('persno', $cuser->report_to)->first();
+        if($superior->id == $boss_id){
+          return true;
+        } else {
+          return UserRegisterHandler::isInReportingLine($superior->id, $boss_id);
+        }
+      } else {
+        return false;
+      }
 
-
+    } else {
+      return false;
+    }
+  }
 }

@@ -4,14 +4,48 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SkillCategory;
+use App\SkillType;
 use App\CommonSkillset;
 use App\PersonalSkillset;
+use App\PersSkillHistory;
+use App\User;
 
 class PersonalSSController extends Controller
 {
   public function __construct()
   {
       $this->middleware('auth');
+  }
+
+  public function listv2(Request $req){
+    $sid = $req->user()->id;
+    $isvisitor = false;
+    $isboss = false;
+    if($req->filled('staff_id')){
+      if($sid != $req->staff_id){
+        $isvisitor = true;
+        $isboss = \App\common\UserRegisterHandler::isInReportingLine($req->staff_id, $sid);
+        $sid = $req->staff_id;
+      }
+    }
+
+    $user = User::find($sid);
+
+    $skillcat = SkillCategory::all();
+    $skilltype = SkillType::all();
+    $skills = CommonSkillset::all();
+    $perskill = PersonalSkillset::where('staff_id', $sid)->where('status', '!=', 'D')->get();
+
+    return view('staff.skillset', [
+      'user' => $user,
+      'skillcat' => $skillcat,
+      'skilltype' => $skilltype,
+      'skills' => $skills,
+      'pskills' => $perskill,
+      'isvisitor' => $isvisitor,
+      'isboss' => $isboss
+    ]);
+
   }
 
   public function list(Request $req){
@@ -99,6 +133,56 @@ class PersonalSSController extends Controller
     return $ps;
   }
 
+  public function updatev2(Request $req){
+    $newstatus = 'N';
+    // double check
+    if($req->user()->id != $req->staff_id){
+      // added by someone else
+      if(\App\common\UserRegisterHandler::isInReportingLine($req->staff_id, $req->user()->id)){
+        // added by boss
+        $newstatus = 'E';
+      } else {
+        // not validly added
+        return redirect()->back()->with([
+          'alert' => 'You are not allowed to add skill for this person',
+          'a_type' => 'danger'
+        ]);
+      }
+    }
+
+    // check if the skill exists
+    $ps = PersonalSkillset::where('staff_id', $req->staff_id)
+      ->where('common_skill_id', $req->csid)
+      ->where('status', '!=', 'D')->first();
+    if($ps){
+      return redirect()->back()->with([
+        'alert' => 'Skill already added. Update it instead',
+        'a_type' => 'warning'
+      ]);
+    }
+
+    $ps = $this->addPersonalSkill($req->staff_id, $req->csid);
+    $ps->level = $req->rate;
+    $ps->status = $newstatus;
+    $ps->save();
+
+    // add the history
+    $phist = new PersSkillHistory;
+    $phist->personal_skillset_id = $ps->id;
+    $phist->action_user_id = $req->user()->id;
+    $phist->action = 'Add';
+    $phist->remark = $req->remark;
+    $phist->save();
+
+    return redirect(route('ps.list', ['staff_id' => $req->staff_id]))
+      ->with([
+        'alert' => 'New skill added',
+        'a_type' => 'success'
+      ]);
+
+
+  }
+
   public function update(Request $req){
     $sid = \Session::get('staffdata')['id'];
     $skills = $req->skill;
@@ -113,6 +197,10 @@ class PersonalSSController extends Controller
 
     return redirect(route('ps.list', ['alert' => $req->cat . ' Skillset Updated'], false));
 
+  }
+
+  public function detail(Request $req){
+    dd('Construction in progress');
   }
 
   public function createcustom(Request $req){

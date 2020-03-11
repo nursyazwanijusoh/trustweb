@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SkillCategory;
+use App\SkillType;
+
 use App\CommonSkillset;
 
 class SkillCategoryController extends Controller
@@ -30,6 +32,18 @@ class SkillCategoryController extends Controller
     }
   }
 
+  public function stlist(Request $req){
+
+    $cfgs = SkillCategory::all();
+    $sts = SkillType::all();
+
+    return view('admin.skilltype', [
+      'data' => $sts,
+      'catlist' => $cfgs
+    ]);
+
+  }
+
   public function addedit(Request $req){
     $cfg = SkillCategory::where('name', $req->name)->first();
     $msg = 'record updated';
@@ -43,6 +57,24 @@ class SkillCategoryController extends Controller
     $cfg->save();
 
     return redirect(route('sc.list', ['alert' => 'record updated']));
+  }
+
+  public function staddedit(Request $req){
+    $cfg = SkillType::where('name', $req->name)->first();
+    $msg = 'record updated';
+    if(!$cfg){
+      $cfg = new SkillType;
+      $cfg->name = $req->name;
+      $cfg->added_by = $req->user()->id;
+      $msg = 'record added';
+    }
+    $cfg->skill_category_id = $req->skill_cat;
+    $cfg->save();
+
+    return redirect(route('st.list'))->with([
+      'alert' => 'Skill type added',
+      'a_type' => 'success'
+    ]);
   }
 
   public function edit(Request $req){
@@ -104,41 +136,36 @@ class SkillCategoryController extends Controller
     }
 
     $skillcats = SkillCategory::all();
+    $skilltypes = SkillType::all();
 
-    if($req->filled('alert')){
-      return view('admin.sharedskillset', [
-        'alert' => $req->alert,
-        'data' => $cfgs,
-        'skillcats' => $skillcats,
-        'cat' => $type
-      ]);
-    } else {
-      return view('admin.sharedskillset', ['data' => $cfgs,
+    return view('admin.sharedskillset', [
+      'alert' => $req->alert,
+      'data' => $cfgs,
       'skillcats' => $skillcats,
-      'cat' => $type]);
-    }
+      'skilltypes' => $skilltypes,
+      'cat' => $type
+    ]);
   }
 
   public function ssaddedit(Request $req){
-    $cfg = CommonSkillset::where('name', $req->name)->first();
-    $msg = 'record updated';
-    if(!$cfg){
-      $cfg = new CommonSkillset;
-      $cfg->name = $req->name;
-      $cfg->added_by = \Session::get('staffdata')['id'];
-      $cfg->category = 'p';
 
-      // default to blank first
-      $cfg->skillgroup = '';
-      $cfg->skilltype = '';
+    $cfg = new CommonSkillset;
+    $cfg->name = $req->name;
+    $cfg->added_by = $req->user()->id;
+    $cfg->category = 'p';
 
-      $msg = 'record added';
+    // default to blank first
+    $cfg->skillgroup = '';
+    $cfg->skilltype = '';
 
-    }
     $cfg->skill_category_id = $req->skill_cat;
+    $cfg->skill_type_id = $req->skill_type;
+
     $cfg->save();
 
-    return redirect(route('ss.list', ['alert' => 'record updated']));
+    return redirect(route('ss.list'))->with([
+      'alert' => 'Skill added', 'a_type' => 'success'
+    ]);
   }
 
   public function ssedit(Request $req){
@@ -165,6 +192,29 @@ class SkillCategoryController extends Controller
     $cs->delete();
 
     return redirect(route('ss.list', ['alert' => 'record deleted']));
+  }
+
+  // temp apis
+  public function SSApiGetType(Request $req){
+    $types = SkillType::query();
+    if($req->filled('cat') && $req->cat != 0){
+      $types->where('skill_category_id', $req->cat);
+    }
+
+    return $types->orderBy('name')->get(['id', 'name']);
+  }
+
+  public function SSApiGetSkill(Request $req){
+    $types = CommonSkillset::query();
+    if($req->filled('type') && $req->type != 0){
+      $types->where('skill_type_id', $req->type);
+    }
+
+    if($req->filled('cat') && $req->cat != 0){
+      $types->where('skill_category_id', $req->cat);
+    }
+
+    return $types->orderBy('name')->get(['id', 'name']);
   }
 
 }

@@ -178,6 +178,12 @@ Route::post('/skillcat/add', 'SkillCategoryController@addedit')->name('sc.add');
 Route::post('/skillcat/edit', 'SkillCategoryController@edit')->name('sc.edit');
 Route::get('/skillcat/del', 'SkillCategoryController@del')->name('sc.del');
 
+// skill type
+Route::get('/skilltype/list', 'SkillCategoryController@stlist')->name('st.list');
+Route::post('/skilltype/add', 'SkillCategoryController@staddedit')->name('st.add');
+Route::post('/skilltype/edit', 'SkillCategoryController@stedit')->name('st.edit');
+Route::get('/skilltype/del', 'SkillCategoryController@stdel')->name('st.del');
+
 // public holiday
 Route::get('/ph/list', 'PublicHolidayController@list')->name('ph.list');
 Route::post('/ph/add', 'PublicHolidayController@add')->name('ph.add');
@@ -197,13 +203,17 @@ Route::post('/sharedskill/edit', 'SkillCategoryController@ssedit')->name('ss.edi
 Route::get('/sharedskill/del', 'SkillCategoryController@ssdel')->name('ss.del');
 
 // personal skillset
-Route::get('/user/skillset', 'PersonalSSController@list')->name('ps.list');
-Route::post('/user/skillset/update', 'PersonalSSController@update')->name('ps.update');
+Route::get('/user/skillset', 'PersonalSSController@listv2')->name('ps.list');
+Route::post('/user/skillset/update', 'PersonalSSController@updatev2')->name('ps.update');
 Route::post('/user/skillset/create', 'PersonalSSController@createcustom')->name('ps.create');
 Route::get('/user/skillset/addcustom', 'PersonalSSController@addcustom')->name('ps.add');
 Route::get('/user/skillset/doaddcustom', 'PersonalSSController@doaddcustom')->name('ps.do.add');
 Route::get('/user/skillset/del', 'PersonalSSController@delete')->name('ps.del');
+Route::get('/user/skillset/detail', 'PersonalSSController@detail')->name('ps.detail');
 
+// temp Skillset APIs
+Route::get('/ss/api/gettype', 'SkillCategoryController@SSApiGetType')->name('ss.api.gettype');
+Route::get('/ss/api/getskill', 'SkillCategoryController@SSApiGetSkill')->name('ss.api.getskill');
 
 // mobile app installers
 Route::get('/download', 'AppDownloadController@list')->name('app.list');
