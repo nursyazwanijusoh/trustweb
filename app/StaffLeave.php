@@ -19,10 +19,13 @@ class StaffLeave extends Model
 
     while($edate->greaterThan($sdate)){
       $oned = GDWActions::GetDailyPerfObj($this->user_id, $sdate);
-      $oned->is_off_day = true;
-      $oned->leave_type_id = $this->leave_type_id;
-      $oned->expected_hours = $this->LeaveType->hours_value;
-      $oned->save();
+      if($oned->expected_hours > 0){
+        // only set as leave if default expected is not 0
+        $oned->is_off_day = true;
+        $oned->leave_type_id = $this->leave_type_id;
+        $oned->expected_hours = $this->LeaveType->hours_value;
+        $oned->save();
+      }
 
       $sdate->addDay();
     }
