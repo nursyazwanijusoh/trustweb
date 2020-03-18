@@ -1459,6 +1459,59 @@
         "description": "Highlight PHP code in terminal"
     },
     {
+        "name": "laracasts/generators",
+        "version": "1.1.7",
+        "version_normalized": "1.1.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/laracasts/Laravel-5-Generators-Extended.git",
+            "reference": "134fd33fcbde4799c4d22106ab4af5c23a8067e4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/laracasts/Laravel-5-Generators-Extended/zipball/134fd33fcbde4799c4d22106ab4af5c23a8067e4",
+            "reference": "134fd33fcbde4799c4d22106ab4af5c23a8067e4",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "~5.0|~6.0|~7.0",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpspec/phpspec": "~2.1"
+        },
+        "time": "2020-03-03T10:04:59+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Laracasts\\Generators\\GeneratorsServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Laracasts\\Generators\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jeffrey Way",
+                "email": "jeffrey@laracasts.com"
+            }
+        ],
+        "description": "Extend Laravel 5's generators.",
+        "keywords": [
+            "generators",
+            "laravel"
+        ]
+    },
+    {
         "name": "laravel/framework",
         "version": "v5.7.26",
         "version_normalized": "5.7.26.0",
@@ -6415,6 +6468,7 @@
             "http",
             "psr",
             "psr-7"
-        ]
+        ],
+        "abandoned": "laminas/laminas-diactoros"
     }
 ]

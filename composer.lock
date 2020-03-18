@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "abe2a576757d8b16144b560968138c5e",
+    "content-hash": "07bfbcd9c19805763f1a5747c7e22ca3",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -4652,6 +4652,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2018-09-05T19:29:37+00:00"
         }
     ],
@@ -4929,6 +4930,57 @@
                 "test"
             ],
             "time": "2016-01-20T08:20:44+00:00"
+        },
+        {
+            "name": "laracasts/generators",
+            "version": "1.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laracasts/Laravel-5-Generators-Extended.git",
+                "reference": "134fd33fcbde4799c4d22106ab4af5c23a8067e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laracasts/Laravel-5-Generators-Extended/zipball/134fd33fcbde4799c4d22106ab4af5c23a8067e4",
+                "reference": "134fd33fcbde4799c4d22106ab4af5c23a8067e4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0|~6.0|~7.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laracasts\\Generators\\GeneratorsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laracasts\\Generators\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeffrey Way",
+                    "email": "jeffrey@laracasts.com"
+                }
+            ],
+            "description": "Extend Laravel 5's generators.",
+            "keywords": [
+                "generators",
+                "laravel"
+            ],
+            "time": "2020-03-03T10:04:59+00:00"
         },
         {
             "name": "mockery/mockery",

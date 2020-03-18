@@ -50,6 +50,7 @@ return array(
     'Lcobucci\\JWT\\' => array($vendorDir . '/lcobucci/jwt/src'),
     'Laravel\\Tinker\\' => array($vendorDir . '/laravel/tinker/src'),
     'Laravel\\Passport\\' => array($vendorDir . '/laravel/passport/src'),
+    'Laracasts\\Generators\\' => array($vendorDir . '/laracasts/generators/src'),
     'JakubOnderka\\PhpConsoleHighlighter\\' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
     'JakubOnderka\\PhpConsoleColor\\' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
     'Illuminate\\Notifications\\' => array($vendorDir . '/laravel/nexmo-notification-channel/src', $vendorDir . '/laravel/slack-notification-channel/src'),

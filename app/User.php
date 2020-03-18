@@ -56,4 +56,8 @@ class User extends Authenticatable
         return $this->Division->pporgunitdesc;
       }
     }
+
+    public function BauExperiences(){
+      return $this->belongsToMany(BauExperience::class);
+    }
 }

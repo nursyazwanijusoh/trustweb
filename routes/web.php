@@ -202,6 +202,13 @@ Route::post('/sharedskill/add', 'SkillCategoryController@ssaddedit')->name('ss.a
 Route::post('/sharedskill/edit', 'SkillCategoryController@ssedit')->name('ss.edit');
 Route::get('/sharedskill/del', 'SkillCategoryController@ssdel')->name('ss.del');
 
+// bau / exp
+Route::get('/bauexp/list', 'BauExperienceController@list')->name('bauexp.list');
+Route::post('/bauexp/add', 'BauExperienceController@add')->name('bauexp.add');
+Route::post('/bauexp/edit', 'BauExperienceController@edit')->name('bauexp.edit');
+Route::get('/bauexp/del', 'BauExperienceController@del')->name('bauexp.del');
+Route::get('/bauexp/staffs', 'BauExperienceController@staffWithExp')->name('bauexp.staffs');
+
 // personal skillset
 Route::get('/user/skillset', 'PersonalSSController@listv2')->name('ps.list');
 Route::post('/user/skillset/update', 'PersonalSSController@updatev2')->name('ps.update');

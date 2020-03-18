@@ -44,9 +44,10 @@
         <div class="card-header">Skill Competency LOVs</div>
         <div class="card-body">
           <div class="list-group">
-            <a href="{{ route('ss.list', [], false) }}" class="list-group-item list-group-item-action">Shared Skillset List</a>
             <a href="{{ route('sc.list', [], false) }}" class="list-group-item list-group-item-action">Skill Category</a>
             <a href="{{ route('st.list', [], false) }}" class="list-group-item list-group-item-action">Skill Type</a>
+            <a href="{{ route('ss.list', [], false) }}" class="list-group-item list-group-item-action">Shared Skillset List</a>
+            <a href="{{ route('bauexp.list', [], false) }}" class="list-group-item list-group-item-action">Experiences</a>
           </div>
         </div>
       </div>

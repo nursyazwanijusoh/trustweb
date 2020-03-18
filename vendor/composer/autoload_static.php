@@ -172,6 +172,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
             'Lcobucci\\JWT\\' => 13,
             'Laravel\\Tinker\\' => 15,
             'Laravel\\Passport\\' => 17,
+            'Laracasts\\Generators\\' => 21,
         ),
         'J' => 
         array (
@@ -413,6 +414,10 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         array (
             0 => __DIR__ . '/..' . '/laravel/passport/src',
         ),
+        'Laracasts\\Generators\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laracasts/generators/src',
+        ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
             0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
@@ -594,12 +599,14 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Api\\V1\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Api/V1/Controllers/LoginController.php',
         'App\\Api\\V1\\Controllers\\LovController' => __DIR__ . '/../..' . '/app/Api/V1/Controllers/LovController.php',
         'App\\Api\\V1\\Controllers\\MiscController' => __DIR__ . '/../..' . '/app/Api/V1/Controllers/MiscController.php',
+        'App\\Api\\V1\\Controllers\\SkillsetController' => __DIR__ . '/../..' . '/app/Api/V1/Controllers/SkillsetController.php',
         'App\\Api\\V1\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Api/V1/Controllers/UserController.php',
         'App\\AreaEvent' => __DIR__ . '/../..' . '/app/AreaEvent.php',
         'App\\Assignment' => __DIR__ . '/../..' . '/app/Assignment.php',
         'App\\Attendance' => __DIR__ . '/../..' . '/app/Attendance.php',
         'App\\Avatar' => __DIR__ . '/../..' . '/app/Avatar.php',
         'App\\BatchJob' => __DIR__ . '/../..' . '/app/BatchJob.php',
+        'App\\BauExperience' => __DIR__ . '/../..' . '/app/BauExperience.php',
         'App\\Checkin' => __DIR__ . '/../..' . '/app/Checkin.php',
         'App\\CommonConfig' => __DIR__ . '/../..' . '/app/CommonConfig.php',
         'App\\CommonSkillset' => __DIR__ . '/../..' . '/app/CommonSkillset.php',
@@ -621,6 +628,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\AvatarController' => __DIR__ . '/../..' . '/app/Http/Controllers/AvatarController.php',
         'App\\Http\\Controllers\\BatchJobController' => __DIR__ . '/../..' . '/app/Http/Controllers/BatchJobController.php',
+        'App\\Http\\Controllers\\BauExperienceController' => __DIR__ . '/../..' . '/app/Http/Controllers/BauExperienceController.php',
         'App\\Http\\Controllers\\CommonConfigController' => __DIR__ . '/../..' . '/app/Http/Controllers/CommonConfigController.php',
         'App\\Http\\Controllers\\CompGroupController' => __DIR__ . '/../..' . '/app/Http/Controllers/CompGroupController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
@@ -639,7 +647,6 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php',
         'App\\Http\\Controllers\\SapLoadController' => __DIR__ . '/../..' . '/app/Http/Controllers/SapLoadController.php',
         'App\\Http\\Controllers\\SkillCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/SkillCategoryController.php',
-        'App\\Http\\Controllers\\SkillTypController' => __DIR__ . '/../..' . '/app/Http/Controllers/SkillTypController.php',
         'App\\Http\\Controllers\\SkillTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/SkillTypeController.php',
         'App\\Http\\Controllers\\StaffLeaveController' => __DIR__ . '/../..' . '/app/Http/Controllers/StaffLeaveController.php',
         'App\\Http\\Controllers\\TAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/TAdminController.php',
@@ -2442,6 +2449,14 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/Highlighter.php',
         'JsonSerializable' => __DIR__ . '/..' . '/nesbot/carbon/src/JsonSerializable.php',
+        'Laracasts\\Generators\\Commands\\MigrationMakeCommand' => __DIR__ . '/..' . '/laracasts/generators/src/Commands/MigrationMakeCommand.php',
+        'Laracasts\\Generators\\Commands\\PivotMigrationMakeCommand' => __DIR__ . '/..' . '/laracasts/generators/src/Commands/PivotMigrationMakeCommand.php',
+        'Laracasts\\Generators\\Commands\\SeedMakeCommand' => __DIR__ . '/..' . '/laracasts/generators/src/Commands/SeedMakeCommand.php',
+        'Laracasts\\Generators\\GeneratorException' => __DIR__ . '/..' . '/laracasts/generators/src/GeneratorException.php',
+        'Laracasts\\Generators\\GeneratorsServiceProvider' => __DIR__ . '/..' . '/laracasts/generators/src/GeneratorsServiceProvider.php',
+        'Laracasts\\Generators\\Migrations\\NameParser' => __DIR__ . '/..' . '/laracasts/generators/src/Migrations/NameParser.php',
+        'Laracasts\\Generators\\Migrations\\SchemaParser' => __DIR__ . '/..' . '/laracasts/generators/src/Migrations/SchemaParser.php',
+        'Laracasts\\Generators\\Migrations\\SyntaxBuilder' => __DIR__ . '/..' . '/laracasts/generators/src/Migrations/SyntaxBuilder.php',
         'Laravel\\Passport\\ApiTokenCookieFactory' => __DIR__ . '/..' . '/laravel/passport/src/ApiTokenCookieFactory.php',
         'Laravel\\Passport\\AuthCode' => __DIR__ . '/..' . '/laravel/passport/src/AuthCode.php',
         'Laravel\\Passport\\Bridge\\AccessToken' => __DIR__ . '/..' . '/laravel/passport/src/Bridge/AccessToken.php',
