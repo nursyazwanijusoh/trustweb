@@ -21,7 +21,7 @@
                         @foreach($be->Users as $atask)
                         <tr>
                           <td>{{ $atask->unit }}</td>
-                          <td><a href="{{ route('ps.list', ['id' => $atask->id], false) }}">{{ $atask->name }}</a></td>
+                          <td><a href="{{ route('ps.list', ['staff_id' => $atask->id], false) }}">{{ $atask->name }}</a></td>
                           <td>{{ $atask->jobtype }}</td>
                         </tr>
                         @endforeach

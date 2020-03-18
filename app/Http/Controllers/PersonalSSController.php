@@ -115,7 +115,39 @@ class PersonalSSController extends Controller
 
 
   public function detail(Request $req){
-    dd('Construction in progress');
+    if($req->filled('psid')){
+      $ps = PersonalSkillset::find($req->psid);
+      if($ps){
+        // check who is the current user
+        $sid = $req->user()->id;
+        $isvisitor = false;
+        $isboss = false;
+        if($sid != $ps->staff_id){
+          $isvisitor = true;
+          $isboss = \App\common\UserRegisterHandler::isInReportingLine($ps->staff_id, $sid);
+        }
+
+        $owner = User::find($ps->staff_id);
+
+        return view('staff.psdetail', [
+          'ps' => $ps,
+          'owner' => $owner,
+          'isvisitor' => $isvisitor,
+          'isboss' => $isboss
+        ]);
+      } else {
+        return redirect(route('ps.list'));
+      }
+
+
+    } else {
+      return redirect(route('ps.list'));
+    }
+
+  }
+
+  public function modify(Request $req){
+
   }
 
   public function addexp(Request $req){

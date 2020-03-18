@@ -41,4 +41,8 @@ class PersonalSkillset extends Model
       return "Deleted";
     }
   }
+
+  public function Histories(){
+    return $this->hasMany(PersSkillHistory::class);
+  }
 }
