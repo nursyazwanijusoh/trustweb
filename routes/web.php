@@ -201,6 +201,7 @@ Route::get('/sharedskill/list', 'SkillCategoryController@sslist')->name('ss.list
 Route::post('/sharedskill/add', 'SkillCategoryController@ssaddedit')->name('ss.add');
 Route::post('/sharedskill/edit', 'SkillCategoryController@ssedit')->name('ss.edit');
 Route::get('/sharedskill/del', 'SkillCategoryController@ssdel')->name('ss.del');
+Route::get('/sharedskill/staffs', 'SkillCategoryController@staffWithSkill')->name('ss.staffs');
 
 // bau / exp
 Route::get('/bauexp/list', 'BauExperienceController@list')->name('bauexp.list');
@@ -211,12 +212,11 @@ Route::get('/bauexp/staffs', 'BauExperienceController@staffWithExp')->name('baue
 
 // personal skillset
 Route::get('/user/skillset', 'PersonalSSController@listv2')->name('ps.list');
-Route::post('/user/skillset/update', 'PersonalSSController@updatev2')->name('ps.update');
-Route::post('/user/skillset/create', 'PersonalSSController@createcustom')->name('ps.create');
-Route::get('/user/skillset/addcustom', 'PersonalSSController@addcustom')->name('ps.add');
-Route::get('/user/skillset/doaddcustom', 'PersonalSSController@doaddcustom')->name('ps.do.add');
+Route::post('/user/skillset/add', 'PersonalSSController@updatev2')->name('ps.update');
 Route::get('/user/skillset/del', 'PersonalSSController@delete')->name('ps.del');
 Route::get('/user/skillset/detail', 'PersonalSSController@detail')->name('ps.detail');
+Route::post('/user/skillset/addexp', 'PersonalSSController@addexp')->name('ps.addexp');
+Route::post('/user/skillset/delexp', 'PersonalSSController@delexp')->name('ps.delexp');
 
 // temp Skillset APIs
 Route::get('/ss/api/gettype', 'SkillCategoryController@SSApiGetType')->name('ss.api.gettype');

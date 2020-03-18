@@ -6,12 +6,12 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
       @if($isvisitor == false || $isboss == true)
       <div class="col-lg-6">
         <div class="card mb-3">
-            <div class="card-header">Add Skill That No One Probably Care</div>
+            <div class="card-header">Add Skill To Your Arsenal</div>
             <div class="card-body">
               @if (session()->has('alert'))
               <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
@@ -90,39 +90,95 @@
         <div class="card mb-3">
           <div class="card-header">Add Past Experience</div>
           <div class="card-body">
-
+            <div class="table-responsive">
+              <table id="bexps" class="table table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Systems</th>
+                    <th scope="col">Add</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($bes as $acts)
+                  <tr>
+                    <td class="py-1">{{ $acts->name }}</td>
+                    <td class="py-1"><form method="post" action="{{ route('ps.addexp')}}">
+                      @csrf
+                      <input type="hidden" name="uid" value="{{ $user->id }}" />
+                      <input type="hidden" name="beid" value="{{ $acts->id }}"  />
+                      <button type="submit" class="btn btn-sm btn-success" title="add"><i class="fa fa-plus"></i></button>
+                    </form></td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
       @endif
-      <div class="card mb-3">
-        <div class="card-header">Current Skillset for {{ $user->name }}</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table id="perfsameri" class="table table-striped table-hover table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Category</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Skill</th>
-                  <th scope="col">Competency</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Details</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($pskills as $acts)
-                <tr>
-                  <td>{{ $acts->CommonSkill->SkillCategory->name }}</td>
-                  <td>{{ $acts->CommonSkill->SkillType->name }}</td>
-                  <td>{{ $acts->CommonSkill->name }}</td>
-                  <td>{{ $acts->slevel() }}</td>
-                  <td>{{ $acts->sStatus() }}</td>
-                  <td><a href="{{ route('ps.detail', ['psid' => $acts->id])}}"><button type="button" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-info"></i></button></a></td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
+      <div class="col-xl-8">
+        <div class="card mb-3">
+          <div class="card-header">Current Skillset for <a href="{{ route('staff', ['staff_id' => $user->id ])}}">{{ $user->name }}</a></div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="perfsameri" class="table table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Skill</th>
+                    <th scope="col">Competency</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($pskills as $acts)
+                  <tr>
+                    <td>{{ $acts->CommonSkill->SkillCategory->name }}</td>
+                    <td>{{ $acts->CommonSkill->SkillType->name }}</td>
+                    <td>{{ $acts->CommonSkill->name }}</td>
+                    <td>{{ $acts->slevel() }}</td>
+                    <td>{{ $acts->sStatus() }}</td>
+                    <td><a href="{{ route('ps.detail', ['psid' => $acts->id])}}"><button type="button" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-info"></i></button></a></td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card mb-3">
+          <div class="card-header">Experiences</div>
+          <div class="card-body">
+            <div class="row">
+              @foreach($user->BauExperiences as $bexp)
+              <div class="col-6 col-sm-4 col-md-2 col-xl-6">
+                <div class="card m-1">
+                  <div class="card-body p-1">
+                    <div class="row">
+                      <div class="col">
+                        {{ $bexp->name }}
+                      </div>
+                      @if($isvisitor == false || $isboss == true)
+                      <div class="col text-right">
+                        <form method="post" action="{{ route('ps.delexp')}}">
+                          @csrf
+                          <input type="hidden" name="uid" value="{{ $user->id }}" />
+                          <input type="hidden" name="beid" value="{{ $bexp->id }}"  />
+                          <button type="submit" class="btn btn-sm btn-warning" title="remove"><i class="fa fa-times"></i></button>
+                        </form>
+                      </div>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+              </div>
+              @endforeach
+            </div>
           </div>
         </div>
       </div>
@@ -194,6 +250,9 @@
 
     $(document).ready(function() {
       $('#perfsameri').DataTable();
+      $('#bexps').DataTable({
+        "pageLength": 5
+      });
       $('#csid').select2({
           width: '100%'
       });

@@ -51,12 +51,12 @@
                           <td>{{ $atask->name }}</td>
                           <td>{{ $atask->Users->count() }}</td>
                           <td>
-                            <a href="{{ route('bauexp.staffs', ['id' => $atask->id], false) }}"><button type="button" class="btn btn-info btn-sm" title="Approve application">List</button></a>
+                            <a href="{{ route('bauexp.staffs', ['id' => $atask->id], false) }}"><button type="button" class="btn btn-info btn-sm" title="Who are they">List</button></a>
                             <button id="btnedit" type="button" class="btn btn-success btn-sm" title="Edit Partner Name"
                             data-toggle="modal" data-target="#editCfgModal"
                             data-id="{{$atask['id']}}" data-name="{{$atask['name']}}"
                             >Edit</button>
-                            <a href="{{ route('bauexp.del', ['id' => $atask->id], false) }}"><button type="button" class="btn btn-danger btn-sm" title="Approve application">Delete</button></a>
+                            <a href="{{ route('bauexp.del', ['id' => $atask->id], false) }}"><button type="button" class="btn btn-danger btn-sm" title="delete">Delete</button></a>
                           </td>
                         </tr>
                         @endforeach

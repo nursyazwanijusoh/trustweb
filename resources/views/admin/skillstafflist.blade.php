@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Staff with experience in {{ $be->name }}</div>
+                <div class="card-header">Staff with skill in {{ $be->name }}</div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="taskdetailtable" class="table table-striped table-hover">
@@ -14,15 +14,19 @@
                         <tr>
                           <th scope="col">Division</th>
                           <th scope="col">Staff Name</th>
-                          <th scope="col">Position</th>
+                          <th scope="col">Competency</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Details</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($be->Users as $atask)
+                        @foreach($pss as $atask)
                         <tr>
-                          <td>{{ $atask->unit }}</td>
-                          <td><a href="{{ route('ps.list', ['id' => $atask->id], false) }}">{{ $atask->name }}</a></td>
-                          <td>{{ $atask->jobtype }}</td>
+                          <td>{{ $atask->User->unit }}</td>
+                          <td><a href="{{ route('staff', ['id' => $atask->staff_id], false) }}">{{ $atask->User->name }}</a></td>
+                          <td>{{ $atask->slevel() }}</td>
+                          <td>{{ $atask->sStatus() }}</td>
+                          <td><a href="{{ route('ps.detail', ['psid' => $atask->id])}}"><button type="button" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-info"></i></button></a></td>
                         </tr>
                         @endforeach
                       </tbody>

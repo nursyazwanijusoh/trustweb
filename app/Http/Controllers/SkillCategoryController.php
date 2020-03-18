@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SkillCategory;
 use App\SkillType;
+use App\PersonalSkillset;
 
 use App\CommonSkillset;
 
@@ -215,6 +216,26 @@ class SkillCategoryController extends Controller
     }
 
     return $types->orderBy('name')->get(['id', 'name']);
+  }
+
+  public function staffWithSkill(Request $req){
+    if(!$req->filled('id')){
+      return redirect(route('ss.list'));
+    }
+
+    $theskill = CommonSkillset::find($req->id);
+    if($theskill){
+      $pslist = PersonalSkillset::where('common_skill_id', $req->id)->get();
+      return view('admin.skillstafflist', [
+        'be' => $theskill,
+        'pss' => $pslist
+      ]);
+    } else {
+      return redirect(route('ss.list'))->with([
+        'alert' => 'Item no longer exist',
+        'a_type' => 'danger'
+      ]);
+    }
   }
 
 }

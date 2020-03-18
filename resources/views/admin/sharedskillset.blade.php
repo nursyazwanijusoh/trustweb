@@ -90,6 +90,7 @@
                         <td>{{ $atask->name }}</td>
                         <td>{{ $atask->PersonalSkillset->count() }}</td>
                         <td>
+                          <a href="{{ route('ss.staffs', ['id' => $atask->id], false) }}"><button type="button" class="btn btn-info btn-sm" title="Show who the staffs are">List</button></a>
                           <button id="btnedit" type="button" class="btn btn-warning btn-sm" title="Edit"
                           data-toggle="modal" data-target="#editCfgModal"
                           data-id="{{$atask['id']}}" data-name="{{$atask['name']}}"
