@@ -13,7 +13,7 @@ class LdapHelper extends Controller
     $errm = 'success';
 
     $udn = "cn=$username,ou=users,o=data";
-    $hostnameSSL = env('TMLDAP_HOSTNAME', 'ldaps://idssldap.tm.com.my:636');
+    $hostnameSSL = env('TMLDAP_HOSTNAME');
     //	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
     putenv('LDAPTLS_REQCERT=never');
 
@@ -75,9 +75,10 @@ class LdapHelper extends Controller
     // do the ldap things
     $errm = 'success';
     $errorcode = 200;
-    $udn= 'cn=novabillviewerldapadmin, ou=serviceAccount, o=Telekom';
-    $password = 'nHQUbG9Z';
-    $hostnameSSL = env('TMLDAP_HOSTNAME', 'ldaps://idssldap.tm.com.my:636');
+    $adminuser = env('TMLDAP_ADMINUSER');
+    $udn= "cn=$adminuser, ou=serviceAccount, o=Telekom";
+    $password = env('TMLDAP_ADMINPASS');
+    $hostnameSSL = env('TMLDAP_HOSTNAME');
     $retdata = [];
     //	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
     putenv('LDAPTLS_REQCERT=never');
@@ -182,9 +183,10 @@ class LdapHelper extends Controller
     // do the ldap things
     $errm = 'success';
     $errorcode = 200;
-    $udn= 'cn=novabillviewerldapadmin, ou=serviceAccount, o=Telekom';
-    $password = 'nHQUbG9Z';
-    $hostnameSSL = env('TMLDAP_HOSTNAME', 'ldaps://idssldap.tm.com.my:636');
+    $adminuser = env('TMLDAP_ADMINUSER');
+    $udn= "cn=$adminuser, ou=serviceAccount, o=Telekom";
+    $password = env('TMLDAP_ADMINPASS');
+    $hostnameSSL = env('TMLDAP_HOSTNAME');
     $retdata = [];
     //	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
     putenv('LDAPTLS_REQCERT=never');
@@ -268,9 +270,10 @@ class LdapHelper extends Controller
     // do the ldap things
     $errm = 'success';
     $errorcode = 200;
-    $udn= 'cn=novabillviewerldapadmin, ou=serviceAccount, o=Telekom';
-    $password = 'nHQUbG9Z';
-    $hostnameSSL = env('TMLDAP_HOSTNAME', 'ldaps://idssldap.tm.com.my:636');
+    $adminuser = env('TMLDAP_ADMINUSER');
+    $udn= "cn=$adminuser, ou=serviceAccount, o=Telekom";
+    $password = env('TMLDAP_ADMINPASS');
+    $hostnameSSL = env('TMLDAP_HOSTNAME');
     $retdata = [];
     //	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
     putenv('LDAPTLS_REQCERT=never');
