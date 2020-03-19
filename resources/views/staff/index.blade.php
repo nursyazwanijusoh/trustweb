@@ -73,6 +73,17 @@
                       </div>
                     </a>
                   </div>
+                  @if($pscount > 0)
+                  <div class="col-6 col-xl-4 mb-1 p-1">
+                    <a href="{{ route('ps.pendingapprove') }}">
+                      <div class="card text-center text-dark bg-light">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-thumbs-o-up"></i> Approve Skillset <span class="badge badge-info">{{ $pscount }}</span></p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  @endif
                   <div class="col-6 col-xl-4 mb-1 p-1">
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-secondary">

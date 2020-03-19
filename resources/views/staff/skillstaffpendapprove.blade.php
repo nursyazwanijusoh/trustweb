@@ -6,26 +6,24 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Staff with skill in {{ $be->name }}</div>
+                <div class="card-header">Staff skills that are pending for approval</div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="taskdetailtable" class="table table-striped table-hover">
                       <thead>
                         <tr>
-                          <th scope="col">Division</th>
                           <th scope="col">Staff Name</th>
-                          <th scope="col">Competency</th>
-                          <th scope="col">Status</th>
+                          <th scope="col">Previously Approved</th>
+                          <th scope="col">New Competency</th>
                           <th scope="col">Details</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($be->PersonalSkillset as $atask)
+                        @foreach($pss as $atask)
                         <tr>
-                          <td>{{ $atask->User->unit }}</td>
                           <td><a href="{{ route('staff', ['id' => $atask->staff_id], false) }}">{{ $atask->User->name }}</a></td>
+                          <td>{{ $atask->prev_approved() }}</td>
                           <td>{{ $atask->slevel() }}</td>
-                          <td>{{ $atask->sStatus() }}</td>
                           <td><a href="{{ route('ps.detail', ['psid' => $atask->id])}}"><button type="button" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-info"></i></button></a></td>
                         </tr>
                         @endforeach

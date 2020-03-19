@@ -225,10 +225,8 @@ class SkillCategoryController extends Controller
 
     $theskill = CommonSkillset::find($req->id);
     if($theskill){
-      $pslist = PersonalSkillset::where('common_skill_id', $req->id)->get();
       return view('admin.skillstafflist', [
-        'be' => $theskill,
-        'pss' => $pslist
+        'be' => $theskill
       ]);
     } else {
       return redirect(route('ss.list'))->with([

@@ -9,6 +9,7 @@ use App\Task;
 use App\TaskCategory;
 use App\ActivityType;
 use App\User;
+use App\PersonalSkillset;
 use App\Activity;
 use App\Subordinate;
 use App\DailyPerformance;
@@ -199,6 +200,14 @@ class TStaffController extends Controller
       $todayperc = intval($calcperf);
     }
 
+    $pscoiunt = 0;
+    if($isvisitor == false){
+      // cek ada nak kena approve skillset tak
+      $subsids = User::where('report_to', $rq->user()->persno)->pluck('id');
+      $pscoiunt = PersonalSkillset::whereIn('staff_id', $subsids)
+        ->whereIn('status', ['N', 'C'])->count();
+    }
+
     $final = [
       'staff_id' => $s_staff_id,
       'chart' => $schart,
@@ -209,7 +218,8 @@ class TStaffController extends Controller
       'cds' => $cds,
       'isvisitor' => $isvisitor,
       'todaydf' => $todaydf,
-      'todayperc' => $todayperc
+      'todayperc' => $todayperc,
+      'pscount' => $pscoiunt
     ];
     // dd($final);
 

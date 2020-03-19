@@ -213,10 +213,11 @@ Route::get('/bauexp/staffs', 'BauExperienceController@staffWithExp')->name('baue
 // personal skillset
 Route::get('/user/skillset', 'PersonalSSController@listv2')->name('ps.list');
 Route::post('/user/skillset/add', 'PersonalSSController@updatev2')->name('ps.update');
-Route::get('/user/skillset/mod', 'PersonalSSController@modify')->name('ps.mod');
+Route::post('/user/skillset/mod', 'PersonalSSController@modify')->name('ps.mod');
 Route::get('/user/skillset/detail', 'PersonalSSController@detail')->name('ps.detail');
 Route::post('/user/skillset/addexp', 'PersonalSSController@addexp')->name('ps.addexp');
 Route::post('/user/skillset/delexp', 'PersonalSSController@delexp')->name('ps.delexp');
+Route::get('/user/skillset/pendingapprove', 'PersonalSSController@pendingapprove')->name('ps.pendingapprove');
 
 // temp Skillset APIs
 Route::get('/ss/api/gettype', 'SkillCategoryController@SSApiGetType')->name('ss.api.gettype');

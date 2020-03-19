@@ -16,16 +16,30 @@ class PersonalSkillset extends Model
 
   public function slevel(){
     if($this->level == 1){
-      return "Beginner";
+      return "1 - Beginner";
     } elseif($this->level == 2){
-      return "Intermediate";
+      return "2 - Intermediate";
     } elseif ($this->level == 3) {
-      return "Expert";
+      return "3 - Expert";
     } elseif ($this->level == 0) {
-      return "Deleted";
+      return "0 - N/A";
     }
 
     return $this->level . " - Unranked";
+  }
+
+  public function prev_approved(){
+    if($this->prev_level == 1){
+      return "1 - Beginner";
+    } elseif($this->prev_level == 2){
+      return "2 - Intermediate";
+    } elseif ($this->prev_level == 3) {
+      return "3 - Expert";
+    } elseif ($this->prev_level == 0) {
+      return "0 - N/A";
+    }
+
+    return $this->prev_level . " - Unranked";
   }
 
   public function sStatus(){
@@ -43,6 +57,6 @@ class PersonalSkillset extends Model
   }
 
   public function Histories(){
-    return $this->hasMany(PersSkillHistory::class);
+    return $this->hasMany(PersSkillHistory::class)->orderBy('created_at');
   }
 }

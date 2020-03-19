@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group row mb-0">
                     <div class="col text-center">
-                      <button type="submit" class="btn btn-primary">Add. No edit / delete yet</button>
+                      <button type="submit" class="btn btn-primary">Add</button>
                     </div>
                 </div>
                 <input type="hidden" name="staff_id" value="{{ $user->id }}"  />
@@ -154,13 +154,14 @@
         <div class="card mb-3">
           <div class="card-header">Experiences</div>
           <div class="card-body">
-            <div class="row">
+            <div class="row no-gutters">
               @foreach($user->BauExperiences as $bexp)
               <div class="col-6 col-sm-4 col-md-2 col-xl-6">
-                <div class="card m-1">
+              <!-- <div class="col-auto"> -->
+                <div class="card bg-light m-1">
                   <div class="card-body p-1">
                     <div class="row">
-                      <div class="col">
+                      <div class="col pl-4">
                         {{ $bexp->name }}
                       </div>
                       @if($isvisitor == false || $isboss == true)
