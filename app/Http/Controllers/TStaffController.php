@@ -10,6 +10,8 @@ use App\TaskCategory;
 use App\ActivityType;
 use App\User;
 use App\PersonalSkillset;
+use App\CommonSkillset;
+use App\BauExperience;
 use App\Activity;
 use App\Subordinate;
 use App\DailyPerformance;
@@ -397,41 +399,89 @@ class TStaffController extends Controller
   }
 
   public function rptFindStaff(Request $req){
+
+    $skilist = CommonSkillset::all();
+    $bauexp = BauExperience::all();
+    $data = 'empty';
+
     if($req->filled('input')){
       $hdrh = new \App\common\HDReportHandler;
       $data = $hdrh->findStaff($req->input);
-
-      // dd($data);
 
       if($data->count() == 1){
         $auser = $data->shift();
 
         return redirect(route('staff', ['staff_id' => $auser->id], false));
       } elseif($data->count() == 0){
-        return view('staff.find', ['result' => '404']);
-      } else {
-        return view('staff.find', ['result' => $data]);
+        $data = '404';
       }
 
-      /*
-      if($data['type'] == 'no'){
-        return redirect(route('staff', ['staff_id' => $data['data']->id], false));
-      } else {
-        if($data['data']->count() == 0){
-          return view('staff.find', ['result' => '404']);
-        } elseif ($data['data']->count() == 1) {
-          $astaff = $data['data']->shift();
-          return redirect(route('staff', ['staff_id' => $astaff->id], false));
-        } else {
-          return view('staff.find', ['result' => $data['data']]);
-        }
+    }
 
+    return view('staff.find', [
+      'result' => $data,
+      'skills' => $skilist,
+      'exps' => $bauexp
+    ]);
+  }
+
+  public function rptFindStaffWSkill(Request $req){
+
+    $result = [];
+    $heads = ['Division', 'Name', 'Position'];
+    $params = [];
+    $parame = [];
+    $skillids = [];
+    $nops = false;
+    $noexp = false;
+
+
+    $cariuser = User::query();
+
+    if($req->filled('skid')){
+      foreach ($req->skid as $key => $value) {
+        $idss = CommonSkillset::find($value);
+        array_push($heads, $idss->name);
+        array_push($params, $idss->name);
+        array_push($skillids, $idss->id);
+        $cariuser->whereIn('id', PersonalSkillset::where('common_skill_id', $value)->where('level', '!=', 0)->pluck('staff_id'));
       }
-      */
 
     } else {
-      return view('staff.find', ['result' => 'empty']);
+      $nops = true;
     }
+
+    if($req->filled('expid')){
+      $parame = BauExperience::find($req->expid)->pluck('name');
+
+      foreach ($req->expid as $key => $value) {
+        $cariuser->whereIn('id', \DB::table('bau_experience_user')->where('bau_experience_id', $value)->pluck('user_id'));
+      }
+
+    } else {
+      $noexp = true;
+    }
+
+    if($nops == true && $noexp == true){
+      return view('staff.skillfindresult', [
+        'paramskill' => ['no', 'search'],
+        'paramexp' => ['parameter', 'specified'],
+        'result' => $result,
+        'header' => ['press', 'back', 'and', 'search', 'again']
+      ]);
+    }
+
+    // get the result
+    $result = $cariuser->get();
+
+    return view('staff.skillfindresult', [
+      'paramskill' => $params,
+      'paramexp' => $parame,
+      'result' => $result,
+      'header' => $heads,
+      'skillids' => $skillids
+    ]);
+
   }
 
 }

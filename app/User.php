@@ -65,5 +65,16 @@ class User extends Authenticatable
       return BauExperience::whereNotIn('id', $this->BauExperiences->pluck('id'))->get();
     }
 
+    public function GetSkillLevel($common_skill_id){
+      $ps = PersonalSkillset::where('staff_id', $this->id)
+        ->where('common_skill_id', $common_skill_id)->first();
+
+      if($ps){
+        return $ps->slevel();
+      } else {
+        return '0 - N/A';
+      }
+    }
+
 
 }
