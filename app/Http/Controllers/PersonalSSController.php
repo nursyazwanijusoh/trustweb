@@ -36,7 +36,7 @@ class PersonalSSController extends Controller
     $skilltype = SkillType::all();
     $skills = CommonSkillset::all();
     $perskill = PersonalSkillset::where('staff_id', $sid)->where('status', '!=', 'D')->get();
-    $bauexps = BauExperience::all();
+    $bauexps = $user->NoBauExperiences();
 
     return view('staff.skillset', [
       'user' => $user,

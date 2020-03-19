@@ -60,4 +60,10 @@ class User extends Authenticatable
     public function BauExperiences(){
       return $this->belongsToMany(BauExperience::class);
     }
+
+    public function NoBauExperiences(){
+      return BauExperience::whereNotIn('id', $this->BauExperiences->pluck('id'))->get();
+    }
+
+
 }
