@@ -982,7 +982,7 @@ class GwdReportController extends Controller
     if($texp == 0){
       $avgperf = $tact > 0 ? 120 : 100;
     } else {
-      $avgperf = $tact / $texp;
+      $avgperf = $tact / $texp * 100;
     }
 
 
