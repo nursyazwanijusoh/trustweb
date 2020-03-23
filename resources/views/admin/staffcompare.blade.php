@@ -65,25 +65,26 @@
         <div class="card-body">
           <form method="POST" action="{{ route('admin.updateuserdata', [], false) }}">
             @csrf
+            <input type="hidden" name="id" value="{{ $uid }}" disabled>
             <div class="form-group">
               <label for="staff_no" class="control-label">Staff No</label>
               <input type="text" class="form-control" id="staff_no" value="{{ $ldata['staff_no'] }}" disabled>
             </div>
             <div class="form-group">
               <label for="staff_name" class="control-label">Staff Name</label>
-              <input type="text" class="form-control" id="staff_name" value="{{ $ldata['name'] }}" disabled>
+              <input type="text" class="form-control" id="staff_name" name="name" value="{{ $ldata['name'] }}" disabled>
             </div>
             <div class="form-group">
               <label for="persno" class="control-label">Personnel No</label>
-              <input type="text" class="form-control" id="persno" value="{{ $ldata['persno'] }}" disabled>
+              <input type="text" class="form-control" id="persno" name="persno" value="{{ $ldata['persno'] }}" disabled>
             </div>
             <div class="form-group">
               <label for="pporgunit" class="control-label">Org Unit</label>
-              <input type="text" class="form-control" id="pporgunit" value="{{ $ldata['pporgunit'] }} - {{ $ldata['pporgunitdesc'] }}" disabled>
+              <input type="text" class="form-control" id="pporgunit" name="lob" value="{{ $ldata['pporgunit'] }} - {{ $ldata['pporgunitdesc'] }}" disabled>
             </div>
             <div class="form-group">
               <label for="report_to" class="control-label">Report To</label>
-              <input type="text" class="form-control" id="report_to" value="{{ $ldata['report_to'] }} - {{ $ldata['report_name'] }}" disabled>
+              <input type="text" class="form-control" id="report_to" name="report_to" value="{{ $ldata['report_to'] }} - {{ $ldata['report_name'] }}" disabled>
             </div>
             <div class="form-group mb-0">
               <div class="col text-center">
@@ -101,25 +102,26 @@
         <div class="card-body">
           <form method="POST" action="{{ route('admin.updateuserdata', [], false) }}">
             @csrf
+            <input type="hidden" name="id" value="{{ $uid }}" disabled>
             <div class="form-group">
               <label for="staff_no" class="control-label">Staff No</label>
-              <input type="text" class="form-control" id="staff_no" value="S53788" disabled>
+              <input type="text" class="form-control" id="staff_no" value="{{ $staff_no }}" disabled>
             </div>
             <div class="form-group">
               <label for="staff_name" class="control-label">Staff Name</label>
-              <input type="text" class="form-control" id="staff_name" value="{{ $ldata['name'] }}" required>
+              <input type="text" class="form-control" id="staff_name" name="name" value="{{ $ldata['name'] }}" required>
             </div>
             <div class="form-group">
               <label for="persno" class="control-label">Personnel No</label>
-              <input type="text" class="form-control" id="persno" value="{{ $ldata['persno'] }}" required>
+              <input type="text" class="form-control" id="persno" name="persno" value="{{ $ldata['persno'] }}" required>
             </div>
             <div class="form-group">
               <label for="pporgunit" class="control-label">Org Unit (pporgunit only)</label>
-              <input type="text" class="form-control" id="pporgunit" value="{{ $ldata['pporgunit'] }}" required>
+              <input type="text" class="form-control" id="pporgunit" name="lob" value="{{ $ldata['pporgunit'] }}" required>
             </div>
             <div class="form-group">
               <label for="report_to" class="control-label">Report To (persno only)</label>
-              <input type="text" class="form-control" id="report_to" value="{{ $ldata['report_to'] }}" required>
+              <input type="text" class="form-control" id="report_to" name="report_to" value="{{ $ldata['report_to'] }}" required>
             </div>
             <div class="form-group mb-0">
               <div class="col text-center">
