@@ -5,7 +5,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-sm-12">
-      <div class="card mb-3">
+      <div class="card bg-success mb-3">
         <div class="card-header">Check for Staff Data</div>
         <div class="card-body">
           @if (session()->has('alert'))
