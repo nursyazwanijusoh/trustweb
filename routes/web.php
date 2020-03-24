@@ -221,8 +221,8 @@ Route::post('/user/skillset/delexp', 'PersonalSSController@delexp')->name('ps.de
 Route::get('/user/skillset/pendingapprove', 'PersonalSSController@pendingapprove')->name('ps.pendingapprove');
 
 // temp Skillset APIs
-Route::get('/ss/api/gettype', 'SkillCategoryController@SSApiGetType')->name('ss.api.gettype');
-Route::get('/ss/api/getskill', 'SkillCategoryController@SSApiGetSkill')->name('ss.api.getskill');
+Route::get('/ss/api/gettype', 'WebApiController@SSApiGetType')->name('ss.api.gettype');
+Route::get('/ss/api/getskill', 'WebApiController@SSApiGetSkill')->name('ss.api.getskill');
 
 // mobile app installers
 Route::get('/download', 'AppDownloadController@list')->name('app.list');
