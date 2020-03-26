@@ -722,6 +722,7 @@ class UserController extends Controller
         'role' => $staffdata->role,
         'pushnoti_id' => $staffdata->pushnoti_id,
         'avatar' => $staffdata->Avatar,
+        'band' => $staffdata->job_grade,
         'allowed_building' => json_decode($staffdata->allowed_building)
       ];
 
