@@ -51,7 +51,7 @@ class UserController extends Controller
         $luser->pushnoti_id = $req->pushnoti_id;
         $luser->save();
 
-        return $this->respond_json(200, 'Success', []);
+        return $this->respond_json(200, 'Success', ['user' => $luser]);
       }
 
       return $this->respond_json(403, 'Missmatched token', []);
@@ -467,8 +467,48 @@ class UserController extends Controller
 
       $user = UserRegisterHandler::attClockIn($req);
 
-      return $this->respond_json(200, 'clocked-in', $this->getStaffInfo($user));
+      return $this->respond_json(200, 'clocked-in', UserRegisterHandler::attLocHistory($req->staff_id));
 
+    }
+
+    public function updateLocation(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required'],
+        'lat' => ['required'],
+        'long' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $note = "";
+      if($req->filled('reason')){
+        $note = $req->reason;
+      }
+
+      UserRegisterHandler::attUpdateLoc($req->staff_id, $req->lat, $req->long, $note);
+
+      return $this->respond_json(200, 'location updated', UserRegisterHandler::attLocHistory($req->staff_id));
+
+    }
+
+    public function getLocHistory(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required']
+  		];
+
+      $validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      return $this->respond_json(200, 'location history', UserRegisterHandler::attLocHistory($req->staff_id));
     }
 
     public function clockOut(Request $req){
@@ -505,7 +545,7 @@ class UserController extends Controller
       $attendance = UserRegisterHandler::attClockOut($req->staff_id, $req->out_time, $lat, $long, $reason);
 
 
-      return $this->respond_json(200, 'clocked-out', $attendance);
+      return $this->respond_json(200, 'clocked-out', UserRegisterHandler::attLocHistory($req->staff_id));
 
     }
 

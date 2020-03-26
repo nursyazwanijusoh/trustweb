@@ -20,6 +20,14 @@ class DailyPerformance extends Model
 
   public function addHours($hours){
     $this->actual_hours +=  $hours;
+
+    // $this->actual_hours = $this->Activities->sum('hours_spent');
+
+    $this->save();
+  }
+
+  public function recalcHours(){
+    $this->actual_hours = GwdActivity::where('daily_performance_id', $this->id)->sum('hours_spent');
     $this->save();
   }
 

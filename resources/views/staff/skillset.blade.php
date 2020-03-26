@@ -44,7 +44,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="csid" class="col-md-4 col-form-label text-md-right">The Skill to add</label>
+                  <label for="csid" class="col-md-4 col-form-label text-md-right">Skill</label>
                   <div class="col-md-8">
                     <select class="form-control" id="csid" name="csid" required >
                       @foreach ($skills as $act)

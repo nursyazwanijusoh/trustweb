@@ -9,6 +9,7 @@ use App\Subordinate;
 use App\VerifyUser;
 use App\CommonConfig;
 use App\Attendance;
+use App\LocationHistory;
 use App\Mail\VerifyMail;
 use \Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -122,7 +123,10 @@ class UserRegisterHandler
     }
 
     if($errormsg == 'success' && $isweb == 0){
-      $user->pushnoti_id = $pushid;
+      if($pushid != ''){
+        $user->pushnoti_id = $pushid;
+      }
+      
       $user->save();
       $user['token'] = $user->createToken('trUSt')->accessToken;
     }
@@ -310,8 +314,10 @@ class UserRegisterHandler
 
     if($req->filled('reason')){
       $reason = $req->reason;
+      $reasonco = $req->reason;
     } else {
-      $reason = 're-clock in';
+      $reasonco = 're-clock in';
+      $reason = '';
     }
 
     $lat = 0;
@@ -325,10 +331,24 @@ class UserRegisterHandler
       $long = $req->long;
     }
 
+    if($req->filled('in_time')){
+      $intime = $req->in_time;
+    } else {
+      $intime = Carbon::now();
+    }
+
+    $lochist = new LocationHistory;
+    $lochist->user_id = $user->id;
+    $lochist->latitude = $lat;
+    $lochist->longitude = $long;
+    $lochist->note = $reason;
+    $lochist->action = 'Clock In';
+    $lochist->save();
+
     // double check if there's existing clock in
     if(isset($user->curr_attendance)){
       // clock out that existing attendance
-      UserRegisterHandler::attClockOut($user->id, $req->in_time, $lat, $long, $reason);
+      UserRegisterHandler::attClockOut($user->id, $intime, $lat, $long, $reasonco);
     }
 
     // create new attendance
@@ -336,7 +356,7 @@ class UserRegisterHandler
     $att->user_id = $user->id;
     $att->in_latitude = $lat;
     $att->in_longitude = $long;
-    $att->clockin_time = $req->in_time;
+    $att->clockin_time = $intime;
     $att->isvendor = $user->isvendor;
 
     if($user->isvendor == 1){
@@ -348,10 +368,27 @@ class UserRegisterHandler
     $att->save();
 
     $user->curr_attendance = $att->id;
+    $user->last_location_id = $lochist->id;
     $user->save();
 
     return $user;
 
+  }
+
+  public static function attUpdateLoc($staff_id, $lat, $long, $reason){
+    $user = User::find($staff_id);
+    if($user){
+      $lochist = new LocationHistory;
+      $lochist->user_id = $user->id;
+      $lochist->latitude = $lat;
+      $lochist->longitude = $long;
+      $lochist->note = $reason;
+      $lochist->action = 'Update Location';
+      $lochist->save();
+
+      $user->last_location_id = $lochist->id;
+      $user->save();
+    }
   }
 
   public static function attClockOut($staff_id, $time, $olat, $olong, $reason){
@@ -382,11 +419,27 @@ class UserRegisterHandler
 
       $curratt->save();
 
+      $lochist = new LocationHistory;
+      $lochist->user_id = $staff_id;
+      $lochist->latitude = $olat;
+      $lochist->longitude = $olong;
+      $lochist->note = $reason;
+      $lochist->action = 'Clock Out';
+      $lochist->save();
+
       $user->curr_attendance = null;
+      $user->last_location_id = $lochist->id;
       $user->save();
     }
 
     return $curratt;
+  }
+
+  public static function attLocHistory($staff_id){
+    $items = LocationHistory::where('user_id', $staff_id)
+      ->latest()->limit(10)->get();
+
+    return $items;
   }
 
   public static function updateStaffInfoFromJI($staffno, $staffname, $position, $reportingto, $div, $orgunit, $divid, $pporgunit, $persno, $reportpersno){

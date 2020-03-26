@@ -95,7 +95,7 @@ class GDWActions
     $act->save();
 
     // update the daily perf hours
-    $dp->addHours($req->hours);
+    $dp->recalcHours();
 
     GDWActions::updateAvatar($staff_id);
 
@@ -110,7 +110,11 @@ class GDWActions
       return "404";
     }
 
+    $act->hours_spent = $req->hours;
+    $act->save();
+
     $currdp = $act->DailyPerf;
+
 
     if($req->filled('actdate')){
       $act->activity_date = $req->actdate;
@@ -128,8 +132,6 @@ class GDWActions
       $hoursdiff = $req->hours - $act->hours_spent;
       $currdp->addHours($hoursdiff);
     }
-
-    $act->hours_spent = $req->hours;
 
     // optionals
     if($req->filled('title')){
@@ -157,13 +159,13 @@ class GDWActions
     if(!$act){
       return "404";
     }
-
-    // take out the hours from daily perf
-    $currdp = $act->DailyPerf;
-    $currdp->addHours(0 - $act->hours_spent);
-
     $staffid = $act->user_id;
+    $currdp = $act->DailyPerf;
     $act->delete();
+    // take out the hours from daily perf
+    $currdp->recalcHours();
+    // $currdp->addHours(0 - $act->hours_spent);
+
     GDWActions::updateAvatar($staffid);
 
     return "deleted";
@@ -569,7 +571,7 @@ class GDWActions
 
   // get 7 days worth of data
   public static function GetStaffRecentPerf($user_id, $daterange){
-    
+
 
     $retarr = [];
 

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
               <div class="card">
-                <div class="card-header">Where {{ $username }} has been for the past 1 month</div>
+                <div class="card-header">Where {{ $username }} has sat for the past 1 month</div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="taskdetailtable" class="table table-striped table-bordered table-hover">

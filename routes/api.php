@@ -107,6 +107,8 @@ $api->version('v1', function ($api) {
 
   $api->post('/UserClockIn',  ['as' => 'user.clockin', 'uses' => 'App\Api\V1\Controllers\UserController@clockIn']);
   $api->post('/UserClockOut',  ['as' => 'user.clockout', 'uses' => 'App\Api\V1\Controllers\UserController@clockOut']);
+  $api->post('/UserUpdateLoc',  ['as' => 'user.updateloc', 'uses' => 'App\Api\V1\Controllers\UserController@updateLocation']);
+  $api->post('/UserLocHistory',  ['as' => 'user.lochistory', 'uses' => 'App\Api\V1\Controllers\UserController@getLocHistory']);
 
   $api->get('/officeGetBuilding',  ['as' => 'office.b.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeBuilding']);
   $api->get('/officeGetFloor',  ['as' => 'office.f.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeFloor']);
@@ -138,8 +140,8 @@ $api->version('v1', [
   $api->post('/CheckinDirect',  ['as' => 'o.user.checkin.dir', 'uses' => 'App\Api\V1\Controllers\UserController@CheckinDirect']);
   $api->post('/UserFind',  ['as' => 'o.user.finda', 'uses' => 'App\Api\V1\Controllers\UserController@Find']);
   $api->post('/UserListBuilding',  ['as' => 'o.user.listbuild', 'uses' => 'App\Api\V1\Controllers\UserController@ListAllowedBuilding']);
-  $api->post('/UserClockIn',  ['as' => 'user.clockin', 'uses' => 'App\Api\V1\Controllers\UserController@clockIn']);
-  $api->post('/UserClockOut',  ['as' => 'user.clockout', 'uses' => 'App\Api\V1\Controllers\UserController@clockOut']);
+  $api->post('/UserClockIn',  ['as' => 'o.user.clockin', 'uses' => 'App\Api\V1\Controllers\UserController@clockIn']);
+  $api->post('/UserClockOut',  ['as' => 'o.user.clockout', 'uses' => 'App\Api\V1\Controllers\UserController@clockOut']);
 
 
   $api->get('/officeGetBuilding',  ['as' => 'office.b.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeBuilding']);

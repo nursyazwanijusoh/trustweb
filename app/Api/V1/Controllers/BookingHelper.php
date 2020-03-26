@@ -126,9 +126,20 @@ class BookingHelper extends Controller
 
     $cekin->save();
 
+    $okaceinfo = $this->getPlaceInfo($seat_id);
+
+    $lochist = new LocationHistory;
+    $lochist->user_id = $staff->id;
+    $lochist->latitude = $lat;
+    $lochist->longitude = $long;
+    $lochist->action = 'Agile Seat';
+    $lochist->address = $okaceinfo->loc_name;
+    $lochist->save();
+
     // update back to the staff
     $staff->curr_checkin = $cekin->id;
     $staff->last_checkin = $cekin->id;
+    $staff->last_location_id = $lochist->id;
     $staff->save();
 
     return $cekin;

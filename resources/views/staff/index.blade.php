@@ -23,6 +23,15 @@
                   @if(isset($superior))
                   Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}">{{ $superior->name }}</a><br />
                   @endif
+                  @if(isset($user->LastLocation))
+                  Last Location :<a href="https://www.google.com/maps/search/?api=1&query={{ $user->LastLocation->latitude . ',' . $user->LastLocation->longitude }}" target="_blank">
+                    @if(isset($user->LastLocation->address))
+                    {{ $user->LastLocation->address }}
+                    @else
+                    See in map
+                    @endif
+                  </a> at {{ $user->LastLocation->created_at }}<br />
+                  @endif
                 </p>
               </div>
             </div></div>
@@ -68,7 +77,7 @@
                     <a href="{{ route('ps.list', ['staff_id' => $staff_id ], false) }}">
                       <div class="card text-center text-dark bg-warning">
                         <div class="card-body">
-                          <p class="card-text"><i class="fa fa-wheelchair-alt"></i> Skill Competency</p>
+                          <p class="card-text"><img src="/img/competency.png" height="14em" width="14em" alt="" title="" /> Skill Competency</p>
                         </div>
                       </div>
                     </a>
@@ -85,14 +94,19 @@
                   </div>
                   @endif
                   <div class="col-6 col-xl-4 mb-1 p-1">
+                    <a href="{{ route('clock.list', ['staff_id' => $staff_id], false) }}">
+                      <div class="card text-center text-white bg-dark">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-street-view"></i> Clock-Ins</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-6 col-xl-4 mb-1 p-1">
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-secondary">
                         <div class="card-body">
-                          @if($isvisitor == false)
-                          <p class="card-text"><i class="fa fa-map-marker"></i> Where I've Been</p>
-                          @else
-                          <p class="card-text"><i class="fa fa-map-marker"></i> Where This Person Has Been</p>
-                          @endif
+                          <p class="card-text"><i class="fa fa-check-square-o"></i> Hot-desk History</p>
                         </div>
                       </div>
                     </a>
@@ -166,10 +180,11 @@
             <div class="card">
               <div class="card-header">My Subordinate</div>
               <div class="card-body">
-                <div class="card-columns">
+                <div class="row">
                   @foreach($subords as $asub)
+                  <div class="col-md-4 col-sm-6">
                   @if($asub['status'] != 0)
-                  <div class="card text-center">
+                  <div class="card mb-3 text-center">
                     <a href="{{ route('staff', ['staff_id' => $asub['staff_id']], false) }}">
                     <div class="card-body">
                       <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
@@ -181,13 +196,14 @@
                     </a>
                   </div>
                   @else
-                  <div class="card text-center text-white bg-secondary">
+                  <div class="card mb-3 text-center text-white bg-secondary">
                     <div class="card-body">
                       <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
                       <p class="card-text">{{ $asub['name'] }}</p>
                     </div>
                   </div>
                   @endif
+                  </div>
                   @endforeach
                 </div>
               </div>

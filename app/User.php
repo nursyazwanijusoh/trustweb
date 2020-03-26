@@ -76,5 +76,8 @@ class User extends Authenticatable
       }
     }
 
+    public function LastLocation(){
+      return $this->hasOne(LocationHistory::class, 'id', 'last_location_id');
+    }
 
 }
