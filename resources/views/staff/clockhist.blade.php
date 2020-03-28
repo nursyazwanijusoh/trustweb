@@ -93,10 +93,10 @@ li.tlbg {
                 <div id="batens" class="form-group hidden row mb-0">
                     <div class="col text-center">
                       @if(isset($user->curr_attendance))
-                      <button type="submit" class="btn btn-success" name="action" value="updateloc" title="Bagitau boss skrg kat mana">Update Location</button>
-                      <button type="submit" class="btn btn-warning" name="action" value="clockout" title="Keluar">Clock Out</button>
+                      <button type="submit" class="btn btn-success" name="action" value="updateloc" title="Bagitau boss skrg kat mana">Update FlexiSpace</button>
+                      <button type="submit" class="btn btn-warning" name="action" value="clockout" title="Keluar">Check-in for FlexiSpace</button>
                       @else
-                      <button type="submit" class="btn btn-primary" name="action" value="clockin" title="Masuk">Clock In</button>
+                      <button type="submit" class="btn btn-primary" name="action" value="clockin" title="Masuk">Check-out for FlexiSpace</button>
                       @endif
                     </div>
                 </div>
