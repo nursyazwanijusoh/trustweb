@@ -99,8 +99,8 @@ Route::post('/user/closetask', 'TStaffController@closeTask')->name('staff.closet
 Route::get('/user/lochist', 'TStaffController@locHistory')->name('staff.lochist');
 
 // clockins
-Route::get('/user/clocks', 'LocationHistoryController@list')->name('clock.list');
-Route::post('/user/clockins', 'LocationHistoryController@clockin')->name('clock.in');
+Route::get('/user/location', 'LocationHistoryController@list')->name('clock.list');
+Route::post('/user/location/cekin', 'LocationHistoryController@clockin')->name('clock.in');
 
 // GWD V2
 
