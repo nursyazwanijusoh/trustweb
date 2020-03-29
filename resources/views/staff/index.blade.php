@@ -46,7 +46,7 @@
                     <a href="{{ route('clock.list', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-dark">
                         <div class="card-body">
-                          <p class="card-text"><i class="fa fa-street-view"></i> Location History</p>
+                          <p class="card-text"><i class="fa fa-street-view"></i> Check-in Location</p>
                         </div>
                       </div>
                     </a>
