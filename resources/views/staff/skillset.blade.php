@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group row mb-0">
                     <div class="col text-center">
-                      <button type="submit" class="btn btn-primary" title="Tambah banyak2 supaya tak nampak cam lepasan SPM sangat">Add</button>
+                      <button type="submit" class="btn btn-primary" title="Tambah kemahiran">Add</button>
                     </div>
                 </div>
                 <input type="hidden" name="staff_id" value="{{ $user->id }}"  />

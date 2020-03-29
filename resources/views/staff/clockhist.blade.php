@@ -68,7 +68,7 @@ li.tlbg {
       @if($isvisitor == false)
       <div class="col-12">
         <div class="card mb-3">
-            <div class="card-header">Clock-In (prototype. please use the trUSt mobile app instead)</div>
+            <div class="card-header">Check-in Location (prototype. please use the trUSt mobile app instead)</div>
             <div class="card-body">
               @if (session()->has('alert'))
               <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
@@ -93,10 +93,10 @@ li.tlbg {
                 <div id="batens" class="form-group hidden row mb-0">
                     <div class="col text-center">
                       @if(isset($user->curr_attendance))
-                      <button type="submit" class="btn btn-success" name="action" value="updateloc" title="Bagitau boss skrg kat mana">Update FlexiSpace</button>
-                      <button type="submit" class="btn btn-warning" name="action" value="clockout" title="Keluar">Check-in for FlexiSpace</button>
+                      <button type="submit" class="btn btn-success" name="action" value="updateloc" title="Tukar Tempat">Update Location</button>
+                      <button type="submit" class="btn btn-warning" name="action" value="clockout" title="Keluar">Check-out Location</button>
                       @else
-                      <button type="submit" class="btn btn-primary" name="action" value="clockin" title="Masuk">Check-out for FlexiSpace</button>
+                      <button type="submit" class="btn btn-primary" name="action" value="clockin" title="Masuk">Check-in Location</button>
                       @endif
                     </div>
                 </div>
@@ -108,7 +108,7 @@ li.tlbg {
       @endif
       <div class="col-12">
         <div class="card bg-light mb-3">
-          <div class="card-header">Recent 'Transactions'</div>
+          <div class="card-header">Recent Check-ins</div>
           <div class="card-body">
             <ul class="timeline">
               @foreach($lochist as $psh)

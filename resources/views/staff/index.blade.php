@@ -42,6 +42,24 @@
                 <!-- <h5 class="card-title">Action</h5> -->
 
                 <div class="row">
+                  <div class="col-6 col-xl-4 mb-1 p-1">
+                    <a href="{{ route('clock.list', ['staff_id' => $staff_id], false) }}">
+                      <div class="card text-center text-white bg-dark">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-street-view"></i> Location History</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-6 col-xl-4 mb-1 p-1">
+                    <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
+                      <div class="card text-center text-white bg-secondary">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-check-square-o"></i> Workspace History</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
                   @if($isvisitor == false)
                   <div class="col-6 col-xl-4 mb-1 p-1">
                     <a href="{{ route('staff.addact', [], false) }}">
@@ -58,21 +76,12 @@
                     <a href="{{ route('report.agm.recent', ['agm_id' => $user->id ], false) }}">
                       <div class="card text-center text-white bg-primary">
                         <div class="card-body">
-                          <p class="card-text"><i class="fa fa-people"></i> Team Summary</p>
+                          <p class="card-text"><i class="fa fa-people"></i> Team Productivity</p>
                         </div>
                       </div>
                     </a>
                   </div>
                   @endif
-                  <div class="col-6 col-xl-4 mb-1 p-1">
-                    <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}">
-                      <div class="card text-center text-white bg-info">
-                        <div class="card-body">
-                          <p class="card-text"><i class="fa fa-list-alt"></i> Monthly Activities</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
                   <div class="col-6 col-xl-4 mb-1 p-1">
                     <a href="{{ route('ps.list', ['staff_id' => $staff_id ], false) }}">
                       <div class="card text-center text-dark bg-warning">
@@ -94,19 +103,10 @@
                   </div>
                   @endif
                   <div class="col-6 col-xl-4 mb-1 p-1">
-                    <a href="{{ route('clock.list', ['staff_id' => $staff_id], false) }}">
-                      <div class="card text-center text-white bg-dark">
+                    <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}">
+                      <div class="card text-center text-white bg-info">
                         <div class="card-body">
-                          <p class="card-text"><i class="fa fa-street-view"></i> Clock-Ins</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  <div class="col-6 col-xl-4 mb-1 p-1">
-                    <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
-                      <div class="card text-center text-white bg-secondary">
-                        <div class="card-body">
-                          <p class="card-text"><i class="fa fa-check-square-o"></i> Hot-desk History</p>
+                          <p class="card-text"><i class="fa fa-list-alt"></i> Diary Entries</p>
                         </div>
                       </div>
                     </a>

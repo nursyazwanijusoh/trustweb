@@ -126,7 +126,7 @@ class UserRegisterHandler
       if($pushid != ''){
         $user->pushnoti_id = $pushid;
       }
-      
+
       $user->save();
       $user['token'] = $user->createToken('trUSt')->accessToken;
     }
@@ -342,7 +342,7 @@ class UserRegisterHandler
     $lochist->latitude = $lat;
     $lochist->longitude = $long;
     $lochist->note = $reason;
-    $lochist->action = 'Clock In';
+    $lochist->action = 'Check-in';
     $lochist->save();
 
     // double check if there's existing clock in
@@ -424,7 +424,7 @@ class UserRegisterHandler
       $lochist->latitude = $olat;
       $lochist->longitude = $olong;
       $lochist->note = $reason;
-      $lochist->action = 'Clock Out';
+      $lochist->action = 'Check-out';
       $lochist->save();
 
       $user->curr_attendance = null;
