@@ -490,7 +490,13 @@ class UserController extends Controller
         $note = $req->reason;
       }
 
-      UserRegisterHandler::attUpdateLoc($req->staff_id, $req->lat, $req->long, $note);
+      if($req->filled('address')){
+        $address = $req->address;
+      } else {
+        $address = '';
+      }
+
+      UserRegisterHandler::attUpdateLoc($req->staff_id, $req->lat, $req->long, $note, $address);
 
       return $this->respond_json(200, 'location updated', UserRegisterHandler::attLocHistory($req->staff_id));
 
@@ -527,7 +533,7 @@ class UserController extends Controller
       if($req->filled('reason')){
         $reason = $req->reason;
       } else {
-        $reason = 'clock-out';
+        $reason = '';
       }
 
       $lat = 0;
@@ -541,8 +547,14 @@ class UserController extends Controller
         $long = $req->long;
       }
 
+      if($req->filled('address')){
+        $address = $req->address;
+      } else {
+        $address = '';
+      }
+
       $this->bh->checkOut($req->staff_id);
-      $attendance = UserRegisterHandler::attClockOut($req->staff_id, $req->out_time, $lat, $long, $reason);
+      $attendance = UserRegisterHandler::attClockOut($req->staff_id, $req->out_time, $lat, $long, $reason, $address);
 
 
       return $this->respond_json(200, 'clocked-out', UserRegisterHandler::attLocHistory($req->staff_id));

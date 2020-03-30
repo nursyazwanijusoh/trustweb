@@ -316,7 +316,7 @@ class UserRegisterHandler
       $reason = $req->reason;
       $reasonco = $req->reason;
     } else {
-      $reasonco = 're-clock in';
+      $reasonco = 're check-in';
       $reason = '';
     }
 
@@ -337,18 +337,32 @@ class UserRegisterHandler
       $intime = Carbon::now();
     }
 
+    if($req->filled('address')){
+      $address = $req->address;
+    } else {
+      $address = '';
+    }
+
     $lochist = new LocationHistory;
     $lochist->user_id = $user->id;
     $lochist->latitude = $lat;
     $lochist->longitude = $long;
-    $lochist->note = $reason;
+
+    if($reason != ''){
+      $lochist->note = $reason;
+    }
+
+    if($address != ''){
+      $lochist->address = $address;
+    }
+
     $lochist->action = 'Check-in';
     $lochist->save();
 
     // double check if there's existing clock in
     if(isset($user->curr_attendance)){
       // clock out that existing attendance
-      UserRegisterHandler::attClockOut($user->id, $intime, $lat, $long, $reasonco);
+      UserRegisterHandler::attClockOut($user->id, $intime, $lat, $long, $reasonco, $address);
     }
 
     // create new attendance
@@ -375,14 +389,22 @@ class UserRegisterHandler
 
   }
 
-  public static function attUpdateLoc($staff_id, $lat, $long, $reason){
+  public static function attUpdateLoc($staff_id, $lat, $long, $reason, $address = ''){
     $user = User::find($staff_id);
     if($user){
       $lochist = new LocationHistory;
       $lochist->user_id = $user->id;
       $lochist->latitude = $lat;
       $lochist->longitude = $long;
-      $lochist->note = $reason;
+
+      if($reason != ''){
+        $lochist->note = $reason;
+      }
+
+      if($address != ''){
+        $lochist->address = $address;
+      }
+
       $lochist->action = 'Update Location';
       $lochist->save();
 
@@ -391,7 +413,7 @@ class UserRegisterHandler
     }
   }
 
-  public static function attClockOut($staff_id, $time, $olat, $olong, $reason){
+  public static function attClockOut($staff_id, $time, $olat, $olong, $reason, $address = ''){
     $user = User::find($staff_id);
     if(isset($user->curr_attendance)){
       $curratt = Attendance::find($user->curr_attendance);
@@ -423,13 +445,23 @@ class UserRegisterHandler
       $lochist->user_id = $staff_id;
       $lochist->latitude = $olat;
       $lochist->longitude = $olong;
-      $lochist->note = $reason;
+
+      if($reason != ''){
+        $lochist->note = $reason;
+      }
+
+      if($address != ''){
+        $lochist->address = $address;
+      }
+
       $lochist->action = 'Check-out';
       $lochist->save();
 
       $user->curr_attendance = null;
       $user->last_location_id = $lochist->id;
       $user->save();
+    } else {
+      $curratt = 'Not currently checked-in';
     }
 
     return $curratt;

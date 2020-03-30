@@ -117,10 +117,10 @@ li.tlbg {
                   <h2 class="h5 mb-0">{!! $psh->action !!}. <a href="https://www.google.com/maps/search/?api=1&query={{ $psh->latitude . ',' . $psh->longitude }}" target="_blank" class="text-success">See in map</a></h2>
                   <span class="small text-secondary"><i class="fa fa-clock-o mr-1"></i>{{ $psh->created_at }}</span>
                   @if(isset($psh->note))
-                  <p class="text-small mt-2 font-weight-light">{{ $psh->note }}</p>
+                  <p class="text-small my-1 font-weight-light">{{ $psh->note }}</p>
                   @endif
                   @if(isset($psh->address))
-                  <p class="text-small mt-2 font-weight-light">Location: {{ $psh->address }}</p>
+                  <p class="text-small my-1  font-weight-light">Location: {{ $psh->address }}</p>
                   @endif
               </li>
               @endforeach
@@ -132,6 +132,7 @@ li.tlbg {
 </div>
 @endsection
 
+@if($isvisitor == false)
 @section('page-js')
 <script type="text/javascript">
 
@@ -182,3 +183,4 @@ $(document).ready(function() {
 
 </script>
 @endsection
+@endif
