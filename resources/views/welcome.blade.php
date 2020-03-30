@@ -72,7 +72,7 @@
                 <!-- <!-- Uncomment below if you prefer to use an image logo
                 <a class="v1" href="#body"><img src="/welcome/img/TM_LOGO.png" height="40" width="100" alt="" title=""
                         style="padding-right: 20px;" /></a> -->
-                <a href="#body"><img src="/welcome/img/TrustNew.png" height="60" width="80" alt="" title="" /></a>
+                <a href="#body"><img src="/welcome/img/TrustNew.png" height="40" width="60" alt="" title="" /></a>
             </div>
 
             <nav id="nav-menu-container">
@@ -198,7 +198,7 @@
                     <div class="col-lg-6">
                         <div class="box wow fadeInLeft bg-primary rounded" data-wow-delay="0.2s">
                             <div class="icon"><i class="fa fa-sign-in"></i></div>
-                            <h4 class="title"><a href="">Check In</a></h4>
+                            <h4 class="title"><a href="">Agile Workspace</a></h4>
                             <p class="description">Enable employees to check in at any hot desk by scaning the QR code.
                             </p>
                         </div>
@@ -206,24 +206,24 @@
 
                     <div class="col-lg-6">
                         <div class="box wow fadeInLeft bg-success rounded" data-wow-delay="0.2s">
-                            <div class="icon"><i class="fa fa-eye"></i></div>
-                            <h4 class="title"><a href="">View seat availability</a></h4>
-                            <p class="description">Display number of available seats at each office location .</p>
+                            <div class="icon"><i class="fa fa-pencil-square-o"></i></div>
+                            <h4 class="title"><a href="">Diary</a></h4>
+                            <p class="description">Record the tasks that you have performed for the day.</p>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="box wow fadeInLeft bg-warning rounded" data-wow-delay="0.2s">
-                            <div class="icon"><i class="fa fa-sign-out"></i></div>
-                            <h4 class="title"><a href="">Check Out</a></h4>
-                            <p class="description">Allow employees to check out from current desk anywhere.</p>
+                            <div class="icon"><i class="fa fa-location-arrow"></i></div>
+                            <h4 class="title"><a href="">Flexi Space</a></h4>
+                            <p class="description">Check-in your current working location.</p>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="box wow fadeInLeft bg-info shadow rounded">
                             <div class="icon"><i class="fa fa-search"></i></div>
-                            <h4 class="title"><a href="">Searh Person</a></h4>
-                            <p class="description">Search a person based on name locate the person whereabouts.</p>
+                            <h4 class="title"><a href="">Staff Finder</a></h4>
+                            <p class="description">Search a staff to see their relevant information.</p>
                         </div>
                     </div>
 

@@ -39,7 +39,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-weight: 400;
   margin: 0 0 20px 0;
   padding: 0;
@@ -123,8 +123,8 @@ h6 {
 --------------------------------------------------------------*/
 
 #header {
-  padding: 20px 0;
-  height: 85px;
+  padding: 10px 0;
+  height: 60px;
   transition: all 0.5s;
   z-index: 997;
   background: #fff;

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center no-gutters">
           @if($isvisitor == false)
           <div class="col-lg-5">

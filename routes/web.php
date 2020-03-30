@@ -21,6 +21,7 @@ Route::get('/postreg', 'HomeController@postreg')->name('postreg');
 Route::get('/resend', 'HomeController@resend')->name('verification.resend');
 Route::get('/delete', 'HomeController@troll')->name('troll');
 Route::get('/info', 'HomeController@info')->name('info');
+Route::get('/hallofflame', 'HomeController@hallofshame')->name('hofs');
 
 Route::get('/booking_faq', 'HomeController@booking_faq')->name('booking_faq');
 

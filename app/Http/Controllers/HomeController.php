@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\VerifyMail;
 use App\User;
 use App\Partner;
+use App\DailyPerformance;
 
 class HomeController extends Controller
 {
@@ -99,6 +100,18 @@ class HomeController extends Controller
     public function info(){
       return redirect(route('app.list', [], false));
 
+    }
+
+    public function hallofshame(Request $req){
+      $today = date('Y-m-d');
+      $dtop10 = DailyPerformance::whereDate('record_date', $today)
+        ->orderBy('actual_hours', 'DESC')
+        ->limit(10)->get();
+
+
+      return view('halloffame', [
+        'diarytop10' => $dtop10
+      ]);
     }
 
 }
