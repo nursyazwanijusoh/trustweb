@@ -976,7 +976,7 @@ class GwdReportController extends Controller
       $texp += $apers['avg']['expected'];
       array_push($lbl, $apers['name']);
       array_push($val, $apers['avg']['perc']);
-      array_push($targ, 75);
+      array_push($targ, 80);
     }
 
     if($texp == 0){
@@ -995,7 +995,7 @@ class GwdReportController extends Controller
            [
              'label' => 'Productivity %',
              'data' => $val,
-             'backgroundColor' => "rgba(255, 255, 0, 0.5)",
+             'backgroundColor' => "rgba(1, 155, 144, 0.5)",
              'borderColor' => "rgba(51, 51, 204, 0.7)"
            ], [
              'label' => 'Target',
