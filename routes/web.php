@@ -216,6 +216,12 @@ Route::post('/bauexp/edit', 'BauExperienceController@edit')->name('bauexp.edit')
 Route::get('/bauexp/del', 'BauExperienceController@del')->name('bauexp.del');
 Route::get('/bauexp/staffs', 'BauExperienceController@staffWithExp')->name('bauexp.staffs');
 
+Route::get('/bauexp/role/list', 'JobscopeController@list')->name('bauexp.role.list');
+Route::post('/bauexp/role/add', 'JobscopeController@add')->name('bauexp.role.add');
+Route::post('/bauexp/role/edit', 'JobscopeController@edit')->name('bauexp.role.edit');
+Route::get('/bauexp/role/del', 'JobscopeController@del')->name('bauexp.role.del');
+
+
 // personal skillset
 Route::get('/user/skillset', 'PersonalSSController@listv2')->name('ps.list');
 Route::post('/user/skillset/add', 'PersonalSSController@updatev2')->name('ps.update');
