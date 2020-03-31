@@ -9,9 +9,9 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
       @if($isvisitor == false || $isboss == true)
-      <div class="col-lg-5">
+      <div class="col-xl-5">
         <div class="card mb-3">
-            <div class="card-header">Add Skill To Your Arsenal</div>
+            <div class="card-header bg-info text-white">Add Skill To Your Arsenal</div>
             <div class="card-body">
               @if (session()->has('alert'))
               <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
@@ -89,7 +89,7 @@
       @endif
       <div class="col-xl-7">
         <div class="card mb-3">
-          <div class="card-header">Current Skillset for <a href="{{ route('staff', ['staff_id' => $user->id ])}}">{{ $user->name }}</a></div>
+          <div class="card-header  bg-info text-white">Current Skillset for <a class="badge badge-secondary" href="{{ route('staff', ['staff_id' => $user->id ])}}">{{ $user->name }}</a></div>
           <div class="card-body">
             <div class="table-responsive">
               <table id="perfsameri" class="table table-striped table-hover table-bordered">
@@ -121,53 +121,63 @@
         </div>
       </div>
       @if($isvisitor == false || $isboss == true)
-      <div class="col-lg-6">
+      <div class="col-xl-6">
         <div class="card mb-3">
-          <div class="card-header">Add Past Experience</div>
+          <div class="card-header bg-success text-white">Add Past Involvement</div>
           <div class="card-body">
-            <div class="table-responsive">
-              <table id="bexps" class="table table-striped table-hover table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Systems</th>
-                    <th scope="col">Add</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($bes as $acts)
-                  <tr>
-                    <td class="py-1">{{ $acts->name }}</td>
-                    <td class="py-1"><form method="post" action="{{ route('ps.addexp')}}">
-                      @csrf
-                      <input type="hidden" name="uid" value="{{ $user->id }}" />
-                      <input type="hidden" name="beid" value="{{ $acts->id }}"  />
-                      <button type="submit" class="btn btn-sm btn-success" title="add"><i class="fa fa-plus"></i></button>
-                    </form></td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
+            <form method="POST" action="{{ route('ps.addexp', [], false) }}">
+              @csrf
+              <div class="form-group row">
+                <label for="bauid" class="col-md-4 col-form-label text-md-right">Project / BAU System</label>
+                <div class="col-md-8">
+                  <select class="form-control" id="bauid" name="bauid" required >
+                    @foreach ($bes as $act)
+                    <option value="{{ $act->id }}" title="{{ $act->name }}" >{{ $act->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="roleid" class="col-md-4 col-form-label text-md-right">Roles</label>
+                <div class="col-md-8">
+                  <select class="form-control" id="roleid" name="roleid[]" multiple required >
+                    <option disabled>You can select multiple roles</option>
+                    @foreach ($jobskop as $act)
+                    <option value="{{ $act->id }}" title="{{ $act->hint }}" >{{ $act->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row mb-0">
+                  <div class="col text-center">
+                    <button type="submit" class="btn btn-primary" title="Tambah Pengalaman">Add / Edit</button>
+                  </div>
+              </div>
+              <input type="hidden" name="staff_id" value="{{ $user->id }}"  />
+            </form>
           </div>
         </div>
       </div>
       @endif
-      <div class="col-xl-4">
+      <div class="col-xl-5">
         <div class="card mb-3">
-          <div class="card-header">Experiences</div>
-          <div class="card-body">
+          <div class="card-header bg-success text-white">Experiences</div>
+          <div class="card-body p-1">
             <div class="row no-gutters">
-              @foreach($user->BauExperiences as $bexp)
-              <div class="col-6 col-sm-4 col-md-2 col-xl-6">
+              @foreach($pastexps as $bexp)
+              <div class="col-6 col-sm-4 col-md-3 col-xl-6">
               <!-- <div class="col-auto"> -->
                 <div class="card bg-light m-1">
                   <div class="card-body p-1">
                     <div class="row">
-                      <div class="col pl-4">
-                        {{ $bexp->name }}
+                      <div class="col">
+                        <span class="font-weight-bold">{{ $bexp->BauExp->name }}</span>
+                        @foreach($bexp->roles as $ruol)
+                        <p class="small my-1 text-secondary">{{ $ruol->name }}</p>
+                        @endforeach
                       </div>
                       @if($isvisitor == false || $isboss == true)
-                      <div class="col text-right">
+                      <div class="col-4 text-right">
                         <form method="post" action="{{ route('ps.delexp')}}">
                           @csrf
                           <input type="hidden" name="uid" value="{{ $user->id }}" />
@@ -259,6 +269,12 @@
         "pageLength": 5
       });
       $('#csid').select2({
+          width: '100%'
+      });
+      $('#bauid').select2({
+          width: '100%'
+      });
+      $('#roleid').select2({
           width: '100%'
       });
     } );

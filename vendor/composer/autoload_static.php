@@ -637,6 +637,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Http\\Controllers\\GwdActivityController' => __DIR__ . '/../..' . '/app/Http/Controllers/GwdActivityController.php',
         'App\\Http\\Controllers\\GwdReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/GwdReportController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\JobscopeController' => __DIR__ . '/../..' . '/app/Http/Controllers/JobscopeController.php',
         'App\\Http\\Controllers\\LeaveTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/LeaveTypeController.php',
         'App\\Http\\Controllers\\LocationHistoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/LocationHistoryController.php',
         'App\\Http\\Controllers\\OfficeController' => __DIR__ . '/../..' . '/app/Http/Controllers/OfficeController.php',

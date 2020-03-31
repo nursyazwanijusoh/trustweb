@@ -228,6 +228,7 @@ Route::post('/user/skillset/add', 'PersonalSSController@updatev2')->name('ps.upd
 Route::post('/user/skillset/mod', 'PersonalSSController@modify')->name('ps.mod');
 Route::get('/user/skillset/detail', 'PersonalSSController@detail')->name('ps.detail');
 Route::post('/user/skillset/addexp', 'PersonalSSController@addexp')->name('ps.addexp');
+Route::post('/user/skillset/editexp', 'PersonalSSController@editexp')->name('ps.editexp');
 Route::post('/user/skillset/delexp', 'PersonalSSController@delexp')->name('ps.delexp');
 Route::get('/user/skillset/pendingapprove', 'PersonalSSController@pendingapprove')->name('ps.pendingapprove');
 

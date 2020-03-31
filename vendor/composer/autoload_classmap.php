@@ -55,6 +55,7 @@ return array(
     'App\\Http\\Controllers\\GwdActivityController' => $baseDir . '/app/Http/Controllers/GwdActivityController.php',
     'App\\Http\\Controllers\\GwdReportController' => $baseDir . '/app/Http/Controllers/GwdReportController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'App\\Http\\Controllers\\JobscopeController' => $baseDir . '/app/Http/Controllers/JobscopeController.php',
     'App\\Http\\Controllers\\LeaveTypeController' => $baseDir . '/app/Http/Controllers/LeaveTypeController.php',
     'App\\Http\\Controllers\\LocationHistoryController' => $baseDir . '/app/Http/Controllers/LocationHistoryController.php',
     'App\\Http\\Controllers\\OfficeController' => $baseDir . '/app/Http/Controllers/OfficeController.php',

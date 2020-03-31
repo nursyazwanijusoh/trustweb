@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SkillCategory;
 use App\SkillType;
+use App\Jobscope;
+use App\Involvement;
 use App\CommonSkillset;
 use App\PersonalSkillset;
 use App\PersSkillHistory;
@@ -36,7 +38,9 @@ class PersonalSSController extends Controller
     $skilltype = SkillType::all();
     $skills = CommonSkillset::all();
     $perskill = PersonalSkillset::where('staff_id', $sid)->where('status', '!=', 'D')->get();
-    $bauexps = $user->NoBauExperiences();
+    $pastexps = Involvement::where('user_id', $sid)->get();
+    $bauexps = BauExperience::all();
+    $jobscop = Jobscope::all();
 
     return view('staff.skillset', [
       'user' => $user,
@@ -46,7 +50,9 @@ class PersonalSSController extends Controller
       'pskills' => $perskill,
       'isvisitor' => $isvisitor,
       'isboss' => $isboss,
-      'bes' => $bauexps
+      'bes' => $bauexps,
+      'jobskop' => $jobscop,
+      'pastexps' => $pastexps
     ]);
 
   }
@@ -231,8 +237,10 @@ class PersonalSSController extends Controller
 
   public function addexp(Request $req){
 
-    if($req->user()->id != $req->uid){
-      if(\App\common\UserRegisterHandler::isInReportingLine($req->uid, $req->user()->id)){
+    // dd($req->all());
+
+    if($req->user()->id != $req->staff_id){
+      if(\App\common\UserRegisterHandler::isInReportingLine($req->staff_id, $req->user()->id)){
       } else {
         // added by someone not relevant
         return redirect()->back()->with([
@@ -242,17 +250,44 @@ class PersonalSSController extends Controller
       }
     }
 
-    $user = User::find($req->uid);
+    $user = User::find($req->staff_id);
     if($user){
-      $user->BauExperiences()->attach($req->beid);
-      return redirect(route('ps.list', ['staff_id' => $req->uid]))
-        ->with([
-          'alert' => 'New experince added',
-          'a_type' => 'success'
-        ]);
+
+      // check for existing exp
+      $existing = Involvement::where('user_id', $user->id)
+        ->where('bau_experience_id', $req->bauid)->first();
+
+      if($existing){
+
+        $existing->roles()->sync($req->roleid);
+
+        return redirect(route('ps.list', ['staff_id' => $req->staff_id]))
+          ->with([
+            'alert' => 'Experience roles updated',
+            'a_type' => 'info'
+          ]);
+      } else {
+        $neu = new Involvement;
+        $neu->user_id = $user->id;
+        $neu->added_by = $req->user()->id;
+        $neu->bau_experience_id = $req->bauid;
+        $neu->save();
+        $neu->roles()->sync($req->roleid);
+
+        return redirect(route('ps.list', ['staff_id' => $req->staff_id]))
+          ->with([
+            'alert' => 'New experince added',
+            'a_type' => 'success'
+          ]);
+      }
+
     } else {
       return redirect(route('staff'));
     }
+  }
+
+  public function editexp(Request $req){
+
   }
 
   public function delexp(Request $req){
@@ -268,16 +303,20 @@ class PersonalSSController extends Controller
       }
     }
 
-    $user = User::find($req->uid);
-    if($user){
-      $user->BauExperiences()->detach($req->beid);
+    $exp = Involvement::find($req->beid);
+    if($exp){
+      $exp->delete();
       return redirect(route('ps.list', ['staff_id' => $req->uid]))
         ->with([
           'alert' => 'Experince removed',
           'a_type' => 'secondary'
         ]);
     } else {
-      return redirect(route('staff'));
+      return redirect(route('ps.list', ['staff_id' => $req->uid]))
+        ->with([
+          'alert' => 'Experince no longer in the list',
+          'a_type' => 'warning'
+        ]);
     }
   }
 

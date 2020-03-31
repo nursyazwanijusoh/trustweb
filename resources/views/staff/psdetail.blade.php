@@ -127,7 +127,9 @@ li.tlbg {
               <li class="timeline-item rounded ml-3 p-3 shadow tlbg">
                   <div class="timeline-arrow"></div>
                   <h2 class="h5 mb-0">{!! $psh->GetPreText() !!} <a href="{{ route('staff', ['staff_id' => $psh->ActBy->id], false) }}"  class="text-success">{{ $psh->ActBy->name }}</a> {!! $psh->GetPostText() !!}</h2><span class="small text-secondary"><i class="fa fa-clock-o mr-1"></i>{{ date_format($psh->created_at, 'D, d M, Y')}}</span>
-                  <p class="text-small mt-2 font-weight-light">{{ $psh->remark }}</p>
+                  @if( $psh->remark ?? '' )
+                  <p class="text-small mt-2 font-weight-light my-1">{{ $psh->remark }}</p>
+                  @endif
               </li>
               @endforeach
             </ul>

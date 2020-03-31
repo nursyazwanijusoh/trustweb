@@ -57,6 +57,6 @@ class PersonalSkillset extends Model
   }
 
   public function Histories(){
-    return $this->hasMany(PersSkillHistory::class)->orderBy('created_at');
+    return $this->hasMany(PersSkillHistory::class)->orderBy('created_at', 'DESC');
   }
 }
