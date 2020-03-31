@@ -9,6 +9,7 @@ use App\Task;
 use App\TaskCategory;
 use App\ActivityType;
 use App\User;
+use App\Involvement;
 use App\PersonalSkillset;
 use App\CommonSkillset;
 use App\BauExperience;
@@ -488,17 +489,15 @@ class TStaffController extends Controller
 
     $psl = [];
     $exp = [];
-    $heads = ['Division', 'Name', 'Position', 'Skill / Exp', 'Rating / Role'];
     $params = [];
     $parame = [];
     $skillids = [];
     $nops = false;
-    $noexp = true;
+    $noexp = false;
 
     if($req->filled('skid')){
       foreach ($req->skid as $key => $value) {
         $idss = CommonSkillset::find($value);
-        array_push($heads, $idss->name);
         array_push($params, $idss->name);
         array_push($skillids, $idss->id);
 
@@ -526,23 +525,20 @@ class TStaffController extends Controller
       $nops = true;
     }
 
-    // if($req->filled('expid')){
-    //   $parame = BauExperience::find($req->expid)->pluck('name');
-    //
-    //   foreach ($req->expid as $key => $value) {
-    //     $cariuser->whereIn('id', \DB::table('bau_experience_user')->where('bau_experience_id', $value)->pluck('user_id'));
-    //   }
-    //
-    // } else {
-    //   $noexp = true;
-    // }
+    if($req->filled('expid')){
+      $parame = BauExperience::find($req->expid)->pluck('name');
+      $exp = Involvement::whereIn('bau_experience_id', $req->expid)->get();
+
+    } else {
+      $noexp = true;
+    }
 
     if($nops == true && $noexp == true){
-      return view('staff.skillfindresult', [
+      return view('staff.skillfindresult2', [
         'paramskill' => ['no', 'search'],
         'paramexp' => ['parameter', 'specified'],
-        'result' => $result,
-        'header' => ['press', 'back', 'and', 'search', 'again']
+        'psres' => [],
+        'expres' => []
       ]);
     }
 
@@ -550,9 +546,7 @@ class TStaffController extends Controller
       'paramskill' => $params,
       'paramexp' => $parame,
       'psres' => $psl,
-      'expres' => $exp,
-      'header' => $heads,
-      'skillids' => $skillids
+      'expres' => $exp
     ]);
 
   }

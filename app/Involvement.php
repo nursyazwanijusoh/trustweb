@@ -14,5 +14,9 @@ class Involvement extends Model
     return $this->belongsTo(BauExperience::class, 'bau_experience_id');
   }
 
+  public function User(){
+    return $this->belongsTo(User::class);
+  }
+
 
 }

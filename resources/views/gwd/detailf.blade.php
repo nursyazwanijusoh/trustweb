@@ -32,7 +32,7 @@
                         <select class="form-control" id="pporgunit" name="pporgunit" onchange="event.preventDefault();
                                       document.getElementById('whform').submit();">
                           @foreach ($divlist as $atask)
-                          <option value="{{ $atask['pporgunit'] }}" {{ $atask['sel'] }} >{{ $atask['divname'] . ' (' . $atask['regcount'] . ')' }}</option>
+                          <option value="{{ $atask['pporgunit'] }}" {{ $atask['sel'] }} >{{ $atask['pporgunit'] }} - {{ $atask['divname'] . ' (' . $atask['regcount'] . ')' }}</option>
                           @endforeach
                         </select>
                       </div>

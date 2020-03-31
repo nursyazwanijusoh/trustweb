@@ -10,7 +10,7 @@
       <div class="col-md-11">
           <div class="card mb-3">
               <div class="card-header">Search Parameters</div>
-              <div class="card-body">
+              <div class="card-body p-1">
                 <div class="row no-gutters">
                   @foreach($paramskill as $ap)
                   <div class="col-auto">
@@ -35,8 +35,8 @@
           </div>
       </div>
       <div class="col-md-11">
-          <div class="card">
-              <div class="card-header">Search result</div>
+          <div class="card mb-3">
+              <div class="card-header">Search result - Skillset</div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table id="taskdetailtable" class="table table-striped table-hover">
@@ -69,6 +69,41 @@
               </div>
           </div>
       </div>
+      <div class="col-md-11">
+          <div class="card">
+              <div class="card-header">Search result - Involvements</div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="involves" class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Division</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Report To</th>
+                        <th scope="col">Involvement</th>
+                        <th scope="col">Roles</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($expres as $atask)
+                      <tr>
+                        <td>{{ $atask->User->unit }}</td>
+                        <td><a href="{{ route('staff', ['staff_id' => $atask->User->id], false) }}">{{ $atask->User->name }}</a></td>
+                        <td><a href="{{ route('staff', ['staff_id' => $atask->User->Boss->id], false) }}">{{ $atask->User->Boss->name }}</a></td>
+                        <td>{{ $atask->BauExp->name }}</td>
+                        <td>
+                          @foreach($atask->roles as $key => $value)
+                          <p class="small my-1">{{ $key + 1 }} - {{ $value->name }}</p>
+                          @endforeach
+                        </td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+      </div>
     </div>
 </div>
 @endsection
@@ -85,6 +120,13 @@
 
 $(document).ready(function() {
     $('#taskdetailtable').DataTable({
+        paging: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'excel'
+        ]
+    });
+    $('#involves').DataTable({
         paging: true,
         dom: 'Bfrtip',
         buttons: [

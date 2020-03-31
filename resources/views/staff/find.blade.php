@@ -6,9 +6,9 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-5">
             <div class="card mb-3">
                 <div class="card-header">Find Staff</div>
                 <div class="card-body">
@@ -29,6 +29,8 @@
                   </form>
                 </div>
               </div>
+            </div>
+            <div class="col-md-7">
               <div class="card mb-3">
                   <div class="card-header">Find Staff With Skill</div>
                   <div class="card-body">
@@ -64,12 +66,15 @@
                     </form>
                   </div>
                 </div>
+              </div>
+
                 @if($result != 'empty')
+            <div class="col-md-12">
               <div class="card">
                 @if($result == '404')
                 <div class="alert alert-error" role="alert">No result</div>
                 @else
-                <div class="card-header"> </div>
+                <div class="card-header">Search Result</div>
                 <div class="card-body">
                   <!-- <h5 class="card-title">List of task type</h5> -->
                   <div class="table-responsive">
@@ -105,8 +110,8 @@
                 </div>
                 @endif
               </div>
-                @endif
             </div>
+              @endif
         </div>
     </div>
 </div>
