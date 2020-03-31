@@ -282,7 +282,7 @@ class PersonalSSController extends Controller
   }
 
   public function pendingapprove(Request $req){
-    dd($req->user()->report_to);
+    // dd($req->user()->report_to);
     $mypersno = $req->user()->persno;
 
     $subsids = User::where('report_to', $mypersno)->pluck('id');
