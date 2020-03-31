@@ -146,7 +146,7 @@ Route::get('/reports/divcheckin', 'ReportController@checkinByDiv')->name('report
 Route::get('/hdreports/DivByDateFind', 'AdminReportController@DivByDateFind')->name('hdreports.dbdf');
 Route::get('/hdreports/WorkSpaceUsage', 'AdminReportController@WorkSpaceUsage')->name('hdreports.wsu');
 Route::get('/find/staff', 'TStaffController@rptFindStaff')->name('staff.find');
-Route::post('/find/skill', 'TStaffController@rptFindStaffWSkill')->name('staff.skill.find');
+Route::post('/find/skill', 'TStaffController@rptFindStaffWSkill2')->name('staff.skill.find');
 
 // feedback
 Route::get('/feedback', 'FeedbackController@sform')->name('feedback');

@@ -484,7 +484,7 @@ class GDWActions
 
   }
 
-  public static function GetExpectedHours($date, DailyPerformance $dpp = null, $exclude = null){
+  public static function GetExpectedHours($date, DailyPerformance $dpp = null, $exclude = null, $fridayhours = 7.5){
     // first, check if it's a public holiday
     if($exclude){
       $ph = PublicHoliday::whereDate('event_date', $date)
@@ -509,7 +509,7 @@ class GDWActions
     $dow = $carbond->dayOfWeekIso;
 
     if($dow == 5){
-      return 7.5;
+      return $fridayhours;
     } elseif($dow > 5){
       return 0;
     } else {

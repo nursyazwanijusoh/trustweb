@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
       @if($isvisitor == false || $isboss == true)
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <div class="card mb-3">
             <div class="card-header">Add Skill To Your Arsenal</div>
             <div class="card-body">
@@ -58,20 +58,20 @@
                   <div class="col-md-8">
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="rate" id="noob" value="1" onchange="expertlevel()" checked />
-                      <label class="form-check-label" for="noob">Beginner</label>
+                      <label class="form-check-label" title="I know some basic" for="noob">Beginner</label>
                     </div>
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="rate" id="soso" value="2" onchange="expertlevel()" />
-                      <label class="form-check-label" for="soso">Intermediate</label>
+                      <label class="form-check-label" title="I can work independently" for="soso">Intermediate</label>
                     </div>
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="rate" id="e1337" value="3" onchange="expertlevel()" />
-                      <label class="form-check-label" for="e1337">Expert</label>
+                      <label class="form-check-label" title="I can teach others" for="e1337">Expert</label>
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                    <label for="ddremark" class="col-md-4 col-form-label text-md-right">Remarks</label>
+                    <label for="ddremark" class="col-md-4 col-form-label text-md-right">Justification</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" name="remark" id="ddremark" placeholder="Additional info" />
                     </div>
@@ -86,6 +86,41 @@
             </div>
         </div>
       </div>
+      @endif
+      <div class="col-xl-7">
+        <div class="card mb-3">
+          <div class="card-header">Current Skillset for <a href="{{ route('staff', ['staff_id' => $user->id ])}}">{{ $user->name }}</a></div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="perfsameri" class="table table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Skill</th>
+                    <th scope="col">Competency</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($pskills as $acts)
+                  <tr>
+                    <td>{{ $acts->CommonSkill->SkillCategory->name }}</td>
+                    <td>{{ $acts->CommonSkill->SkillType->name }}</td>
+                    <td>{{ $acts->CommonSkill->name }}</td>
+                    <td>{{ $acts->slevel() }}</td>
+                    <td>{{ $acts->sStatus() }}</td>
+                    <td><a href="{{ route('ps.detail', ['psid' => $acts->id])}}"><button type="button" class="btn btn-sm btn-info" title="Detail, Edit, Delete or Approve here"><i class="fa fa-info"></i></button></a></td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      @if($isvisitor == false || $isboss == true)
       <div class="col-lg-6">
         <div class="card mb-3">
           <div class="card-header">Add Past Experience</div>
@@ -117,39 +152,6 @@
         </div>
       </div>
       @endif
-      <div class="col-xl-8">
-        <div class="card mb-3">
-          <div class="card-header">Current Skillset for <a href="{{ route('staff', ['staff_id' => $user->id ])}}">{{ $user->name }}</a></div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table id="perfsameri" class="table table-striped table-hover table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Category</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Skill</th>
-                    <th scope="col">Competency</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($pskills as $acts)
-                  <tr>
-                    <td>{{ $acts->CommonSkill->SkillCategory->name }}</td>
-                    <td>{{ $acts->CommonSkill->SkillType->name }}</td>
-                    <td>{{ $acts->CommonSkill->name }}</td>
-                    <td>{{ $acts->slevel() }}</td>
-                    <td>{{ $acts->sStatus() }}</td>
-                    <td><a href="{{ route('ps.detail', ['psid' => $acts->id])}}"><button type="button" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-info"></i></button></a></td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="col-xl-4">
         <div class="card mb-3">
           <div class="card-header">Experiences</div>
@@ -250,7 +252,9 @@
     }
 
     $(document).ready(function() {
-      $('#perfsameri').DataTable();
+      $('#perfsameri').DataTable({
+        "pageLength": 5
+      });
       $('#bexps').DataTable({
         "pageLength": 5
       });

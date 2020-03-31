@@ -484,4 +484,77 @@ class TStaffController extends Controller
 
   }
 
+  public function rptFindStaffWSkill2(Request $req){
+
+    $psl = [];
+    $exp = [];
+    $heads = ['Division', 'Name', 'Position', 'Skill / Exp', 'Rating / Role'];
+    $params = [];
+    $parame = [];
+    $skillids = [];
+    $nops = false;
+    $noexp = true;
+
+    if($req->filled('skid')){
+      foreach ($req->skid as $key => $value) {
+        $idss = CommonSkillset::find($value);
+        array_push($heads, $idss->name);
+        array_push($params, $idss->name);
+        array_push($skillids, $idss->id);
+
+        $psldd = PersonalSkillset::where('common_skill_id', $value)->where('level', '!=', 0)->get();
+
+        foreach($psldd as $atask){
+          array_push($psl, [
+            'ps_id' => $atask->id,
+            'name' => $atask->User->name,
+            'staff_id' => $atask->User->id,
+            'division' => $atask->User->unit,
+            'report_to_name' => $atask->User->Boss->name,
+            'report_to_id' => $atask->User->Boss->id,
+            'ps_name' => $atask->CommonSkill->name,
+            'ps_status' => $atask->sStatus(),
+            'ps_level' => $atask->slevel(),
+            'ps_plevel' => $atask->prev_approved()
+          ]);
+        }
+
+
+      }
+
+    } else {
+      $nops = true;
+    }
+
+    // if($req->filled('expid')){
+    //   $parame = BauExperience::find($req->expid)->pluck('name');
+    //
+    //   foreach ($req->expid as $key => $value) {
+    //     $cariuser->whereIn('id', \DB::table('bau_experience_user')->where('bau_experience_id', $value)->pluck('user_id'));
+    //   }
+    //
+    // } else {
+    //   $noexp = true;
+    // }
+
+    if($nops == true && $noexp == true){
+      return view('staff.skillfindresult', [
+        'paramskill' => ['no', 'search'],
+        'paramexp' => ['parameter', 'specified'],
+        'result' => $result,
+        'header' => ['press', 'back', 'and', 'search', 'again']
+      ]);
+    }
+
+    return view('staff.skillfindresult2', [
+      'paramskill' => $params,
+      'paramexp' => $parame,
+      'psres' => $psl,
+      'expres' => $exp,
+      'header' => $heads,
+      'skillids' => $skillids
+    ]);
+
+  }
+
 }

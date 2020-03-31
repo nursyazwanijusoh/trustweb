@@ -42,7 +42,7 @@
                       <tbody>
                         @foreach($cgrp->Members as $atask)
                         <tr>
-                          <td>{{ $atask->pporgunitdesc }}</td>
+                          <td>{{ $atask->pporgunit }} - {{ $atask->pporgunitdesc }}</td>
                           <td>
                             <form action="{{ route('cgrp.remove', [], false) }}" method="post">
                               @csrf
@@ -72,7 +72,7 @@
                     <tbody>
                       @foreach($freeg as $atask)
                       <tr>
-                        <td>{{ $atask->pporgunitdesc }}</td>
+                        <td>{{ $atask->pporgunit }} - {{ $atask->pporgunitdesc }}</td>
                         <td>
                           <form action="{{ route('cgrp.take', [], false) }}" method="post">
                             @csrf
@@ -103,7 +103,7 @@
                   <tbody>
                     @foreach($otherg as $atask)
                     <tr>
-                      <td>{{ $atask->pporgunitdesc }}</td>
+                      <td>{{ $atask->pporgunit }} - {{ $atask->pporgunitdesc }}</td>
                       <td>{{ $atask->Group->name }}</td>
                       <td>
                         <form action="{{ route('cgrp.take', [], false) }}" method="post">

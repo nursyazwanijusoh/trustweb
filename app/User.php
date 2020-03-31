@@ -41,6 +41,10 @@ class User extends Authenticatable
       return $this->belongsTo('App\Unit', 'unit_id');
     }
 
+    public function Boss(){
+      return $this->hasOne(User::class, 'persno', 'report_to');
+    }
+
     public function Attendance(){
       return $this->hasOne('App\Attendance', 'id', 'curr_attendance');
     }
