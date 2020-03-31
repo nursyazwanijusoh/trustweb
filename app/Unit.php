@@ -8,11 +8,11 @@ use \DB;
 class Unit extends Model
 {
   public function Staffs(){
-    return $this->hasMany(User::class, 'lob', 'pporgunit');
+    return $this->hasMany(User::class, 'lob', 'pporgunit')->where('status', 1);
   }
 
   public function StaffWithNotiID(){
-    return $this->hasMany(User::class, 'lob', 'pporgunit')->whereNotNull('pushnoti_id');
+    return $this->hasMany(User::class, 'lob', 'pporgunit')->where('status', 1)->whereNotNull('pushnoti_id');
   }
 
   public function Group(){

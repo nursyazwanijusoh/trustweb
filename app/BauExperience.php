@@ -10,6 +10,6 @@ class BauExperience extends Model
   use SoftDeletes;
 
   public function Users(){
-    return $this->belongsToMany(User::class);
+    return $this->belongsToMany(User::class)->where('status', 1);
   }
 }

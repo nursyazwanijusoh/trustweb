@@ -17,7 +17,7 @@ class CompGroup extends Model
     $csum = 0;
 
     foreach($this->Members as $aunit){
-      $csum += User::where('lob', $aunit->pporgunit)->count();
+      $csum += User::where('lob', $aunit->pporgunit)->where('status', 1)->count();
     }
 
     return $csum;
