@@ -1044,7 +1044,7 @@ class GwdReportController extends Controller
   }
 
   private function getSubsInfo($persno, $daterange, $sunitid, $cdate, $ldate){
-    $staffs = User::where('report_to', $persno)->get();
+    $staffs = User::where('report_to', $persno)->where('status', 1)->get();
 
     foreach($staffs as $ast){
       $ast->section_id = $sunitid;

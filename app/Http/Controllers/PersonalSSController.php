@@ -324,7 +324,7 @@ class PersonalSSController extends Controller
     // dd($req->user()->report_to);
     $mypersno = $req->user()->persno;
 
-    $subsids = User::where('report_to', $mypersno)->pluck('id');
+    $subsids = User::where('report_to', $mypersno)->where('status', 1)->pluck('id');
     $pslist = PersonalSkillset::whereIn('staff_id', $subsids)
       ->whereIn('status', ['N', 'C'])->get();
 

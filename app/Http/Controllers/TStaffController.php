@@ -206,7 +206,7 @@ class TStaffController extends Controller
     $pscoiunt = 0;
     if($isvisitor == false){
       // cek ada nak kena approve skillset tak
-      $subsids = User::where('report_to', $rq->user()->persno)->pluck('id');
+      $subsids = User::where('report_to', $rq->user()->persno)->where('status', 1)->pluck('id');
       $pscoiunt = PersonalSkillset::whereIn('staff_id', $subsids)
         ->whereIn('status', ['N', 'C'])->count();
     }
