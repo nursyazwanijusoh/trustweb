@@ -754,6 +754,10 @@ class UserController extends Controller
         $staff['attendance'] = $staffdata->Attendance;
       }
 
+      if(isset($staffdata->last_location_id)){
+        $staff['last_known_location'] = $staffdata->LastLocation;
+      }
+
       return $staff;
     }
 
