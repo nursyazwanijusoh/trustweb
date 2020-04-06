@@ -24,13 +24,15 @@ class PersSkillHistory extends Model
       return "Updated by" ;
     } elseif($this->action == 'Approve') {
       return "Approved by" ;
+    } elseif($this->action == 'Migrate') {
+      return "Migrated by" ;
     } else {
       return $this->action . ' by ';
     }
   }
 
   public function GetPostText(){
-    if($this->action == 'Add'){
+    if($this->action == 'Add' || $this->action == 'Migrate'){
       return "with rating <b>".$this->nlevel()."</b>" ;
     } elseif($this->action == 'Comment') {
       return "added comment" ;

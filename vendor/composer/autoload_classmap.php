@@ -25,6 +25,7 @@ return array(
     'App\\Avatar' => $baseDir . '/app/Avatar.php',
     'App\\BatchJob' => $baseDir . '/app/BatchJob.php',
     'App\\BauExperience' => $baseDir . '/app/BauExperience.php',
+    'App\\BulkSkillsetAdd' => $baseDir . '/app/BulkSkillsetAdd.php',
     'App\\Checkin' => $baseDir . '/app/Checkin.php',
     'App\\CommonConfig' => $baseDir . '/app/CommonConfig.php',
     'App\\CommonSkillset' => $baseDir . '/app/CommonSkillset.php',

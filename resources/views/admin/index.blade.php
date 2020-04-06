@@ -25,6 +25,7 @@
             @endif
             </a>
             <a href="{{ route('pn.form', [], false) }}" class="list-group-item list-group-item-action">Blast Push Notification</a>
+            <!-- <a href="{{ route('admin.bulkupdate', [], false) }}" class="list-group-item list-group-item-action">Bulk Upload to Update</a> -->
           </div>
         </div>
       </div>

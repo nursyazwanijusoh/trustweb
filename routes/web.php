@@ -51,7 +51,7 @@ Route::get('/admin/getallqr', 'TAdminController@getallqr')->name('admin.getallqr
 Route::get('/admin/seatToggle', 'TAdminController@seatToggle')->name('admin.seat.toggle');
 Route::get('/admin/loadsap', 'SapLoadController@showSummaryPage')->name('admin.loadsapform');
 Route::get('/admin/loadsapom', 'SapLoadController@processOM')->name('admin.processOM');
-Route::get('/admin/loadsappersno', 'SapLoadController@mapPersNo')->name('admin.updatePersno');
+Route::get('/admin/loadkemahiran', 'SapLoadController@loadBulkSkillset')->name('admin.loadDataSkill');
 Route::get('/admin/loadsapcuti', 'SapLoadController@loadDataCuti')->name('admin.loadDataCuti');
 
 // meeting rooms
@@ -66,6 +66,9 @@ Route::get('/admin/blockdiv/{divid}', 'TAdminController@blockdiv')->name('admin.
 Route::post('/admin/reflov', 'TAdminController@refreshLOV')->name('admin.reflov');
 Route::get('/admin/reflov', 'TAdminController@showLOV')->name('admin.lov');
 Route::post('/admin/upstaffdiv', 'TAdminController@updateStaffDiv')->name('admin.upstaffdiv');
+
+// admin bulk update
+Route::get('/admin/bulkupdate', 'BatchJobController@menu')->name('admin.bulkupdate');
 
 
 // admin staff role

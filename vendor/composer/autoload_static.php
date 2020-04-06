@@ -607,6 +607,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Avatar' => __DIR__ . '/../..' . '/app/Avatar.php',
         'App\\BatchJob' => __DIR__ . '/../..' . '/app/BatchJob.php',
         'App\\BauExperience' => __DIR__ . '/../..' . '/app/BauExperience.php',
+        'App\\BulkSkillsetAdd' => __DIR__ . '/../..' . '/app/BulkSkillsetAdd.php',
         'App\\Checkin' => __DIR__ . '/../..' . '/app/Checkin.php',
         'App\\CommonConfig' => __DIR__ . '/../..' . '/app/CommonConfig.php',
         'App\\CommonSkillset' => __DIR__ . '/../..' . '/app/CommonSkillset.php',

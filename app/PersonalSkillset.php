@@ -47,6 +47,8 @@ class PersonalSkillset extends Model
       return "New";
     } elseif($this->status == "A"){
       return "Approved";
+    } elseif($this->status == "M"){
+      return "Migrated";
     } elseif ($this->status == "C") {
       return "Changed";
     } elseif ($this->status == "R") {
