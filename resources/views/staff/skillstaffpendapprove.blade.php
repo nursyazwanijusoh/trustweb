@@ -13,6 +13,7 @@
                       <thead>
                         <tr>
                           <th scope="col">Staff Name</th>
+                          <th scope="col">Skill Name</th>
                           <th scope="col">Previously Approved</th>
                           <th scope="col">New Competency</th>
                           <th scope="col">Details</th>
@@ -22,6 +23,7 @@
                         @foreach($pss as $atask)
                         <tr>
                           <td><a href="{{ route('staff', ['id' => $atask->staff_id], false) }}">{{ $atask->User->name }}</a></td>
+                          <td>{{ $atask->CommonSkill->name }}</td>
                           <td>{{ $atask->prev_approved() }}</td>
                           <td>{{ $atask->slevel() }}</td>
                           <td><a href="{{ route('ps.detail', ['psid' => $atask->id])}}"><button type="button" class="btn btn-sm btn-info" title="Detail"><i class="fa fa-info"></i></button></a></td>
