@@ -47,7 +47,6 @@
                         <th scope="col">Report To</th>
                         <th scope="col">Skill</th>
                         <th scope="col">Competency</th>
-                        <th scope="col">Approved Competency</th>
                         <th scope="col">Status</th>
                       </tr>
                     </thead>
@@ -59,7 +58,6 @@
                         <td><a href="{{ route('staff', ['staff_id' => $atask['report_to_id']], false) }}">{{ $atask['report_to_name'] }}</a></td>
                         <td><a href="{{ route('ps.detail', ['psid' => $atask['ps_id']], false) }}">{{ $atask['ps_name'] }}</a></td>
                         <td>{{ $atask['ps_level'] }}</td>
-                        <td>{{ $atask['ps_plevel'] }}</td>
                         <td>{{ $atask['ps_status'] }}</td>
                       </tr>
                       @endforeach

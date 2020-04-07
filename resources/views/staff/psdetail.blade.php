@@ -98,18 +98,22 @@ li.tlbg {
                 <div class="form-group row">
                     <label for="ddremark" class="col-md-4 col-form-label text-md-right">Remark</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control" name="remark" id="ddremark" placeholder="Some comment here" maxlength="300" required/>
+                      <input type="text" class="form-control" name="remark" id="ddremark" placeholder="Some comment here" value="{{ old('remark')}}" maxlength="300" required/>
                     </div>
                 </div>
                 <div class="form-group row mb-0">
                     <div class="col text-center">
-                      @if($ps->status == 'N' && $isboss == true)
-                      <button type="submit" class="btn btn-primary" name="action" value="A" title="Approve with the new competency that you can set above">Approve</button>
-                      <button type="submit" class="btn btn-danger" name="action" value="R" title="This will set competency to 0">Delete</button>
+
+                      @if($ps->status == 'M')
+                      <button type="submit" class="btn btn-primary" name="action" value="Y">Accept</button>
                       @else
                       <button type="submit" class="btn btn-primary" name="action" value="C">Update</button>
+                      @endif
+
+                      @if($ps->status != 'D')
                       <button type="submit" class="btn btn-warning" name="action" value="D" title="This will set competency to 0">Delete</button>
                       @endif
+
                     </div>
                 </div>
                 <input type="hidden" name="psid" value="{{ $ps->id }}"  />

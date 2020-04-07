@@ -34,13 +34,16 @@ class PersonalSSController extends Controller
 
     $user = User::find($sid);
 
+    if($user){
+
+    } else {
+      abort(404);
+    }
+
     $skillcat = SkillCategory::all();
     $skilltype = SkillType::all();
     $skills = CommonSkillset::all();
-    $perskill = PersonalSkillset::where('staff_id', $sid)->where('status', '!=', 'D')->get();
-    $pastexps = Involvement::where('user_id', $sid)->get();
-    $bauexps = BauExperience::all();
-    $jobscop = Jobscope::all();
+    $perskill = PersonalSkillset::where('staff_id', $sid)->get();
 
     return view('staff.skillset', [
       'user' => $user,
@@ -49,12 +52,44 @@ class PersonalSSController extends Controller
       'skills' => $skills,
       'pskills' => $perskill,
       'isvisitor' => $isvisitor,
+      'isboss' => $isboss
+    ]);
+
+  }
+
+  public function listExpage(Request $req){
+
+    $sid = $req->user()->id;
+    $isvisitor = false;
+    $isboss = false;
+    if($req->filled('staff_id')){
+      if($sid != $req->staff_id){
+        $isvisitor = true;
+        $isboss = \App\common\UserRegisterHandler::isInReportingLine($req->staff_id, $sid);
+        $sid = $req->staff_id;
+      }
+    }
+
+    $user = User::find($sid);
+
+    if($user){
+
+    } else {
+      abort(404);
+    }
+
+    $pastexps = Involvement::where('user_id', $sid)->get();
+    $bauexps = BauExperience::all();
+    $jobscop = Jobscope::all();
+
+    return view('staff.experiences', [
+      'user' => $user,
+      'isvisitor' => $isvisitor,
       'isboss' => $isboss,
       'bes' => $bauexps,
       'jobskop' => $jobscop,
       'pastexps' => $pastexps
     ]);
-
   }
 
   private function addPersonalSkill($staff_id, $skill_id){
@@ -174,6 +209,15 @@ class PersonalSSController extends Controller
         }
       }
 
+      if($req->filled('rate')){
+
+      } else {
+        return redirect()->back()->withInput()->with([
+          'alert' => 'Please select the competency level',
+          'a_type' => 'danger'
+        ]);
+      }
+
       $oldlevel = $ps->level ?? 0;
       $newlevel = $req->rate;
       $haction = 'Update';
@@ -181,6 +225,9 @@ class PersonalSSController extends Controller
       if($req->action == 'A'){
         $newstatus = 'A';
         $haction = 'Approve';
+      } if($req->action == 'Y'){
+        $newstatus = 'A';
+        $haction = 'Accept';
       } elseif ($req->action == 'R') {
         $newstatus = 'R';
         $haction = 'Reject';
@@ -220,8 +267,16 @@ class PersonalSSController extends Controller
       $phist->newlevel = $newlevel;
       $phist->oldlevel = $oldlevel;
       $phist->action = $haction;
-      $phist->remark = $req->remark;
+      $phist->remark = $req->remark ?? '';
       $phist->save();
+
+      if($req->action == 'D' || $req->action == 'Y'){
+        return redirect(route('ps.list', ['staff_id' => $ps->staff_id]))
+          ->with([
+            'alert' => 'Skill updated',
+            'a_type' => 'success'
+          ]);
+      }
 
       return redirect(route('ps.detail', ['psid' => $req->psid]))
         ->with([
@@ -261,7 +316,7 @@ class PersonalSSController extends Controller
 
         $existing->roles()->sync($req->roleid);
 
-        return redirect(route('ps.list', ['staff_id' => $req->staff_id]))
+        return redirect(route('ps.exps', ['staff_id' => $req->staff_id]))
           ->with([
             'alert' => 'Experience roles updated',
             'a_type' => 'info'
@@ -274,7 +329,7 @@ class PersonalSSController extends Controller
         $neu->save();
         $neu->roles()->sync($req->roleid);
 
-        return redirect(route('ps.list', ['staff_id' => $req->staff_id]))
+        return redirect(route('ps.exps', ['staff_id' => $req->staff_id]))
           ->with([
             'alert' => 'New experince added',
             'a_type' => 'success'
@@ -306,13 +361,13 @@ class PersonalSSController extends Controller
     $exp = Involvement::find($req->beid);
     if($exp){
       $exp->delete();
-      return redirect(route('ps.list', ['staff_id' => $req->uid]))
+      return redirect(route('ps.exps', ['staff_id' => $req->uid]))
         ->with([
           'alert' => 'Experince removed',
           'a_type' => 'secondary'
         ]);
     } else {
-      return redirect(route('ps.list', ['staff_id' => $req->uid]))
+      return redirect(route('ps.exps', ['staff_id' => $req->uid]))
         ->with([
           'alert' => 'Experince no longer in the list',
           'a_type' => 'warning'

@@ -203,13 +203,13 @@ class TStaffController extends Controller
       $todayperc = intval($calcperf);
     }
 
-    $pscoiunt = 0;
-    if($isvisitor == false){
-      // cek ada nak kena approve skillset tak
-      $subsids = User::where('report_to', $rq->user()->persno)->where('status', 1)->pluck('id');
-      $pscoiunt = PersonalSkillset::whereIn('staff_id', $subsids)
-        ->whereIn('status', ['N', 'C'])->count();
-    }
+    // $pscoiunt = 0;
+    // if($isvisitor == false){
+    //   // cek ada nak kena approve skillset tak
+    //   $subsids = User::where('report_to', $rq->user()->persno)->where('status', 1)->pluck('id');
+    //   $pscoiunt = PersonalSkillset::whereIn('staff_id', $subsids)
+    //     ->whereIn('status', ['N', 'C'])->count();
+    // }
 
     $final = [
       'staff_id' => $s_staff_id,
@@ -221,8 +221,7 @@ class TStaffController extends Controller
       'cds' => $cds,
       'isvisitor' => $isvisitor,
       'todaydf' => $todaydf,
-      'todayperc' => $todayperc,
-      'pscount' => $pscoiunt
+      'todayperc' => $todayperc
     ];
     // dd($final);
 
@@ -501,7 +500,7 @@ class TStaffController extends Controller
         array_push($params, $idss->name);
         array_push($skillids, $idss->id);
 
-        $psldd = PersonalSkillset::where('common_skill_id', $value)->where('level', '!=', 0)->get();
+        $psldd = PersonalSkillset::where('common_skill_id', $value)->get();
 
         foreach($psldd as $atask){
           array_push($psl, [

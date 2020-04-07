@@ -43,6 +43,16 @@ class PersonalSkillset extends Model
   }
 
   public function sStatus(){
+
+    if($this->status == "M"){
+      return "Migrated";
+    } elseif($this->status == "D"){
+      return "Deleted";
+    } else {
+      return "Active";
+    }
+
+    /*
     if($this->status == "N"){
       return "New";
     } elseif($this->status == "A"){
@@ -56,6 +66,7 @@ class PersonalSkillset extends Model
     } elseif ($this->status == "D") {
       return "Deleted";
     }
+    */
   }
 
   public function Histories(){

@@ -18,6 +18,8 @@ class PersSkillHistory extends Model
       return "" ;
     } elseif($this->action == 'Reject') {
       return "Rejected by" ;
+    } elseif($this->action == 'Accept') {
+      return "Acknowledged by" ;
     } elseif($this->action == 'Delete') {
       return "" ;
     } elseif($this->action == 'Update') {
@@ -32,7 +34,7 @@ class PersSkillHistory extends Model
   }
 
   public function GetPostText(){
-    if($this->action == 'Add' || $this->action == 'Migrate'){
+    if($this->action == 'Add' || $this->action == 'Migrate' || $this->action == 'Accept'){
       return "with rating <b>".$this->nlevel()."</b>" ;
     } elseif($this->action == 'Comment') {
       return "added comment" ;

@@ -225,8 +225,9 @@ Route::post('/bauexp/role/edit', 'JobscopeController@edit')->name('bauexp.role.e
 Route::get('/bauexp/role/del', 'JobscopeController@del')->name('bauexp.role.del');
 
 
-// personal skillset
+// personal skillset and experience
 Route::get('/user/skillset', 'PersonalSSController@listv2')->name('ps.list');
+Route::get('/user/experience', 'PersonalSSController@listExpage')->name('ps.exps');
 Route::post('/user/skillset/add', 'PersonalSSController@updatev2')->name('ps.update');
 Route::post('/user/skillset/mod', 'PersonalSSController@modify')->name('ps.mod');
 Route::get('/user/skillset/detail', 'PersonalSSController@detail')->name('ps.detail');
