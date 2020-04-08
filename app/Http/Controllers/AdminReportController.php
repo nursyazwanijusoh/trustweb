@@ -89,4 +89,35 @@ class AdminReportController extends Controller
 
   }
 
+  public function fridayulist(Request $req){
+    $eight = Unit::where('friday_hours', 8)->get();
+    $seven = Unit::where('friday_hours', 7.5)->get();
+
+    return view('admin.fridayhours', [
+      'lapan' => $eight,
+      'tujuh' => $seven
+    ]);
+  }
+
+  public function addfriday8(Request $req){
+
+    $unit = Unit::find($req->id);
+    if($unit){
+      $unit->friday_hours = 8;
+      $unit->save();
+    }
+    return redirect(route('admin.fridayhours'));
+  }
+
+  public function delfriday8(Request $req){
+
+    $unit = Unit::find($req->id);
+    if($unit){
+      $unit->friday_hours = 7.5;
+      $unit->save();
+    }
+
+    return redirect(route('admin.fridayhours'));
+  }
+
 }

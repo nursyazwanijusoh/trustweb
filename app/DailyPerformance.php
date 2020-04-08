@@ -14,6 +14,10 @@ class DailyPerformance extends Model
     return $this->belongsTo(LeaveType::class, 'leave_type_id');
   }
 
+  public function Division(){
+    return $this->belongsTo(Unit::class, 'unit_id', 'pporgunit');
+  }
+
   public function User(){
     return $this->belongsTo(User::class, 'user_id');
   }

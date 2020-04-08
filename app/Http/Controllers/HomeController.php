@@ -30,38 +30,12 @@ class HomeController extends Controller
         return view('guide');
     }
 
-    function playground(){
-      $lh = new \App\Api\V1\Controllers\LdapHelper;
-      return $lh->fetchUser('S53788');
+    function playground(Request $req){
 
-      return [
-        'test' => \App\common\UserRegisterHandler::isInReportingLine(1, 48505)
-        ];
-
-      $ldate = new \Carbon\Carbon();
-      if($ldate->dayOfWeek == 5){
-        $ldate->subDay();
+      if($req->filled('id')){
+        return \App\common\GDWActions::GetDailyPerfObj($req->id, $req->date);
       }
 
-      $cdate = new \Carbon\Carbon($ldate);
-      $cdate->subDays($cdate->dayOfWeek)->subDays(2);
-
-      $daterange = new \DatePeriod(
-        $cdate,
-        \DateInterval::createFromDateString('1 day'),
-        (new \Carbon\Carbon($ldate))->addDay()
-      );
-
-      dd($ldate);
-
-      $pd = [];
-      foreach($daterange as $od){
-        $pd[] = date_format($od, 'Y-m-d');
-      }
-
-      dd($pd);
-
-      return \App\common\GDWActions::GetStaffAvgPerf(1, $cdate, $ldate);
 
     }
 

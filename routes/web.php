@@ -54,6 +54,11 @@ Route::get('/admin/loadsapom', 'SapLoadController@processOM')->name('admin.proce
 Route::get('/admin/loadkemahiran', 'SapLoadController@loadBulkSkillset')->name('admin.loadDataSkill');
 Route::get('/admin/loadsapcuti', 'SapLoadController@loadDataCuti')->name('admin.loadDataCuti');
 
+// 8 jam jumaat untuk webe
+Route::get('/admin/fridayhours', 'AdminReportController@fridayulist')->name('admin.fridayhours');
+Route::post('/admin/fridayhours/add', 'AdminReportController@addfriday8')->name('admin.addfriday8');
+Route::post('/admin/fridayhours/del', 'AdminReportController@delfriday8')->name('admin.delfriday8');
+
 // meeting rooms
 Route::get('/admin/meetroom', 'TAdminController@meetroom')->name('admin.meetroom');
 Route::post('/admin/meetroom/add', 'TAdminController@meetroomAdd')->name('admin.meetroom.add');

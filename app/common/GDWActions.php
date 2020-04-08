@@ -528,11 +528,12 @@ class GDWActions
     } else {
       // no record. create new
       $user = User::find($user_id);
+      $friday = $user->Division->friday_hours;
       $dp = new DailyPerformance;
       $dp->user_id = $user_id;
       $dp->record_date = $date;
       $dp->unit_id = $user->lob;
-      $dp->expected_hours = GDWActions::GetExpectedHours($date, $dp);
+      $dp->expected_hours = GDWActions::GetExpectedHours($date, $dp, null, $friday);
       $dp->save();
     }
 

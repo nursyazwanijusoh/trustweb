@@ -38,6 +38,7 @@
             <a href="{{ route('cgrp.list', [], false) }}" class="list-group-item list-group-item-action">Division Groups</a>
             <a href="{{ route('leave.list', [], false) }}" class="list-group-item list-group-item-action">Leave Types</a>
             <a href="{{ route('ph.list', [], false) }}" class="list-group-item list-group-item-action">Public Holidays</a>
+            <a href="{{ route('admin.fridayhours', [], false) }}" class="list-group-item list-group-item-action">Friday Work Hour</a>
           </div>
         </div>
       </div>
