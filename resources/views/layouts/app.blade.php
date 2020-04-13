@@ -13,7 +13,7 @@
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <!-- <script src="{{ asset('js/Chart.min.js') }}"></script> -->
-
+    <link rel="icon" sizes="32x32" type="image/png" href="/images/trust-stayhome.png" />
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -41,7 +41,7 @@
         <header id="header">
             <div class="container">
                 <div id="logo" class="pull-left">
-                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/TrustNew.png" height="40" width="60" alt="" title="" /></a>
+                    <a href="{{ route('staff', [], false) }}"><img src="/images/trust-stayhome.png" height="50" alt="" title="" /></a>
                 </div>
 
                 <nav id="nav-menu-container">

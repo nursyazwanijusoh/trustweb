@@ -75,25 +75,29 @@ class CreateDailyPerformance implements ShouldQueue
   			->get();
 
   		foreach ($userrs as $key => $value) {
-  			$gdata = DailyPerformance::where('user_id', $value->id)
-  				->whereDate('record_date', $this->input_date)
-  				->first();
-  			if($gdata){
-  				// got data. do nothing
-  			} else {
-  				// no data. create new
-  				if(isset($value->lob) && strlen($value->lob) > 6){
-  					$dp = new DailyPerformance;
-  		      $dp->user_id = $value->id;
-  		      $dp->record_date = $this->input_date;
-  		      $dp->unit_id = $value->lob;
-  		      $dp->expected_hours = GDWActions::GetExpectedHours($this->input_date, $dp);
-  		      $dp->save();
 
-  					$counter++;
-  				}
+        GDWActions::GetDailyPerfObj($value->id, $this->input_date);
+        $counter++;
 
-  			}
+  			// $gdata = DailyPerformance::where('user_id', $value->id)
+  			// 	->whereDate('record_date', $this->input_date)
+  			// 	->first();
+  			// if($gdata){
+  			// 	// got data. do nothing
+  			// } else {
+  			// 	// no data. create new
+  			// 	if(isset($value->lob) && strlen($value->lob) > 6){
+  			// 		$dp = new DailyPerformance;
+  		  //     $dp->user_id = $value->id;
+  		  //     $dp->record_date = $this->input_date;
+  		  //     $dp->unit_id = $value->lob;
+  		  //     $dp->expected_hours = GDWActions::GetExpectedHours($this->input_date, $dp);
+  		  //     $dp->save();
+        //
+  			// 		$counter++;
+  			// 	}
+        //
+  			// }
   		}
 
       return [
