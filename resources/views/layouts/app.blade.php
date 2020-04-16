@@ -83,6 +83,13 @@
                         <li class="menu-has-children"><a href="#">Menu</a>
                           <ul>
                               <li><a class="dropdown-item" href="{{ route('staff', [], false) }}">Home</a></li>
+                              <li class="menu-has-children"><a href="#">MCO Initiative</a>
+                                <ul>
+                                    <li><a class="dropdown-item" href="{{ route('mco.reqform', [], false) }}">Request Travel Acknowledgement</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('mco.ackreqs', [], false) }}">Acknowledge Travel Request</a></li>
+                                    <!-- <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li> -->
+                                </ul>
+                              </li>
                               <li><a class="dropdown-item" href="{{ route('staff.find', [], false) }}">Staff Finder</a></li>
                               <!-- li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li -->
                               <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>

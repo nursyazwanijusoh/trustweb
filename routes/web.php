@@ -16,6 +16,8 @@ Auth::routes();
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pg', 'HomeController@playground')->name('pg');
+Route::get('/poip', 'HomeController@poip')->name('poip');
+Route::get('/staff/image', 'HomeController@getImage')->name('staff.image');
 Route::get('/adminlist', 'HomeController@listAdmins')->name('adminlist');
 Route::get('/postreg', 'HomeController@postreg')->name('postreg');
 Route::get('/resend', 'HomeController@resend')->name('verification.resend');
@@ -24,6 +26,7 @@ Route::get('/info', 'HomeController@info')->name('info');
 Route::get('/hallofflame', 'HomeController@hallofshame')->name('hofs');
 
 Route::get('/booking_faq', 'HomeController@booking_faq')->name('booking_faq');
+Route::get('/readnotify', 'NotiMenuController@read')->name('notify.read');
 
 // ============ admins ================
 Route::get('/admin', 'TAdminController@index')->name('admin');
@@ -95,6 +98,14 @@ Route::get('/admin/delstaff', 'TAdminController@delstaff')->name('admin.delstaff
 Route::get('/admin/loadji', 'TAdminController@loadji')->name('admin.loadji');
 Route::post('/admin/loadji', 'TAdminController@doloadji')->name('admin.doloadji');
 Route::get('/admin/DlSampleJi', 'TAdminController@dlji')->name('admin.dlji');
+
+// MCO - WFH initiative
+Route::get('/mco/reqform', 'McoTravelReqController@reqform')->name('mco.reqform');
+Route::post('/mco/submitform', 'McoTravelReqController@submitform')->name('mco.submitform');
+Route::get('/mco/ackreqs', 'McoTravelReqController@ackreqs')->name('mco.ackreqs');
+Route::post('/mco/takeaction', 'McoTravelReqController@takeaction')->name('mco.takeaction');
+Route::get('/mco/checkins', 'McoTravelReqController@checkins')->name('mco.checkins');
+Route::get('/mco/getpermit', 'McoTravelReqController@getpermit')->name('mco.getpermit');
 
 // normal users
 Route::get('/user', 'TStaffController@index')->name('staff');

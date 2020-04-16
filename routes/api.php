@@ -121,6 +121,16 @@ $api->version('v1', function ($api) {
   $api->post('/SeatReqAccept',  ['as' => 'seat.req.accept', 'uses' => 'App\Api\V1\Controllers\UserController@acceptSeatRequest']);
   $api->post('/floorTomorrowStatus',  ['as' => 'infra.esok.status', 'uses' => 'App\Api\V1\Controllers\InfraController@getTomorrowAvailability']);
 
+
+  // mco
+  $api->post('/mco/getgminfo',  ['as' => 'api.mco.GetGmInfo', 'uses' => 'App\Api\V1\Controllers\McoController@GetGmInfo']);
+  $api->post('/mco/requestmcoack',  ['as' => 'api.mco.requestMcoAck', 'uses' => 'App\Api\V1\Controllers\McoController@requestMcoAck']);
+  $api->post('/mco/requestlist',  ['as' => 'api.mco.requestList', 'uses' => 'App\Api\V1\Controllers\McoController@requestList']);
+  $api->get('/mco/getpermit',  ['as' => 'api.mco.getpermit', 'uses' => 'App\Api\V1\Controllers\McoController@getPermit']);
+  $api->post('/mco/getpendingack',  ['as' => 'api.mco.getpending', 'uses' => 'App\Api\V1\Controllers\McoController@getpending']);
+  $api->post('/mco/getapprovedack',  ['as' => 'api.mco.getapproved', 'uses' => 'App\Api\V1\Controllers\McoController@getapproved']);
+  $api->post('/mco/getmcocheckin',  ['as' => 'api.mco.getmcocheckin', 'uses' => 'App\Api\V1\Controllers\McoController@getmcocheckin']);
+
 });
 
 $api->version('v1', [
@@ -147,5 +157,8 @@ $api->version('v1', [
   $api->get('/officeGetBuilding',  ['as' => 'office.b.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeBuilding']);
   $api->get('/officeGetFloor',  ['as' => 'office.f.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeFloor']);
   $api->get('/officeGetArea',  ['as' => 'office.area.getbytype', 'uses' => 'App\Api\V1\Controllers\InfraController@getOfficeArea']);
+
+  // mco
+  $api->post('/mco/takeaction',  ['as' => 'api.mco.takeaction', 'uses' => 'App\Api\V1\Controllers\McoController@takeaction']);
 
 });

@@ -7,6 +7,7 @@ use App\Mail\VerifyMail;
 use App\User;
 use App\Partner;
 use App\DailyPerformance;
+use App\common\IopHandler;
 
 class HomeController extends Controller
 {
@@ -87,5 +88,16 @@ class HomeController extends Controller
         'diarytop10' => $dtop10
       ]);
     }
+
+    public function poip(Request $req){
+      return IopHandler::ReverseGeo(2.788489299, 101.7182277);
+    }
+
+    public function getImage(Request $req){
+      if($req->filled('staff_no')){
+        return IopHandler::GetStaffImage($req->staff_no);
+      }
+    }
+
 
 }
