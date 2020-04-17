@@ -117,7 +117,8 @@ class McoTravelReqController extends Controller
         $pdf = \PDF::loadView('mco.permit', [
           'date' => $mco->request_date,
           'name' => $mco->requestor->name,
-          'newic' => $mco->requestor->new_ic
+          'newic' => $mco->requestor->new_ic,
+          'seq' => $mco->id
         ]);
 
         return $pdf->download('permit.pdf');
@@ -135,7 +136,8 @@ class McoTravelReqController extends Controller
     // return view('mco.permit', [
     //   'date' => '2020-04-10',
     //   'name' => 'Ali bin Abu',
-    //   'staffno' => 'C51421'
+    //   'newic' => 'C51421',
+    //   'seq' => 201
     // ]);
   }
 
