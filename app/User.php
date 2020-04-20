@@ -84,4 +84,17 @@ class User extends Authenticatable
       return $this->hasOne(LocationHistory::class, 'id', 'last_location_id');
     }
 
+    public function Section(){
+      if(isset($this->section_id)){
+        $unit = SubUnit::find($this->section_id);
+        if($unit){
+          return $unit->ppsuborgunitdesc;
+        } else {
+          return $this->subunit;
+        }
+      } else {
+        return $this->subunit;
+      }
+    }
+
 }

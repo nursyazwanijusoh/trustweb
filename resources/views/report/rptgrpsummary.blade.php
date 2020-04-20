@@ -55,6 +55,7 @@
                         <div class="col text-center">
                             <button type="submit" name="action" value="graph" class="btn btn-primary m-1">Get Summary</button>
                             <button type="submit" name="action" value="excel" class="btn btn-primary m-1">Generate Report</button>
+                            <button type="submit" name="action" value="datatable" class="btn btn-primary m-1">View Details (beta)</button>
                         </div>
                     </div>
                   </form>

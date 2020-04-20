@@ -525,6 +525,8 @@ class GwdReportController extends Controller
         return $this->doGrpSummary($req);
       } elseif ($req->action == 'excel') {
         return $this->doGrpExcel($req);
+      } elseif ($req->action == 'datatable') {
+        return $this->doGrpTable($req);
       }
     }
 
@@ -545,6 +547,116 @@ class GwdReportController extends Controller
       'sdate' => $lastweek,
       'edate' => $curdate,
       'rpthist' => $rpthist
+    ]);
+  }
+
+  public function getPersonalApi(Request $req){
+    $user = User::find($req->user_id);
+    if($user){
+
+    } else {
+      abort(404);
+    }
+
+    $cdate = new Carbon($req->tdate);
+    $ldate = new Carbon($req->fdate);
+    $cdate->addSecond();
+    $headers = [];
+
+    array_push($headers, $user->name);
+    array_push($headers, $user->staff_no);
+    array_push($headers, $user->unit);
+    array_push($headers, $user->Section());
+    array_push($headers, $user->email);
+
+
+    $daterange = new \DatePeriod(
+          $ldate,
+          \DateInterval::createFromDateString('1 day'),
+          $cdate
+        );
+
+    // dd($daterange);
+    $totalactual = 0;
+    $totalexpected = 0;
+
+    foreach ($daterange as $key => $value) {
+      $df = GDWActions::GetDailyPerfObj($user->id, $value);
+      $totalactual += $df->actual_hours;
+      $totalexpected += $df->expected_hours;
+      array_push($headers, $df->actual_hours);
+    }
+
+    array_push($headers, $totalactual);
+    array_push($headers, $totalexpected);
+
+    if($totalexpected == 0){
+      $pdtivity = 100;
+    } else {
+      $pdtivity = round($totalactual / $totalexpected * 100, 2);
+    }
+
+    if($pdtivity == 0){
+      $pdgrp = '0%';
+    } elseif($pdtivity < 50){
+      $pdgrp = '1% - 49%';
+    } elseif($pdtivity < 80){
+      $pdgrp = '50% - 79%';
+    } elseif($pdtivity <= 100){
+      $pdgrp = '70% - 100%';
+    } else {
+      $pdgrp = '101% +';
+    }
+
+    array_push($headers, $pdtivity);
+    array_push($headers, $pdgrp);
+
+    return $headers;
+  }
+
+  public function doGrpTable(Request $req){
+
+    // gid=1&fdate=2020-04-10&tdate=2020-04-17&action=datatable
+
+    $cgrp = CompGroup::find($req->gid);
+    if($cgrp){
+
+    } else {
+      return redirect()->back()->withInput()->with([
+        'alert' => 'Group 404',
+        'a_type' => 'danger'
+      ]);
+    }
+
+    $cdate = new Carbon($req->tdate);
+    $ldate = new Carbon($req->fdate);
+    $cdate->addSecond();
+    $headers = ['Name', 'Staff No', 'Division', 'Section', 'Email'];
+
+    $daterange = new \DatePeriod(
+          $ldate,
+          \DateInterval::createFromDateString('1 day'),
+          $cdate
+        );
+
+    // dd($daterange);
+
+    foreach ($daterange as $key => $value) {
+      array_push($headers, $value->format('d (D)'));
+    }
+    array_push($headers, 'Actual Hours');
+    array_push($headers, 'Expected Hours');
+    array_push($headers, 'Productivity');
+    array_push($headers, 'Range');
+
+    $users = [1, 3, 5];
+
+    return view('report.rptgrpsummaryv2', [
+      'header' => $headers,
+      'groupname' => $cgrp->name,
+      'startdate' => $req->fdate,
+      'enddate' => $req->tdate,
+      'idlist' => $users
     ]);
   }
 
