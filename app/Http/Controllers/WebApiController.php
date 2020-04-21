@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 
 use App\SkillType;
 use App\CommonSkillset;
+use App\common\IopHandler;
 
 class WebApiController extends Controller
 {
+
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
+
   // temp apis
   public function SSApiGetType(Request $req){
     $types = SkillType::query();
@@ -31,4 +38,17 @@ class WebApiController extends Controller
 
     return $types->orderBy('name')->get(['id', 'name']);
   }
+
+  public function reverseGeo(Request $req){
+    return IopHandler::ReverseGeo($req->lat, $req->lon);
+  }
+
+  public function getImage(Request $req){
+    if($req->filled('staff_no')){
+      return IopHandler::GetStaffImage($req->staff_no);
+    }
+  }
+
+
+
 }

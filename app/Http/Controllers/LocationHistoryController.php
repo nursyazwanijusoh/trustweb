@@ -45,12 +45,14 @@ class LocationHistoryController extends Controller
         if($req->action == 'updateloc'){
           UserRegisterHandler::attUpdateLoc($req->staff_id,
             $req->lat, $req->long,
-            $req->filled('reason') ? $req->reason : ''
+            $req->filled('reason') ? $req->reason : '',
+            $req->address
           );
         } elseif ($req->action == 'clockout') {
           UserRegisterHandler::attClockOut($req->staff_id, \Carbon\Carbon::now(),
             $req->lat, $req->long,
-            $req->filled('reason') ? $req->reason : ''
+            $req->filled('reason') ? $req->reason : '',
+            $req->address
           );
         } elseif ($req->action == 'clockin') {
           UserRegisterHandler::attClockIn($req);

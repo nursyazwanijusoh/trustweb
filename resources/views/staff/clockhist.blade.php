@@ -90,6 +90,12 @@ li.tlbg {
                       <input type="text" class="form-control" name="long" id="lon" placeholder="not enabled" maxlength="300" readonly/>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="addr" class="col-md-4 col-form-label text-md-right">Address</label>
+                    <div class="col-md-6">
+                      <textarea rows="3" class="form-control" id="addr" name="address" placeholder="pending coord" readonly></textarea>
+                    </div>
+                </div>
                 <div id="batens" class="form-group hidden row mb-0">
                     <div class="col text-center">
                       @if(isset($user->curr_attendance))
@@ -174,6 +180,25 @@ function showError(error) {
 function showPosition(position) {
   document.getElementById('lat').value = position.coords.latitude;
   document.getElementById('lon').value = position.coords.longitude;
+  document.getElementById('addr').innerHTML = 'Getting address. Please wait';
+
+  var search_url = "{{ route('reversegeo') }}";
+
+  $.ajax({
+    url: search_url,
+    data: {
+      'lat' : position.coords.latitude,
+      'lon' : position.coords.longitude
+    },
+    success: function(result) {
+      document.getElementById('addr').innerHTML = result;
+    },
+    error: function(xhr){
+      document.getElementById('addr').innerHTML = xhr.statusText;
+      // alert("An error occured: " + xhr.status + " " + xhr.statusText);
+    }
+  });
+
 
 }
 

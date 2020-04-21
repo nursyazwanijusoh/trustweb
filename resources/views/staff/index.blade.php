@@ -9,33 +9,46 @@
     <div class="row justify-content-center">
         <div class="col">
           <div class="row">
-            <div class="col-md-6 col-xl-5 mb-3">
+            <div class="col-md-6 mb-3">
             <div class="card">
               <div class="card-header">Staff Home Page - {{ $user['staff_no'] }}</div>
               <div class="card-body">
-                <h5 class="card-title">My Information</h5>
-                <p class="card-text text-monospace">
-                  Name : {{ $user['name'] }}<br />
-                  Division : {{ $user['unit'] }}<br />
-                  Unit : {{ $user['subunit'] }}<br />
-                  Email : {{ $user['email'] }}<br />
-                  Mobile : {{ $user['mobile_no'] }}<br />
-                  @if(isset($superior))
-                  Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}">{{ $superior->name }}</a><br />
-                  @endif
-                  @if(isset($user->LastLocation))
-                  Last Location :<a href="https://www.google.com/maps/search/?api=1&query={{ $user->LastLocation->latitude . ',' . $user->LastLocation->longitude }}" target="_blank">
-                    @if(isset($user->LastLocation->address))
-                    {{ $user->LastLocation->address }}
-                    @else
-                    See in map
-                    @endif
-                  </a> at {{ $user->LastLocation->created_at }}<br />
-                  @endif
-                </p>
+                <div class="row">
+                  <div class="col-9 p-1">
+                    <p class="card-text text-monospace">
+                      Name : {{ $user['name'] }}<br />
+                      Division : {{ $user['unit'] }}<br />
+                      Unit : {{ $user['subunit'] }}<br />
+                      Email : {{ $user['email'] }}<br />
+                      Mobile : {{ $user['mobile_no'] }}<br />
+                    </p>
+                  </div>
+                  <div class="col-3 p-1">
+                    <img class="card-img"  style="border: 1px solid #000; max-width:120px; max-height:120px;" src="{{ route('staff.image', ['staff_no' => $user['staff_no']]) }}" alt="gambo staff">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col p-1">
+                    <p class="card-text text-monospace">
+                      @if(isset($superior))
+                      Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}">{{ $superior->name }}</a><br />
+                      @endif
+                      @if(isset($user->LastLocation))
+                      Last Location :<a href="https://www.google.com/maps/search/?api=1&query={{ $user->LastLocation->latitude . ',' . $user->LastLocation->longitude }}" target="_blank">
+                        @if(isset($user->LastLocation->address))
+                        {{ $user->LastLocation->address }}
+                        @else
+                        See in map
+                        @endif
+                      </a> at {{ $user->LastLocation->created_at }}<br />
+                      @endif
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </div></div>
-            <div class="col-md-6 col-xl-7 mb-3">
+            <div class="col-md-6 mb-3">
             <div class="card">
               <div class="card-header">Action</div>
               <div class="card-body">
@@ -185,8 +198,15 @@
                   <div class="card mb-3 text-center">
                     <a href="{{ route('staff', ['staff_id' => $asub['staff_id']], false) }}">
                     <div class="card-body">
-                      <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
-                      <p class="card-text">{{ $asub['name'] }}</p>
+                      <div class="row">
+                        <div class="col-3 p-1">
+                          <img class="card-img"  style="border: 1px solid #000; max-width:64px; max-height:64px;" src="{{ route('staff.image', ['staff_no' => $asub['staff_no']]) }}" alt="gambo staff">
+                        </div>
+                        <div class="col-9 p-1">
+                          <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
+                          <p class="card-text">{{ $asub['name'] }}</p>
+                        </div>
+                      </div>
                     </div>
                     <div class="card-footer text-muted">
                       Yesterday: {{ $asub['yesterday_act'] }} / {{ $asub['yesterday_exp'] }}. Today: {{ $asub['today_act'] }} / {{ $asub['today_exp'] }}
@@ -196,8 +216,15 @@
                   @else
                   <div class="card mb-3 text-center text-white bg-secondary">
                     <div class="card-body">
-                      <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
-                      <p class="card-text">{{ $asub['name'] }}</p>
+                      <div class="row">
+                        <div class="col-3 p-1">
+                          <img class="card-img"  style="border: 1px solid #000; max-width:64px; max-height:64px;" src="{{ route('staff.image', ['staff_no' => $asub['staff_no']]) }}" alt="gambo staff">
+                        </div>
+                        <div class="col-9 p-1">
+                          <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
+                          <p class="card-text">{{ $asub['name'] }}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   @endif
