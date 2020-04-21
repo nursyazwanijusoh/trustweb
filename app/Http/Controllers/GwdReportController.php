@@ -649,7 +649,12 @@ class GwdReportController extends Controller
     array_push($headers, 'Productivity');
     array_push($headers, 'Range');
 
-    $users = [1, 3, 5];
+    $users = [];
+    foreach ($cgrp->Members as $onemember) {
+      foreach ($onemember->Staffs as $value) {
+        array_push($users, $value->id);
+      }
+    }
 
     return view('report.rptgrpsummaryv2', [
       'header' => $headers,

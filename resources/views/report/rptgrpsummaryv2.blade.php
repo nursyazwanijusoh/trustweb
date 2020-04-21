@@ -24,7 +24,7 @@
       </div>
       <div class="col-lg-12">
         <div class="card mb-3">
-          <div class="card-header">Reports History</div>
+          <div class="card-header">Report Data</div>
           <div class="card-body text-center">
             <div class="table-responsive">
               <table id="repothist" class="table table-striped table-bordered table-hover" style="white-space: nowrap;">
