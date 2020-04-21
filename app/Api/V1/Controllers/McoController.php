@@ -142,6 +142,9 @@ class McoController extends Controller
 
       $pending = McoTravelReq::where('approver_id', $req->staff_id)
       ->where('status', 'Pending Approval')->get();
+      foreach ($pending as $key => $value) {
+        $value->requestor_name = $value->requestor->name;
+      }
 
 
       return $this->respond_json(200, 'Success', $pending);
