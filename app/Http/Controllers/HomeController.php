@@ -7,6 +7,7 @@ use App\Mail\VerifyMail;
 use App\User;
 use App\Partner;
 use App\DailyPerformance;
+use \Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -81,13 +82,38 @@ class HomeController extends Controller
         ->orderBy('actual_hours', 'DESC')
         ->limit(10)->get();
 
+      $lastmon = new Carbon;
+      $lastmon->subMonth();
+
+      $mtop10 = \DB::table('daily_performances')
+        ->select('user_id', \DB::raw('sum(actual_hours) as tot_hrs'), \DB::raw('sum(expected_hours) as exp_hrs'))
+        ->whereDate('record_date', '>', $lastmon)
+        ->groupBy('user_id')
+        ->orderBy('tot_hrs', 'DESC')
+        ->limit(10)->get();
+
+
+      $m10data = [];
+      foreach($mtop10 as $au){
+        $user = User::find($au->user_id);
+
+        array_push($m10data, [
+          'id' => $user->id,
+          'name' => $user->name,
+          'div' => $user->unit,
+          'exp' => $au->exp_hrs,
+          'act' => $au->tot_hrs
+        ]);
+      }
+
 
       return view('halloffame', [
-        'diarytop10' => $dtop10
+        'diarytop10' => $dtop10,
+        'montop'  => $m10data
       ]);
     }
 
-    
+
 
 
 }
