@@ -21,6 +21,11 @@ class GwdActivityController extends Controller
     $staffid = $req->session()->get('staffdata')['id'];
     // dd($req->all());
     $act = GDWActions::addActivity($req, $staffid);
+    if($act == '403'){
+      return redirect()->back()->withInput()->withErrors([
+        'hours' => 'Exceeded current valid work hour'
+      ]);
+    }
 
     return redirect(route('staff.addact', ['dfid' => $act->daily_performance_id]))->with(['alert' => 'Diary entry added', 'a_type' => 'success']);
   }
@@ -29,6 +34,7 @@ class GwdActivityController extends Controller
     $staffid = $req->session()->get('staffdata')['id'];
 
     $taccccc = GwdActivity::find($req->actid);
+    $df = $taccccc->daily_performance_id;
     if($taccccc){
       if($taccccc->user_id != $staffid){
         return redirect()->back()->with(['alert' => 'Not allowed to delete the entry of another person', 'a_type' => 'danger']);
@@ -39,7 +45,7 @@ class GwdActivityController extends Controller
     // dd($req->all());
     $act = GDWActions::deleteActivity($req->actid);
 
-    return redirect(route('staff.list', []))->with(['alert' => 'Diary entry ' . $act, 'a_type' => 'warning']);
+    return redirect(route('staff.addact', ['dfid' => $df]))->with(['alert' => 'Diary entry ' . $act, 'a_type' => 'warning']);
   }
 
   public function edit(Request $req){
@@ -198,6 +204,8 @@ class GwdActivityController extends Controller
       $seldf = GDWActions::GetDailyPerfObj($cuserid, $today);
     }
 
+    $earlytime = GDWActions::GetStartWorkTime($cuserid, $indate);
+
     $cindate = new Carbon($indate);
     // if($cindate->lt($mindate)){
     //   $isvisitor = true;
@@ -214,6 +222,16 @@ class GwdActivityController extends Controller
       }
     }
 
+    // check if now is before start time
+    $nowtime = new Carbon;
+    if($nowtime->lt($earlytime)){
+      $isearly = true;
+    } else {
+      $isearly = false;
+    }
+
+
+
     return view('staff.addactivity', [
       'actlist' => $actype,
       'curdate' => $today,
@@ -224,7 +242,9 @@ class GwdActivityController extends Controller
       'pbes'    => [],
       'mindate' => $mindate->format('Y-m-d'),
       'tagref'  => json_encode($tagref),
-      'dfobj' => $seldf
+      'dfobj' => $seldf,
+      'early' => $earlytime,
+      'isearly' => $isearly
     ]);
   }
 

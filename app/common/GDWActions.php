@@ -13,6 +13,7 @@ use App\Avatar;
 use App\DailyPerformance;
 use App\PublicHoliday;
 use App\CommonConfig;
+use App\LocationHistory;
 use \DB;
 
 class GDWActions
@@ -37,6 +38,14 @@ class GDWActions
     }
 
     $dp = GDWActions::GetDailyPerfObj($staff_id, $indate);
+
+    if(GDWActions::canAcceptThisAct($dp, $req->hours)){
+      // allow changes
+    } else {
+      // reject changes
+      return '403';
+    }
+
 
     $act = new GwdActivity;
     $act->user_id = $staff_id;
@@ -110,10 +119,22 @@ class GDWActions
       return "404";
     }
 
+    $currdp = $act->DailyPerf;
+
+    $timediff = $act->hours_spent - $req->hours;
+    if($timediff > 0){
+      if(GDWActions::canAcceptThisAct($currdp, $timediff)){
+        // allow changes
+      } else {
+        // reject changes
+        return '403';
+      }
+    }
+
     $act->hours_spent = $req->hours;
     $act->save();
 
-    $currdp = $act->DailyPerf;
+
 
 
     if($req->filled('actdate')){
@@ -152,6 +173,74 @@ class GDWActions
 
     return $act;
 
+  }
+
+  public static function canAcceptThisAct($dailyperf, $hourstoadd){
+
+    // double check kat config
+    $confc = CommonConfig::where('key', 'reinforce_diary')->first();
+    if($confc){
+      if($confc->value != 'true'){
+        // no need to check. just return true
+        return true;
+      }
+    } else {
+      $confc = new CommonConfig;
+      $confc->key = 'reinforce_diary';
+      $confc->value = 'true';
+      $confc->save();
+    }
+
+    // check ada check in rekod tak untuk hari ni
+    $earliestime = GDWActions::GetStartWorkTime($dailyperf->user_id, $dailyperf->record_date);
+
+    // current time
+    $ctime = new Carbon;
+    $cdate = new Carbon(date('Y-m-d'));
+
+    // check if this is for previous days
+    $qdate = new Carbon($dailyperf->record_date);
+    if($qdate->gt($cdate)){
+      // future date. reject
+      return false;
+    }
+
+    if($qdate->lt($cdate)){
+      // past days. set max hour to 24
+      $maxhrs = 24;
+    } else {
+      $maxhrs = $ctime->hour;
+    }
+
+    // get max number of hours allowed at this time
+    $maxhrs = $maxhrs - $earliestime->hour + 1;  // plus 1 hour as allowed buffer
+
+    // return true if the added hours will not exceed allowed hours
+    return $maxhrs >= $dailyperf->actual_hours + $hourstoadd;
+  }
+
+  public static function GetStartWorkTime($user_id, $date){
+    $cekin = LocationHistory::where('user_id', $user_id)
+      ->whereDate('created_at', $date)
+      ->where('action', '!=', 'Check-out')
+      ->orderBy('created_at', 'ASC')->first();
+
+    if($cekin){
+      $earliestime = new Carbon($cekin->created_at);
+    } else {
+      $earliestime = new Carbon($date);
+      $earliestime->hour = 8;
+    }
+
+    // if checkin after 8, assume start time at 8
+    $startlapan = new Carbon($date);
+    $startlapan->hour = 8;
+
+    if($earliestime->gt($startlapan)){
+      $earliestime = $startlapan;
+    }
+
+    return $earliestime;
   }
 
   public static function deleteActivity($activityid){

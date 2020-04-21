@@ -33,10 +33,9 @@ class HomeController extends Controller
 
     function playground(Request $req){
 
-      if($req->filled('id')){
-        return \App\common\GDWActions::GetDailyPerfObj($req->id, $req->date);
-      }
+      $df = \App\common\GDWActions::GetDailyPerfObj($req->user()->id, '2020-04-20');
 
+      dd(\App\common\GDWActions::canAcceptThisAct($df, 5.1));
 
     }
 

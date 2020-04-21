@@ -55,6 +55,11 @@ class MiscController extends Controller
 		}
 
 		$act = GDWActions::addActivity($req, $req->staff_id);
+
+		if($act == '403'){
+			return $this->respond_json(403, 'Invalid number of hours relative to current time', $input);
+		}
+		
 		return $this->respond_json(200, 'Success', $act);
 	}
 
@@ -74,6 +79,11 @@ class MiscController extends Controller
 		if($act == '404'){
 			return $this->respond_json(404, 'gwd activity not found', $input);
 		}
+
+		if($act == '403'){
+			return $this->respond_json(403, 'Invalid number of hours relative to current time', $input);
+		}
+
 		return $this->respond_json(200, 'Success', $act);
 	}
 

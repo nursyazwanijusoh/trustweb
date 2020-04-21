@@ -7,7 +7,7 @@
           @if($isvisitor == false)
           <div class="col-lg-5">
             <div class="card m-1">
-                <div class="card-header">Add Diary Entry</div>
+                <div class="card-header">Add Diary Entry. Start work time: {{ $early->toTimeString() }}</div>
                 <div class="card-body">
                   @if (session()->has('alert'))
                   <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
@@ -20,15 +20,16 @@
                     <div class="form-group row">
                         <label for="actdate" class="col-md-4 col-form-label text-md-right">Date</label>
                         <div class="col-md-6">
-                          <input type="date" class="form-control" name="actdate" id="actdate" value="{{ $recdate }}" min="2020-01-01" max="{{ $curdate }}" onchange="loadActListForDate()"/>
+                          <input type="date" class="form-control" name="actdate" id="actdate" value="{{ old('actdate', $recdate) }}" min="2020-01-01" max="{{ $curdate }}" onchange="loadActListForDate()"/>
                         </div>
                     </div>
+                    @if($isearly == false)
                     <div class="form-group row">
                       <label for="actcat" class="col-md-4 col-form-label text-md-right">Activity Tag</label>
                       <div class="col-md-8">
                         <select class="form-control" id="actcat" name="actcat" required onchange="setTitleInput()">
                           @foreach ($actcats as $act)
-                          <option value="{{ $act['descr'] }}" title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
+                          <option value="{{ $act['descr'] }}" title="{{ $act->remark }}" {{ old('actcat') == $act['descr'] ? 'selected' : '' }} >{{ $act['descr'] }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -36,12 +37,12 @@
                     <div class="form-group row">
                         <label id="lbl_title" for="parent_no" class="col-md-4 col-form-label text-md-right">Nom</label>
                         <div class="col-md-8" id="inp_title1">
-                            <input id="parent_no" class="form-control" type="text" name="parent_no" placeholder="High level activity info" required>
+                            <input id="parent_no" class="form-control" type="text" name="parent_no" value="{{old('parent_no')}}" placeholder="High level activity info" required>
                         </div>
                         <div class="col-md-8" id="inp_title2">
                           <select class="form-control" id="pbe_sel" name="pbe_id" required>
                             @foreach ($pbes as $pbe)
-                            <option value="{{ $pbe->id }}"  title="{{ $pbe->title }}" >{{ $pbe->title }}</option>
+                            <option value="{{ $pbe->id }}"  title="{{ $pbe->title }}" {{ old('pbe_id') == $pbe->id ? 'selected' : '' }} >{{ $pbe->title }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -51,32 +52,42 @@
                       <div class="col-md-8">
                         <select class="form-control" id="acttype" name="acttype" required>
                           @foreach ($actlist as $act)
-                          <option value="{{ $act['descr'] }}"  title="{{ $act->remark }}" >{{ $act['descr'] }}</option>
+                          <option value="{{ $act['descr'] }}"  title="{{ $act->remark }}" {{ old('acttype') == $act['descr'] ? 'selected' : '' }} >{{ $act['descr'] }}</option>
                           @endforeach
                         </select>
                       </div>
                     </div>
                     <div class="form-group row">
-                        <label for="hours" class="col-md-4 col-form-label text-md-right">Hours Spent</label>
+                        <label for="hours" class="col-md-4 col-form-label text-md-right" title="Spent, not planned">Hours <b>Spent</b></label>
                         <!-- <div class="col-md-4">
                           <input type="range" class="custom-range" id="hours"
                           oninput="displaysliderval()" name="hourss" min="0" max="8" step="0.1" value="1"/>
                         </div> -->
                         <div class="col-md-4">
-                          <input type="number" class="form-control" name="hours" value="1" min="0" max="24" step="0.01" id="hourisid" onchange="updateSlider()" />
+                          <input type="number" class="form-control{{ $errors->has('hours') ? ' is-invalid' : '' }}" name="hours" value="{{ old('hours', 1) }}" min="0" max="24" step="0.01" id="hourisid" onchange="updateSlider()" />
+                          @if ($errors->has('hours'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('hours') }}</strong>
+                              </span>
+                          @endif
                         </div>
                         <!-- <label for="hours" class="col-md-1 col-form-label text-md-right">1</label> -->
                     </div>
                     <div class="form-group row">
                         <label for="remark" class="col-md-3 col-form-label text-md-right">Details</label>
                         <div class="col-md-9">
-                          <textarea rows="3" class="form-control" id="remark" name="details" placeholder="Anything you wish to elaborate regarding this activity" required></textarea>
+                          <textarea rows="3" class="form-control" id="remark" name="details" placeholder="Spesific detail regarding this activity" required>{{ old('details') }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row mb-0 justify-content-center">
                             <button type="submit" class="btn btn-primary m-1">Add Activity</button>
                             <a href="{{ route('staff', [], false) }}"><button type="button" class="btn btn-success m-1" title="Being unable to navigate on one's own is never a sin">Back to Dashboard</button></a>
                     </div>
+                    @else
+                    <div class="form-group row mb-0 justify-content-center">
+                      <a href="{{ route('clock.list', [], false) }}"><button type="button" class="btn btn-dark m-1" title="I want to start working now">Check in to start working early</button></a>
+                    </div>
+                    @endif
                   </form>
                 </div>
             </div>
@@ -127,7 +138,7 @@
                             @csrf
                             <button type="button" class="btn btn-sm btn-warning" title="Edit" data-toggle="modal" data-target="#editCfgModal"
                             data-id="{{ $acts->id }}"><i class="fa fa-pencil"></i></button>
-                            <button type="submit" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></button>
+                            <button type="submit" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash"></i></button>
                           </form>
                           @endif
                         </td>
