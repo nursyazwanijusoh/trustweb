@@ -43,7 +43,7 @@ class GDWActions
       // allow changes
     } else {
       // reject changes
-      return '403';
+      return '402';
     }
 
 
@@ -127,15 +127,12 @@ class GDWActions
         // allow changes
       } else {
         // reject changes
-        return '403';
+        return '402';
       }
     }
 
     $act->hours_spent = $req->hours;
     $act->save();
-
-
-
 
     if($req->filled('actdate')){
       $act->activity_date = $req->actdate;
@@ -193,6 +190,8 @@ class GDWActions
 
     // check ada check in rekod tak untuk hari ni
     $earliestime = GDWActions::GetStartWorkTime($dailyperf->user_id, $dailyperf->record_date);
+
+    // dd(date('Y-m-d'));
 
     // current time
     $ctime = new Carbon;

@@ -49,7 +49,7 @@ class GwdReportController extends Controller
       if($req->action == 'graph'){
         return $this->doDivSum($req);
       } elseif ($req->action == 'excel') {
-        return $this->doDivExcel($req);
+        return $this->doDivTable($req);
       }
     }
 
@@ -180,6 +180,54 @@ class GwdReportController extends Controller
       'sumchart' => $schart
     ]);
 
+  }
+
+  public function doDivTable(Request $req){
+
+    // gid=1&fdate=2020-04-10&tdate=2020-04-17&action=datatable
+
+    $cgrp = Unit::find($req->did);
+    if($cgrp){
+
+    } else {
+      return redirect()->back()->withInput()->with([
+        'alert' => 'unit 404',
+        'a_type' => 'danger'
+      ]);
+    }
+
+    $cdate = new Carbon($req->tdate);
+    $ldate = new Carbon($req->fdate);
+    $cdate->addSecond();
+    $headers = ['Name', 'Staff No', 'Division', 'Section', 'Email'];
+
+    $daterange = new \DatePeriod(
+          $ldate,
+          \DateInterval::createFromDateString('1 day'),
+          $cdate
+        );
+
+    // dd($daterange);
+
+    foreach ($daterange as $key => $value) {
+      array_push($headers, $value->format('d (D)'));
+    }
+    array_push($headers, 'Actual Hours');
+    array_push($headers, 'Expected Hours');
+    array_push($headers, 'Productivity');
+
+    $users = [];
+    foreach ($cgrp->Staffs as $value) {
+      array_push($users, $value->id);
+    }
+
+    return view('report.rptgrpsummaryv2', [
+      'header' => $headers,
+      'groupname' => $cgrp->name,
+      'startdate' => $req->fdate,
+      'enddate' => $req->tdate,
+      'idlist' => $users
+    ]);
   }
 
   public function doDivExcel(Request $req){
@@ -596,20 +644,7 @@ class GwdReportController extends Controller
       $pdtivity = round($totalactual / $totalexpected * 100, 2);
     }
 
-    if($pdtivity == 0){
-      $pdgrp = '0%';
-    } elseif($pdtivity < 50){
-      $pdgrp = '1% - 49%';
-    } elseif($pdtivity < 80){
-      $pdgrp = '50% - 79%';
-    } elseif($pdtivity <= 100){
-      $pdgrp = '70% - 100%';
-    } else {
-      $pdgrp = '101% +';
-    }
-
     array_push($headers, $pdtivity);
-    array_push($headers, $pdgrp);
 
     return $headers;
   }
@@ -647,7 +682,6 @@ class GwdReportController extends Controller
     array_push($headers, 'Actual Hours');
     array_push($headers, 'Expected Hours');
     array_push($headers, 'Productivity');
-    array_push($headers, 'Range');
 
     $users = [];
     foreach ($cgrp->Members as $onemember) {

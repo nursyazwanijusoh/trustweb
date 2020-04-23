@@ -21,7 +21,7 @@ class GwdActivityController extends Controller
     $staffid = $req->session()->get('staffdata')['id'];
     // dd($req->all());
     $act = GDWActions::addActivity($req, $staffid);
-    if($act == '403'){
+    if($act == '402'){
       return redirect()->back()->withInput()->withErrors([
         'hours' => 'Exceeded current valid work hour'
       ]);
@@ -57,13 +57,20 @@ class GwdActivityController extends Controller
 
       $currdp = $act->DailyPerf;
       $hoursdiff = $req->hours - $act->hours_spent;
-      $currdp->addHours($hoursdiff);
 
-      $act->details = $req->details;
-      $act->hours_spent = $req->hours;
-      $act->save();
+      if(GDWActions::canAcceptThisAct($currdp, $hoursdiff)){
+        $currdp->addHours($hoursdiff);
 
-      return redirect(route('staff.addact', ['dfid' => $act->daily_performance_id]))->with(['alert' => 'Diary entry for ' . $act->parent_number . ' updated', 'a_type' => 'success']);
+        $act->details = $req->details;
+        $act->hours_spent = $req->hours;
+        $act->save();
+
+        return redirect(route('staff.addact', ['dfid' => $act->daily_performance_id]))->with(['alert' => 'Diary entry for ' . $act->parent_number . ' updated', 'a_type' => 'success']);
+      } else {
+        return redirect()->back()->with(['alert' => 'Exceeded valid current work hour', 'a_type' => 'danger']);
+      }
+
+
 
     } else {
       return redirect()->back()->with(['alert' => 'Diary entry not found', 'a_type' => 'danger']);
