@@ -128,6 +128,28 @@
 
 
         <main class="py-4">
+          @if( $enonmen3->count() > 0)
+          <div class="alert alert-info alert-dismissible mx-3">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><i class="fa fa-bullhorn"></i> Announcement!</strong>
+            <ul class="mb-0">
+              @foreach($enonmen3 as $ann)
+              <li>
+                {{ $ann->content }}
+                @if(isset($ann->url))
+                - <a href="{{ $ann->url }}" target="_blank">
+                  @if(isset($ann->url_text))
+                  {{ $ann->url_text }}
+                  @else
+                  Click here
+                  @endif
+                </a>
+                @endif
+              </li>
+              @endforeach
+            </ul>
+          </div>
+          @endif
             @yield('content')
         </main>
     </div>

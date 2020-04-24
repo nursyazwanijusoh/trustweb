@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+// use Illuminate\Support\Facades\View;
+use App\Announcement;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+      view()->composer('layouts.app', function($view)
+      {
+        // get the announcement
+        $today = date('Y-m-d');
+
+        $anlist = Announcement::whereDate('start_date', '<=', $today)
+          ->whereDate('end_date', '>=', $today)
+          ->get();
+
+        $view->with('enonmen3',$anlist);
+      });
 
       // if(config('APP_ENV') === 'production') {
           \URL::forceScheme('https');

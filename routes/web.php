@@ -68,6 +68,12 @@ Route::post('/admin/meetroom/add', 'TAdminController@meetroomAdd')->name('admin.
 Route::post('/admin/meetroom/edit', 'TAdminController@meetroomEdit')->name('admin.meetroom.edit');
 Route::get('/admin/meetroom/del', 'TAdminController@meetroomDel')->name('admin.meetroom.del');
 
+// announcement
+Route::get('/admin/announcement', 'AnnouncementController@list')->name('admin.annc');
+Route::post('/admin/announcement/add', 'AnnouncementController@add')->name('admin.annc.add');
+Route::post('/admin/announcement/edit', 'AnnouncementController@edit')->name('admin.annc.edit');
+Route::get('/admin/announcement/del', 'AnnouncementController@delete')->name('admin.annc.del');
+
 // admin allow access according to division
 Route::get('/admin/allowdiv/{divid}', 'TAdminController@allowdiv')->name('admin.allowdiv');
 Route::get('/admin/blockdiv/{divid}', 'TAdminController@blockdiv')->name('admin.blockdiv');
