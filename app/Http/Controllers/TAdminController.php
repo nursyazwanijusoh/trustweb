@@ -1106,7 +1106,62 @@ class TAdminController extends Controller
   }
 
   public function UpdateStaffData(Request $req){
-    dd('Under Development');
+    // dd($req->all());
+
+    $user = User::find($req->id);
+    if($user){
+      // check org unit
+      $divunit = Unit::where('pporgunit', $req->lob)->first();
+      if($divunit){
+        // check report to
+        $bos = User::where('persno', $req->report_to)->first();
+        if($bos){
+          // just in case, check if persno belongs to other person
+          $otus = User::where('persno', $req->persno)
+            ->where('id', '!=', $req->id)->first();
+
+          if($otus){
+            return redirect()->back()->withInput()->with([
+              'alert' => 'persno ' . $req->persno . ' belongs to ' . $otus->name,
+              'a_type' => 'warning'
+            ]);
+          }
+
+          // ok no issue. begin patch
+          $user->name = $req->name;
+          $user->persno = $req->persno;
+          $user->lob = $req->lob;
+          $user->unit_id = $divunit->id;
+          $user->unit = $divunit->pporgunitdesc;
+          $user->report_to = $req->report_to;
+          $user->save();
+
+          return redirect(route('admin.usercompare', ['staff_no' => $user->staff_no]))
+            ->with([
+              'alert' => 'Record updated',
+              'a_type' => 'info'
+            ]);
+
+        } else {
+          return redirect()->back()->withInput()->with([
+            'alert' => 'report to: staff with persno ' . $req->report_to . ' not found',
+            'a_type' => 'warning'
+          ]);
+        }
+
+      } else {
+        return redirect()->back()->withInput()->with([
+          'alert' => 'OrgUnit ' . $req->lob . ' not found',
+          'a_type' => 'warning'
+        ]);
+      }
+    } else {
+      return redirect()->back()->withInput()->with([
+        'alert' => 'User not found',
+        'a_type' => 'warning'
+      ]);
+    }
+
   }
 
 

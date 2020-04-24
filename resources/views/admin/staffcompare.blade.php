@@ -5,8 +5,8 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-sm-12">
-      <div class="card bg-success mb-3">
-        <div class="card-header">Check for Staff Data</div>
+      <div class="card mb-3">
+        <div class="card-header bg-success text-white">Check for Staff Data</div>
         <div class="card-body">
           @if (session()->has('alert'))
           <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
@@ -37,23 +37,23 @@
         <div class="card-body">
           <div class="form-group">
             <label for="staff_no" class="control-label">Staff No</label>
-            <input type="text" class="form-control" id="staff_no" value="{{ $tdata['staff_no'] }}" disabled>
+            <input type="text" class="form-control" id="staff_no" value="{{ $tdata['staff_no'] }}" readonly>
           </div>
           <div class="form-group">
             <label for="staff_name" class="control-label">Staff Name</label>
-            <input type="text" class="form-control" id="staff_name" value="{{ $tdata['name'] }}" disabled>
+            <input type="text" class="form-control" id="staff_name" value="{{ $tdata['name'] }}" readonly>
           </div>
           <div class="form-group">
             <label for="persno" class="control-label">Personnel No</label>
-            <input type="text" class="form-control" id="persno" value="{{ $tdata['persno'] }}" disabled>
+            <input type="text" class="form-control" id="persno" value="{{ $tdata['persno'] }}" readonly>
           </div>
           <div class="form-group">
             <label for="pporgunit" class="control-label">Org Unit</label>
-            <input type="text" class="form-control" id="pporgunit" value="{{ $tdata['pporgunit'] }} - {{ $tdata['pporgunitdesc'] }}" disabled>
+            <input type="text" class="form-control" id="pporgunit" value="{{ $tdata['pporgunit'] }} - {{ $tdata['pporgunitdesc'] }}" readonly>
           </div>
           <div class="form-group">
             <label for="report_to" class="control-label">Report To</label>
-            <input type="text" class="form-control" id="report_to" value="{{ $tdata['report_to'] }} - {{ $tdata['report_name'] }}" disabled>
+            <input type="text" class="form-control" id="report_to" value="{{ $tdata['report_to'] }} - {{ $tdata['report_name'] }}" readonly>
           </div>
         </div>
       </div>
@@ -65,26 +65,30 @@
         <div class="card-body">
           <form method="POST" action="{{ route('admin.updateuserdata', [], false) }}">
             @csrf
-            <input type="hidden" name="id" value="{{ $uid }}" disabled>
+            <input type="hidden" name="id" value="{{ $uid }}">
             <div class="form-group">
               <label for="staff_no" class="control-label">Staff No</label>
-              <input type="text" class="form-control" id="staff_no" value="{{ $ldata['staff_no'] }}" disabled>
+              <input type="text" class="form-control" id="staff_no" value="{{ $ldata['staff_no'] }}" readonly>
             </div>
             <div class="form-group">
               <label for="staff_name" class="control-label">Staff Name</label>
-              <input type="text" class="form-control" id="staff_name" name="name" value="{{ $ldata['name'] }}" disabled>
+              <input type="text" class="form-control" id="staff_name" value="{{ $ldata['name'] }}" readonly>
+              <input type="hidden" name="name" value="{{ $ldata['name'] }}" />
             </div>
             <div class="form-group">
               <label for="persno" class="control-label">Personnel No</label>
-              <input type="text" class="form-control" id="persno" name="persno" value="{{ $ldata['persno'] }}" disabled>
+              <input type="text" class="form-control" id="persno" value="{{ $ldata['persno'] }}" readonly>
+              <input type="hidden" name="persno" value="{{ $ldata['persno'] }}" />
             </div>
             <div class="form-group">
               <label for="pporgunit" class="control-label">Org Unit</label>
-              <input type="text" class="form-control" id="pporgunit" name="lob" value="{{ $ldata['pporgunit'] }} - {{ $ldata['pporgunitdesc'] }}" disabled>
+              <input type="text" class="form-control" id="pporgunit" value="{{ $ldata['pporgunit'] }} - {{ $ldata['pporgunitdesc'] }}" readonly>
+              <input type="hidden" name="lob" value="{{ $ldata['pporgunit'] }}" />
             </div>
             <div class="form-group">
               <label for="report_to" class="control-label">Report To</label>
-              <input type="text" class="form-control" id="report_to" name="report_to" value="{{ $ldata['report_to'] }} - {{ $ldata['report_name'] }}" disabled>
+              <input type="text" class="form-control" id="report_to" value="{{ $ldata['report_to'] }} - {{ $ldata['report_name'] }}" readonly>
+              <input type="hidden" name="report_to" value="{{ $ldata['report_to'] }}" />
             </div>
             <div class="form-group mb-0">
               <div class="col text-center">
@@ -102,7 +106,7 @@
         <div class="card-body">
           <form method="POST" action="{{ route('admin.updateuserdata', [], false) }}">
             @csrf
-            <input type="hidden" name="id" value="{{ $uid }}" disabled>
+            <input type="hidden" name="id" value="{{ $uid }}">
             <div class="form-group">
               <label for="staff_no" class="control-label">Staff No</label>
               <input type="text" class="form-control" id="staff_no" value="{{ $staff_no }}" disabled>

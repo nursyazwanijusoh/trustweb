@@ -102,7 +102,7 @@ class BatchHelper
               $value->save();
               continue;
             }
-            
+
             // not exist. create new
             $user = new User;
             $user->staff_no = $trimmedstaffno;
@@ -182,13 +182,16 @@ class BatchHelper
         $subu->ppsuborg = $value->unit_no;
       }
 
-      $subu->ppsuborgunitdesc = $value->unit_name;
+      $unitname = isset($value->unit_name) ? $value->unit_name : $value->unit_no;
+      $grpname = isset($value->group_name) ? $value->group_name : $value->group_no;
+
+      $subu->ppsuborgunitdesc = $unitname;
       $subu->pporgunit = $value->group_no;
-      $subu->pporgunitdesc = $value->group_name;
+      $subu->pporgunitdesc = $grpname;
       $subu->save();
 
-      $user->unit = $value->group_name;
-      $user->subunit = $value->unit_name;
+      $user->unit = $grpname;
+      $user->subunit = $unitname;
       // $user->jobtype = $value->postion_name;
 
       $user->save();

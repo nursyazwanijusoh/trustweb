@@ -50,7 +50,7 @@ class BatchController extends Controller
 			// already got the job
 			return $this->respond_json(200, 'Job already exist', []);
 		} else {
-			CreateDailyPerformance::dispatch($ddate);
+			// CreateDailyPerformance::dispatch($ddate);
 		}
 
 		return $this->respond_json(200, 'Job Scheduled', []);
