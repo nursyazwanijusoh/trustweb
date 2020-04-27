@@ -76,7 +76,7 @@
                     <div class="form-group row">
                         <label for="remark" class="col-md-3 col-form-label text-md-right">Details</label>
                         <div class="col-md-9">
-                          <textarea rows="3" class="form-control" id="remark" name="details" placeholder="Spesific detail regarding this activity" required>{{ old('details') }}</textarea>
+                          <textarea rows="3" class="form-control" id="remark" name="details" placeholder="Specific detail regarding this activity" required>{{ old('details') }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row mb-0 justify-content-center">
@@ -105,7 +105,7 @@
                       <tr>
                         <th scope="col">Date Entered</th>
                         <th scope="col">Type</th>
-                        <th scope="col">ID / Name</th>
+                        <th scope="col">ID / Title</th>
                         <th scope="col">Details</th>
                         <th scope="col">Hours</th>
                         @if($isvisitor == false)
