@@ -27,7 +27,7 @@
           <div class="card-header">Report Data</div>
           <div class="card-body text-center">
             <div class="table-responsive">
-              <table id="repothist" class="table table-striped table-bordered table-hover" style="white-space: nowrap;">
+              <table id="repothist" class="table table-bordered table-hover" style="white-space: nowrap;">
                 <thead>
                   <tr>
                     @foreach($header as $tf)
@@ -61,13 +61,38 @@ $(document).ready(function() {
       dom: 'Bfrtip',
       buttons: [
           'csv', 'excel'
+      ],
+      columns : [
+        {data: 'name'},
+        {data: 'staff_no'},
+        {data: 'division'},
+        {data: 'section'},
+        {data: 'email'},
+        @foreach($dtablerender as $one)
+        {
+          data: '{{ $one }}',
+          render: 'data',
+          createdCell: function(td, cellData, rowData, row, col){
+            // $(td).html(cellData.data);
+            if(cellData.ishol == true){
+              $(td).css('background-color', cellData.bgcolor);
+            }
+          }
+        },
+        @endforeach
+
+        {data: 'actual'},
+        {data: 'expected'},
+        {data: 'productivity'}
       ]
   });
 
   counter = 0;
   var idlist = @json($idlist);
 
-  idlist.forEach(loadOneStaff);
+  loadOneStaff(1);
+
+  // idlist.forEach(loadOneStaff);
 
 } );
 

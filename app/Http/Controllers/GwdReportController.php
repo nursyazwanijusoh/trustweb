@@ -209,8 +209,11 @@ class GwdReportController extends Controller
 
     // dd($daterange);
 
+    $contentrender = [];
     foreach ($daterange as $key => $value) {
       array_push($headers, $value->format('d (D)'));
+      $colid = 'd' . $value->format('md');
+      array_push($contentrender, $colid);
     }
     array_push($headers, 'Actual Hours');
     array_push($headers, 'Expected Hours');
@@ -226,7 +229,8 @@ class GwdReportController extends Controller
       'groupname' => $cgrp->name,
       'startdate' => $req->fdate,
       'enddate' => $req->tdate,
-      'idlist' => $users
+      'idlist' => $users,
+      'dtablerender' => $contentrender
     ]);
   }
 
@@ -611,12 +615,11 @@ class GwdReportController extends Controller
     $cdate->addSecond();
     $headers = [];
 
-    array_push($headers, $user->name);
-    array_push($headers, $user->staff_no);
-    array_push($headers, $user->unit);
-    array_push($headers, $user->Section());
-    array_push($headers, $user->email);
-
+    $headers['name'] = $user->name;
+    $headers['staff_no'] = $user->staff_no;
+    $headers['division'] = $user->unit;
+    $headers['section'] = $user->Section();
+    $headers['email'] = $user->email;
 
     $daterange = new \DatePeriod(
           $ldate,
@@ -632,11 +635,34 @@ class GwdReportController extends Controller
       $df = GDWActions::GetDailyPerfObj($user->id, $value);
       $totalactual += $df->actual_hours;
       $totalexpected += $df->expected_hours;
-      array_push($headers, $df->actual_hours);
+
+      $colid = 'd' . $value->format('md');
+
+      $ishol = false;
+      $bgcol = '';
+
+      if($df->is_public_holiday == true){
+        $ishol = true;
+        $bgcol = 'lightblue';
+      } elseif($df->is_off_day == true){
+        $ishol = true;
+        if($df->expected_hours == 0){
+          $bgcol = 'springgreen';
+        } else {
+          $bgcol = 'yellow';
+        }
+      }
+
+      $headers[$colid] = [
+        'data' => $df->actual_hours,
+        'ishol' => $ishol,
+        'bgcolor' => $bgcol
+      ];
+
     }
 
-    array_push($headers, $totalactual);
-    array_push($headers, $totalexpected);
+    $headers['actual'] = $totalactual;
+    $headers['expected'] = $totalexpected;
 
     if($totalexpected == 0){
       $pdtivity = 100;
@@ -644,7 +670,7 @@ class GwdReportController extends Controller
       $pdtivity = round($totalactual / $totalexpected * 100, 2);
     }
 
-    array_push($headers, $pdtivity);
+    $headers['productivity'] = $pdtivity;
 
     return $headers;
   }
@@ -675,9 +701,12 @@ class GwdReportController extends Controller
         );
 
     // dd($daterange);
-
+    $contentrender = [];
     foreach ($daterange as $key => $value) {
       array_push($headers, $value->format('d (D)'));
+      $colid = 'd' . $value->format('md');
+      array_push($contentrender, $colid);
+
     }
     array_push($headers, 'Actual Hours');
     array_push($headers, 'Expected Hours');
@@ -695,7 +724,8 @@ class GwdReportController extends Controller
       'groupname' => $cgrp->name,
       'startdate' => $req->fdate,
       'enddate' => $req->tdate,
-      'idlist' => $users
+      'idlist' => $users,
+      'dtablerender' => $contentrender
     ]);
   }
 
