@@ -90,9 +90,9 @@ $(document).ready(function() {
   counter = 0;
   var idlist = @json($idlist);
 
-  loadOneStaff(1);
+  // loadOneStaff(1);
 
-  // idlist.forEach(loadOneStaff);
+  idlist.forEach(loadOneStaff);
 
 } );
 
