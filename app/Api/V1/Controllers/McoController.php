@@ -8,6 +8,7 @@ use App\common\McoActions;
 use App\McoTravelReq;
 use App\LocationHistory;
 use App\User;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class McoController extends Controller
 {
@@ -92,7 +93,7 @@ class McoController extends Controller
 
       $mco = McoTravelReq::find($req->mid);
       if($mco){
-        $pdf = \PDF::loadView('mco.permit', [
+        $pdf = PDF::loadView('mco.permit', [
           'date' => $mco->request_date,
           'name' => $mco->requestor->name,
           'newic' => $mco->requestor->new_ic

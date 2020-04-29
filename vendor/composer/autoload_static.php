@@ -645,6 +645,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Feedback' => __DIR__ . '/../..' . '/app/Feedback.php',
         'App\\GwdActivity' => __DIR__ . '/../..' . '/app/GwdActivity.php',
         'App\\Http\\Controllers\\AdminReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminReportController.php',
+        'App\\Http\\Controllers\\AnnouncementController' => __DIR__ . '/../..' . '/app/Http/Controllers/AnnouncementController.php',
         'App\\Http\\Controllers\\AppDownloadController' => __DIR__ . '/../..' . '/app/Http/Controllers/AppDownloadController.php',
         'App\\Http\\Controllers\\AreaEventController' => __DIR__ . '/../..' . '/app/Http/Controllers/AreaEventController.php',
         'App\\Http\\Controllers\\AssignmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/AssignmentController.php',
