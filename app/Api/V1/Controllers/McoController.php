@@ -8,7 +8,7 @@ use App\common\McoActions;
 use App\McoTravelReq;
 use App\LocationHistory;
 use App\User;
-use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
 
 class McoController extends Controller
 {

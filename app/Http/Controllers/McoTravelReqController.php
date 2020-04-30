@@ -7,7 +7,7 @@ use \Carbon\Carbon;
 use App\common\McoActions;
 use App\McoTravelReq;
 use App\LocationHistory;
-use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
 
 class McoTravelReqController extends Controller
 {
