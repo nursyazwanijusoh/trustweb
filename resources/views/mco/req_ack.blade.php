@@ -45,7 +45,7 @@
                         <input class="form-check-input" type="checkbox" name="rate" id="noob" value="1" onchange="checkagree()" required />
                       </div>
                       <div class="col-10">
-                        <label class="form-check-label" title="agree to the t&c" for="noob">I hearby agree that I will only travel from home straight to work location, without making any unnecessary stop in between, and then travel straight back home once I'm done with work. <br />Should I fail to do so, I shall accept any kind of punishment imposed by my employer as the consequences of my action.</label>
+                        <label class="form-check-label" title="agree to the t&c" for="noob">I hereby declare that I shall travel from home to workplace and vice versa without making any unnecessary stops in between upon completion of my assigned work. <br />Failure to comply, I understand that my employer may invoke an appropriate disciplinary action as the consequence of my action.</label>
                       </div>
                     </div>
                     <div class="form-group row mb-0 justify-content-center">

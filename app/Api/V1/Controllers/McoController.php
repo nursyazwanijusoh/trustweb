@@ -96,10 +96,11 @@ class McoController extends Controller
         $pdf = PDF::loadView('mco.permit', [
           'date' => $mco->request_date,
           'name' => $mco->requestor->name,
-          'newic' => $mco->requestor->new_ic
+          'newic' => $mco->requestor->new_ic,
+          'seq' => $mco->id
         ]);
 
-        return $pdf->download('permit.pdf');
+        return $pdf->stream('permit.pdf');
       } else {
         return $this->respond_json(404, 'Not found', []);
       }

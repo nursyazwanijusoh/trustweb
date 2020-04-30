@@ -122,7 +122,7 @@ class McoTravelReqController extends Controller
           'seq' => $mco->id
         ]);
 
-        return $pdf->download('permit.pdf');
+        return $pdf->stream('permit.pdf');
       } else {
         abort(404);
       }

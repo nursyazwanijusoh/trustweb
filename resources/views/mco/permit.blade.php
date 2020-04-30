@@ -15,7 +15,7 @@
   </div>
   <div>
 
-    <p>
+    <p style="margin-top:0">
       Ruj. Kami :  GITD/ITAS/RPM/MCO/{{ $seq }} <br />
       {{ $date }}
     </p>
@@ -47,26 +47,26 @@
     <p style="text-align:justify">
       Pihak TM memohon agar pihak tuan/puan membenarkan kakitangan tersebut untuk meneruskan perjalanan dan menyelesaikan tugasan penting mereka.
     </p>
-    <p>
+    <p style="margin-bottom:0">
       Bagi pihak <br />
       <b>Telekom Malaysia Berhad (128740-P)</b>
     </p>
 
     <!-- sign area -->
     <p>
-      &nbsp;<br /><br />
+      <img style="height:130px;" src="{{ public_path('sivan-sign.png') }}" />
     </p>
-    <p>
-      <b>NAZLINA SAFINA BINTI NAZIR</b><br />
-  Pengurus Besar <br />
-  IT Assurance &amp; Services <br />
-  Group IT &amp; Digital
+    <p style="margin-bottom:0">
+      <b>M. UMAPATHY SIVAN</b><br />
+  Chief Information Officer<br />
+  Group IT &amp; Digital<br />
+  TELEKOM MALAYSIA BERHAD
     </p>
   </div>
 
   <div>
     <hr />
-    <p style="font-size:14px;color:gray;">
+    <p style="font-size:14px;color:gray;margin-bottom:0;margin-top:0">
       Telekom Malaysia Berhad (128740-P) <br>
       Group IT &amp; Digital <br>
       Level 23 North, Menara TM,<br>
