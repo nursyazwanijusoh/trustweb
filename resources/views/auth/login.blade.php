@@ -6,12 +6,12 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
-                @if ( isset($loginerror) )
-                    <div class="alert alert-{{ $type }}" role="alert">
-                        {{ $loginerror }}
-                    </div>
-                @endif
                 <div class="card-body">
+                  @if ( isset($loginerror) )
+                      <div class="alert alert-{{ $type }}" role="alert">
+                          {{ $loginerror }}
+                      </div>
+                  @endif
                     <form method="POST" action="{{ route('login', [], false) }}">
                         @csrf
 

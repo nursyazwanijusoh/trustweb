@@ -35,7 +35,7 @@ class LdapHelper extends Controller
 
         } else {
           $errorcode = 401;
-          $errm = 'Invalid credentials.';
+          $errm = ldap_error($con);
         }} catch(Exception $e) {
           $errorcode = 500;
           $errm = $e->getMessage();

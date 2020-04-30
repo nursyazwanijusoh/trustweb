@@ -51,8 +51,9 @@ class LoginController extends Controller
 
       $logresp = UserRegisterHandler::userLogin($req->staff_id, $req->password, 1);
 
-      if($logresp['msg'] == 'failed'){
-        return view('auth.login', ['loginerror' => 'Invalid Credential', 'type' => 'warning']);
+      if($logresp['msg'] == 'success'){
+        session(['staffdata' => $logresp['user']]);
+        return redirect()->intended(route('staff', [], false));
       } elseif ($logresp['msg'] == 'email') {
         return view('auth.verify', ['staff' => $logresp['user']->id]);
       } elseif ($logresp['msg'] == 'pending') {
@@ -61,9 +62,8 @@ class LoginController extends Controller
         return view('auth.login', ['loginerror' => 'Your division is not authorized for this application', 'type' => 'warning']);
       }
 
-      session(['staffdata' => $logresp['user']]);
+      return view('auth.login', ['loginerror' => $logresp['msg'], 'type' => 'warning']);
 
-      return redirect()->intended(route('staff', [], false));
 
     }
 

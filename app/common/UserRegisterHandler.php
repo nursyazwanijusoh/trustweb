@@ -92,7 +92,7 @@ class UserRegisterHandler
 		  $ldapresp = $ldapherpel->doLogin($username, $password);
       if($ldapresp['code'] != 200){
         // bad ldap login
-        $errormsg = "failed";
+        $errormsg = $ldapresp['msg'];
   		} else {
         // update the data back to the User
         $user = UserRegisterHandler::updateFromLdap($ldapresp);
