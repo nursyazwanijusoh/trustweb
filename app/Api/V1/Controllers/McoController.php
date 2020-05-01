@@ -127,7 +127,7 @@ class McoController extends Controller
         return $this->respond_json(500, 'unknown action', []);
       }
 
-      return $this->respond_json(200, 'Success', []);
+      return $this->respond_json($resp, 'Success', []);
     }
 
     function getpending(Request $req){
