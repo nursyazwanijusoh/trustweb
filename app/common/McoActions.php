@@ -5,6 +5,7 @@ namespace App\common;
 use App\McoTravelReq;
 use App\Notifications\McoPermitApplied;
 use App\Notifications\McoPermitApproved;
+use App\Notifications\McoPermitRejected;
 use App\User;
 use \Carbon\Carbon;
 
