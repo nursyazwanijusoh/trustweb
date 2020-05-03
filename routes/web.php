@@ -112,6 +112,7 @@ Route::get('/mco/ackreqs', 'McoTravelReqController@ackreqs')->name('mco.ackreqs'
 Route::post('/mco/takeaction', 'McoTravelReqController@takeaction')->name('mco.takeaction');
 Route::get('/mco/checkins', 'McoTravelReqController@checkins')->name('mco.checkins');
 Route::get('/mco/getpermit', 'McoTravelReqController@getpermit')->name('mco.getpermit');
+Route::get('/admin/mcorpt', 'TAdminTwoController@McoReport')->name('mco.rpt');
 
 // normal users
 Route::get('/user', 'TStaffController@index')->name('staff');

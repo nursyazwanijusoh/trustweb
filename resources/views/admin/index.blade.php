@@ -55,13 +55,14 @@
         </div>
       </div>
       <div class="card bg-warning mb-2">
-        <div class="card-header">Misc LOVs</div>
+        <div class="card-header">Misc Admn Menu</div>
         <div class="card-body">
           <div class="list-group">
             <a href="{{ route('admin.annc', [], false) }}" class="list-group-item list-group-item-action">Announcement</a>
             <a href="{{ route('avatar.list', [], false) }}" class="list-group-item list-group-item-action">Avatar List</a>
             <a href="{{ route('cfg.list', [], false) }}" class="list-group-item list-group-item-action">Common Configs</a>
             <a href="{{ route('admin.lov', [], false) }}" class="list-group-item list-group-item-action">Department LOVs</a>
+            <a href="{{ route('mco.rpt', [], false) }}" class="list-group-item list-group-item-action">MCO Permit Requests</a>
             <a href="{{ route('partner.list', [], false) }}" class="list-group-item list-group-item-action">Partner / Vendor List</a>
           </div>
         </div>
