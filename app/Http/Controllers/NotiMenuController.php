@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class NotiMenuController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
+
   public function read(Request $req){
     if($req->filled('nid')){
 
@@ -16,11 +21,11 @@ class NotiMenuController extends Controller
       }
 
       // notification not found. most likely not belong to current user
-      return redirect(route('user'));
+      return redirect(route('staff'));
 
     } else {
       // no type. just redirect to home page
-
+      return redirect(route('staff'));
     }
   }
 
