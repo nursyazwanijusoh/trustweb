@@ -100,14 +100,14 @@
               <div class="card-header">Entry for {{ $recdate }}. Total hours: {{ $dfobj->actual_hours }}</div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table id="taskdetailtable" class="table table-striped table-bordered table-hover">
+                  <table id="taskdetailtable" class="table table-striped table-bordered table-hover"  style="white-space: nowrap;">
                     <thead>
                       <tr>
                         <th scope="col">Date Entered</th>
+                        <th scope="col">Hours</th>
                         <th scope="col">Type</th>
                         <th scope="col">ID / Title</th>
                         <th scope="col">Details</th>
-                        <th scope="col">Hours</th>
                         @if($isvisitor == false)
                         <th scope="col">Action</th>
                         @endif
@@ -117,16 +117,21 @@
                       @foreach($todayacts as $acts)
                       <tr>
                         <td>{{ $acts->created_at }}</td>
-                        @if($acts->isleave)
-                        <td>On Leave</td>
-                        <td>{{ $acts->parent_number }}</td>
-                        <td>{{ $acts->leave_remark }}</td>
-                        @else
+                        <td>{{ $acts->hours_spent }}</td>
                         <td>{{ $acts->ActType->descr }}</td>
                         <td>{{ $acts->parent_number }}</td>
-                        <td>{{ $acts->details }}</td>
-                        @endif
-                        <td>{{ $acts->hours_spent }}</td>
+                        <td>
+                          @php
+                            $pecah = preg_split("/\r\n|\n|\r/", $acts->details);
+                            if(sizeof($pecah) == 1){
+                              echo $acts->details;
+                            } else {
+                              foreach($pecah as $aline){
+                                echo $aline . "<br />";
+                              }
+                            }
+                          @endphp
+                        </td>
                         @if($isvisitor == false)
                         <td class="text-center">
                           @if($acts->isleave)

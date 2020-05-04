@@ -97,6 +97,8 @@ class McoController extends Controller
           'date' => $mco->request_date,
           'name' => $mco->requestor->name,
           'newic' => $mco->requestor->new_ic,
+          'staff_no' => $mco->requestor->staff_no,
+          'location' => $mco->location,
           'seq' => $mco->id
         ]);
 

@@ -41,7 +41,9 @@
 
     <p><b>
   Nama : {{ $name }} <br />
-  No K/P: {{ $newic }}
+  No K/P: {{ $newic }} <br />
+  No Pekerja: {{ $staff_no }} <br />
+  Lokasi Tempat Bekerja: {{ $location }}
     </b></p>
 
     <p style="text-align:justify">

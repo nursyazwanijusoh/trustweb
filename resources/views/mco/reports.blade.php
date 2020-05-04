@@ -9,7 +9,6 @@
               <div class="card-header">MCO Travel - Search</div>
               <div class="card-body">
                 <form method="GET" action="{{ route('mco.rpt') }}">
-                  @csrf
                   <div class="form-group row">
                       <label for="actdate" class="col-md-3 col-form-label text-md-right">From</label>
                       <div class="col-md-6">
@@ -34,16 +33,17 @@
             <div class="card-header">Search Result</div>
             <div class="card-body">
               <div class="table-responsive">
-                <table id="tapproved" class="table table-striped table-bordered table-hover">
+                <table id="tapproved" class="table table-striped table-bordered table-hover"  style="white-space: nowrap;">
                   <thead>
                     <tr>
                       <th scope="col">Date</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Name</th>
-                      <th scope="col">Division</th>
-                      <th scope="col">Unit</th>
                       <th scope="col">Approver</th>
                       <th scope="col">Location</th>
                       <th scope="col">Reason</th>
+                      <th scope="col">Division</th>
+                      <th scope="col">Unit</th>
                       <th scope="col">Check-ins</th>
                     </tr>
                   </thead>
@@ -51,12 +51,24 @@
                     @foreach($lust as $p)
                     <tr>
                       <td>{{ $p->request_date }}</td>
+                      <td>{{ $p->status }}</td>
                       <td><a href="{{ route('staff', ['staff_id' => $p->requestor_id]) }}">{{ $p->requestor->name }}</a></td>
-                      <td>{{ $p->requestor->unit }}</td>
-                      <td>{{ $p->requestor->subunit }}</td>
                       <td><a href="{{ route('staff', ['staff_id' => $p->requestor_id]) }}">{{ $p->approver->name }}</a></td>
                       <td>{{ $p->location }}</td>
-                      <td>{{ $p->reason }}</td>
+                      <td>
+                      @php
+                        $pecah = preg_split("/\r\n|\n|\r/", $p->reason);
+                        if(sizeof($pecah) == 1){
+                          echo $p->reason;
+                        } else {
+                          foreach($pecah as $aline){
+                            echo $aline . "<br />";
+                          }
+                        }
+                      @endphp
+                      </td>
+                      <td>{{ $p->requestor->unit }}</td>
+                      <td>{{ $p->requestor->subunit }}</td>
                       <td>
                         <a href="{{ route('mco.checkins', ['mid' => $p->id]) }}">
                           <button type="button" class="btn btn-sm btn-info" title="Check-in Info"><i class="fa fa-map-marker"></i></button>
