@@ -33,10 +33,14 @@ class HomeController extends Controller
 
     function playground(Request $req){
 
-      $df = \App\common\GDWActions::GetDailyPerfObj($req->user()->id, '2020-04-20');
+      $user = User::find($req->id);
 
-      dd(\App\common\GDWActions::canAcceptThisAct($df, 5.1));
+      $repot = \App\common\McoActions::FindAtLeastGm($user, $user);
+      dd($repot->name);
 
+      // $ddas = new \App\Api\V1\Controllers\LdapHelper;
+      // // dd($user->persno);
+      // return $ddas->fetchUser($user->staff_no);
     }
 
     function welcome(){

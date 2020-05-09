@@ -117,8 +117,8 @@ class LdapHelper extends Controller
               $subunit = $ldapdata['0']['ppsuborgunitdesc']['0'];
               $dept = $ldapdata['0']['pporgunit']['0'];
               $eprsno = $ldapdata['0']['employeenumber']['0'];
-              if(strlen($eprsno) > 7){
-                $eprsno = substr($eprsno, -7) + 0;
+              if(strlen($eprsno) > 6){
+                $eprsno = substr($eprsno, -6) + 0;
               }
 
 
@@ -142,7 +142,8 @@ class LdapHelper extends Controller
               'MOBILE_NO' => $ldapdata['0']['mobile']['0'],
               'SUPERIOR' => $ldapdata['0']['ppreporttoname']['0'],
               'SP_PERSNO' => $ldapdata['0']['ppreportto']['0'] + 0,
-              'PERSNO' => $eprsno
+              'PERSNO' => $eprsno,
+              'ORI_PERSNO' => $ldapdata['0']['employeenumber']['0']
 
             ];
 

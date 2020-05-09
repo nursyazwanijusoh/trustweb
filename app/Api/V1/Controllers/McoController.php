@@ -26,7 +26,7 @@ class McoController extends Controller
 
       $staff = User::find($req->staff_id);
       if($staff){
-        $gm = McoActions::FindAtLeastGm($staff);
+        $gm = McoActions::FindAtLeastGm($staff, $staff);
       } else {
         return $this->respond_json(404, 'Staff not found', []);
       }

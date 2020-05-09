@@ -22,7 +22,7 @@ class McoTravelReqController extends Controller
     $mindate = new Carbon;
     $maxdate = new Carbon;
     $maxdate->addDay();
-    $gm = McoActions::FindAtLeastGm($req->user());
+    $gm = McoActions::FindAtLeastGm($req->user(), $req->user());
 
     $reqhist = McoTravelReq::where('requestor_id', $req->user()->id)->get();
 

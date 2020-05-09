@@ -40,7 +40,7 @@ class McoActions {
 
     $user = User::find($staff_id);
     if($user){
-      $mygm = McoActions::FindAtLeastGm($user);
+      $mygm = McoActions::FindAtLeastGm($user, $user);
 
       // register the request
       $mco = new McoTravelReq;
@@ -119,30 +119,35 @@ class McoActions {
     }
   }
 
-  public static function FindAtLeastGm($user){
-
-    if($user){
-    } else {
-      return "no";
-    }
-
-    if($user->job_grade == 4 || $user->job_grade == 5) {
-      return $user;
-    }
+  public static function FindAtLeastGm($user, $origin_user){
 
     if(isset($user->report_to)){
-      $nom = McoActions::FindAtLeastGm($user->Boss);
-      if($nom == 'no'){
+      // check the boss of this person
+      $myboss = $user->Boss;
+      if($myboss){
+        if($myboss->job_grade == 5){
+          // already reached VP / C
+          if($user->id == $origin_user->id){
+            // legit case report to band 5
+            return $myboss;
+          } else {
+            // return the person before this band 5;
+            return $user;
+          }
+        } elseif($myboss->job_grade == 4) {
+          return $myboss;
+        } else {
+          // climb further
+          return McoActions::FindAtLeastGm($myboss, $origin_user);
+        }
+      } else {
+        // no boss. return self
         return $user;
       }
-
-      return $nom;
     } else {
+      // no boss. return self
       return $user;
     }
-
-
-
   }
 
 }
