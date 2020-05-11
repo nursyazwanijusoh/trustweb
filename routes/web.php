@@ -83,6 +83,7 @@ Route::post('/admin/upstaffdiv', 'TAdminController@updateStaffDiv')->name('admin
 
 // admin bulk update
 Route::get('/admin/bulkupdate', 'BatchJobController@menu')->name('admin.bulkupdate');
+Route::get('/admin/findBand45', 'BatchJobController@findBand45')->name('admin.findBand45');
 
 
 // admin staff role

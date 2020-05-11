@@ -15,24 +15,26 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-9 p-1">
-                    <p class="card-text text-monospace">
-                      Name : {{ $user['name'] }}<br />
-                      Division : {{ $user['unit'] }}<br />
-                      Unit : {{ $user['subunit'] }}<br />
-                      Email : {{ $user['email'] }}<br />
-                      Mobile : {{ $user['mobile_no'] }}<br />
-                    </p>
+                    <pre class="mb-0">
+Name     : {{ $user['name'] }}
+Division : {{ $user['unit'] }}
+Unit     : {{ $user['subunit'] }}
+Position : {{ $user['position'] }}
+Email    : {{ $user['email'] }}
+Mobile   : {{ $user['mobile_no'] }}
+@if(isset($superior))
+Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}">{{ $superior->name }}</a><br />
+@endif
+</pre>
                   </div>
                   <div class="col-3 p-1">
                     <img class="card-img"  style="border: 1px solid #000; max-width:120px; max-height:120px;" src="{{ route('staff.image', ['staff_no' => $user['staff_no']]) }}" alt="gambo staff">
                   </div>
                 </div>
-                <div class="row">
+                <!-- div class="row">
                   <div class="col p-1">
                     <p class="card-text text-monospace">
-                      @if(isset($superior))
-                      Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}">{{ $superior->name }}</a><br />
-                      @endif
+
                       @if(isset($user->LastLocation))
                       Last Location :<a href="https://www.google.com/maps/search/?api=1&query={{ $user->LastLocation->latitude . ',' . $user->LastLocation->longitude }}" target="_blank">
                         @if(isset($user->LastLocation->address))
@@ -44,7 +46,7 @@
                       @endif
                     </p>
                   </div>
-                </div>
+                </div -->
 
               </div>
             </div></div>

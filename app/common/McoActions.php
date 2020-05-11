@@ -11,7 +11,7 @@ use \Carbon\Carbon;
 
 class McoActions {
 
-  public static function SubmitApplication($staff_id, $location, $reqdate, $reason){
+  public static function SubmitApplication($staff_id, $location, $reqdate, $reason, $gmid = 0){
     // double check date dulu
     $date = new Carbon($reqdate);
     $today = new Carbon;
@@ -40,7 +40,16 @@ class McoActions {
 
     $user = User::find($staff_id);
     if($user){
-      $mygm = McoActions::FindAtLeastGm($user, $user);
+
+      if($gmid == 0){
+        $mygm = McoActions::FindAtLeastGm($user, $user);
+      } else {
+        if(UserRegisterHandler::isInReportingLine($staff_id, $gmid)){
+          $mygm = User::find($gmid);
+        } else {
+          return 'Not a valid approver';
+        }
+      }
 
       // register the request
       $mco = new McoTravelReq;
@@ -125,6 +134,11 @@ class McoActions {
       // check the boss of this person
       $myboss = $user->Boss;
       if($myboss){
+        // update fromm ldap
+
+        $myboss->job_grade = McoActions::GetJobGrade($myboss->staff_no);
+        $myboss->save();
+
         if($myboss->job_grade == 5){
           // already reached VP / C
           if($user->id == $origin_user->id){
@@ -148,6 +162,92 @@ class McoActions {
       // no boss. return self
       return $user;
     }
+  }
+
+  public static function GetJobGrade($staff_no){
+    $adminuser = env('TMLDAP_ADMINUSER');
+    $udn= "cn=$adminuser, ou=serviceAccount, o=Telekom";
+    $password = env('TMLDAP_ADMINPASS');
+    $hostnameSSL = env('TMLDAP_HOSTNAME');
+    $retdata = 1;
+    //	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+    putenv('LDAPTLS_REQCERT=never');
+
+    $con =  ldap_connect($hostnameSSL);
+    if (is_resource($con)){
+      if (ldap_set_option($con, LDAP_OPT_PROTOCOL_VERSION, 3)){
+        ldap_set_option($con, LDAP_OPT_REFERRALS, 0);
+
+        // try to bind / authenticate
+        try{
+        if (ldap_bind($con,$udn, $password)){
+
+          // perform the search
+          $ldres = ldap_search($con, 'ou=users,o=data', "cn=" . $staff_no);
+          $ldapdata = ldap_get_entries($con, $ldres);
+          // dd($ldapdata);
+
+
+          if($ldapdata['count'] > 0){
+            $retdata = $ldapdata['0']['ppjobgrade']['0'];
+          }
+
+        } else {
+          $errorcode = 403;
+          $errm = 'Invalid admin credentials.';
+        }} catch(Exception $e) {
+          $errorcode = 500;
+          $errm = $e->getMessage();
+        }
+
+      } else {
+        $errorcode = 500;
+        $errm = "TLS not supported. Unable to set LDAP protocol version to 3";
+      }
+
+      // clean up after done
+      ldap_close($con);
+
+    } else {
+      $errorcode = 500;
+      $errm = "Unable to connect to $hostnameSSL";
+    }
+
+    return $retdata;
+  }
+
+  public static function GetApprovers($user){
+    $ret = [];
+    // first, find the default approver
+    $def = McoActions::FindAtLeastGm($user, $user);
+    array_push($ret, [
+      'id' => $def->id,
+      'name' => $def->name,
+      'pos' => 'Default Approver'
+    ]);
+
+    // then start crawl up
+    while(isset($def->report_to)){
+      $def = User::where('persno', $def->report_to)->first();
+      if($def){
+        $def->job_grade = McoActions::GetJobGrade($def->staff_no);
+        $def->save();
+
+        array_push($ret, [
+          'id' => $def->id,
+          'name' => $def->name,
+          'pos' => $def->position
+        ]);
+
+      } else {
+        // report to not found
+        break;
+      }
+
+    }
+
+    return $ret;
+
   }
 
 }

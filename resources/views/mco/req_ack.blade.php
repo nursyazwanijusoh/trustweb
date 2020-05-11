@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('page-css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
 
 <div class="container-fluid">
@@ -37,12 +41,18 @@
                     <div class="form-group row">
                       <label for="Approver" class="col-md-3 col-form-label text-md-right">Approver</label>
                       <div class="col-md-9">
-                        <input id="Approver" class="form-control" type="text" value="{{ $gm->name }}" readonly />
+                        <select class="form-control" id="Approver" name="gmid" required>
+                          @foreach ($gm as $pbe)
+                          <optgroup label="{{ $pbe['pos'] }}">
+                            <option value="{{ $pbe['id'] }}">{{ $pbe['name'] }}</option>
+                          </optgroup>
+                          @endforeach
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
                       <div class="col-2 text-right">
-                        <input class="form-check-input" type="checkbox" name="rate" id="noob" value="1" onchange="checkagree()" required />
+                        <input class="form-check-input" type="checkbox" name="rate" id="noob" value="1" required />
                       </div>
                       <div class="col-10">
                         <label class="form-check-label" title="agree to the t&c" for="noob">I hereby declare that I shall travel from home to workplace and vice versa without making any unnecessary stops in between upon completion of my assigned work. <br />Failure to comply, I understand that my employer may invoke an appropriate disciplinary action as the consequence of my action.</label>
@@ -99,9 +109,12 @@
 @section('page-js')
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 <script>
 
 $(document).ready(function() {
+  $('#Approver').select2();
+
   $('#taskdetailtable').DataTable({
       "order": [[ 0, "desc" ]]
     });

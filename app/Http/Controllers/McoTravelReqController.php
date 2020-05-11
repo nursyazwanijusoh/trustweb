@@ -22,7 +22,11 @@ class McoTravelReqController extends Controller
     $mindate = new Carbon;
     $maxdate = new Carbon;
     $maxdate->addDay();
-    $gm = McoActions::FindAtLeastGm($req->user(), $req->user());
+
+    // $gm = McoActions::FindAtLeastGm($req->user(), $req->user());
+    // $contoh = \App\User::find(1842);
+    // $gm = McoActions::GetApprovers($contoh);
+    $gm = McoActions::GetApprovers($req->user());
 
     $reqhist = McoTravelReq::where('requestor_id', $req->user()->id)->get();
 
@@ -35,7 +39,7 @@ class McoTravelReqController extends Controller
   }
 
   public function submitform(Request $req){
-    $resp = McoActions::SubmitApplication($req->user()->id, $req->location, $req->reqdate, $req->reason);
+    $resp = McoActions::SubmitApplication($req->user()->id, $req->location, $req->reqdate, $req->reason, $req->gmid);
 
     if($resp == 200){
       return redirect(route('mco.reqform'))->with([
@@ -115,8 +119,13 @@ class McoTravelReqController extends Controller
     if($req->filled('mid')){
       $mco = McoTravelReq::find($req->mid);
       if($mco){
+
+        $reqdate = new Carbon($mco->request_date);
+        $appdate = new Carbon($mco->action_datetime);
+
         $pdf = PDF::loadView('mco.permit', [
-          'date' => $mco->request_date,
+          'date' => $appdate->format('d-M-Y'),
+          'tdate' => $reqdate->format('d-M-Y'),
           'name' => $mco->requestor->name,
           'newic' => $mco->requestor->new_ic,
           'staff_no' => $mco->requestor->staff_no,

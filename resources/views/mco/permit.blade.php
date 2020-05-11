@@ -7,7 +7,7 @@
           <b>GROUP IT &amp; DIGITAL</b>
         </td>
         <td align="right">
-          <img style="height:50px;" src="{{ public_path('TM_LOGO.jpg') }}" />
+          <img style="height:30px;" src="{{ public_path('TM_LOGO.jpg') }}" />
         </td>
       </tr>
     </table>
@@ -43,6 +43,7 @@
   Nama : {{ $name }} <br />
   No K/P: {{ $newic }} <br />
   No Pekerja: {{ $staff_no }} <br />
+  Tarikh Perjalanan: {{ $tdate }} <br />
   Lokasi Tempat Bekerja: {{ $location }}
     </b></p>
 
@@ -55,8 +56,8 @@
     </p>
 
     <!-- sign area -->
-    <p>
-      <img style="height:130px;" src="{{ public_path('sivan-sign.png') }}" />
+    <p style="margin-bottom:0;margin-top:0">
+      <img style="height:100px;" src="{{ public_path('sivan-sign.png') }}" />
     </p>
     <p style="margin-bottom:0">
       <b>M. UMAPATHY SIVAN</b><br />
@@ -68,7 +69,7 @@
 
   <div>
     <hr />
-    <p style="font-size:14px;color:gray;margin-bottom:0;margin-top:0">
+    <p style="font-size:13px;color:gray;margin-bottom:0;margin-top:0">
       Telekom Malaysia Berhad (128740-P) <br>
       Group IT &amp; Digital <br>
       Level 23 North, Menara TM,<br>
