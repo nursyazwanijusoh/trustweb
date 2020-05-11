@@ -30,6 +30,11 @@ class RespFeedback extends Mailable
      */
     public function build()
     {
-        return $this->subject('Your trUSt Feedback')->view('email.feedback');
+
+
+      return $this->subject('Your trUSt Feedback')->markdown('email.feedback', [
+        'name' => $this->fb->Sender->name,
+        'thef' => $this->fb
+      ]);
     }
 }

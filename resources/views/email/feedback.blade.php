@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>trUSt Feedback Response</title>
-</head>
-<body>
-<h2>Greetings from trUSt</h2>
-<br/>
-Regarding your feedback below:
-<br/>
-<div style="border: green solid; border-radius: 5px; padding: 5px; margin: 5px;">
-<b>{{ $fb->title }}</b><br />
-{{ nl2br($fb->content) }}
-</div>
-<br />
-Response from the admin
-<div style="border: blue dashed; border-radius: 5px; padding: 5px; margin: 5px;">
-{{ nl2br($fb->remark) }}
-</div>
-</body>
+@component('mail::message')
+# trUSt Feedback Response
 
-</html>
+Dear {{ $name }},
+
+Thank you for your feedback titled **{{ $thef->title }}**.
+
+Here's what you have written previously:
+
+@component('mail::panel')
+{!! nl2br($thef->content) !!}
+@endcomponent
+
+And here's the response by given by the admin:
+
+@component('mail::panel')
+{!! nl2br($thef->remark) !!}
+@endcomponent
+
+Thanks!
+@endcomponent
