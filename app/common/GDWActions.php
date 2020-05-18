@@ -607,6 +607,13 @@ class GDWActions
   }
 
   public static function GetDailyPerfObj($user_id, $date){
+
+    if(isset($date)){
+
+    } else {
+      $date = date('Y-m-d');
+    }
+
     $dp = DailyPerformance::where('user_id', $user_id)
       ->whereDate('record_date', $date)
       ->first();
