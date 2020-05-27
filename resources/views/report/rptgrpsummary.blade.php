@@ -56,6 +56,7 @@
                             <button type="submit" name="action" value="graph" class="btn btn-primary m-1">Get Summary</button>
                             <button type="submit" name="action" value="excel" class="btn btn-primary m-1">Generate Report</button>
                             <button type="submit" name="action" value="datatable" class="btn btn-primary m-1">View Details (beta)</button>
+                            <button type="submit" name="action" value="verticaldate" class="btn btn-primary m-1">Vertical Detail</button>
                         </div>
                     </div>
                   </form>
@@ -70,22 +71,17 @@
                   <table id="repothist" class="table table-striped table-bordered table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">Submit Date</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Status Date</th>
                         <th scope="col">Group</th>
                         <th scope="col">Status</th>
                         <th scope="col">Data From</th>
                         <th scope="col">Data To</th>
-                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($rpthist as $acts)
                       <tr>
-                        <td>{{ $acts->created_at }}</td>
-                        <td>{{ $acts->CGroup->name }}</td>
-                        <td>{{ $acts->status }}</td>
-                        <td>{{ $acts->from_date }}</td>
-                        <td>{{ $acts->to_date }}</td>
                         @if($acts->status == 'Completed')
                         <td><form action="{{ route('report.gwd.gsummdl', [], false)}}"
                           method="post">
@@ -96,6 +92,11 @@
                         @else
                         <td>...</td>
                         @endif
+                        <td>{{ $acts->updated_at }}</td>
+                        <td>{{ $acts->CGroup->name }}</td>
+                        <td>{{ $acts->status }}</td>
+                        <td>{{ (new \Carbon\Carbon($acts->from_date))->format('Y-m-d') }}</td>
+                        <td>{{ (new \Carbon\Carbon($acts->to_date))->format('Y-m-d') }}</td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -164,7 +165,7 @@ $(document).ready(function() {
       "order": [[ 1, "desc" ]]
     });
   $('#repothist').DataTable({
-      "order": [[ 0, "desc" ]]
+      "order": [[ 1, "desc" ]]
     });
 
   document.getElementById('summa').scrollIntoView();
@@ -175,7 +176,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
   $('#repothist').DataTable({
-      "order": [[ 0, "desc" ]]
+      "order": [[ 1, "desc" ]]
     });
 } );
 </script>

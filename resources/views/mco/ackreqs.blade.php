@@ -8,6 +8,13 @@
             <div class="card mb-3">
               <div class="card-header">MCO Travel - Pending Approval</div>
               <div class="card-body">
+                <div class="row justify-content-center">
+                  <form method="post" action="{{ route('mco.takeactionall') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-primary m-1" name="action" value="Approved">Approve All</button>
+                    <button type="submit" class="btn btn-primary m-1" name="action" value="Rejected">Reject All</button>
+                  </form>
+                </div>
                 <div class="table-responsive">
                   <table id="tpending" class="table table-striped table-bordered table-hover">
                     <thead>

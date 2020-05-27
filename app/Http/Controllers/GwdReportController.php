@@ -579,7 +579,11 @@ class GwdReportController extends Controller
         return $this->doGrpExcel($req);
       } elseif ($req->action == 'datatable') {
         return $this->doGrpTable($req);
+      } elseif ($req->action == 'verticaldate') {
+        return $this->doGrpVertExcel($req);
       }
+
+
     }
 
 
@@ -588,7 +592,7 @@ class GwdReportController extends Controller
     $curdate = date('Y-m-d');
     $lastweek = date('Y-m-d', strtotime('-1 week'));
 
-    $rpthist = BatchJob::where('job_type', 'Group Diary Report')
+    $rpthist = BatchJob::whereIn('job_type', ['Group Diary Report', 'Group Diary Vertical'])
       ->orderBy('created_at', 'DESC')
       ->limit(100)
       ->get();
@@ -964,6 +968,11 @@ class GwdReportController extends Controller
     ]);
 
   }
+
+  private function doGrpVertExcel(Request $req){
+    dd('Building in progress');
+  }
+
 
   private function getNormDist($x, $mean, $stddev){
     $exp = pow($x - $mean, 2) / (2 * $stddev * $stddev) * -1;

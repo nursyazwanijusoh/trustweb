@@ -35,12 +35,12 @@ class HomeController extends Controller
 
       $user = User::find($req->id);
 
-      $repot = \App\common\McoActions::FindAtLeastGm($user, $user);
-      dd($repot->name);
-
-      // $ddas = new \App\Api\V1\Controllers\LdapHelper;
-      // // dd($user->persno);
-      // return $ddas->fetchUser($user->staff_no);
+      // $repot = \App\common\McoActions::FindAtLeastGm($user, $user);
+      // dd($repot->name);
+      //
+      $ddas = new \App\Api\V1\Controllers\LdapHelper;
+      // // // dd($user->persno);
+      return $ddas->fetchUser($user->staff_no);
     }
 
     function welcome(){

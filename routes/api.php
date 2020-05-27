@@ -160,5 +160,6 @@ $api->version('v1', [
 
   // mco
   $api->post('/mco/takeaction',  ['as' => 'api.mco.takeaction', 'uses' => 'App\Api\V1\Controllers\McoController@takeaction']);
+  $api->post('/mco/takeactionall',  ['as' => 'api.mco.takeactionall', 'uses' => 'App\Api\V1\Controllers\McoController@takeactionall']);
 
 });

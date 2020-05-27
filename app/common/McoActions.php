@@ -103,6 +103,29 @@ class McoActions {
     }
   }
 
+  public static function TakeActionAllMine($approver_id, $status){
+    $nt = new Carbon();
+
+    if($status == 'Approved' || $status == 'Rejected'){
+      $mcolist = McoTravelReq::where('approver_id', $approver_id)
+        ->where('status', 'Pending Approval')->get();
+
+      foreach($mcolist as $mco){
+
+        $mco->status = $status;
+        $mco->action_datetime = $nt;
+        $mco->save();
+
+        // send the notification
+        if($status == 'Approved'){
+          $mco->requestor->notify(new McoPermitApproved($mco));
+        } else {
+          $mco->requestor->notify(new McoPermitRejected($mco));
+        }
+      }
+    }
+  }
+
   public static function RejectApplication($mco_req_id, $approver_id){
     $nt = new Carbon();
     $mco = McoTravelReq::find($mco_req_id);
@@ -189,7 +212,12 @@ class McoActions {
 
 
           if($ldapdata['count'] > 0){
-            $retdata = $ldapdata['0']['ppjobgrade']['0'];
+            if(isset($ldapdata['0']['ppjobgrade']['0'])){
+              $retdata = $ldapdata['0']['ppjobgrade']['0'];
+            } else {
+              $retdata = 'X';
+            }
+
           }
 
         } else {

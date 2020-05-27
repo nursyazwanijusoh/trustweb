@@ -132,6 +132,29 @@ class McoController extends Controller
       return $this->respond_json($resp, 'Success', []);
     }
 
+    function takeactionall(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+        'action' => ['required']
+  		];
+
+  		$validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      if($req->action == 'approve'){
+        McoActions::TakeActionAllMine($req->user()->id, 'Approved');
+      } elseif($req->action == 'reject'){
+        McoActions::TakeActionAllMine($req->user()->id, 'Rejected');
+      } else {
+        return $this->respond_json(500, 'unknown action', $input);
+      }
+
+      return $this->respond_json(200, 'Success', []);
+    }
+
     function getpending(Request $req){
       $input = app('request')->all();
 

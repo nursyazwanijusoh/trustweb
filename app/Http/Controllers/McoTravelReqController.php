@@ -86,6 +86,17 @@ class McoTravelReqController extends Controller
     }
   }
 
+  public function takeactionall(Request $req){
+    if($req->filled('action')){
+      McoActions::TakeActionAllMine($req->user()->id, $req->action);
+
+      return redirect(route('mco.ackreqs'));
+
+    } else {
+      return redirect(route('staff'));
+    }
+  }
+
   public function checkins(Request $req){
 
     if($req->filled('mid')){

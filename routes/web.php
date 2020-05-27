@@ -111,6 +111,7 @@ Route::get('/mco/reqform', 'McoTravelReqController@reqform')->name('mco.reqform'
 Route::post('/mco/submitform', 'McoTravelReqController@submitform')->name('mco.submitform');
 Route::get('/mco/ackreqs', 'McoTravelReqController@ackreqs')->name('mco.ackreqs');
 Route::post('/mco/takeaction', 'McoTravelReqController@takeaction')->name('mco.takeaction');
+Route::post('/mco/takeactionall', 'McoTravelReqController@takeactionall')->name('mco.takeactionall');
 Route::get('/mco/checkins', 'McoTravelReqController@checkins')->name('mco.checkins');
 Route::get('/mco/getpermit', 'McoTravelReqController@getpermit')->name('mco.getpermit');
 Route::get('/admin/mcorpt', 'TAdminTwoController@McoReport')->name('mco.rpt');
