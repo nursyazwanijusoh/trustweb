@@ -95,6 +95,7 @@ class McoController extends Controller
       if($mco){
         $pdf = PDF::loadView('mco.permit', [
           'date' => $mco->request_date,
+          'tdate' => $mco->request_date,
           'name' => $mco->requestor->name,
           'newic' => $mco->requestor->new_ic,
           'staff_no' => $mco->requestor->staff_no,
