@@ -23,7 +23,11 @@ class StaffLeave extends Model
         // only set as leave if default expected is not 0
         $oned->is_off_day = true;
         $oned->leave_type_id = $this->leave_type_id;
-        $oned->expected_hours = $this->LeaveType->hours_value;
+
+        if($this->LeaveType->hours_value != 8){
+          $oned->expected_hours = $this->LeaveType->hours_value;
+        }
+
         $oned->save();
       }
 
@@ -38,10 +42,14 @@ class StaffLeave extends Model
     $edate->addDay();
 
     while($edate->greaterThan($sdate)){
+
+      $user = User::find($this->user_id);
+      $friday = $user->Division->friday_hours;
+
       $oned = GDWActions::GetDailyPerfObj($this->user_id, $sdate);
       $oned->is_off_day = false;
       $oned->leave_type_id = null;
-      $oned->expected_hours = GDWActions::GetExpectedHours($sdate);
+      $oned->expected_hours = GDWActions::GetExpectedHours($sdate, $oned, null, $friday);
       $oned->save();
 
       $sdate->addDay();

@@ -187,7 +187,7 @@
                 </div>
                 <div class="form-group row">
                   <label for="edit-name" class="col-sm-4 col-form-label text-sm-right">Hours Spent</label>
-                  <input type="number" class="form-control col-sm-3" name="hours" value="1" min="0" max="24" step="0.01" id="edit-hours" />
+                  <input type="number" class="form-control col-sm-3" name="hours" value="1" min="0" max="24" step="0.01" id="edit-hours" readonly title="Disabled until the defect is fixed"/>
                 </div>
               </div>
               <div class="modal-footer">
