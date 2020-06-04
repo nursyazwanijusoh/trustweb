@@ -8,6 +8,7 @@ use App\User;
 use App\Partner;
 use App\DailyPerformance;
 use \Carbon\Carbon;
+use App\common\GDWActions;
 
 class HomeController extends Controller
 {
@@ -83,8 +84,13 @@ class HomeController extends Controller
     public function hallofshame(Request $req){
       $today = date('Y-m-d');
       $dtop10 = DailyPerformance::whereDate('record_date', $today)
+        ->where('actual_hours', '>', 0)
         ->orderBy('actual_hours', 'DESC')
         ->limit(10)->get();
+
+      foreach ($dtop10 as $key => $value) {
+        $value->start_working = GDWActions::GetStartWorkTime($value->user_id, $today);
+      }
 
       $lastmon = new Carbon;
       $lastmon->subMonth();

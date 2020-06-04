@@ -19,6 +19,7 @@ use App\DailyPerformance;
 use App\StaffLeave;
 use App\PublicHoliday;
 use App\common\GDWActions;
+use App\common\UserRegisterHandler;
 use App\Api\V1\Controllers\BookingHelper;
 use \Carbon\Carbon;
 
@@ -33,20 +34,41 @@ class TStaffController extends Controller
   public function index(Request $rq){
     $c_staff_id = $rq->user()->id;
     $isvisitor = false;
+    $canseepnc = true;
 
     if($rq->filled('staff_id')){
       $s_staff_id = $rq->staff_id;
       if($s_staff_id != $c_staff_id){
         $isvisitor = true;
+        $canseepnc = UserRegisterHandler::isInReportingLine($s_staff_id, $c_staff_id);
       }
     } else {
       $s_staff_id = $rq->user()->id;
     }
 
+    // if($rq->user()->role <= 1){
+    //   $canseepnc = true;
+    // }
+
     $user = User::find($s_staff_id);
 
     // get subordinates
     $sublist = GDWActions::GetSubordsPerf($s_staff_id);
+    $superi = User::where('persno', $user->report_to)->first();
+
+    if($canseepnc == false){
+      // skip the rest of the data since cannot see it anyway
+
+      return view('staff.index', [
+        'staff_id' => $s_staff_id,
+        'subords' => $sublist,
+        'user' => $user,
+        'cuser' => $c_staff_id,
+        'superior' => $superi,
+        'canseepnc' => false
+      ]);
+    }
+
 
     // build the graph lul
     $cdate = new Carbon();
@@ -125,7 +147,7 @@ class TStaffController extends Controller
     $last3month->subMonths(3);
 
     // first load the public holiday
-    $allph = PublicHoliday::all();
+    $allph = PublicHoliday::whereDate('event_date', '>', $last3month)->get();
     foreach ($allph as $key => $value) {
      $evlist[] = \Calendar::event(
        $value->name,
@@ -149,7 +171,7 @@ class TStaffController extends Controller
      $bgcollll = 'rgba(0, 0, 255, 0.5)';
 
      if($value->expected_hours == 0 && $value->actual_hours > 0){
-       $bgcollll = 'rgba(0, 255, 132, 0.5)';
+       $bgcollll = 'rgba(0, 155, 0, 1)';
      } elseif($value->expected_hours > 0 && $value->actual_hours == 0){
        $bgcollll = 'rgba(255, 0, 0, 0.5)';
      }
@@ -187,7 +209,6 @@ class TStaffController extends Controller
      );
     }
 
-    $superi = User::where('persno', $user->report_to)->first();
 
     $cds = \Calendar::addEvents($evlist);
     $todaydf = GDWActions::GetDailyPerfObj($s_staff_id, new Carbon());
@@ -221,7 +242,8 @@ class TStaffController extends Controller
       'cds' => $cds,
       'isvisitor' => $isvisitor,
       'todaydf' => $todaydf,
-      'todayperc' => $todayperc
+      'todayperc' => $todayperc,
+      'canseepnc' => $canseepnc
     ];
     // dd($final);
 

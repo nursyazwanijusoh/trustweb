@@ -9,7 +9,11 @@
     <div class="row justify-content-center">
         <div class="col">
           <div class="row">
+            @if($canseepnc == true)
             <div class="col-md-6 mb-3">
+            @else
+            <div class="col-md-12 mb-3">
+            @endif
             <div class="card">
               <div class="card-header">Staff Home Page - {{ $user['staff_no'] }}</div>
               <div class="card-body">
@@ -50,6 +54,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 
               </div>
             </div></div>
+            @if($canseepnc == true)
             <div class="col-md-6 mb-3">
             <div class="card">
               <div class="card-header">Action</div>
@@ -136,7 +141,9 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                 </div>
               </div>
             </div></div>
+            @endif
           </div>
+          @if($canseepnc == true)
           <div class="card mb-3">
             <div class="card-header">Summary</div>
             <div class="card-body">
@@ -181,13 +188,13 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 
             </div>
           </div>
-            <div class="card mb-3">
-              <div class="card-header">My Diary Calendar</div>
-              <div class="card-body">
-                <!-- <h5 class="card-title"></h5> -->
-                {!! $cds->calendar() !!}
-              </div>
+          <div class="card mb-3">
+            <div class="card-header">My Diary Calendar</div>
+            <div class="card-body">
+              {!! $cds->calendar() !!}
             </div>
+          </div>
+          @endif
 
             @if(sizeof($subords) > 0)
             <div class="card">
@@ -210,9 +217,11 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                         </div>
                       </div>
                     </div>
+                    @if($canseepnc == true)
                     <div class="card-footer text-muted">
                       Yesterday: {{ $asub['yesterday_act'] }} / {{ $asub['yesterday_exp'] }}. Today: {{ $asub['today_act'] }} / {{ $asub['today_exp'] }}
                     </div>
+                    @endif
                     </a>
                   </div>
                   @else
@@ -241,9 +250,11 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 </div>
 @endsection
 
+@if($canseepnc == true)
 @section('page-js')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
 {!! $cds->script() !!}
 @endsection
+@endif

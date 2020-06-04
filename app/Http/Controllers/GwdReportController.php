@@ -1166,7 +1166,7 @@ class GwdReportController extends Controller
       $texp += $apers['avg']['expected'];
       array_push($lbl, $apers['name']);
       array_push($val, $apers['avg']['perc']);
-      array_push($targ, 80);
+      array_push($targ, 85);
     }
 
     if($texp == 0){

@@ -14,6 +14,7 @@
                           <th scope="col">Name</th>
                           <th scope="col">Division</th>
                           <th scope="col">Total Hours</th>
+                          <th scope="col">Start Working At</th>
                           <th scope="col">Last Update</th>
                         </tr>
                       </thead>
@@ -22,7 +23,8 @@
                         <tr>
                           <td><a href="{{ route('staff', ['staff_id' => $acts->User->id], false) }}">{{ $acts->User->name }}</a></td>
                           <td>{{ $acts->User->unit }}</td>
-                          <td><a href="{{ route('staff.addact', ['dfid' => $acts->id], false) }}">{{ $acts->actual_hours }}</a></td>
+                          <td>{{ $acts->actual_hours }}</td>
+                          <td>{{ $acts->start_working }}</td>
                           <td>{{ $acts->updated_at }}</td>
                         </tr>
                         @endforeach

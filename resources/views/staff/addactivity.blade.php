@@ -7,7 +7,7 @@
           @if($isvisitor == false)
           <div class="col-lg-5">
             <div class="card m-1">
-                <div class="card-header">Add Diary Entry. Start work time: {{ $early->toTimeString() }}</div>
+                <div class="card-header">Add Diary Entry. </div>
                 <div class="card-body">
                   @if (session()->has('alert'))
                   <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
@@ -97,7 +97,7 @@
           <div class="col-lg-12">
             @endif
             <div class="card m-1">
-              <div class="card-header">Entry for {{ $recdate }}. Total hours: {{ $dfobj->actual_hours }}</div>
+              <div class="card-header">Entry for {{ $recdate }}. Total hours: {{ $dfobj->actual_hours }}. Start work time: {{ $early->toTimeString() }}</div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table id="taskdetailtable" class="table table-striped table-bordered table-hover"  style="white-space: nowrap;">
