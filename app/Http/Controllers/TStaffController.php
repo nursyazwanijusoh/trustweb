@@ -46,9 +46,9 @@ class TStaffController extends Controller
       $s_staff_id = $rq->user()->id;
     }
 
-    // if($rq->user()->role <= 1){
-    //   $canseepnc = true;
-    // }
+    if($rq->user()->role <= 1){
+      $canseepnc = true;
+    }
 
     $user = User::find($s_staff_id);
 
