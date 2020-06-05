@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\SkillType;
 use App\CommonSkillset;
 use App\common\IopHandler;
+use App\User;
 
 class WebApiController extends Controller
 {
@@ -47,6 +48,43 @@ class WebApiController extends Controller
     if($req->filled('staff_no')){
       return IopHandler::GetStaffImage($req->staff_no);
     }
+  }
+
+  public function findstaff(Request $req){
+
+    if($req->filled('input')){
+
+    } else {
+      return [];
+    }
+
+    $result = [];
+    // first search by exact staff no
+    $user = User::where('staff_no', $req->input)->first();
+
+    if($user){
+      array_push($result, [
+        'id' => $user->id,
+        'staff_no' => $user->staff_no,
+        'name' => $user->name,
+        'div' => $user->unit
+      ]);
+    } else {
+      // find by name
+      $users = User::where('name', 'LIKE', "%".$req->input."%")->get();
+      foreach($users as $user){
+        array_push($result, [
+          'id' => $user->id,
+          'staff_no' => $user->staff_no,
+          'name' => $user->name,
+          'div' => $user->unit
+        ]);
+      }
+    }
+
+
+    return $result;
+
   }
 
 

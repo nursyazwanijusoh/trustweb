@@ -23,4 +23,9 @@ class CompGroup extends Model
     return $csum;
   }
 
+  // the HR reps
+  public function Users(){
+    return $this->belongsToMany(User::class);
+  }
+
 }

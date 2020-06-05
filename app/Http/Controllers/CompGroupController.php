@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\CompGroup;
 use App\Unit;
+use App\User;
 
 class CompGroupController extends Controller
 {
@@ -120,6 +121,43 @@ class CompGroupController extends Controller
 
     } else {
       return redirect(route('cgrp.view', ['id' => $req->gid], false))->with(['alert' => 'Unit not found']);
+    }
+  }
+
+  public function removerep(Request $req){
+    $cgrp = CompGroup::find($req->gid);
+
+    if($cgrp){
+      $cgrp->Users()->detach($req->uid);
+
+      return redirect(route('cgrp.view', ['id' => $req->gid], false))->with(['alert' => 'Rep removed']);
+    } else {
+      return redirect(route('cgrp.list', [], false))->with(['alert' => 'Selected group not found']);
+    }
+  }
+
+  public function addrep(Request $req){
+    $cgrp = CompGroup::find($req->gid);
+
+    if($cgrp){
+      $user = User::where('staff_no', $req->repno)->first();
+      if($user){
+
+        // $orlist = $cgrp->Users()->pluck('id');
+        // array_push($orlist, )
+        //
+        // dd();
+
+        $cgrp->Users()->attach($user->id);
+      } else {
+        return back()->withInput()->withErrors([
+          'repno' => 'User not found'
+        ]);
+      }
+
+      return redirect(route('cgrp.view', ['id' => $req->gid], false))->with(['alert' => 'Rep added']);
+    } else {
+      return redirect(route('cgrp.list', [], false))->with(['alert' => 'Selected group not found']);
     }
   }
 

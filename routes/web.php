@@ -266,6 +266,8 @@ Route::get('/user/skillset/pendingapprove', 'PersonalSSController@pendingapprove
 Route::get('/ss/api/gettype', 'WebApiController@SSApiGetType')->name('ss.api.gettype');
 Route::get('/ss/api/getskill', 'WebApiController@SSApiGetSkill')->name('ss.api.getskill');
 
+Route::get('/webapi/findstaff', 'WebApiController@findstaff')->name('webapi.findstaff');
+
 // mobile app installers
 Route::get('/download', 'AppDownloadController@list')->name('app.list');
 Route::post('/app/upload', 'AppDownloadController@upload')->name('app.up');
@@ -299,6 +301,8 @@ Route::post('/cgrp/del', 'CompGroupController@del')->name('cgrp.del');
 Route::get('/cgrp/view', 'CompGroupController@view')->name('cgrp.view');
 Route::post('/cgrp/take', 'CompGroupController@take')->name('cgrp.take');
 Route::post('/cgrp/remove', 'CompGroupController@remove')->name('cgrp.remove');
+Route::post('/cgrp/removerep', 'CompGroupController@removerep')->name('cgrp.removerep');
+Route::post('/cgrp/addrep', 'CompGroupController@addrep')->name('cgrp.addrep');
 
 // blast notifications
 Route::get('/pushalert', 'PushAnnouncementController@showForm')->name('pn.form');

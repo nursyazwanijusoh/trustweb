@@ -53,7 +53,18 @@ class GwdReportController extends Controller
       }
     }
 
-    $divlist = Unit::all();
+    if($req->user()->role <= 1){
+      $divlist = Unit::all();
+    } else {
+      $divlist = [];
+      $gplist = $req->user()->CompGroups;
+      foreach ($gplist as $key => $value) {
+        foreach ($value->Members as $unit) {
+          $divlist[] = $unit;
+        }
+      }
+    }
+
     $curdate = date('Y-m-d');
     $lastweek = date('Y-m-d', strtotime('-1 week'));
 
@@ -582,17 +593,20 @@ class GwdReportController extends Controller
       } elseif ($req->action == 'verticaldate') {
         return $this->doGrpVertExcel($req);
       }
-
-
     }
 
+    if($req->user()->role <= 1){
+      $grplist = CompGroup::all();
+    } else {
+      $grplist = $req->user()->CompGroups;
+    }
 
-
-    $grplist = CompGroup::all();
     $curdate = date('Y-m-d');
     $lastweek = date('Y-m-d', strtotime('-1 week'));
 
     $rpthist = BatchJob::whereIn('job_type', ['Group Diary Report', 'Group Diary Vertical'])
+      ->where('class_name', 'CompGroup')
+      ->whereIn('obj_id', $grplist->pluck('id'))
       ->orderBy('created_at', 'DESC')
       ->limit(100)
       ->get();

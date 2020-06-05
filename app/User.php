@@ -97,4 +97,8 @@ class User extends Authenticatable
       }
     }
 
+    public function CompGroups(){
+      return $this->belongsToMany(CompGroup::class);
+    }
+
 }

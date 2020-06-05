@@ -29,25 +29,46 @@
                 </div>
               </div><br />
               <div class="card">
-                <div class="card-header">Group Members</div>
+                <div class="card-header">HR Representative?</div>
                 <div class="card-body">
+                  <form method="POST" action="{{ route('cgrp.addrep', [], false) }}">
+                    @csrf
+                    <!-- <h5 class="card-title">Add new avatar</h5> -->
+                    <input type="hidden" name="gid" value="{{ $cgrp->id }}" />
+                    <div class="form-group row">
+                        <label for="repno" class="col-md-4 col-form-label text-md-right">Staff No</label>
+                        <div class="col-md-3">
+                          <input id="repno" class="form-control{{ $errors->has('repno') ? ' is-invalid' : '' }}" value="{{ old('repno') }}" type="text" name="repno" maxlength="15" required>
+                        </div>
+                        <div class="col-md-2">
+                          <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+
+                        </div>
+                    </div>
+                  </form>
                   <div class="table-responsive">
-                    <table id="glist01" class="table table-striped table-hover">
+                    <table id="replist" class="table table-striped table-hover">
                       <thead>
                         <tr>
                           <th scope="col">Name</th>
+                          <th scope="col">Position</th>
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($cgrp->Members as $atask)
+                        @foreach($cgrp->Users as $atask)
                         <tr>
-                          <td>{{ $atask->pporgunit }} - {{ $atask->pporgunitdesc }}</td>
+                          <td>{{ $atask->name }}</td>
+                          <td>{{ $atask->position }}</td>
                           <td>
-                            <form action="{{ route('cgrp.remove', [], false) }}" method="post">
+                            <form action="{{ route('cgrp.removerep', [], false) }}" method="post">
                               @csrf
-                              <input type="hidden" name="id" value="{{ $atask->id }}" />
                               <input type="hidden" name="gid" value="{{ $cgrp->id }}" />
+                              <input type="hidden" name="uid" value="{{ $atask->id }}" />
                               <button type="submit" class="btn btn-warning btn-sm" title="Remove">Remove</button>
                             </form>
                           </td>
@@ -58,6 +79,36 @@
                   </div>
                 </div>
             </div><br />
+            <div class="card">
+              <div class="card-header">Group Members</div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="glist01" class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($cgrp->Members as $atask)
+                      <tr>
+                        <td>{{ $atask->pporgunit }} - {{ $atask->pporgunitdesc }}</td>
+                        <td>
+                          <form action="{{ route('cgrp.remove', [], false) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $atask->id }}" />
+                            <input type="hidden" name="gid" value="{{ $cgrp->id }}" />
+                            <button type="submit" class="btn btn-warning btn-sm" title="Remove">Remove</button>
+                          </form>
+                        </td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div><br />
             <div class="card">
               <div class="card-header">Units not in any group</div>
               <div class="card-body">
