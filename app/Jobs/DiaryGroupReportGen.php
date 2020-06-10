@@ -285,6 +285,10 @@ class DiaryGroupReportGen implements ShouldQueue
         $bjob->extra_info = $fname;
         $bjob->completed_at = now();
         $bjob->save();
+
+        // email to rep
+        $recps = $cgrp->Users()->pluck('email');
+        \Mail::to(implode(',', $recps))->send(new SendDiaryRpt($cgrp));
       }
     }
 }

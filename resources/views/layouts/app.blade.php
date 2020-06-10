@@ -47,30 +47,7 @@
                 <nav id="nav-menu-container">
                       <ul class="nav-menu">
                         <li><a class="nav-link" href="{{ route('hofs', [], false) }}" title="Hall Of Fame"><i class="fa fa-trophy" style="color:red"></i></a></li>
-                        @if(false)
-                        <li class="menu-has-children"><a href="#">Guide</a>
-                          <ul>
-                            <li class="menu-has-children"><a href="#">trUSt</a>
-                              <ul>
-                                  <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li>
-                                  <!-- <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li> -->
-                              </ul>
-                            </li>
-                            <li class="menu-has-children"><a href="#">Workspace Booking</a>
-                              <ul>
-                                  <!-- <li><a class="dropdown-item" href="{{ route('home', [], false) }}">How-to</a></li> -->
-                                  <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">FAQ</a></li>
-                              </ul>
-                            </li>
-                            <li class="menu-has-children"><a href="#">Diary (GWD)</a>
-                              <ul>
-                                  <li><a class="dropdown-item" href="#">Guide under development</a></li>
-                                  <!-- <li><a class="dropdown-item" href="{{ route('home', [], false) }}">FAQ</a></li> -->
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        @endif
+                        <li><a class="nav-link" href="{{ route('guides', [], false) }}" title="Hall Of Fame">Guides</i></a></li>
                         @guest
                         @else
                         <!-- <li><a href="{{ route('staff', [], false) }}">Home</a></li> -->

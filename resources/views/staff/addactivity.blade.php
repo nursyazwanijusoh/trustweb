@@ -64,7 +64,7 @@
                           oninput="displaysliderval()" name="hourss" min="0" max="8" step="0.1" value="1"/>
                         </div> -->
                         <div class="col-md-4">
-                          <input type="number" class="form-control{{ $errors->has('hours') ? ' is-invalid' : '' }}" name="hours" value="{{ old('hours', 1) }}" min="0" max="24" step="0.01" id="hourisid" onchange="updateSlider()" />
+                          <input type="number" class="form-control{{ $errors->has('hours') ? ' is-invalid' : '' }}" name="hours" value="{{ old('hours', 1) }}" min="0" max="24" step="0.1" id="hourisid" onchange="updateSlider()" />
                           @if ($errors->has('hours'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('hours') }}</strong>

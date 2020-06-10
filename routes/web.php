@@ -24,6 +24,7 @@ Route::get('/resend', 'HomeController@resend')->name('verification.resend');
 Route::get('/delete', 'HomeController@troll')->name('troll');
 Route::get('/info', 'HomeController@info')->name('info');
 Route::get('/hallofflame', 'HomeController@hallofshame')->name('hofs');
+Route::get('/guides', 'HomeController@guides')->name('guides');
 
 Route::get('/booking_faq', 'HomeController@booking_faq')->name('booking_faq');
 Route::get('/readnotify', 'NotiMenuController@read')->name('notify.read');
@@ -61,6 +62,11 @@ Route::get('/admin/loadsapcuti', 'SapLoadController@loadDataCuti')->name('admin.
 Route::get('/admin/fridayhours', 'AdminReportController@fridayulist')->name('admin.fridayhours');
 Route::post('/admin/fridayhours/add', 'AdminReportController@addfriday8')->name('admin.addfriday8');
 Route::post('/admin/fridayhours/del', 'AdminReportController@delfriday8')->name('admin.delfriday8');
+
+// guides
+Route::get('/admin/guides', 'GuideController@list')->name('admin.guides');
+Route::post('/admin/guides/add', 'GuideController@add')->name('admin.addguide');
+Route::post('/admin/guides/del', 'GuideController@delete')->name('admin.delguide');
 
 // meeting rooms
 Route::get('/admin/meetroom', 'TAdminController@meetroom')->name('admin.meetroom');

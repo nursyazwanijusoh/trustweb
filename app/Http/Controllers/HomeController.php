@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\VerifyMail;
 use App\User;
 use App\Partner;
+use App\Guide;
 use App\DailyPerformance;
 use \Carbon\Carbon;
 use App\common\GDWActions;
@@ -30,6 +31,13 @@ class HomeController extends Controller
     public function index()
     {
         return view('guide');
+    }
+
+    public function guides(){
+      $gs = Guide::all()->sortBy('title');
+      return view('guides', [
+        'guide' => $gs
+      ]);
     }
 
     function playground(Request $req){
