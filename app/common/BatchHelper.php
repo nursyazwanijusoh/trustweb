@@ -44,7 +44,13 @@ class BatchHelper
 
         if($curcuti){
           // entry already exist. check if it's for reject or withdrawn
-          if($c->status == 'REJECTED' || $c->status == 'WITHDRAWN'){
+          if($c->operation == 'INS' && ($c->status == 'REJECTED' || $c->status == 'WITHDRAWN')){
+            // reverse the cuti
+            $curcuti->reverseCuti();
+            // then delete the cuti
+            $curcuti->delete();
+            $c->load_status = 'S';
+          } elseif($c->operation == 'DEL' && $c->status == 'POSTED'){
             // reverse the cuti
             $curcuti->reverseCuti();
             // then delete the cuti
@@ -57,6 +63,10 @@ class BatchHelper
         } else {
           // not exist. create new
           if($c->status == 'REJECTED' || $c->status == 'WITHDRAWN'){
+            // no need to create new for this one lol
+            $c->load_status = 'I';
+
+          } elseif($c->operation == 'DEL'){
             // no need to create new for this one lol
             $c->load_status = 'I';
 

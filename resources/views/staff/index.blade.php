@@ -91,7 +91,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </a>
                   </div>
                   @endif
-                  @if($user->job_grade == '3')
+                  @if($user->job_grade != '5')
                   <div class="col-6 col-xl-4 mb-1 p-1">
                     <a href="{{ route('report.agm.recent', ['agm_id' => $user->id ], false) }}">
                       <div class="card text-center text-white bg-primary">
@@ -192,6 +192,13 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
             <div class="card-header">My Diary Calendar</div>
             <div class="card-body">
               {!! $cds->calendar() !!}
+              <p class="card-text"><br/> Legend:
+                <button class="btn btn-info">Normal Entry</button>
+                <button class="btn btn-success">Working on non-working day</button>
+                <button class="btn btn-danger">0 hours on expected working day</button>
+                <button class="btn btn-warning">Leave Info</button>
+                <button class="btn btn-secondary">Public Holiday</button>
+              </p>
             </div>
           </div>
           @endif

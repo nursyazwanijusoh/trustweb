@@ -45,6 +45,9 @@
       <div class="card mb-3">
         <div class="card-header">Productivity % for {{ $s_name }}. Overall: {{ number_format($tavg, 2) + 0 }}%</div>
         <div class="card-body">
+          <p class="card-text">Legend: <button class="btn btn-warning">Below Target 85%</button>
+            <button class="btn btn-secondary">On Leave</button>
+          </p>
           <div class="table-responsive">
             <table id="taskdetailtable" class="table table-sm table-bordered table-hover">
               <thead>
@@ -65,7 +68,7 @@
                   @foreach($acts['recent_perf'] as $adate)
                   @if($adate['isonleave'])
                   <td class="bg-secondary">
-                  @elseif($adate['perc'] < 75)
+                  @elseif($adate['perc'] < 85)
                   <td class="bg-warning">
                   @else
                   <td>

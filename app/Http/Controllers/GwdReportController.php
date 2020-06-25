@@ -1095,6 +1095,7 @@ class GwdReportController extends Controller
 
     $todayyy = new Carbon();
 
+
     // check if date is passed
     if($req->filled('sdate')){
       if($req->filled('edate')){
@@ -1130,19 +1131,20 @@ class GwdReportController extends Controller
       $cdate->subDays($cdate->dayOfWeek)->subDays(2);
     }
 
-    if($user->job_grade != '3'){
-      dd('user is not an AGM');
-    }
+
 
     $sunitid = 0;
-    // find my section id
-    $subunit = SubUnit::where('ppsuborgunitdesc', $user->subunit)->first();
-    if($subunit){
-      $sunitid = $subunit->id;
+    if($user->job_grade == '3'){
+      // find my section id
+      $subunit = SubUnit::where('ppsuborgunitdesc', $user->subunit)->first();
+      if($subunit){
+        $sunitid = $subunit->id;
+      }
+      // update my section id
+      $user->section_id = $sunitid;
+      $user->save();
     }
-    // update my section id
-    $user->section_id = $sunitid;
-    $user->save();
+
 
     // reset
     $this->team_member = [];
@@ -1152,6 +1154,8 @@ class GwdReportController extends Controller
       \DateInterval::createFromDateString('1 day'),
       (new Carbon($ldate))->addDay()
     );
+
+
 
     $perfarr = GDWActions::GetStaffRecentPerf($user->id, $daterange);
     $perfavg = GDWActions::GetStaffAvgPerf($user->id, $cdate, $ldate);
@@ -1164,7 +1168,9 @@ class GwdReportController extends Controller
       'avg' => $perfavg
     ]);
 
-    $this->getSubsInfo($user->persno, $daterange, $sunitid, $cdate, $ldate);
+    if(isset($user->persno)){
+      $this->getSubsInfo($user->persno, $daterange, $sunitid, $cdate, $ldate);
+    }
 
     // get average perf for alll
     $scount = 0;
@@ -1251,8 +1257,11 @@ class GwdReportController extends Controller
     $staffs = User::where('report_to', $persno)->where('status', 1)->get();
 
     foreach($staffs as $ast){
-      $ast->section_id = $sunitid;
-      $ast->save();
+      if($sunitid != 0){
+        $ast->section_id = $sunitid;
+        $ast->save();
+      }
+
       // add this staff info
 
       $perfarr = GDWActions::GetStaffRecentPerf($ast->id, $daterange);
