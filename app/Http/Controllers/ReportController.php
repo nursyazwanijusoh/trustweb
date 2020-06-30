@@ -120,7 +120,7 @@ class ReportController extends Controller
 
   public function floorAvailability(){
     $bookh = new BookingHelper;
-    $buildlist = building::all();
+    $buildlist = building::all()->sortBy('building_name');
     $ret = [];
     foreach ($buildlist as $abuild) {
       array_push($ret, $bookh->getBuildingStat($abuild->id));

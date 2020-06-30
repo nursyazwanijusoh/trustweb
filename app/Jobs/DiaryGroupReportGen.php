@@ -288,7 +288,7 @@ class DiaryGroupReportGen implements ShouldQueue
 
         // email to rep
         $recps = $cgrp->Users()->pluck('email');
-        \Mail::to(implode(',', $recps))->send(new SendDiaryRpt($cgrp));
+        \Mail::to(implode(',', $recps))->send(new SendDiaryRpt($bjob));
       }
     }
 }
