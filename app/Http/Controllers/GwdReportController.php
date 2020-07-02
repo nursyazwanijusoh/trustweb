@@ -45,6 +45,7 @@ class GwdReportController extends Controller
       if(!$req->filled('tdate')){
         return redirect()->back()->withInput()->withErrors(['tdate' => 'To date is required']);
       }
+      // dd($req);
 
       if($req->action == 'graph'){
         return $this->doDivSum($req);
@@ -235,9 +236,10 @@ class GwdReportController extends Controller
       array_push($users, $value->id);
     }
 
+    // dd($cgrp->pporgunitdesc);
     return view('report.rptgrpsummaryv2', [
       'header' => $headers,
-      'groupname' => $cgrp->name,
+      'groupname' => $cgrp->pporgunitdesc,
       'startdate' => $req->fdate,
       'enddate' => $req->tdate,
       'idlist' => $users,

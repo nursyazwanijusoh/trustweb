@@ -18,6 +18,14 @@
                 <td>Fetched record : </td>
                 <td id="fetchedrecord">0</td>
               </tr>
+              <tr>
+                <td>Legend: </td>
+                <td>
+                  <button class="btn" style="background-color: lightblue">Public Holiday</button>
+                  <button class="btn" style="background-color: springgreen">Planned Leave</button>
+                  <button class="btn" style="background-color: yellow">Unplanned Leave</button>
+                </td>
+              </tr>
             </table>
           </div>
         </div>
