@@ -44,6 +44,7 @@
                       <thead>
                         <tr>
                           <th scope="col">Date</th>
+                          <th scope="col">Tag</th>
                           <th scope="col">Type</th>
                           <th scope="col">ID / Name</th>
                           <th scope="col">Details</th>
@@ -57,15 +58,10 @@
                         @foreach($activities as $acts)
                         <tr>
                           <td>{{ $acts->activity_date }}</td>
-                          @if($acts->isleave)
-                          <td>On Leave</td>
-                          <td>{{ $acts->parent_number }}</td>
-                          <td>{{ $acts->leave_remark }}</td>
-                          @else
+                          <td>{{ $acts->ActCat->descr }}</td>
                           <td>{{ $acts->ActType->descr }}</td>
                           <td>{{ $acts->parent_number }}</td>
                           <td>{{ $acts->details }}</td>
-                          @endif
                           <td>{{ $acts->hours_spent }}</td>
                           @if($isvisitor == false)
                           <td>

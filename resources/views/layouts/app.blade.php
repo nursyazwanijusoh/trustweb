@@ -51,7 +51,7 @@
                         @guest
                         @else
                         <!-- <li><a href="{{ route('staff', [], false) }}">Home</a></li> -->
-                        @if (Session::get('staffdata')['role'] <= 1)
+                        @if (Auth::user()->role <= 1)
                         <li class="menu-has-children"><a href="#">Admin</a>
                           <ul>
                               <li><a class="dropdown-item" href="{{ route('admin', [], false) }}">Management</a></li>

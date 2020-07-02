@@ -18,7 +18,7 @@ class AdminGate
     {
       // dd($next);
       if($request->session()->exists('staffdata')){
-        if(Session::get('staffdata')['role'] > 1){
+        if($request->user()->role > 1){
           abort(403);
         }
       } else {
