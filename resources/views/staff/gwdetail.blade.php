@@ -61,7 +61,18 @@
                           <td>{{ $acts->ActCat->descr }}</td>
                           <td>{{ $acts->ActType->descr }}</td>
                           <td>{{ $acts->parent_number }}</td>
-                          <td>{{ $acts->details }}</td>
+                          <td>
+                            @php
+                              $pecah = preg_split("/\r\n|\n|\r/", $acts->details);
+                              if(sizeof($pecah) == 1){
+                                echo $acts->details;
+                              } else {
+                                foreach($pecah as $aline){
+                                  echo $aline . ", <br />";
+                                }
+                              }
+                            @endphp
+                          </td>
                           <td>{{ $acts->hours_spent }}</td>
                           @if($isvisitor == false)
                           <td>
