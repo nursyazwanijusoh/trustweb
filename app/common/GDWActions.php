@@ -121,7 +121,7 @@ class GDWActions
 
     $currdp = $act->DailyPerf;
 
-    $timediff = $act->hours_spent - $req->hours;
+    $timediff = $req->hours - $act->hours_spent;
     if($timediff > 0){
       if(GDWActions::canAcceptThisAct($currdp, $timediff)){
         // allow changes

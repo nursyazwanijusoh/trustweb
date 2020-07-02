@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('page-css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
 
 <div class="container-fluid">
@@ -203,6 +207,7 @@
 @endsection
 
 @section('page-js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 <script>
 
 $('#editCfgModal').on('show.bs.modal', function(e) {
@@ -276,6 +281,8 @@ function loadActListForDate(){
 }
 
 $(document).ready(function() {
+  $('#actcat').select2();
+  $('#acttype').select2();
   setTitleInput();
 });
 
