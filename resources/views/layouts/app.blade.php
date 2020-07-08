@@ -71,6 +71,7 @@
                               <li><a class="dropdown-item" href="{{ route('staff.find', [], false) }}">Staff Finder</a></li>
                               <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li>
                               <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
+                              <li><a class="dropdown-item" href="{{ route('poll.index', [], false) }}"><i class="fa fa-line-chart" style="color:green"></i> Polls <span class="badge badge-danger">&nbsp;beta!&nbsp;</span></a></li>
 
                           </ul>
                         </li>

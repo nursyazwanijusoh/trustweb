@@ -314,3 +314,15 @@ Route::post('/cgrp/addrep', 'CompGroupController@addrep')->name('cgrp.addrep');
 Route::get('/pushalert', 'PushAnnouncementController@showForm')->name('pn.form');
 Route::post('/pushalert/send', 'PushAnnouncementController@registerReq')->name('pn.reg');
 Route::get('/pushalert/getstatus', 'PushAnnouncementController@doSend')->name('pn.dosend');
+
+// polls
+Route::get('/polls', 'PollController@index')->name('poll.index');
+Route::get('/polls/my', 'PollController@mypolls')->name('poll.my');
+Route::get('/polls/create', 'PollController@createPoll')->name('poll.create');
+Route::post('/polls/docreate', 'PollController@docreatePoll')->name('poll.docreate');
+Route::post('/polls/publish', 'PollController@publishPoll')->name('poll.publish');
+Route::post('/polls/delete', 'PollController@deletePoll')->name('poll.delete');
+Route::post('/polls/addopt', 'PollController@addOption')->name('poll.addopt');
+Route::post('/polls/remopt', 'PollController@removeOption')->name('poll.remopt');
+Route::get('/polls/view', 'PollController@viewPoll')->name('poll.view');
+Route::post('/polls/vote', 'PollController@vote')->name('poll.vote');

@@ -101,4 +101,8 @@ class User extends Authenticatable
       return $this->belongsToMany(CompGroup::class);
     }
 
+    public function Votes(){
+      return $this->belongsToMany(Poll::class);
+    }
+
 }
