@@ -326,3 +326,8 @@ Route::post('/polls/addopt', 'PollController@addOption')->name('poll.addopt');
 Route::post('/polls/remopt', 'PollController@removeOption')->name('poll.remopt');
 Route::get('/polls/view', 'PollController@viewPoll')->name('poll.view');
 Route::post('/polls/vote', 'PollController@vote')->name('poll.vote');
+
+// art mgmt
+Route::get('/art', 'AgileResourceTeamController@list')->name('art.list');
+Route::post('/art/add', 'AgileResourceTeamController@add')->name('art.add');
+Route::post('/art/del', 'AgileResourceTeamController@del')->name('art.del');

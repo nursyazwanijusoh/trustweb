@@ -614,6 +614,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
     public static $classMap = array (
         'App\\Activity' => __DIR__ . '/../..' . '/app/Activity.php',
         'App\\ActivityType' => __DIR__ . '/../..' . '/app/ActivityType.php',
+        'App\\AgileResourceTeam' => __DIR__ . '/../..' . '/app/AgileResourceTeam.php',
         'App\\Announcement' => __DIR__ . '/../..' . '/app/Announcement.php',
         'App\\Api\\V1\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Api/V1/Controllers/AdminController.php',
         'App\\Api\\V1\\Controllers\\BatchController' => __DIR__ . '/../..' . '/app/Api/V1/Controllers/BatchController.php',
@@ -691,6 +692,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Http\\Controllers\\WebApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebApiController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\AdminGate' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminGate.php',
+        'App\\Http\\Middleware\\AgileResTeamGate' => __DIR__ . '/../..' . '/app/Http/Middleware/AgileResTeamGate.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',

@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Activity' => $baseDir . '/app/Activity.php',
     'App\\ActivityType' => $baseDir . '/app/ActivityType.php',
+    'App\\AgileResourceTeam' => $baseDir . '/app/AgileResourceTeam.php',
     'App\\Announcement' => $baseDir . '/app/Announcement.php',
     'App\\Api\\V1\\Controllers\\AdminController' => $baseDir . '/app/Api/V1/Controllers/AdminController.php',
     'App\\Api\\V1\\Controllers\\BatchController' => $baseDir . '/app/Api/V1/Controllers/BatchController.php',
@@ -85,6 +86,7 @@ return array(
     'App\\Http\\Controllers\\WebApiController' => $baseDir . '/app/Http/Controllers/WebApiController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\AdminGate' => $baseDir . '/app/Http/Middleware/AdminGate.php',
+    'App\\Http\\Middleware\\AgileResTeamGate' => $baseDir . '/app/Http/Middleware/AgileResTeamGate.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\CheckForMaintenanceMode' => $baseDir . '/app/Http/Middleware/CheckForMaintenanceMode.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',

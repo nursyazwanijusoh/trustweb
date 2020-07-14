@@ -29,6 +29,14 @@
           </div>
         </div>
       </div>
+      <div class="card bg-light mb-2">
+        <div class="card-header">Opportunity Config</div>
+        <div class="card-body">
+          <div class="list-group">
+            <a href="{{ route('art.list', [], false) }}" class="list-group-item list-group-item-action">Agile Resource Team</a>
+          </div>
+        </div>
+      </div>
       <div class="card text-white bg-success mb-2">
         <div class="card-header">Diary LOVs</div>
         <div class="card-body">
