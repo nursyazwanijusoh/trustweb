@@ -331,3 +331,6 @@ Route::post('/polls/vote', 'PollController@vote')->name('poll.vote');
 Route::get('/art', 'AgileResourceTeamController@list')->name('art.list');
 Route::post('/art/add', 'AgileResourceTeamController@add')->name('art.add');
 Route::post('/art/del', 'AgileResourceTeamController@del')->name('art.del');
+
+//opportunity
+Route::get('/opp/list', 'OppProjectController@list')->name('art.del');

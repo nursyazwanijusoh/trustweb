@@ -69,6 +69,7 @@ return array(
     'App\\Http\\Controllers\\McoTravelReqController' => $baseDir . '/app/Http/Controllers/McoTravelReqController.php',
     'App\\Http\\Controllers\\NotiMenuController' => $baseDir . '/app/Http/Controllers/NotiMenuController.php',
     'App\\Http\\Controllers\\OfficeController' => $baseDir . '/app/Http/Controllers/OfficeController.php',
+    'App\\Http\\Controllers\\OppApplicationController' => $baseDir . '/app/Http/Controllers/OppApplicationController.php',
     'App\\Http\\Controllers\\OppAssigmentController' => $baseDir . '/app/Http/Controllers/OppAssigmentController.php',
     'App\\Http\\Controllers\\OppProjectController' => $baseDir . '/app/Http/Controllers/OppProjectController.php',
     'App\\Http\\Controllers\\PartnerController' => $baseDir . '/app/Http/Controllers/PartnerController.php',
