@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card mb-3">
                 <div class="card-header">Agile Resource Team Member</div>
                 <div class="card-body">
@@ -37,56 +37,52 @@
               <div class="card">
                 <div class="card-header">Agile Resource Team Members</div>
                 <div class="card-body">
-                  <table class="table table-striped table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Staff No</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Position</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col">Remove</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $atask)
-                      <tr>
-                        <td>{{ $atask->User->staff_no }}</td>
-                        <td>{{ $atask->User->name }}</td>
-                        <td>{{ $atask->User->position }}</td>
-                        <td>{{ $atask->User->subunit }}</td>
-                        <td>
-                          <form method="post" action="{{ route('art.del') }}">
-                            <input type="hidden" name="artid" value="{{ $atask->id }}" />
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete">Delete</button>
-                          </form>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                  <div class="table-responsive">
+                    <table id="artmeja" class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Staff No</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Position</th>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Remove</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($data as $atask)
+                        <tr>
+                          <td>{{ $atask->User->staff_no }}</td>
+                          <td>{{ $atask->User->name }}</td>
+                          <td>{{ $atask->User->position }}</td>
+                          <td>{{ $atask->User->subunit }}</td>
+                          <td>
+                            <form method="post" action="{{ route('art.del', [], false) }}">
+                              @csrf
+                              <input type="hidden" name="artid" value="{{ $atask->id }}" />
+                              <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </form>
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 @endsection
 
 @section('page-js')
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
-
-$('#editCfgModal').on('show.bs.modal', function(e) {
-
-    //get data-id attribute of the clicked element
-    var id = $(e.relatedTarget).data('id');
-    var key = $(e.relatedTarget).data('key');
-    var value = $(e.relatedTarget).data('value');
-
-    //populate the textbox
-    $(e.currentTarget).find('input[name="id"]').val(id);
-    $(e.currentTarget).find('input[name="key"]').val(key);
-    $(e.currentTarget).find('input[name="value"]').val(value);
-    $(e.currentTarget).find('input[name="value"]').focus();
-});
+$(document).ready(function() {
+    $('#artmeja').DataTable();
+} );
 </script>
 @stop
