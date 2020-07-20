@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header"></div>
                 <div class="card-body">
@@ -37,6 +37,7 @@
                           @else
                           <th scope="col">Close Remark</th>
                           <th scope="col">Closed By</th>
+                          <th scope="col">With Email</th>
                           <th scope="col">Close Date</th>
                           @endif
                         </tr>
@@ -57,6 +58,7 @@
                           @else
                           <td>{{ $atask->remark }}</td>
                           <td><a title="{{ $atask->Closer->name }}" href="{{ route('staff', ['staff_id' => $atask->Closer->id], false) }}">{{ $atask->Closer->staff_no }}</a></td>
+                          <td>{{ $atask->contacted == true ? 'Yes' : 'No' }}</td>
                           <td>{{ $atask->updated_at }}</td>
                           @endif
                         </tr>

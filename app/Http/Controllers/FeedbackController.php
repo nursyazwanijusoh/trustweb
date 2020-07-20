@@ -6,6 +6,7 @@ use App\Feedback;
 use App\User;
 use App\Mail\RespFeedback;
 use Illuminate\Http\Request;
+use \Carbon\Carbon;
 
 class FeedbackController extends Controller
 {
@@ -72,7 +73,11 @@ class FeedbackController extends Controller
         $atype = 0;
       }
 
-      $feedbacklist = Feedback::where('status', $atype)->get();
+      $last2mon = new Carbon;
+      $last2mon->subMonths(2);
+
+      $feedbacklist = Feedback::where('status', $atype)
+        ->whereDate('created_at', '>', $last2mon->toDateString())->get();
 
       // add name to the results
       foreach($feedbacklist as $afb){
