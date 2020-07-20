@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'AdminGate' => \App\Http\Middleware\AdminGate::class,
         'SuperAdminGate' => \App\Http\Middleware\SuperAdminGate::class,
+        'AgileResTeamGate' => \App\Http\Middleware\AgileResTeamGate::class,
     ];
 
     /**
