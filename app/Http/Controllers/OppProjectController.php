@@ -14,7 +14,11 @@ class OppProjectController extends Controller
      */
     public function list()
     {
-        
+        $projs = OppProject::where('status', 'Active')->get();
+        return view('opp.projlist', [
+            'projs' => $projs
+          ]);
+
     }
 
     /**
