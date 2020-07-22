@@ -37,7 +37,6 @@ class OppProjectController extends Controller
 
     public function add(Request $req) {
 
-      $pm =
     }
 
     public function edit(Request $req) {
