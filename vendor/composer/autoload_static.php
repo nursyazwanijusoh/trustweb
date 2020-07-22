@@ -675,6 +675,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Http\\Controllers\\McoTravelReqController' => __DIR__ . '/../..' . '/app/Http/Controllers/McoTravelReqController.php',
         'App\\Http\\Controllers\\NotiMenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotiMenuController.php',
         'App\\Http\\Controllers\\OfficeController' => __DIR__ . '/../..' . '/app/Http/Controllers/OfficeController.php',
+        'App\\Http\\Controllers\\OppApplicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/OppApplicationController.php',
         'App\\Http\\Controllers\\OppAssigmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/OppAssigmentController.php',
         'App\\Http\\Controllers\\OppProjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/OppProjectController.php',
         'App\\Http\\Controllers\\PartnerController' => __DIR__ . '/../..' . '/app/Http/Controllers/PartnerController.php',
