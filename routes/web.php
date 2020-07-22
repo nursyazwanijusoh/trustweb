@@ -331,3 +331,11 @@ Route::post('/polls/vote', 'PollController@vote')->name('poll.vote');
 Route::get('/art', 'AgileResourceTeamController@list')->name('art.list');
 Route::post('/art/add', 'AgileResourceTeamController@add')->name('art.add');
 Route::post('/art/del', 'AgileResourceTeamController@del')->name('art.del');
+
+// art project
+Route::get('/project', 'OppProjectController@list')->name('opp.project.list');
+Route::get('/project/view', 'OppProjectController@view')->name('opp.project.view');
+Route::get('/project/create', 'OppProjectController@create')->name('opp.project.create');
+Route::post('/project/add', 'OppProjectController@add')->name('opp.project.add');
+Route::post('/project/del', 'OppProjectController@del')->name('opp.project.del');
+Route::post('/project/edit', 'OppProjectController@edit')->name('opp.project.edit');
