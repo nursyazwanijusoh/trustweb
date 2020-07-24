@@ -129,6 +129,17 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                       </div>
                     </a>
                   </div>
+                  @if($iscaretaker == true || Auth::user()->role < 2 )
+                  <div class="col-6 col-xl-4 mb-1 p-1">
+                    <a href="{{ route('mleave.list', ['staff_id' => $staff_id], false) }}">
+                      <div class="card text-center text-white bg-danger">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-calendar"></i> Zerorize Expected Hours</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  @endif
                   <!-- <div class="col-sm-4 mb-3">
                     <a href="{{ route('area.myevents', ['id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-secondary">
@@ -150,13 +161,13 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
               <div class="row">
                 <div class="col-lg-6">
                   <div class="card mb-3">
-                    <div class="card-header bg-info text-white">Today's Productivity</div>
+                    <div class="card-header bg-{{ $todaycol }} text-white">Today's Productivity</div>
                     <div class="card-body">
                       <div class="row text-center">
                         <div class="col-4 border-right">
                           <h1 class="card-title">{{ $todaydf->actual_hours }}</h1>
                           <p class="card-text">
-                            Total Actual Hours
+                            Actual Hours
                           </p>
                         </div>
                         <div class="col-4 border-right">
@@ -167,6 +178,31 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                         </div>
                         <div class="col-4">
                           <h1 class="card-title">{{ $todayperc }}%</h1>
+                          <p class="card-text">
+                            Productivity
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card mb-3">
+                    <div class="card-header bg-{{ $weekcol }} text-white">Past 7 Days</div>
+                    <div class="card-body">
+                      <div class="row text-center">
+                        <div class="col-4 border-right">
+                          <h1 class="card-title">{{ number_format($weekact, 2) }}</h1>
+                          <p class="card-text">
+                            Total Actual Hours
+                          </p>
+                        </div>
+                        <div class="col-4 border-right">
+                          <h1 class="card-title">{{ number_format($weekexp, 2) }}</h1>
+                          <p class="card-text">
+                            Expected Hours
+                          </p>
+                        </div>
+                        <div class="col-4">
+                          <h1 class="card-title">{{ $weekperc }}%</h1>
                           <p class="card-text">
                             Productivity
                           </p>

@@ -647,6 +647,7 @@ class ComposerStaticInitd11d13fece7aedfd777e673256acba3a
         'App\\Guide' => __DIR__ . '/../..' . '/app/Guide.php',
         'App\\GwdActivity' => __DIR__ . '/../..' . '/app/GwdActivity.php',
         'App\\Http\\Controllers\\AdminReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminReportController.php',
+        'App\\Http\\Controllers\\AgileResourceTeamController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgileResourceTeamController.php',
         'App\\Http\\Controllers\\AnnouncementController' => __DIR__ . '/../..' . '/app/Http/Controllers/AnnouncementController.php',
         'App\\Http\\Controllers\\AppDownloadController' => __DIR__ . '/../..' . '/app/Http/Controllers/AppDownloadController.php',
         'App\\Http\\Controllers\\AreaEventController' => __DIR__ . '/../..' . '/app/Http/Controllers/AreaEventController.php',

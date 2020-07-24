@@ -56,7 +56,9 @@ class TStaffController extends Controller
     $sublist = GDWActions::GetSubordsPerf($s_staff_id);
     $superi = User::where('persno', $user->report_to)->first();
 
-    if($canseepnc == false){
+    $iscaretaker = UserRegisterHandler::IsCaretaker($rq->user(), $user);
+
+    if($canseepnc == false && $iscaretaker == false){
       // skip the rest of the data since cannot see it anyway
 
       return view('staff.index', [
@@ -75,15 +77,29 @@ class TStaffController extends Controller
     $ldate = new Carbon();
 
     $daterange = new \DatePeriod(
-      $cdate->subDays(7),
+      $cdate->subDays(6),
       \DateInterval::createFromDateString('1 day'),
       $ldate->addDay()
     );
 
     $gdata = GDWActions::GetStaffRecentPerf($s_staff_id, $daterange);
     $pgdata = [];
+    $weekact = 0;
+    $weekexp = 0;
     foreach ($gdata as $key => $value) {
       $pgdata[] = $value['perc'];
+      $weekact += $value['actual'];
+      $weekexp += $value['expected'];
+    }
+
+    $weekperc = intval($weekexp == 0 ? 100 + ($weekact / (8 * 7) * 100) : $weekact / $weekexp * 100);
+    $weekcol = 'success';
+    if($weekperc < 100){
+      $weekcol = 'warning';
+    }
+
+    if($weekperc < 85){
+      $weekcol = 'danger';
     }
 
     $graphlabel = [];
@@ -174,6 +190,8 @@ class TStaffController extends Controller
        $bgcollll = 'rgba(0, 155, 0, 1)';
      } elseif($value->expected_hours > 0 && $value->actual_hours == 0){
        $bgcollll = 'rgba(255, 0, 0, 0.5)';
+     } elseif($value->is_off_day == true){
+       $bgcollll = 'rgba(66, 66, 66, 0.8)';
      }
 
      $evlist[] = \Calendar::event(
@@ -197,9 +215,10 @@ class TStaffController extends Controller
 
       $eeeedate = new Carbon($value->end_date);
       $eeeedate->addDay();
+      $clabel = $value->is_manual == true ? ' - ' . $value->remark : '';
 
      $evlist[] = \Calendar::event(
-       $value->LeaveType->descr,
+       $value->LeaveType->descr . $clabel,
        true,
        new \DateTime($value->start_date),
        new \DateTime($eeeedate),
@@ -224,6 +243,15 @@ class TStaffController extends Controller
       $todayperc = intval($calcperf);
     }
 
+    $todaycol = 'success';
+    if($todaycol < 100){
+      $todaycol = 'warning';
+    }
+
+    if($todaycol < 85){
+      $todaycol = 'danger';
+    }
+
     // $pscoiunt = 0;
     // if($isvisitor == false){
     //   // cek ada nak kena approve skillset tak
@@ -243,7 +271,13 @@ class TStaffController extends Controller
       'isvisitor' => $isvisitor,
       'todaydf' => $todaydf,
       'todayperc' => $todayperc,
-      'canseepnc' => $canseepnc
+      'canseepnc' => $canseepnc,
+      'todaycol' => $todaycol,
+      'weekexp' => $weekexp,
+      'weekact' => $weekact,
+      'weekperc' => $weekperc,
+      'weekcol' => $weekcol,
+      'iscaretaker' => $iscaretaker
     ];
     // dd($final);
 

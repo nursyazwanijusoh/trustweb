@@ -585,4 +585,15 @@ class UserRegisterHandler
       return false;
     }
   }
+
+  public static function IsCaretaker($user, $staff){
+
+    // check for caretaker
+    if($staff->Division->Group->Users->where('id', $user->id)->count() == 0){
+      return false;
+    }
+
+    return true;
+
+  }
 }

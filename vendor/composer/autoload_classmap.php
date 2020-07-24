@@ -41,6 +41,7 @@ return array(
     'App\\Guide' => $baseDir . '/app/Guide.php',
     'App\\GwdActivity' => $baseDir . '/app/GwdActivity.php',
     'App\\Http\\Controllers\\AdminReportController' => $baseDir . '/app/Http/Controllers/AdminReportController.php',
+    'App\\Http\\Controllers\\AgileResourceTeamController' => $baseDir . '/app/Http/Controllers/AgileResourceTeamController.php',
     'App\\Http\\Controllers\\AnnouncementController' => $baseDir . '/app/Http/Controllers/AnnouncementController.php',
     'App\\Http\\Controllers\\AppDownloadController' => $baseDir . '/app/Http/Controllers/AppDownloadController.php',
     'App\\Http\\Controllers\\AreaEventController' => $baseDir . '/app/Http/Controllers/AreaEventController.php',
