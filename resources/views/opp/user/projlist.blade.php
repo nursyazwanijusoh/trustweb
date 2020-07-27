@@ -27,7 +27,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                      @foreach($projs as $proj)
+                      @foreach($pojeks as $proj)
                       
                       <tr>
                       <td></td>
