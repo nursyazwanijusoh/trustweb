@@ -339,4 +339,4 @@ Route::get('/project/create', 'OppProjectController@create')->name('opp.project.
 Route::post('/project/add', 'OppProjectController@add')->name('opp.project.add');
 Route::post('/project/del', 'OppProjectController@del')->name('opp.project.del');
 Route::post('/project/edit', 'OppProjectController@edit')->name('opp.project.edit');
-Route::get('/opp/list', 'OppProjectController@list')->name('art.del');
+Route::get('/opp/usr/projects', 'OppUserController@projectList')->name('opp.user.list');
