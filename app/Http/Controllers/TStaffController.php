@@ -94,12 +94,15 @@ class TStaffController extends Controller
 
     $weekperc = intval($weekexp == 0 ? 100 + ($weekact / (8 * 7) * 100) : $weekact / $weekexp * 100);
     $weekcol = 'success';
+    $weektitle = 'You have fully utilized your weekly work-hours. We are proud of you!';
     if($weekperc < 100){
       $weekcol = 'warning';
+      $weektitle = 'You have met the weekly target of between 85% to 100%';
     }
 
-    if($weekperc < 80){
+    if($weekperc < 85){
       $weekcol = 'danger';
+      $weektitle = 'You are below the weekly target of 85%';
     }
 
     $graphlabel = [];
@@ -242,14 +245,18 @@ class TStaffController extends Controller
     }
 
     $todaycol = 'success';
+    $todaytitle = 'You have fully utilized your work-hours. Nice!';
     if($todayperc < 100){
       if($todaydf->is_off_day == true){
         $todaycol = 'dark';
+        $todaytitle = 'On leave';
       } else {
         $todaycol = 'warning';
+        $todaytitle = 'You have met the target, between 85% to 100% productivity';
 
         if($todayperc < 85){
           $todaycol = 'danger';
+          $todaytitle = 'You are below the target 85% productivity';
         }
       }
     }
@@ -279,7 +286,9 @@ class TStaffController extends Controller
       'weekact' => $weekact,
       'weekperc' => $weekperc,
       'weekcol' => $weekcol,
-      'iscaretaker' => $iscaretaker
+      'iscaretaker' => $iscaretaker,
+      'todaytitle' => $todaytitle,
+      'weektitle' => $weektitle,
     ];
     // dd($final);
 

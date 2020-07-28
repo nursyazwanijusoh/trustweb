@@ -160,7 +160,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
             <div class="card-body">
               <div class="row">
                 <div class="col-lg-6">
-                  <div class="card mb-3">
+                  <div class="card mb-3" title="{{ $todaytitle }}">
                     <div class="card-header bg-{{ $todaycol }} text-white">Today's Productivity</div>
                     <div class="card-body">
                       <div class="row text-center">
@@ -185,7 +185,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                       </div>
                     </div>
                   </div>
-                  <div class="card mb-3">
+                  <div class="card mb-3" title="{{ $weektitle }}">
                     <div class="card-header bg-{{ $weekcol }} text-white">Past 7 Days</div>
                     <div class="card-body">
                       <div class="row text-center">
