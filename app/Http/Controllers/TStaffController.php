@@ -244,11 +244,11 @@ class TStaffController extends Controller
     }
 
     $todaycol = 'success';
-    if($todaycol < 100){
+    if($todayperc < 100){
       $todaycol = 'warning';
     }
 
-    if($todaycol < 85){
+    if($todayperc < 85){
       $todaycol = 'danger';
     }
 

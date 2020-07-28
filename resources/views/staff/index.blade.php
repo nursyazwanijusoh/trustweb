@@ -54,7 +54,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 
               </div>
             </div></div>
-            @if($canseepnc == true)
+            @if($canseepnc == true || $iscaretaker == true)
             <div class="col-md-6 mb-3">
             <div class="card">
               <div class="card-header">Action</div>
