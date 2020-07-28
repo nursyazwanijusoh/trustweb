@@ -98,7 +98,7 @@ class TStaffController extends Controller
       $weekcol = 'warning';
     }
 
-    if($weekperc < 85){
+    if($weekperc < 80){
       $weekcol = 'danger';
     }
 
