@@ -589,7 +589,13 @@ class UserRegisterHandler
   public static function IsCaretaker($user, $staff){
 
     // check for caretaker
-    if($staff->Division->Group->Users->where('id', $user->id)->count() == 0){
+    $grp = $staff->Division->Group;
+    if(isset($grp)){
+      if($grp->Users->where('id', $user->id)->count() == 0){
+        return false;
+      }
+    } else {
+      // no group. meaning no caretaker
       return false;
     }
 
