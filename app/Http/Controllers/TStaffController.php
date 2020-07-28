@@ -189,9 +189,11 @@ class TStaffController extends Controller
      if($value->expected_hours == 0 && $value->actual_hours > 0){
        $bgcollll = 'rgba(0, 155, 0, 1)';
      } elseif($value->expected_hours > 0 && $value->actual_hours == 0){
-       $bgcollll = 'rgba(255, 0, 0, 0.5)';
-     } elseif($value->is_off_day == true){
-       $bgcollll = 'rgba(66, 66, 66, 0.8)';
+       if($value->is_off_day == true){
+         $bgcollll = 'rgba(66, 66, 66, 0.8)';
+       } else {
+         $bgcollll = 'rgba(255, 0, 0, 0.5)';
+       }
      }
 
      $evlist[] = \Calendar::event(
@@ -233,11 +235,7 @@ class TStaffController extends Controller
     $todaydf = GDWActions::GetDailyPerfObj($s_staff_id, new Carbon());
     $todayperc = 0;
     if($todaydf->expected_hours == 0){
-      if($todaydf->actual_hours > 0){
-        $todayperc = 120;
-      } else {
-        $todayperc = 100;
-      }
+      $todayperc = intval(100 + ($todaydf->actual_hours / (8 * 7) * 100));
     } else {
       $calcperf = $todaydf->actual_hours / $todaydf->expected_hours * 100;
       $todayperc = intval($calcperf);
@@ -245,11 +243,15 @@ class TStaffController extends Controller
 
     $todaycol = 'success';
     if($todayperc < 100){
-      $todaycol = 'warning';
-    }
+      if($todaydf->is_off_day == true){
+        $todaycol = 'dark';
+      } else {
+        $todaycol = 'warning';
 
-    if($todayperc < 85){
-      $todaycol = 'danger';
+        if($todayperc < 85){
+          $todaycol = 'danger';
+        }
+      }
     }
 
     // $pscoiunt = 0;
