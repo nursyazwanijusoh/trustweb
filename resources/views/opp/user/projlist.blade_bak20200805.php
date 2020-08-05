@@ -21,17 +21,13 @@
                           <th >Descr</th>
                           <th >Start Date</th>
                           <th >End Date</th>
-                          <th >Post</th>
                           <th >Status</th>
-                          
-
-                          <th> </th>
+                          <th class="none"></th>
                 
                         </tr>
                       </thead>
                       <tbody>
                       @foreach($pojeks as $proj)
-                        @foreach($proj->assigments as $assg)
                       
                       <tr>
                       <td></td>
@@ -39,17 +35,24 @@
                       <td>{{$proj->descr}}</td>
                       <td>{{$proj->start_date}}</td>
                       <td>{{$proj->end_date}}</td>
-                      <td>{{$assg->title}}</td>
-                      <td>{{$proj->status}}</td>             
-                      
+                      <td>{{$proj->status}}</td>
+                      <td style='padding:0'>
+                      <table style="margin:0; display:inline"
+                      class="table-bordered"> 
+                      @foreach($proj->assigments as $assg)
+                       <tr>
+                       <td>dd</td>
+                       <td>dooooooooooooooooooooooood</td>
                        <td>Apply</td>
-    
-                        
-    
+                       </tr>
+                      @endforeach
+                      </table>
+                      </td>
+
                
                       </tr>
 
-                        @endforeach
+                      
                       @endforeach
                       </tbody>
                     </table>
@@ -76,7 +79,26 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#projmeja').DataTable();
+    $('#projmeja').DataTable({
+        
+        
+      responsive: {
+            details: {
+                type: 'inline',
+                target: 'tr'
+            }
+        },
+
+        columnDefs: [ {
+            className: 'control',
+            orderable: false,
+            targets:   0
+        } ],
+        order: [ 1, 'asc' ]
+
+
+
+    });
 } );
 
 </script>
