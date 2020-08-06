@@ -13,7 +13,7 @@
                 <div class="card-header">Project List</div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table id="projmeja" class="table-striped table-hover display" style="width:100%">
+                    <table id="projmeja" class="table table-striped table-hover" >
                       <thead>
                         <tr>
                           <th></th>
@@ -21,11 +21,11 @@
                           <th >Descr</th>
                           <th >Start Date</th>
                           <th >End Date</th>
-                          <th >Post</th>
+                          <th >Assigment</th>
                           <th >Status</th>
                           
 
-                          <th> </th>
+                          <th class="no-sort"> </th>
                 
                         </tr>
                       </thead>
@@ -67,16 +67,21 @@
 @section('page-js')
 
 <link href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.dataTables.min.css" rel="stylesheet" media="screen">
-<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" media="screen">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js
-"></script>
-<script src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
+<!-- <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" media="screen"> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
 
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#projmeja').DataTable();
+    $('#projmeja').DataTable(
+   {"aoColumnDefs": [
+        { "bSortable": false, "aTargets": [ 0,7 ] }, 
+        { "bSearchable": false, "aTargets": [ 0,7] }
+    ]}
+
+    );
 } );
 
 </script>
