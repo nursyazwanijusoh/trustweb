@@ -234,7 +234,8 @@ class DiaryGroupReportGen implements ShouldQueue
 
             // calc the productivity
             if($pdaycount == $zdaycount){
-              $pdtivity = 100 + ($sumhrs / (8 * $pdaycount) * 100);
+              // $pdtivity = 100 + ($sumhrs / (8 * $pdaycount) * 100);
+              $pdtivity = 'N/A';
               $pdgrp = 'N/A';
               $pbg = ExcelHandler::PD_NA;
             } elseif($expectedhrs == 0){
@@ -268,7 +269,7 @@ class DiaryGroupReportGen implements ShouldQueue
             }
 
 
-            array_push($dathrs, ['v' => number_format($pdtivity, 2), 't' => $pbg]);
+            array_push($dathrs, ['v' => ($pdtivity == 'N/A' ? $pdtivity : number_format($pdtivity, 2)), 't' => $pbg]);
             array_push($dathrs, ['v' => $pdgrp, 't' => ExcelHandler::BG_NORMAL]);
 
             // push hours to main array
