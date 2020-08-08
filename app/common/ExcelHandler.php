@@ -16,7 +16,7 @@ class ExcelHandler {
   const BG_PH = '34eb64';
   const BG_HEADER = '000000';
   const BG_NORMAL = 'NA';
-  const BG_INFO = 'c34bfa';
+  const BG_INFO = 'NA';
 
   // productivity group colors
   const PD_G0 = '808080';  // > 100
@@ -24,6 +24,7 @@ class ExcelHandler {
   const PD_GB = '47539e';  // 50-80
   const PD_GC = '3e8f36';  // 80-100
   const PD_GD = 'e051cd';  // > 100
+  const PD_NA = 'c34bfa';  // zeroed
 
 
   private $filename = "";

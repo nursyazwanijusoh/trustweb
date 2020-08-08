@@ -650,8 +650,9 @@ class GwdReportController extends Controller
     // dd($daterange);
     $totalactual = 0;
     $totalexpected = 0;
-
+    $pdaycount = 0;
     foreach ($daterange as $key => $value) {
+      $pdaycount++;
       $df = GDWActions::GetDailyPerfObj($user->id, $value);
       $totalactual += $df->actual_hours;
       $totalexpected += $df->expected_hours;
@@ -685,7 +686,7 @@ class GwdReportController extends Controller
     $headers['expected'] = $totalexpected;
 
     if($totalexpected == 0){
-      $pdtivity = 100;
+      $pdtivity = 100 + ($totalactual / (8 * $pdaycount) * 100);
     } else {
       $pdtivity = round($totalactual / $totalexpected * 100, 2);
     }

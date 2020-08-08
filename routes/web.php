@@ -173,7 +173,10 @@ Route::get('/reports/floorutildetail', 'ReportController@floorUtilDetail')->name
 Route::post('/reports/floorutildetailr', 'ReportController@floorUtilDetailRes')->name('reports.fudr');
 Route::get('/reports/divcheckin', 'ReportController@checkinByDiv')->name('reports.divcheckin');
 
-
+// cuti v2 - zerorize expected hours
+Route::get('/manualleave', 'StaffLeaveController@list')->name('mleave.list');
+Route::post('/manualleave/add', 'StaffLeaveController@add')->name('mleave.add');
+Route::post('/manualleave/del', 'StaffLeaveController@del')->name('mleave.del');
 
 
 

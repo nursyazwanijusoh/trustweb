@@ -676,7 +676,8 @@ class GDWActions
     foreach($daterange as $indate){
       $tdf = GDWActions::GetDailyPerfObj($user_id, $indate);
       if($tdf->expected_hours == 0){
-        $perc = $tdf->actual_hours > 0 ? 120 : 100;
+        // $perc = $tdf->actual_hours > 0 ? 120 : 100;
+        $perc = 100 + ($tdf->actual_hours / 8 * 100);
       } else {
         $calcperf = $tdf->actual_hours / $tdf->expected_hours * 100;
         $perc = intval($calcperf);

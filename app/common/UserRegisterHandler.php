@@ -585,4 +585,21 @@ class UserRegisterHandler
       return false;
     }
   }
+
+  public static function IsCaretaker($user, $staff){
+
+    // check for caretaker
+    $grp = $staff->Division->Group;
+    if(isset($grp)){
+      if($grp->Users->where('id', $user->id)->count() == 0){
+        return false;
+      }
+    } else {
+      // no group. meaning no caretaker
+      return false;
+    }
+
+    return true;
+
+  }
 }
