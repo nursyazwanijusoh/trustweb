@@ -159,15 +159,22 @@ class DiaryGroupReportGen implements ShouldQueue
               ['v' => $value->email, 't' => ExcelHandler::BG_INFO]
             ];
 
+            $pdaycount = 0;
+            $zdaycount = 0;
             foreach ($dayinfo as $odt) {
-              $dpu = DailyPerformance::where('user_id', $value->id)
-                ->whereDate('record_date', $odt['date'])
-                ->first();
+              $pdaycount++;
+              $dpu = GDWActions::GetDailyPerfObj($value->id, $odt['date']);
+              // $dpu = DailyPerformance::where('user_id', $value->id)
+              //   ->whereDate('record_date', $odt['date'])
+              //   ->first();
 
               $dbg = $odt['bgcolor'];
               $hrs = 0;
 
               if($dpu){
+                if($dpu->zerorized == true){
+                  $zdaycount++;
+                }
                 // check for off day
                 if($dpu->is_off_day){
                   if($dpu->expected_hours < 5){
@@ -226,9 +233,14 @@ class DiaryGroupReportGen implements ShouldQueue
             array_push($dathrs, ['v' => $expectedentry, 't' => ExcelHandler::BG_INFO]);
 
             // calc the productivity
-            if($expectedhrs == 0){
+            if($pdaycount == $zdaycount){
+              // $pdtivity = 100 + ($sumhrs / (8 * $pdaycount) * 100);
+              $pdtivity = 'N/A';
+              $pdgrp = 'N/A';
+              $pbg = ExcelHandler::PD_NA;
+            } elseif($expectedhrs == 0){
               if($sumhrs > 0){
-                $pdtivity = $sumhrs * 100;
+                $pdtivity = 100 + ($sumhrs / (8 * $pdaycount) * 100);
                 $pdgrp = '101% +';
                 $pbg = ExcelHandler::PD_GD;
               } else {
@@ -257,7 +269,7 @@ class DiaryGroupReportGen implements ShouldQueue
             }
 
 
-            array_push($dathrs, ['v' => number_format($pdtivity, 2), 't' => $pbg]);
+            array_push($dathrs, ['v' => ($pdtivity == 'N/A' ? $pdtivity : number_format($pdtivity, 2)), 't' => $pbg]);
             array_push($dathrs, ['v' => $pdgrp, 't' => ExcelHandler::BG_NORMAL]);
 
             // push hours to main array

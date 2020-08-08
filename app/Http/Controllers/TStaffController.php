@@ -56,7 +56,9 @@ class TStaffController extends Controller
     $sublist = GDWActions::GetSubordsPerf($s_staff_id);
     $superi = User::where('persno', $user->report_to)->first();
 
-    if($canseepnc == false){
+    $iscaretaker = UserRegisterHandler::IsCaretaker($rq->user(), $user);
+
+    if($canseepnc == false && $iscaretaker == false){
       // skip the rest of the data since cannot see it anyway
 
       return view('staff.index', [
@@ -75,15 +77,32 @@ class TStaffController extends Controller
     $ldate = new Carbon();
 
     $daterange = new \DatePeriod(
-      $cdate->subDays(7),
+      $cdate->subDays(6),
       \DateInterval::createFromDateString('1 day'),
       $ldate->addDay()
     );
 
     $gdata = GDWActions::GetStaffRecentPerf($s_staff_id, $daterange);
     $pgdata = [];
+    $weekact = 0;
+    $weekexp = 0;
     foreach ($gdata as $key => $value) {
       $pgdata[] = $value['perc'];
+      $weekact += $value['actual'];
+      $weekexp += $value['expected'];
+    }
+
+    $weekperc = intval($weekexp == 0 ? 100 + ($weekact / (8 * 7) * 100) : $weekact / $weekexp * 100);
+    $weekcol = 'success';
+    $weektitle = 'You have fully utilized your weekly work-hours. We are proud of you!';
+    if($weekperc < 100){
+      $weekcol = 'warning';
+      $weektitle = 'You have met the weekly target of between 85% to 100%';
+    }
+
+    if($weekperc < 85){
+      $weekcol = 'danger';
+      $weektitle = 'You are below the weekly target of 85%';
     }
 
     $graphlabel = [];
@@ -173,7 +192,11 @@ class TStaffController extends Controller
      if($value->expected_hours == 0 && $value->actual_hours > 0){
        $bgcollll = 'rgba(0, 155, 0, 1)';
      } elseif($value->expected_hours > 0 && $value->actual_hours == 0){
-       $bgcollll = 'rgba(255, 0, 0, 0.5)';
+       if($value->is_off_day == true){
+         $bgcollll = 'rgba(66, 66, 66, 0.8)';
+       } else {
+         $bgcollll = 'rgba(255, 0, 0, 0.5)';
+       }
      }
 
      $evlist[] = \Calendar::event(
@@ -197,9 +220,10 @@ class TStaffController extends Controller
 
       $eeeedate = new Carbon($value->end_date);
       $eeeedate->addDay();
+      $clabel = $value->is_manual == true ? ' - ' . $value->remark : '';
 
      $evlist[] = \Calendar::event(
-       $value->LeaveType->descr,
+       $value->LeaveType->descr . $clabel,
        true,
        new \DateTime($value->start_date),
        new \DateTime($eeeedate),
@@ -214,14 +238,27 @@ class TStaffController extends Controller
     $todaydf = GDWActions::GetDailyPerfObj($s_staff_id, new Carbon());
     $todayperc = 0;
     if($todaydf->expected_hours == 0){
-      if($todaydf->actual_hours > 0){
-        $todayperc = 120;
-      } else {
-        $todayperc = 100;
-      }
+      $todayperc = intval(100 + ($todaydf->actual_hours / (8 * 7) * 100));
     } else {
       $calcperf = $todaydf->actual_hours / $todaydf->expected_hours * 100;
       $todayperc = intval($calcperf);
+    }
+
+    $todaycol = 'success';
+    $todaytitle = 'You have fully utilized your work-hours. Nice!';
+    if($todayperc < 100){
+      if($todaydf->is_off_day == true){
+        $todaycol = 'dark';
+        $todaytitle = 'On leave';
+      } else {
+        $todaycol = 'warning';
+        $todaytitle = 'You have met the target, between 85% to 100% productivity';
+
+        if($todayperc < 85){
+          $todaycol = 'danger';
+          $todaytitle = 'You are below the target 85% productivity';
+        }
+      }
     }
 
     // $pscoiunt = 0;
@@ -243,7 +280,15 @@ class TStaffController extends Controller
       'isvisitor' => $isvisitor,
       'todaydf' => $todaydf,
       'todayperc' => $todayperc,
-      'canseepnc' => $canseepnc
+      'canseepnc' => $canseepnc,
+      'todaycol' => $todaycol,
+      'weekexp' => $weekexp,
+      'weekact' => $weekact,
+      'weekperc' => $weekperc,
+      'weekcol' => $weekcol,
+      'iscaretaker' => $iscaretaker,
+      'todaytitle' => $todaytitle,
+      'weektitle' => $weektitle,
     ];
     // dd($final);
 

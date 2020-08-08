@@ -247,10 +247,6 @@ class TAdminController extends Controller
       }
 
     } else {
-      // default buildings as unchecked
-      foreach($blist as $build){
-        $build['chk'] = '';
-      }
 
       // default the selected Role
       $selected[3] = 'selected';
@@ -274,10 +270,9 @@ class TAdminController extends Controller
         ];
 
         return view('admin.editstaff', [
-          'blist' => $blist, 'role' => $myrole,
+          'role' => $myrole,
           'staffdata' => $staff, 'selected' => $selected,
-          'alert' => 'Staff not exist in LDAP',
-          'cben' => $flooren
+          'alert' => 'Staff not exist in LDAP'
         ]);
       } else {
           $staff = $lresp['data'];
@@ -287,22 +282,17 @@ class TAdminController extends Controller
           $staff['btn_state'] = '';
       }
     }
-    //
-    // return [
-    //   'blist' => $blist, 'role' => $myrole,
-    //   'staffdata' => $staff, 'selected' => $selected];
 
     if($req->filled('nc')){
       return view('admin.editstaff', [
-        'blist' => $blist, 'role' => $myrole,
+        'role' => $myrole,
         'staffdata' => $staff, 'selected' => $selected,
-        'alert' => $req->nc, 'cben' => $flooren
+        'alert' => $req->nc
       ]);
     } else {
       return view('admin.editstaff', [
-        'blist' => $blist, 'role' => $myrole,
-        'staffdata' => $staff, 'selected' => $selected,
-        'cben' => $flooren
+        'role' => $myrole,
+        'staffdata' => $staff, 'selected' => $selected
       ]);
     }
   }
