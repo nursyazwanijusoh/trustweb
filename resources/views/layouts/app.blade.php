@@ -3,12 +3,42 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+<!-- backstrap -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Your Page Title</title>
+    <!-- Icons-->
+    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css" rel="stylesheet">
+    <link href="../node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
+    <link href="../node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+    <link href="../node_modules/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    <!-- CoreUI styles-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+    <!-- Backpack style on top-->
+    <link href="css/backstrap.css" rel="stylesheet">
+ 
+
+
+
+
+
+
+<!-- end backstrap -->
+
+
+
+
+
+
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>

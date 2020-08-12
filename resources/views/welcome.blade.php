@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">-->
     <!-- <meta name=”viewport” content=”width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no”> -->
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -45,6 +45,33 @@
     Author: BootstrapMade.com
     License: https://bootstrapmade.com/license/
   ======================================================= -->
+
+<!-- backstrap -->
+
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Your Page Title</title>
+    <!-- Icons-->
+    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css" rel="stylesheet">
+    <link href="../node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
+    <link href="../node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+    <link href="../node_modules/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    <!-- CoreUI styles-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+    <!-- Backpack style on top-->
+    <link href="css/backstrap.css" rel="stylesheet">
+ 
+
+
+
+
+
+
+<!-- end backstrap -->
+
+
 </head>
 
 <body id="body">
@@ -69,7 +96,7 @@
 
             <div id="logo" class="pull-left">
 
-                <!-- <!-- Uncomment below if you prefer to use an image logo
+                <!--  Uncomment below if you prefer to use an image logo
                 <a class="v1" href="#body"><img src="/welcome/img/TM_LOGO.png" height="40" width="100" alt="" title=""
                         style="padding-right: 20px;" /></a> -->
                 <a href="#body"><img src="/welcome/img/TrustNew.png" height="40" width="60" alt="" title="" /></a>
@@ -104,50 +131,69 @@
 
     </header><!-- #header -->
 
-    <!--==========================
-    Intro Section
-  ============================-->
-    <section id="intro">
-
-        <div id="intro-carousel" class="owl-carousel">
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/b1t.jpg');"></div>
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/b2r.jpg');">
-            </div>
-            <div class="item" style="background-image: url('/welcome/img/intro-carousel/b3u.jpg');">
-            </div>
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/b4s.jpg');">
-            </div>
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/b5t.jpg');">
-            </div>
-
-        </div>
-
-    </section><!-- #intro -->
-
+    
     <main id="main">
 
         <!--==========================
       About Section
     ============================-->
         <section id="about" class="wow fadeInUp">
-            <div class="container">
+            <div class="container" >
                 <div class="row">
-                    <div class="col-lg-6 about-img">
-                        <img src="/welcome/img/agile.jpg" alt="">
-                    </div>
-
-                    <div class="col-lg-6 content text-justify">
-                        <div class="section-header">
-                            <h2>AGILE OFFICE</h2>
+                    <div class="col-lg-6" style="background-image:url('/welcome/img/home.png');background-size: cover;">
+                        
+                    <div class="ml-2 mt-5">
+                    <div class="section-header">
+                            <h2>ABOUT TRUST</h2>
                         </div>
 
                         <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
                         <span>In order for GIT to be more effective in delivering high quality solution with faster
-                            delivery,
+                            delivery, 
+                            teamwork is crucial. We need to change the way we work.how we deal with each other. We need
+                            to be more
+                            collaborative</span>
+
+                        <ul>
+                            <li><i class="ion-android-checkmark-circle"></i>
+                                <b>SPACE OPTIMIZATION:</b>
+                                Less square footage required to host the employees. Bring your laptop only will be
+                                adhered! (staff will
+                                be provided drawer to keep their belonging but it is not dedicated)
+                                .</li>
+                            <li><i class="ion-android-checkmark-circle"></i>
+                                <b>PROMOTE 5S:</b>
+                                Safety and good housekeeping practices in all office space. A must criteria for
+                                Hot-Desking
+                            </li>
+                            <li><i class="ion-android-checkmark-circle"></i>
+                                <b> FLEXIBILITY:</b>
+                                Don’t have to commit to a single layout – will come in handy during structure
+                                re-organization.
+                            </li>
+                            <li><i class="ion-android-checkmark-circle"></i>
+                                <b>FREE & EASY:</b>
+                                We determine the floor, you determine your place. Get to know your new neighbor
+                                everyday!
+
+                            </li>
+                        </ul>
+</div>
+
+
+
+
+                    
+                    </div>
+
+                    <div class="col-lg-6 content text-justify">
+                        <div class="section-header">
+                            <h2>FEATURES</h2>
+                        </div>
+
+                        <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
+                        <span>In order for GIT to be more effective in delivering high quality solution with faster
+                            delivery, 
                             teamwork is crucial. We need to change the way we work.how we deal with each other. We need
                             to be more
                             collaborative</span>
