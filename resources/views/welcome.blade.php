@@ -46,14 +46,15 @@
     License: https://bootstrapmade.com/license/
   ======================================================= -->
 
-<!-- backstrap -->
+    <!-- backstrap -->
 
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Your Page Title</title>
     <!-- Icons-->
-    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css"
+        rel="stylesheet">
     <link href="../node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
     <link href="../node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
     <link href="../node_modules/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
@@ -62,14 +63,14 @@
     <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
     <!-- Backpack style on top-->
     <link href="css/backstrap.css" rel="stylesheet">
- 
 
 
 
 
 
 
-<!-- end backstrap -->
+
+    <!-- end backstrap -->
 
 
 </head>
@@ -92,26 +93,23 @@
     Header
   ============================-->
     <header id="header">
-        <div class="container">
+        <div class="container-fluid mb-1" style="">
 
-            <div id="logo" class="pull-left">
+            <div id="logo" class="pull-left ">
+                <a href="#body"><img src="/welcome/img/trust_white.png" height="50" alt="" title="" /></a>
 
-                <!--  Uncomment below if you prefer to use an image logo
-                <a class="v1" href="#body"><img src="/welcome/img/TM_LOGO.png" height="40" width="100" alt="" title=""
-                        style="padding-right: 20px;" /></a> -->
-                <a href="#body"><img src="/welcome/img/TrustNew.png" height="40" width="60" alt="" title="" /></a>
             </div>
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <li class="menu-active"><a href="#body">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#services">Features</a></li>
+
                     <li class="menu-has-children"><a href="#">Guide</a>
-                      <ul>
-                          <li><a class="dropdown-item" href="{{ route('home', [], false) }}">trUSt General Guide</a></li>
-                          <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">Space Booking FAQ</a></li>
-                      </ul>
+                        <ul>
+                            <li><a class="dropdown-item" href="{{ route('home', [], false) }}">trUSt General Guide</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">Space Booking
+                                    FAQ</a></li>
+                        </ul>
                     </li>
                     <!-- <li class="menu-has-children"><a href="">Drop Down</a>
             <ul>
@@ -122,8 +120,8 @@
             </ul>
           </li> -->
                     <li><a id="downloada" href="#downloadmodal" role="button" data-toggle="modal">Download</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a id="logina" href="#loginModal" role="button" data-toggle="modal">Login</a></li>
+                    <li><a href="#contact" class="btn" style="color:#fff;"> <i class="fa fa-envelope-o fa-3x"></i></a></li>
+                    <li><a id="logina" href="#loginModal" role="button" data-toggle="modal" ><span class="btn btn-danger btn-sm">Login</span></a></li>
                 </ul>
             </nav><!-- #nav-menu-container -->
 
@@ -131,167 +129,137 @@
 
     </header><!-- #header -->
 
-    
+
     <main id="main">
 
         <!--==========================
       About Section
     ============================-->
         <section id="about" class="wow fadeInUp">
-            <div class="container" >
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6" style="background-image:url('/welcome/img/home.png');background-size: cover;">
-                        
-                    <div class="ml-2 mt-5">
-                    <div class="section-header">
-                            <h2>ABOUT TRUST</h2>
+                    <div class="col-lg-6 border"
+                        style="background-image:url('/welcome/img/home.png');background-size: contain;">
+
+                        <div class="ml-3 mt-5">
+                            <div class="section-header">
+                                <h2>ABOUT TRUST.</h2>
+                            </div>
+
+                            <p>A GIT AGILE DEVELOPMENT CENTRE.</p>
+                            <span>In order for GIT to be more effective in delivering high quality solution with faster
+                                delivery,
+                                teamwork is crucial. We need to change the way we work.how we deal with each other. We
+                                need
+                                to be more
+                                collaborative</span>
+
+                            <ul>
+                                <li><i class="ion-android-checkmark-circle"></i>
+                                    <b>SPACE OPTIMIZATION:</b>
+                                    Less square footage required to host the employees. Bring your laptop only will be
+                                    adhered! (staff will
+                                    be provided drawer to keep their belonging but it is not dedicated)
+                                    .</li>
+                                <li><i class="ion-android-checkmark-circle"></i>
+                                    <b>PROMOTE 5S:</b>
+                                    Safety and good housekeeping practices in all office space. A must criteria for
+                                    Hot-Desking
+                                </li>
+                                <li><i class="ion-android-checkmark-circle"></i>
+                                    <b> FLEXIBILITY:</b>
+                                    Don’t have to commit to a single layout – will come in handy during structure
+                                    re-organization.
+                                </li>
+                                <li><i class="ion-android-checkmark-circle"></i>
+                                    <b>FREE & EASY:</b>
+                                    We determine the floor, you determine your place. Get to know your new neighbor
+                                    everyday!
+
+                                </li>
+                            </ul>
                         </div>
-
-                        <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
-                        <span>In order for GIT to be more effective in delivering high quality solution with faster
-                            delivery, 
-                            teamwork is crucial. We need to change the way we work.how we deal with each other. We need
-                            to be more
-                            collaborative</span>
-
-                        <ul>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>SPACE OPTIMIZATION:</b>
-                                Less square footage required to host the employees. Bring your laptop only will be
-                                adhered! (staff will
-                                be provided drawer to keep their belonging but it is not dedicated)
-                                .</li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>PROMOTE 5S:</b>
-                                Safety and good housekeeping practices in all office space. A must criteria for
-                                Hot-Desking
-                            </li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b> FLEXIBILITY:</b>
-                                Don’t have to commit to a single layout – will come in handy during structure
-                                re-organization.
-                            </li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>FREE & EASY:</b>
-                                We determine the floor, you determine your place. Get to know your new neighbor
-                                everyday!
-
-                            </li>
-                        </ul>
-</div>
-
-
-
-
-                    
                     </div>
 
-                    <div class="col-lg-6 content text-justify">
-                        <div class="section-header">
-                            <h2>FEATURES</h2>
+                    <div class="col-lg-6 content text-justify border ">
+                        <div class="ml-3 mt-5">
+                            <div class="container">
+                                <div class="section-header mb-1">
+                                    <h2>Features.</h2>
+                                    <p>To realize the “Open Office’ and ‘Hot-Desking” implementation, the trUSt mobile
+                                        app has been developed with the following features:
+                                    </p>
+                                </div>
+
+                                <div class="row p-1 mt-0 smaller05">
+                                    <div class="col-lg-12">
+                                        <div class="row wow fadeInLeft box-zahid border p-1" data-wow-delay="0.2s">
+                                            <div class="col-2 ">
+                                                <img src="/img/desk.png" class="img-thumbnail">
+                                            </div>
+                                            <div class="col-9">
+                                                <b>AGILE WORKSPACE</b> <br />
+                                                <div class="smaller15">
+                                                    Enable employees to check in at any hot desk by scanning the QR code
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 mt-1">
+                                        <div class="row wow fadeInLeft box-zahid border p-1" data-wow-delay="0.2s">
+                                            <div class="col-2">
+                                                <img src="/img/diary.png" class="img-thumbnail">
+                                            </div>
+                                            <div class="col-9">
+                                                <b>UPDATE DIARY</b> <br />
+                                                <div class="smaller15">
+                                                    Record the tasks that you have performed for the day.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mt-1">
+                                        <div class="row wow fadeInLeft box-zahid border p-1" data-wow-delay="0.1s">
+                                            <div class="col-2">
+                                                <img src="/img/map.png" class="img-thumbnail">
+                                            </div>
+                                            <div class="col-9">
+                                                <b>FLEXI SPACE</b> <br />
+                                                <div class="smaller15">
+                                                    Check-in your current working location.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 mt-1">
+                                        <div class="row wow fadeInLeft box-zahid border p-1">
+                                            <div class="col-2">
+                                                <img src="/img/finder.png" class="img-thumbnail">
+                                            </div>
+                                            <div class="col-9">
+                                                <b>STAFF FINDER</b> <br />
+                                                <div class="smaller15">
+                                                    Search a staff to see their relevant information.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
                         </div>
-
-                        <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
-                        <span>In order for GIT to be more effective in delivering high quality solution with faster
-                            delivery, 
-                            teamwork is crucial. We need to change the way we work.how we deal with each other. We need
-                            to be more
-                            collaborative</span>
-
-                        <ul>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>SPACE OPTIMIZATION:</b>
-                                Less square footage required to host the employees. Bring your laptop only will be
-                                adhered! (staff will
-                                be provided drawer to keep their belonging but it is not dedicated)
-                                .</li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>PROMOTE 5S:</b>
-                                Safety and good housekeeping practices in all office space. A must criteria for
-                                Hot-Desking
-                            </li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b> FLEXIBILITY:</b>
-                                Don’t have to commit to a single layout – will come in handy during structure
-                                re-organization.
-                            </li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>FREE & EASY:</b>
-                                We determine the floor, you determine your place. Get to know your new neighbor
-                                everyday!
-
-                            </li>
-                        </ul>
                     </div>
                 </div>
 
             </div>
         </section><!-- #about -->
 
-        <!--==========================
-      Services Section
-    ============================-->
-        <section id="services">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Features</h2>
-                    <p>To realize the “Open Office’ and ‘Hot-Desking” implementation, the trUSt mobile app has
-                        been developed with the following features:
-                    </p>
-                </div>
 
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="box wow fadeInLeft bg-primary rounded" data-wow-delay="0.2s">
-                            <div class="icon"><i class="fa fa-sign-in"></i></div>
-                            <h4 class="title"><a href="">Agile Workspace</a></h4>
-                            <p class="description">Enable employees to check in at any hot desk by scaning the QR code.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="box wow fadeInLeft bg-success rounded" data-wow-delay="0.2s">
-                            <div class="icon"><i class="fa fa-pencil-square-o"></i></div>
-                            <h4 class="title"><a href="">Diary</a></h4>
-                            <p class="description">Record the tasks that you have performed for the day.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="box wow fadeInLeft bg-warning rounded" data-wow-delay="0.2s">
-                            <div class="icon"><i class="fa fa-location-arrow"></i></div>
-                            <h4 class="title"><a href="">Flexi Space</a></h4>
-                            <p class="description">Check-in your current working location.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="box wow fadeInLeft bg-info shadow rounded">
-                            <div class="icon"><i class="fa fa-search"></i></div>
-                            <h4 class="title"><a href="">Staff Finder</a></h4>
-                            <p class="description">Search a staff to see their relevant information.</p>
-                        </div>
-                    </div>
-
-                    <!-- <div class="col-lg-6">
-                        <div class="box wow fadeInRight bg-primary rounded">
-                            <div class="icon"><i class="fa fa-bar-chart"></i></div>
-                            <h4 class="title"><a href="">Reporting</a></h4>
-                            <p class="description">Trust application provide pie-chart reporting to show the occupied of
-                                each office
-                                level.</p>
-                        </div>
-                    </div> -->
-
-
-
-
-
-
-                </div>
-
-            </div>
-        </section><!-- #services -->
 
         <!--==========================
       Clients Section

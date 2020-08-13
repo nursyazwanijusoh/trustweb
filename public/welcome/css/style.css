@@ -124,11 +124,14 @@ h6 {
 
 #header {
   padding: 10px 0;
-  height: 60px;
-  transition: all 0.5s;
+  height: 70px;
+  transition: all 0.9s;
   z-index: 997;
-  background: #fff;
-  box-shadow: 0px 6px 9px 0px rgba(0, 0, 0, 0.06);
+  background: #24242D;
+  box-shadow: 0px 6px 5px 0px rgba(255, 255, 255, 0.06);
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 36px;
 }
 
 #header #logo h1 {
@@ -144,6 +147,7 @@ h6 {
   color: #0c2e8a;
   line-height: 1;
   display: inline-block;
+
 }
 
 #header #logo h1 a span {
@@ -492,8 +496,8 @@ body.mobile-nav-active #mobile-nav-toggle {
   position: absolute;
   display: block;
   width: 50px;
-  height: 3px;
-  background: #E2455A;
+  height: 5px;
+  background: #E2455A; 
   bottom: 0;
   left: 0;
 }
@@ -507,7 +511,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 #about {
-  padding: 60px 0 30px 0;
+  padding: 10px 0 30px 0;
 }
 
 #about .about-img {
@@ -881,6 +885,13 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin: 0 2px;
 }
 
+/* Feature
+--------------------------------*/
+.feature{
+  background-color: #C0B2A0;
+}
+
+
 /* Contact Section
 --------------------------------*/
 
@@ -1052,6 +1063,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   #header {
     padding: 20px 0;
     height: 74px;
+    background-color: #24242D;
   }
 
   #header #logo h1 {
@@ -1111,4 +1123,25 @@ body.mobile-nav-active #mobile-nav-toggle {
   #contact #google-map {
     margin-top: 20px;
   }
+}
+
+
+/*--------------------------------------------------------------
+# trust enhancement
+--------------------------------------------------------------*/
+/* white box at welcome page*/
+.box-zahid
+{
+  background-color: #F9F7F5 ;
+
+}
+.smaller15
+{
+  font-size:85%;
+
+}
+.smaller05
+{
+  font-size:95%;
+
 }
