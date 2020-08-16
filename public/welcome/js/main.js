@@ -105,6 +105,9 @@ jQuery(document).ready(function ($) {
     $('#download').modal('show');
   });
 
+  $("#contacta").on("click",function(){
+    $('#contact').modal('show');
+  });
   // Smooth scroll for the menu and links with .scrollto classes
   $('.nav-menu a,#mobile-nav a, .scrollto').on('click', function () {
 
