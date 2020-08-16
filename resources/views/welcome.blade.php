@@ -2,10 +2,16 @@
 <html lang="en">
 
 <head>
+    @php
+
+    $filename = 'welcome/css/style.css';
+$fileModified = substr(md5(filemtime($filename)), 0, 6);
+    @endphp
+    
     <meta charset="utf-8">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">-->
-    <!-- <meta name=”viewport” content=”width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no”> -->
+    <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">
+    <!--<meta name=”viewport” content=”width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no”> -->
     <meta content="" name="keywords">
     <meta content="" name="description">
 
@@ -30,14 +36,16 @@
     <link href="/welcome/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
 
     <!-- Main Stylesheet File -->
-    <link href="/welcome/css/style.css" rel="stylesheet">
+    <link  rel="stylesheet" href="<?php echo $filename;?>?v=<?php echo $fileModified ; ?>">
 
     <style>
     .vl {
         border-left: 6px solid green;
         height: 50px;
+
     }
-    </style>
+
+   </style>
 
     <!-- =======================================================
     Theme Name: Reveal
@@ -46,36 +54,12 @@
     License: https://bootstrapmade.com/license/
   ======================================================= -->
 
-    <!-- backstrap -->
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Your Page Title</title>
-    <!-- Icons-->
-    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css"
-        rel="stylesheet">
-    <link href="../node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
-    <link href="../node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
-    <link href="../node_modules/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-    <!-- CoreUI styles-->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
-    <!-- Backpack style on top-->
-    <link href="css/backstrap.css" rel="stylesheet">
-
-
-
-
-
-
-
-    <!-- end backstrap -->
-
+   
 
 </head>
 
 <body id="body">
+
 
     <!--==========================
     Top Bar
@@ -111,17 +95,11 @@
                                     FAQ</a></li>
                         </ul>
                     </li>
-                    <!-- <li class="menu-has-children"><a href="">Drop Down</a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-              <li><a href="#">Drop Down 5</a></li>
-            </ul>
-          </li> -->
                     <li><a id="downloada" href="#downloadmodal" role="button" data-toggle="modal">Download</a></li>
-                    <li><a href="#contact" class="btn" style="color:#fff;"> <i class="fa fa-envelope-o fa-3x"></i></a></li>
-                    <li><a id="logina" href="#loginModal" role="button" data-toggle="modal" ><span class="btn btn-danger btn-sm">Login</span></a></li>
+                    <li><a id="contacta" href="#contactM" style="color:#fff;"> <i
+                                class="fa fa-envelope-o fa-3x"></i></a></li>
+                    <li><a id="logina" href="#loginModal" role="button" data-toggle="modal"><span
+                                class="btn btn-danger btn-lg">Login</span></a></li>
                 </ul>
             </nav><!-- #nav-menu-container -->
 
@@ -138,50 +116,53 @@
         <section id="about" class="wow fadeInUp">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6 border"
+                    <div class="col-lg-6 border smaller05"
                         style="background-image:url('/welcome/img/home.png');background-size: contain;">
 
-                        <div class="ml-3 mt-5">
+                        <div class="ml-3 mt-5 " >
                             <div class="section-header">
                                 <h2>ABOUT TRUST.</h2>
                             </div>
-
-                            <p>A GIT AGILE DEVELOPMENT CENTRE.</p>
-                            <span>In order for GIT to be more effective in delivering high quality solution with faster
+                            <p >A GIT AGILE DEVELOPMENT CENTRE.</p>
+                            <p>In order for GIT to be more effective in delivering high quality solution with faster
                                 delivery,
                                 teamwork is crucial. We need to change the way we work.how we deal with each other. We
                                 need
                                 to be more
-                                collaborative</span>
+                                collaborative</p>
+                            
+                            <div class="font-hani">
+                                <p>
 
-                            <ul>
-                                <li><i class="ion-android-checkmark-circle"></i>
                                     <b>SPACE OPTIMIZATION:</b>
                                     Less square footage required to host the employees. Bring your laptop only will be
                                     adhered! (staff will
-                                    be provided drawer to keep their belonging but it is not dedicated)
-                                    .</li>
-                                <li><i class="ion-android-checkmark-circle"></i>
+                                    be provided drawer to keep their belonging but it is not dedicated).
+                                </p>
+                                <p>
                                     <b>PROMOTE 5S:</b>
                                     Safety and good housekeeping practices in all office space. A must criteria for
                                     Hot-Desking
-                                </li>
-                                <li><i class="ion-android-checkmark-circle"></i>
+
+                                </p>
+                                <p>
                                     <b> FLEXIBILITY:</b>
                                     Don’t have to commit to a single layout – will come in handy during structure
                                     re-organization.
-                                </li>
-                                <li><i class="ion-android-checkmark-circle"></i>
+                                </p>
+                                <p>
+
                                     <b>FREE & EASY:</b>
                                     We determine the floor, you determine your place. Get to know your new neighbor
                                     everyday!
+                                </p>
+                            </div>
 
-                                </li>
-                            </ul>
+
                         </div>
                     </div>
 
-                    <div class="col-lg-6 content text-justify border ">
+                    <div class="col-lg-6 content text-justify border box-hani">
                         <div class="ml-3 mt-5">
                             <div class="container">
                                 <div class="section-header mb-1">
@@ -195,7 +176,7 @@
                                     <div class="col-lg-12">
                                         <div class="row wow fadeInLeft box-zahid border p-1" data-wow-delay="0.2s">
                                             <div class="col-2 ">
-                                                <img src="/img/desk.png" class="img-thumbnail">
+                                                <img src="/img/desk.png" class="img-fluid">
                                             </div>
                                             <div class="col-9">
                                                 <b>AGILE WORKSPACE</b> <br />
@@ -209,7 +190,7 @@
                                     <div class="col-lg-12 mt-1">
                                         <div class="row wow fadeInLeft box-zahid border p-1" data-wow-delay="0.2s">
                                             <div class="col-2">
-                                                <img src="/img/diary.png" class="img-thumbnail">
+                                                <img src="/img/diary.png" class="img-fluid">
                                             </div>
                                             <div class="col-9">
                                                 <b>UPDATE DIARY</b> <br />
@@ -222,7 +203,7 @@
                                     <div class="col-lg-12 mt-1">
                                         <div class="row wow fadeInLeft box-zahid border p-1" data-wow-delay="0.1s">
                                             <div class="col-2">
-                                                <img src="/img/map.png" class="img-thumbnail">
+                                                <img src="/img/map.png" class="img-fluid">
                                             </div>
                                             <div class="col-9">
                                                 <b>FLEXI SPACE</b> <br />
@@ -236,7 +217,7 @@
                                     <div class="col-lg-12 mt-1">
                                         <div class="row wow fadeInLeft box-zahid border p-1">
                                             <div class="col-2">
-                                                <img src="/img/finder.png" class="img-thumbnail">
+                                                <img src="/img/finder.png" class="img-fluid">
                                             </div>
                                             <div class="col-9">
                                                 <b>STAFF FINDER</b> <br />
@@ -260,167 +241,20 @@
         </section><!-- #about -->
 
 
-
-        <!--==========================
-      Clients Section
-    ============================-->
-        <!--==========================
-      Leadership Section
-    ============================-->
-        <!--
-        <section id="testimonials" class="wow fadeInUp">
-            <div class="container">
-                <div class="section-header">
-                    <h2>What our leaders say</h2>
-
-                </div>
-                <div class="owl-carousel testimonials-carousel">
-                    <div class="testimonial-item">
-                        <div class="row pl-5 ml-5">
-                            <div class="md-col-6">
-                                <img src="/welcome/img/boss/en_izhan.png" class="testimonial-img" alt="">
-                                <h3>En Izhan Ayob</h3>
-                                <h3>VP GIT</h3>
-                            </div>
-                            <div class="md-col-6">
-                                <p>
-                                    <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                                    Great App!
-                                    <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="row pl-5 ml-5">
-                            <div class="md-col-6">
-                                <img src="/welcome/img/boss/pn-nana.png" class="testimonial-img" alt="">
-                                <h3>Puan Naziana</h3>
-                                <h3>GM ITAS</h3>
-                            </div>
-                            <div class="md-col-6">
-                                <p>
-                                    <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                                    trust is good.
-                                    <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="row pl-5 ml-5">
-                            <div class="md-col-6">
-                                <img src="/welcome/img/boss/en_shamsul.png" class="testimonial-img" alt="">
-                                <h3>Encik Shamsul</h3>
-                                <h3>GM ITEC</h3>
-                            </div>
-                            <div class="md-col-6">
-                                <p>
-                                    <img src="/welcome/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                                    trust is good.
-                                    <img src="/welcome/img/quote-sign-right.png" class="quote-sign-right" alt="">
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-      -->
-        <!-- #testimonials -->
-
-
-
-        <!--==========================
-      Our Team Section
-    ============================-->
-        <!-- <section id="team" class="wow fadeInUp">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Our Team</h2>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="pic"><img src="/welcome/img/team-1.jpg" alt=""></div>
-                            <div class="details">
-                                <h4>Walter White</h4>
-                                <span>Chief Executive Officer</span>
-                                <div class="social">
-                                    <a href=""><i class="fa fa-twitter"></i></a>
-                                    <a href=""><i class="fa fa-facebook"></i></a>
-                                    <a href=""><i class="fa fa-google-plus"></i></a>
-                                    <a href=""><i class="fa fa-linkedin"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="pic"><img src="/welcome/img/team-2.jpg" alt=""></div>
-                            <div class="details">
-                                <h4>Sarah Jhinson</h4>
-                                <span>Product Manager</span>
-                                <div class="social">
-                                    <a href=""><i class="fa fa-twitter"></i></a>
-                                    <a href=""><i class="fa fa-facebook"></i></a>
-                                    <a href=""><i class="fa fa-google-plus"></i></a>
-                                    <a href=""><i class="fa fa-linkedin"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="pic"><img src="/welcome/img/team-3.jpg" alt=""></div>
-                            <div class="details">
-                                <h4>William Anderson</h4>
-                                <span>CTO</span>
-                                <div class="social">
-                                    <a href=""><i class="fa fa-twitter"></i></a>
-                                    <a href=""><i class="fa fa-facebook"></i></a>
-                                    <a href=""><i class="fa fa-google-plus"></i></a>
-                                    <a href=""><i class="fa fa-linkedin"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="pic"><img src="/welcome/img/team-4.jpg" alt=""></div>
-                            <div class="details">
-                                <h4>Amanda Jepson</h4>
-                                <span>Accountant</span>
-                                <div class="social">
-                                    <a href=""><i class="fa fa-twitter"></i></a>
-                                    <a href=""><i class="fa fa-facebook"></i></a>
-                                    <a href=""><i class="fa fa-google-plus"></i></a>
-                                    <a href=""><i class="fa fa-linkedin"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>#team -->
-
         <!--==========================
       Contact Section
     ============================-->
-        <section id="contact" class="wow fadeInUp">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Contact Us</h2>
-                    <p>Send us your feedback.</p>
-                </div>
 
-                <!-- <div class="row contact-info">
+        <section id="contact" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2>Contact Us</h2>
+                            <p>Send us your feedback.</p>
+                        </div>
+
+                        <!-- <div class="row contact-info">
 
                     <div class="col-md-4">
                         <div class="contact-address">
@@ -447,37 +281,41 @@
                     </div>
 
                 </div> -->
-            </div>
+                    </div>
 
 
-            <div class="container">
-                <div class="form">
-                    <div id="sendmessage">Your message has been sent. Thank you!</div>
-                    <div id="errormessage"></div>
-                    <form action="" method="post" role="form" class="contactForm">
-                        @csrf
-                        <input type="hidden" name="sos" value="web" />
-                        <div class="form-group ">
-                            <input type="email" class="form-control" id="ctc" class="form-control" name="ctc"
-                                placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                            <div class="validation"></div>
+                    <div class="container">
+                        <div class="form">
+                            <div id="sendmessage">Your message has been sent. Thank you!</div>
+                            <div id="errormessage"></div>
+                            <form action="" method="post" role="form" class="contactForm">
+                                @csrf
+                                <input type="hidden" name="sos" value="web" />
+                                <div class="form-group ">
+                                    <input type="email" class="form-control" id="ctc" class="form-control" name="ctc"
+                                        placeholder="Your Email" data-rule="email"
+                                        data-msg="Please enter a valid email" />
+                                    <div class="validation"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="title" class="form-control" name="title"
+                                        placeholder="Subject" data-rule="minlen:4"
+                                        data-msg="Please enter at least 8 chars of subject" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" id="content" name="content" rows="5"
+                                        data-rule="required" data-msg="Please write something for us"
+                                        placeholder="Message"></textarea>
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="text-center"><button type="submit">Send Message</button></div>
+                            </form>
                         </div>
 
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="title" class="form-control" name="title"
-                                placeholder="Subject" data-rule="minlen:4"
-                                data-msg="Please enter at least 8 chars of subject" />
-                            <div class="validation"></div>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" id="content" name="content" rows="5" data-rule="required"
-                                data-msg="Please write something for us" placeholder="Message"></textarea>
-                            <div class="validation"></div>
-                        </div>
-                        <div class="text-center"><button type="submit">Send Message</button></div>
-                    </form>
+                    </div>
                 </div>
-
             </div>
         </section><!-- #contact -->
 

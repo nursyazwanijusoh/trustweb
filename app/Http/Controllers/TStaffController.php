@@ -113,13 +113,13 @@ class TStaffController extends Controller
     // dd($gdata);
     $schart = app()->chartjs
          ->name('barChartTest')
-         ->type('line')
+         ->type('bar')
          // ->size(['width' => 400, 'height' => 400])
          ->labels($graphlabel)
          ->datasets([
              [
                  'label' => 'Productivity %',
-                 'backgroundColor' => 'rgba(0, 255, 132, 0.5)',
+                 'backgroundColor' => 'rgba(64, 49, 78, 1)',
                  'borderColor' => '#000',
                  'data' => $pgdata,
                  'lineTension' => 0

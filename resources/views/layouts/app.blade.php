@@ -2,37 +2,19 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+@php
+
+$filename = 'welcome/css/style.css';
+$fileModified = substr(md5(filemtime($filename)), 0, 6);
+@endphp
+
     <meta charset="utf-8">
      <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-
+     <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-<!-- backstrap -->
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Your Page Title</title>
-    <!-- Icons-->
-    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css" rel="stylesheet">
-    <link href="../node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
-    <link href="../node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
-    <link href="../node_modules/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-    <!-- CoreUI styles-->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
-    <!-- Backpack style on top-->
-    <link href="css/backstrap.css" rel="stylesheet">
- 
-
-
-
-
-
-
-<!-- end backstrap -->
 
 
 
@@ -61,7 +43,8 @@
     <!-- <link href="/welcome/lib/magnific-popup/magnific-popup.css" rel="stylesheet"> -->
 
     <!-- Main Stylesheet File -->
-    <link href="/welcome/css/style.css" rel="stylesheet">
+    <link  rel="stylesheet" href="<?php echo $filename;?>?v=<?php echo $fileModified ; ?>">
+    <!-- <link href="/welcome/css/style.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
     @yield('page-css')
 </head>
@@ -69,7 +52,7 @@
 <body>
     <div id="app">
         <header id="header">
-            <div class="container">
+            <div class="container-fluid">
                 <div id="logo" class="pull-left">
                     <a href="{{ route('staff', [], false) }}"><img src="/images/trust-stayhome.png" height="50" alt="" title="" /></a>
                 </div>
