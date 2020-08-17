@@ -301,11 +301,11 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                                     <img class="card-img"
                                         style="border: 1px solid #000; max-width:64px; max-height:64px;"
                                         src="{{ route('staff.image', ['staff_no' => $asub['staff_no']]) }}"
-                                        alt="gambo staff">
+                                        alt="staff picture">
                                 </div>
                                 <div class="col-9 p-1">
                                     <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
-                                    <p class="card-text">{{ $asub['name'] }}</p>
+                                    <p class="card-text" style="min-height:2em">{{ $asub['name'] }}</p>
                                 </div>
                             </div>
                         </div>
