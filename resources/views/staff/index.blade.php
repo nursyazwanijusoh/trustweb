@@ -47,18 +47,15 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     WELCOME BACK
                 </h2>
             </div>
-            <div class="card" style="background-image:url('/img/peoples.png');background-size:cover;">
+            <div class="row" >
 
-                <div class="card-body h-100">
+                <div class="col-10 text-justify">
                     We Trust you had a productive day today. Here at Trust update your tasks & manage
                     your team’s overall productivity performance on a daily & weekly basis. We Trust you
                     know your work better than others hence share them here!
-
-
-
-
-
-
+                    
+                </div>
+                <div class="col-2" >
 
 
                 </div>
@@ -120,7 +117,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
                         <div class="box-zahid text-center p-3 h-100">
                             <img src="/img/desk.png" class="img-fluid float-none h-75">
-                            <p>workspace history</p>
+                            <p>Workspace History</p>
                         </div>
                     </a>
                 </div>
@@ -169,7 +166,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
             <div class="col-md-3 mt-1">
                 <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}">
                     <div class="box-zahid text-center p-3 h-100">
-                        <img src="/img/TrustNew2.png" alt="zerorize" class="img-fluid img-thumbnail float-none h-75">
+                        <img src="/img/diary_entries.png" alt="zerorize" class="img-fluid img-thumbnail float-none h-75">
                         <p>Diary Entries</p>
                     </div>
                 </a>
@@ -193,7 +190,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                 <div class="col-6 border-right">
                     <h1 class="card-title">{{ $todaydf->actual_hours }}</h1>
                     <p class="card-text">
-                        Actual Hours
+                        ACTUAL HOURS
                     </p>
                 </div>
                 <!--
@@ -264,7 +261,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
     <div class="section-header mb-0">
         <h2>My Subordinate</h2>
     </div>
-      
+      <div class="border" style="min-height: 5.1em" >test</div>
             <div class="row">
                 @foreach($subords as $asub)
                 <div class="col-md-4 col-sm-6">
@@ -281,7 +278,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                                     </div>
                                     <div class="col-9 p-1">
                                         <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
-                                        <p class="card-text">{{ $asub['name'] }}</p>
+                                        <p class="card-text" style="min-height:3em">{{ $asub['name'] }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -301,11 +298,11 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                                     <img class="card-img"
                                         style="border: 1px solid #000; max-width:64px; max-height:64px;"
                                         src="{{ route('staff.image', ['staff_no' => $asub['staff_no']]) }}"
-                                        alt="gambo staff">
+                                        alt="staff picture">
                                 </div>
-                                <div class="col-9 p-1">
+                                <div class="col-9 p-1" >
                                     <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
-                                    <p class="card-text">{{ $asub['name'] }}</p>
+                                    <p class="card-text" style="min-height:3em">{{ $asub['name'] }}</p>
                                 </div>
                             </div>
                         </div>
