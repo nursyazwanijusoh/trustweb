@@ -4,10 +4,15 @@
 <head>
     @php
 
-    $filename = 'welcome/css/style.css';
-$fileModified = substr(md5(filemtime($filename)), 0, 6);
+    $styleCSS = 'welcome/css/style.css';
+    $styleVersion = substr(md5(filemtime($styleCSS)), 0, 6);
+
+
+    $enhanceCSS = 'welcome/css/enhancement.css';
+    $enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
+
     @endphp
-    
+
     <meta charset="utf-8">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">
@@ -36,7 +41,9 @@ $fileModified = substr(md5(filemtime($filename)), 0, 6);
     <link href="/welcome/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
 
     <!-- Main Stylesheet File -->
-    <link  rel="stylesheet" href="<?php echo $filename;?>?v=<?php echo $fileModified ; ?>">
+
+    <link rel="stylesheet" href="{{$styleCSS}}?v={{$styleVersion}}">
+    <link rel="stylesheet" href="{{$enhanceCSS}}?v={{$enhanceVersion}}">
 
     <style>
     .vl {
@@ -44,8 +51,7 @@ $fileModified = substr(md5(filemtime($filename)), 0, 6);
         height: 50px;
 
     }
-
-   </style>
+    </style>
 
     <!-- =======================================================
     Theme Name: Reveal
@@ -54,7 +60,7 @@ $fileModified = substr(md5(filemtime($filename)), 0, 6);
     License: https://bootstrapmade.com/license/
   ======================================================= -->
 
-   
+
 
 </head>
 
@@ -77,35 +83,35 @@ $fileModified = substr(md5(filemtime($filename)), 0, 6);
     Header
   ============================-->
     <header id="header">
-        <div class="container-fluid mb-1" style="">
 
-            <div id="logo" class="pull-left ">
-                <a href="#body"><img src="/welcome/img/trust_white.png" height="50" alt="" title="" /></a>
 
-            </div>
-
-            <nav id="nav-menu-container">
-                <ul class="nav-menu">
-
-                    <li class="menu-has-children"><a href="#">Guide</a>
-                        <ul>
-                            <li><a class="dropdown-item" href="{{ route('home', [], false) }}">trUSt General Guide</a>
-                            </li>
-                            <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">Space Booking
-                                    FAQ</a></li>
-                        </ul>
-                    </li>
-                    <li><a id="downloada" href="#downloadmodal" role="button" data-toggle="modal">Download</a></li>
-                    <li><a id="contacta" href="#contactM" style="color:#fff;"> <i
-                                class="fa fa-envelope-o fa-3x"></i></a></li>
-                    <li><a id="logina" href="#loginModal" role="button" data-toggle="modal"><span
-                                class="btn btn-danger btn-lg">Login</span></a></li>
-                </ul>
-            </nav><!-- #nav-menu-container -->
+        <div id="logo" class="pull-left ">
+            <a href="#body"><img src="/welcome/img/trust_white.png" height="45" alt="" title="" /></a>
 
         </div>
 
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+
+                <li class="menu-has-children"><a href="#"><span class="btn">Guide</span></a>
+                    <ul>
+                        <li><a class="dropdown-item" href="{{ route('home', [], false) }}">trUSt General Guide</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">Space Booking
+                                FAQ</a></li>
+                    </ul>
+                </li>
+                <li><a id="downloada" href="#downloadmodal" role="button" data-toggle="modal"><span class="btn">Download
+                        </span></a></li>
+                <li><a id="contacta" href="#contactM"><span class="btn"><i
+                                class="fa fa-envelope-o fa-lg"></i></span></a>
+                </li>
+                <li><a id="logina" href="#loginModal" role="button" data-toggle="modal"><span
+                            class="btn btn-primary">Login</span></a></li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
     </header><!-- #header -->
+
 
 
     <main id="main">
@@ -117,20 +123,20 @@ $fileModified = substr(md5(filemtime($filename)), 0, 6);
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-6 border smaller05"
-                        style="background-image:url('/welcome/img/home.png');background-size: contain;">
+                        style="background-image:url('/welcome/img/home.png');background-size: cover;">
 
-                        <div class="ml-3 mt-5 " >
+                        <div class="ml-3 mt-5 ">
                             <div class="section-header">
                                 <h2>ABOUT TRUST.</h2>
                             </div>
-                            <p >A GIT AGILE DEVELOPMENT CENTRE.</p>
+                            <p>A GIT AGILE DEVELOPMENT CENTRE.</p>
                             <p>In order for GIT to be more effective in delivering high quality solution with faster
                                 delivery,
                                 teamwork is crucial. We need to change the way we work.how we deal with each other. We
                                 need
                                 to be more
                                 collaborative</p>
-                            
+
                             <div class="font-hani">
                                 <p>
 
@@ -236,9 +242,51 @@ $fileModified = substr(md5(filemtime($filename)), 0, 6);
                         </div>
                     </div>
                 </div>
+                <!--row -->
+
+
+
 
             </div>
         </section><!-- #about -->
+
+
+
+        <!--==========================
+     Download
+    ============================-->
+        <section id="download" class="wow fadeInUp mt-0">
+            <div class="container-fluid mt-0">
+                <div class="row">
+                    <!-- rowcdownload -->
+                    <div class="col-lg-12">
+                        <div class="section-header">
+                            <h2>DOWNLOAD APP.</h2>
+                        </div>
+                        TRUST mobile application also available in Appstore and Android.
+                    </div>
+                </div> <!-- /rowcdownload -->
+                <div class="row">
+                    <!-- rowcdownload -->
+                    <div class="col-lg-12">
+                        <div class="float-right">
+                        <a href="{{ route('app.down', ['type' => 'apk'], false) }}"><img
+                                            src="/welcome/img/download_android.png" height="80"  alt=""
+                                            title="" /></a>
+
+                                            <a
+                                        href="itms-services://?action=download-manifest&url=https://trust.tm.com.my/storage/trust.plist"><img
+                                            src="/welcome/img/download_ios.png" height="80"  alt=""
+                                            title="" /></a>
+
+                        </div>
+                    </div>
+                </div> <!-- /rowcdownload -->
+
+            </div>
+        </section>
+
+
 
 
         <!--==========================

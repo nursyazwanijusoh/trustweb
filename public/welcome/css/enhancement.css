@@ -1,0 +1,100 @@
+/*--------------------------------------------------------------
+# trust enhancement
+--------------------------------------------------------------*/
+/* white box at welcome page*/
+.box-zahid
+{
+  background-color: #F9F7F5 ;
+  border-color: #C0B2A0;
+  border-width: 1pt;
+  border-style: solid;
+}
+
+.box-hani
+{
+ background-color:#C0B2A0;
+}
+
+
+/*buttons hack */
+
+.btn{
+    
+    /*border-radius: 25px;*/
+    border: 2px;
+    border-radius: 2px;
+}
+
+.btn-primary{
+    padding: 0.25em 15px;
+    background: #E2455A 0% 0% no-repeat padding-box;   
+    border: 2px solid #ffffff;
+    font-size: 0.75em;
+    opacity: 1;
+
+}
+
+
+
+
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:disabled:hover{
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+
+}
+
+
+/*end of button hack */
+
+.nav-menu a,button {
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+
+/*title font at welcome page*/
+.font-hani b{  
+  color:#E2455A !important;
+  }
+.smaller15
+{
+  font-size:85%;
+
+}
+.smaller20
+{
+  font-size:80%;
+
+}
+.smaller05
+{
+  font-size:95%;
+}
+
+.section-header h3 {
+  font-size: 24px;
+  color: #0c2e8a;
+  text-transform: uppercase;
+  font-weight: 300;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.section-header h3::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 75px;
+  height: 3px;
+  background: #E2455A; 
+  bottom: 0;
+  left: 0;
+}
+@media (min-width: 600px) {
+  .row.equal {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
