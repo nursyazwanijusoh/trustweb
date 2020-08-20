@@ -4,8 +4,13 @@
 <head>
 @php
 
-$filename = "welcome/css/style.css";
-$fileModified = substr(md5(filemtime($filename)), 0, 6);
+$styleCSS = 'welcome/css/style.css';
+$styleVersion = substr(md5(filemtime($styleCSS)), 0, 6);
+
+
+$enhanceCSS = 'welcome/css/enhancement.css';
+$enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
+
 @endphp
 
     <meta charset="utf-8">
@@ -43,7 +48,8 @@ $fileModified = substr(md5(filemtime($filename)), 0, 6);
     <!-- <link href="/welcome/lib/magnific-popup/magnific-popup.css" rel="stylesheet"> -->
 
     <!-- Main Stylesheet File -->
-    <link  rel="stylesheet" href="<?php echo '/'.$filename;?>?v=<?php echo $fileModified ; ?>">
+    <link rel="stylesheet" href="{{$styleCSS}}?v={{$styleVersion}}">
+    <link rel="stylesheet" href="{{$enhanceCSS}}?v={{$enhanceVersion}}">
     <!-- <link href="/welcome/css/style.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
     @yield('page-css')
