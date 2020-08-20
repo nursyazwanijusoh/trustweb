@@ -101,8 +101,7 @@
                                 FAQ</a></li>
                     </ul>
                 </li>
-                <li><a id="downloada" href="#downloadmodal" role="button" data-toggle="modal"><span class="btn">Download
-                        </span></a></li>
+
                 <li><a id="contacta" href="#contactM"><span class="btn"><i
                                 class="fa fa-envelope-o fa-lg"></i></span></a>
                 </li>
