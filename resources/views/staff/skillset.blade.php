@@ -11,7 +11,7 @@
       @if($isvisitor == false || $isboss == true)
       <div class="col-xl-5">
         <div class="card mb-3">
-            <div class="card-header bg-info text-white">Add Skill To Your Arsenal</div>
+            <div class="card-header text-white">Add Skill To Your Arsenal</div>
             <div class="card-body">
               @if (session()->has('alert'))
               <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">
@@ -94,7 +94,7 @@
       <div class="col-xl-12">
       @endif
         <div class="card mb-3">
-          <div class="card-header  bg-info text-white">Current Skillset for <a class="badge badge-secondary" href="{{ route('staff', ['staff_id' => $user->id ])}}">{{ $user->name }}</a></div>
+          <div class="card-header  text-white">Current Skillset for <a class="badge badge-secondary" href="{{ route('staff', ['staff_id' => $user->id ])}}">{{ $user->name }}</a></div>
           <div class="card-body">
             <div class="table-responsive">
               <table id="perfsameri" class="table table-striped table-hover table-bordered">

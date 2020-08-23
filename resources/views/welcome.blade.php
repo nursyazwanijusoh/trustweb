@@ -93,7 +93,7 @@
         <nav id="nav-menu-container">
             <ul class="nav-menu">
 
-                <li class="menu-has-children"><a href="#"><span class="btn">Guide</span></a>
+                <li class="menu-has-children"><a href="#">Guide</a>
                     <ul>
                         <li><a class="dropdown-item" href="{{ route('home', [], false) }}">trUSt General Guide</a>
                         </li>
@@ -102,8 +102,8 @@
                     </ul>
                 </li>
 
-                <li><a id="contacta" href="#contactM"><span class="btn"><i
-                                class="fa fa-envelope-o fa-lg"></i></span></a>
+                <li><a id="contacta" href="#contactM"><i 
+                                class="fa fa-envelope-o" style="font-size:1.8em"></i></a>
                 </li>
                 <li><a id="logina" href="#loginModal" role="button" data-toggle="modal"><span
                             class="btn btn-primary">Login</span></a></li>

@@ -8,6 +8,8 @@
   border-color: #C0B2A0;
   border-width: 1pt;
   border-style: solid;
+
+
 }
 
 .box-hani
@@ -15,6 +17,20 @@
  background-color:#C0B2A0;
 }
 
+/*card custom enhancement*/
+.card{
+  border-radius: 2px;
+}
+
+.card-header{
+  background-color: #40314E;
+  color:#fff;
+
+}
+
+
+
+/* end of card custom enhancement*/
 
 /*buttons hack */
 
@@ -22,15 +38,16 @@
     
     /*border-radius: 25px;*/
     border: 2px;
-    border-radius: 2px;
+    border-radius: 5px;
 }
 
 .btn-primary{
-    padding: 0.25em 15px;
+    padding: 0.3em 15px;
     background: #E2455A 0% 0% no-repeat padding-box;   
-    border: 2px solid #ffffff;
+    border: 0.15em solid #ffffff;
     font-size: 0.75em;
     opacity: 1;
+
 
 }
 
@@ -53,6 +70,23 @@
     font-size: 18px;
 }
 
+.nav-menu > li {
+  vertical-align: middle;
+  margin:0;
+  height: 3em;
+
+ 
+  
+
+}
+
+.nav-menu{
+  vertical-align:top;
+ 
+
+  
+
+}
 
 /*title font at welcome page*/
 .font-hani b{  
