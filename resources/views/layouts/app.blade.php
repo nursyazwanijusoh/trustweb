@@ -14,8 +14,8 @@ $enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
 @endphp
 
     <meta charset="utf-8">
-     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-     <meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!--meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport"> -->
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -60,7 +60,7 @@ $enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
         <header id="header">
             <div class="container-fluid">
                 <div id="logo" class="pull-left">
-                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/trust-trust_white.png" height="50" alt="" title="" /></a>
+                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/trust_white.png" height="50" alt="" title="" /></a>
                     <!-- <a href="{{ route('staff', [], false) }}"><img src="/images/trust-stayhome.png" height="50" alt="" title="" /></a> -->                </div>
 
                 <nav id="nav-menu-container">

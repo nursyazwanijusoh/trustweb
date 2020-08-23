@@ -140,7 +140,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     <a href="{{ route('ps.list', ['staff_id' => $staff_id ], false) }}">
                         <div class="box-zahid text-center p-3 h-100">
                             <img src="/img/recruitment.png" class="img-fluid float-none h-75">
-                            <p>profile + skills</p>
+                            <p>Skills</p>
                         </div>
                     </a>
                 </div>
