@@ -48,8 +48,8 @@ $enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
     <!-- <link href="/welcome/lib/magnific-popup/magnific-popup.css" rel="stylesheet"> -->
 
     <!-- Main Stylesheet File -->
-    <link rel="stylesheet" href="{{$styleCSS}}?v={{$styleVersion}}">
-    <link rel="stylesheet" href="{{$enhanceCSS}}?v={{$enhanceVersion}}">
+    <link rel="stylesheet" href="/{{$styleCSS}}?v={{$styleVersion}}">
+    <link rel="stylesheet" href="/{{$enhanceCSS}}?v={{$enhanceVersion}}">
     <!-- <link href="/welcome/css/style.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
     @yield('page-css')
@@ -60,8 +60,8 @@ $enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
         <header id="header">
             <div class="container-fluid">
                 <div id="logo" class="pull-left">
-                    <a href="{{ route('staff', [], false) }}"><img src="/images/trust-stayhome.png" height="50" alt="" title="" /></a>
-                </div>
+                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/trust-trust_white.png" height="50" alt="" title="" /></a>
+                    <!-- <a href="{{ route('staff', [], false) }}"><img src="/images/trust-stayhome.png" height="50" alt="" title="" /></a> -->                </div>
 
                 <nav id="nav-menu-container">
                       <ul class="nav-menu">
