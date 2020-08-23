@@ -273,23 +273,23 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
         <div class="section-header mb-0">
             <h2>My Subordinate</h2>
         </div>
-        <div class="border" style="min-height: 5.1em">test</div>
+
         <div class="row">
             @foreach($subords as $asub)
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6 " style="padding:0">
                 @if($asub['status'] != 0)
-                <div class="card mb-3 text-center">
+                <div class="card mb-3 text-center" style="padding:0">
                     <a href="{{ route('staff', ['staff_id' => $asub['staff_id']], false) }}">
-                        <div class="card-body">
+                        <div class="card-body" style="padding:0">
                             <div class="row">
-                                <div class="col-3 p-1">
+                                <div class="col-3 p-1 m-0">
                                     <img class="card-img"
                                         style="border: 1px solid #000; max-width:64px; max-height:64px;"
                                         src="{{ route('staff.image', ['staff_no' => $asub['staff_no']]) }}"
                                         alt="gambo staff">
                                 </div>
-                                <div class="col-9 p-1">
-                                    <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
+                                <div class="col-9">
+                                    <div class="card-title">{{ $asub['staff_no'] }}</div>
                                     <p class="card-text" style="min-height:3em">{{ $asub['name'] }}</p>
                                 </div>
                             </div>
@@ -304,7 +304,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                 </div>
                 @else
                 <div class="card mb-3 text-center text-white bg-secondary">
-                    <div class="card-body">
+                    <div class="card-body" style="padding:0">
                         <div class="row">
                             <div class="col-3 p-1">
                                 <img class="card-img" style="border: 1px solid #000; max-width:64px; max-height:64px;"
@@ -312,7 +312,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                                     alt="staff picture">
                             </div>
                             <div class="col-9 p-1">
-                                <h5 class="card-title">{{ $asub['staff_no'] }}</h5>
+                                <div class="card-title">{{ $asub['staff_no'] }}</div>
                                 <p class="card-text" style="min-height:3em">{{ $asub['name'] }}</p>
                             </div>
                         </div>
