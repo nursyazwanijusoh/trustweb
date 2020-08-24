@@ -1,6 +1,8 @@
 /*--------------------------------------------------------------
 # trust enhancement
 --------------------------------------------------------------*/
+
+
 /* white box at welcome page*/
 .box-zahid
 {
@@ -8,14 +10,16 @@
   border-color: #C0B2A0;
   border-width: 1pt;
   border-style: solid;
-
-
+  color:#24242D;
 }
 
 .box-hani
 {
  background-color:#C0B2A0;
 }
+
+
+
 
 /*card custom enhancement*/
 .card{
@@ -28,11 +32,7 @@
 
 }
 
-.card-title{
-  background-color: #40314E;
-  color:#fff;
 
-}
 
 
 /* end of card custom enhancement*/
@@ -64,7 +64,6 @@
 .btn-primary:disabled:hover{
     background: #000000 !important;
     border: 2px solid #ffffff !important;
-
 }
 
 
@@ -87,8 +86,6 @@
 
 .nav-menu{
   vertical-align:top;
- 
-
   
 
 }
@@ -114,20 +111,23 @@
 
 .section-header h3 {
   font-size: 24px;
-  color: #0c2e8a;
+  color: #40314E;
   text-transform: uppercase;
-  font-weight: 300;
+  font-weight: 700;
   position: relative;
   padding-bottom: 5px;
+  margin-top: 1em;
+  padding-left: 0px;
+  margin-left: 0px;
 }
 
 .section-header h3::before {
   content: '';
   position: absolute;
   display: block;
-  width: 75px;
-  height: 3px;
-  background: #E2455A; 
+  width: 75%;
+  height: 0.5px;
+  background: #C0B2A0; 
   bottom: 0;
   left: 0;
 }
