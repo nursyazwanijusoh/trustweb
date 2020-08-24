@@ -476,12 +476,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 .section-header {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .section-header h2 {
   font-size: 32px;
-  color: #0c2e8a;
+  color: #40314E;
   text-transform: uppercase;
   font-weight: 700;
   position: relative;

@@ -7,29 +7,27 @@
 @section('content')
 <div class="container">
     <!-- begin row 1 -->
-    <div class="row ">
+    <div class="row no-gutters">
 
-        <div class="col-md-5 ">
-            <!-- begin col welcome -->
-            <div class="section-header mb-0">
-                <h2>
-                    WELCOME BACK
-                </h2>
-            </div>
-            <div class="row">
-
-                <div class="col-10 text-justify">
-                    We Trust you had a productive day today. Here at Trust update your tasks & manage
-                    your team’s overall productivity performance on a daily & weekly basis. We Trust you
-                    know your work better than others hence share them here!
-
+        <div class="col-md-5  mb-1  ">
+            <div class="box-zahid p-2 h-100 m-1">
+                <!-- begin col welcome -->
+                <div class="section-header mb-0">
+                    <h2>
+                        WELCOME BACK
+                    </h2>
                 </div>
-                <div class="col-2">
+           
+
+                    <div class="col-12 text-justify h-100">
+                        We <b>trUst</b> you had a productive day today. Here at <b>trUst</b> update your tasks & manage
+                        your team’s overall productivity performance on a daily & weekly basis. We <b>trUst</b> you
+                        know your work better than others hence share them here!
+
+                    </div>
 
 
-                </div>
-
-
+              
 
             </div>
         </div> <!-- end welcome column -->
@@ -43,8 +41,8 @@
 
 
         <!-- begin col 1 -->
-        <div class="col-md-7">
-            <div class="card">
+        <div class="col-md-7 col-sm-12">
+            <div class="card m-1">
                 <div class="card-header">
                     Staff - {{ $user['staff_no'] }}
                 </div>
@@ -98,15 +96,15 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
     <div class="row">
         <div class="col-md-12">
             <div class="section-header mb-0">
-                <h2>
+                <h3>
                     FEATURES
-                </h2>
+                </h3>
             </div>
             <!-- begin features subrows-->
-            <div class="row">
+            <div class="row no-gutters">
 
 
-                <div class="col-md-3 col-sm-6 mt-1 p-1">
+                <div class="col-md-3 col-6 col-6 mt-1 p-1">
                     <a href="{{ route('clock.list', ['staff_id' => $staff_id], false) }}">
                         <div class="box-zahid text-center p-3 h-100">
                             <img src="/img/map.png" class="img-fluid float-none h-75">
@@ -115,7 +113,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </a>
                 </div>
                 @if($isvisitor == false)
-                <div class="col-md-3 col-sm-6 mt-1 p-1">
+                <div class="col-md-3 col-6  mt-1 p-1">
                     <a href="{{ route('staff.addact', [], false) }}">
                         <div class="box-zahid text-center p-3 h-100">
                             <img src="/img/diary.png" class="img-fluid float-none h-75">
@@ -124,7 +122,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </a>
                 </div>
                 @endif
-                <div class="col-md-3 col-sm-6 mt-1 p-1">
+                <div class="col-md-3 col-6 mt-1 p-1">
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
                         <div class="box-zahid text-center p-3 h-100">
                             <img src="/img/desk.png" class="img-fluid float-none h-75">
@@ -136,7 +134,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 
 
 
-                <div class="col-md-3 col-sm-6 mt-1 p-1">
+                <div class="col-md-3 col-6 mt-1 p-1">
                     <a href="{{ route('ps.list', ['staff_id' => $staff_id ], false) }}">
                         <div class="box-zahid text-center p-3 h-100">
                             <img src="/img/recruitment.png" class="img-fluid float-none h-75">
@@ -145,7 +143,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </a>
                 </div>
                 @if($user->job_grade != '5')
-                <div class="col-md-3 col-sm-6 mt-1 p-1">
+                <div class="col-md-3 col-6 mt-1 p-1">
                     <a href="{{ route('report.agm.recent', ['agm_id' => $user->id ], false) }}">
                         <div class="box-zahid text-center p-3 h-100">
                             <img src="/img/browser.png" class="img-fluid float-none">
@@ -154,7 +152,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </a>
                 </div>
                 @endif
-                <div class="col-md-3 col-sm-6 mt-1 p-1">
+                <div class="col-md-3 col-6 mt-1 p-1">
                     <a href="https://era.tm.com.my/happy-meter">
 
                         <div class="box-zahid text-center p-3 h-100">
@@ -174,7 +172,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
             </div>
             @endif
 
-            <div class="col-md-3 col-sm-6 mt-1 p-1">
+            <div class="col-md-3 col-6 mt-1 p-1">
                 <a href="{{ route('staff.list', ['staff_id' => $staff_id], false) }}">
                     <div class="box-zahid text-center p-3 h-100">
                         <img src="/img/diary_entries.png" alt="zerorize"
@@ -192,9 +190,9 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 <div class="row">
     <div class="col-md-6">
         <div class="section-header mb-0">
-            <h2>
+            <h3>
                 SUMMARY
-            </h2>
+            </h3>
         </div>
 
         <div class="card-body">
@@ -224,9 +222,9 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 
     <div class="col-md-6">
         <div class="section-header mb-0">
-            <h2>
+            <h3>
                 PRODUCTIVITY
-            </h2>
+            </h3>
         </div>
 
         <div class="card ">
@@ -243,9 +241,9 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 <div class="row">
     <div class="col-md-12">
         <div class="section-header mb-0">
-            <h2>
+            <h3>
                 CALENDAR
-            </h2>
+            </h3>
         </div>
         <div class="box-zahid">
             <div class="card-body">
@@ -271,7 +269,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 <div class="row">
     <div class="col-md-12">
         <div class="section-header mb-0">
-            <h2>My Subordinate</h2>
+            <h3>My Subordinate</h3>
         </div>
 
         <div class="row">
@@ -289,7 +287,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                                         alt="gambo staff">
                                 </div>
                                 <div class="col-9">
-                                    <div class="card-title">{{ $asub['staff_no'] }}</div>
+                                    <div class="card-header">{{ $asub['staff_no'] }}</div>
                                     <p class="card-text" style="min-height:3em">{{ $asub['name'] }}</p>
                                 </div>
                             </div>
@@ -312,7 +310,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                                     alt="staff picture">
                             </div>
                             <div class="col-9 p-1">
-                                <div class="card-title">{{ $asub['staff_no'] }}</div>
+                                <div class="card-header">{{ $asub['staff_no'] }}</div>
                                 <p class="card-text" style="min-height:3em">{{ $asub['name'] }}</p>
                             </div>
                         </div>
