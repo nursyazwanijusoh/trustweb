@@ -175,23 +175,28 @@ class DiaryGroupReportGen implements ShouldQueue
                 if($dpu->zerorized == true){
                   $zdaycount++;
                 }
-                // check for off day
-                if($dpu->is_off_day){
-                  if($dpu->expected_hours < 5){
-                    $dbg = ExcelHandler::BG_LEAVE0;
-                  } else {
-                    $dbg = ExcelHandler::BG_LEAVE;
+
+                if($dpu->is_public_holiday){
+                  $dbg = ExcelHandler::BG_PH;
+                } else {
+                  // check for off day
+                  if($dpu->is_off_day){
+                    if($dpu->expected_hours < 5){
+                      $dbg = ExcelHandler::BG_LEAVE0;
+                    } else {
+                      $dbg = ExcelHandler::BG_LEAVE;
+                    }
+
                   }
 
-                }
+                  if($dpu->expected_hours > 0){
+                    $expectedentry++;
+                    $expectedmd++;
+                    $expectedhrs += $dpu->expected_hours;
 
-                if($dpu->expected_hours > 0){
-                  $expectedentry++;
-                  $expectedmd++;
-                  $expectedhrs += $dpu->expected_hours;
-
-                  if($dpu->actual_hours > 0){
-                    $sumentry++;
+                    if($dpu->actual_hours > 0){
+                      $sumentry++;
+                    }
                   }
                 }
 
