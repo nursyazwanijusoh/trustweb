@@ -2,7 +2,14 @@
 # trust enhancement
 --------------------------------------------------------------*/
 
+.modal-header{
+margin-bottom: 0px;
+border-bottom: 0 none;
 
+padding-bottom: 0;
+padding-left: 0;
+
+}
 /* white box at welcome page*/
 .box-zahid
 {
@@ -131,9 +138,61 @@
   bottom: 0;
   left: 0;
 }
+
+/* KAKI */
+
+.foot{
+  padding: 10px;
+  width: 100%;
+  position: relative;
+  height: 60px;
+  display: table;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 3;
+  color: white;
+  background-color: #24242D;
+  vertical-align: middle;
+
+}
+
+
+
+.foots{
+  
+  
+  justify-content: space-between;
+
+
+}
+
+
+
+
+.foot-text{
+  vertical-align: middle;
+  display: table-cell;
+
+
+  vertical-align: middle;
+}
+
+.foot-img{
+  margin-left: auto;
+  height: 40px;
+}
+
+
+/* end of kaki */
+
+/*----
+
 @media (min-width: 600px) {
   .row.equal {
     display: flex;
     flex-wrap: wrap;
   }
 }
+
+----!>

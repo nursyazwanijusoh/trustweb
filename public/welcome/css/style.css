@@ -481,7 +481,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .section-header h2 {
   font-size: 32px;
-  color: #40314E;
+  color: #40314e;
   text-transform: uppercase;
   font-weight: 700;
   position: relative;
@@ -523,7 +523,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #about .content h2 {
-  color: #0c2e8a;
+  /*color: #0c2e8a;*/
   font-weight: 700;
   font-size: 36px;
   font-family: "Raleway", sans-serif;

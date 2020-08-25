@@ -102,8 +102,7 @@
                     </ul>
                 </li>
 
-                <li><a id="contacta" href="#contactM"><i 
-                                class="fa fa-envelope-o" style="font-size:1.8em"></i></a>
+                <li><a id="contacta" href="#contactM"><i class="fa fa-envelope-o" style="font-size:1.75em"></i></a>
                 </li>
                 <li><a id="logina" href="#loginModal" role="button" data-toggle="modal"><span
                             class="btn btn-primary">Login</span></a></li>
@@ -269,14 +268,12 @@
                     <!-- rowcdownload -->
                     <div class="col-lg-12">
                         <div class="float-right">
-                        <a href="{{ route('app.down', ['type' => 'apk'], false) }}"><img
-                                            src="/welcome/img/download_android.png" height="80"  alt=""
-                                            title="" /></a>
+                            <a href="{{ route('app.down', ['type' => 'apk'], false) }}"><img
+                                    src="/welcome/img/download_android.png" height="80" alt="" title="" /></a>
 
-                                            <a
-                                        href="itms-services://?action=download-manifest&url=https://trust.tm.com.my/storage/trust.plist"><img
-                                            src="/welcome/img/download_ios.png" height="80"  alt=""
-                                            title="" /></a>
+                            <a
+                                href="itms-services://?action=download-manifest&url=https://trust.tm.com.my/storage/trust.plist"><img
+                                    src="/welcome/img/download_ios.png" height="80" alt="" title="" /></a>
 
                         </div>
                     </div>
@@ -368,65 +365,81 @@
 
 
 
-        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
+        <div id="loginModal" class="modal fade" tabindex="1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header" style="text-align:center;">
-                        <h2>{{ __('Login') }}</h2>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
+
                     @if ( isset($loginerror) )
                     <div class="alert alert-{{ $type }}" role="alert">
                         {{ $loginerror }}
                     </div>
                     @endif
                     <div class="modal-body">
-                        <form method="POST" action="{{ route('login', [], false) }}">
-                            @csrf
 
-                            <div class="form-group row">
-                                <label for="staff_id"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Staff ID') }}</label>
+                        <div class="row no-gutter">
+                            <div class="col-md-6" descr="login pic">
 
-                                <div class="col-md-6">
-                                    <input id="staff_id" type="text"
-                                        class="form-control{{ $errors->has('staff_id') ? ' is-invalid' : '' }}"
-                                        name="staff_id" value="{{ old('staff_id') }}" required autofocus>
+                            </div> <!-- login picture -->
+
+                            <div class="col-md-6" descr="login form div">
+
+                                <div class="modal-header section-header">
+                                    <h2>{{ __('Sign In') }}</h2>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">×</button>
                                 </div>
+
+                                <form method="POST" action="{{ route('login', [], false) }}">
+                                    @csrf
+
+                                    <div class="form-group row">
+                                        <label for="staff_id"
+                                            class="col-md-12 col-form-label">{{ __('Staff ID') }}</label>
+
+                                        <div class="col-md-12">
+                                            <input id="staff_id" type="text"
+                                                class="form-control{{ $errors->has('staff_id') ? ' is-invalid' : '' }}"
+                                                name="staff_id" value="{{ old('staff_id') }}" required autofocus>
+                                        </div>
+
+                                        <label for="password"
+                                            class="col-md-12 col-form-label">{{ __('Password') }}</label>
+
+                                        <div class="col-md-12">
+                                            <input id="password" type="password"
+                                                class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                                name="password" required>
+
+                                            @if ($errors->has('password'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Login') }}
+                                            </button>
+
+                                            <a href="{{ route('register', [], false) }}">New User?</a>
+
+                                        </div>
+                                    </div>
+
+                                </form>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="password"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password"
-                                        class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                        name="password" required>
-
-                                    @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group row mb-0">
-                                <div class="col-md-4 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
-                                    </button>
-                                </div>
-                                <a href="{{ route('register', [], false) }}">New User?</a>
-
-                            </div>
-                        </form>
-                    </div>
+                            <!--login form div -->
+                        </div> <!-- row-->
+                    </div> <!-- modal-body -->
                 </div>
             </div>
         </div>
 
-        <div id="downloadmodal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:100%;">
+        <!---
+
+        <div id="downloadmodal" class="modal fade" tabindex="-13 role="dialog" aria-hidden="true" style="width:100%;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="text-align:center;">
@@ -463,13 +476,13 @@
                 </div>
             </div>
         </div>
-
+--->
     </main>
 
     <!--==========================
     Footer
   ============================-->
-    <footer id="footer" style="background-color: orange;color: orange">
+    <footer id="footer" style="background-color: orange;color: orange; display:none">
         <div class="container">
             <div class="copyright">
                 &copy; Copyright <strong>Reveal</strong>. All Rights Reserved
@@ -486,6 +499,18 @@
             </div>
         </div>
     </footer><!-- #footer -->
+    <footer class="foot">
+
+        <div class="foot-text">Copyright © 2020 Telekom Malaysia Berhad. All rights reserved.
+        </div>
+
+        <div class="float-right">
+            <img class="foot-img " src="/welcome/img/footer-logo.png">
+        </div>
+        </div>
+    </footer>
+
+
 
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
