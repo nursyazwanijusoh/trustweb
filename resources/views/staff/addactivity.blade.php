@@ -101,7 +101,7 @@
           <div class="col-lg-12">
             @endif
             <div class="card m-1">
-              <div class="card-header">Entry for {{ $recdate }}. Total hours: {{ $dfobj->actual_hours }}. Start work time: {{ $early->toTimeString() }}</div>
+              <div class="card-header"><a href="{{ route('staff', ['staff_id' => $dfobj->User->id], false) }}" title="{{ $dfobj->User->name }}" >{{ $dfobj->User->staff_no }}</a>'s entry for {{ $recdate }}. Total hours: {{ $dfobj->actual_hours }}. Start work time: {{ $early->toTimeString() }}</div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table id="taskdetailtable" class="table table-striped table-bordered table-hover"  style="white-space: nowrap;">
