@@ -60,12 +60,14 @@ jQuery(document).ready(function ($) {
     $('body').prepend('<button type="button" id="mobile-nav-toggle"><i class="fa fa-bars"></i></button>');
     $('body').append('<div id="mobile-body-overly"></div>');
     $('#mobile-nav').find('.menu-has-children').prepend('<i class="fa fa-chevron-down"></i>');
-    $("#mobile-nav,#logina").on("click",function(){
+    $("#mobile-nav #logina").on("click",function(){
       $('#loginModal').modal('show');
     });
+/*
     $("#mobile-nav,#downloada").on("click",function(){
       $('#downloadmodal').modal('show');
     });
+*/
     $(document).on('click', '.menu-has-children i', function (e) {
       $(this).next().toggleClass('menu-item-active');
       $(this).nextAll('ul').eq(0).slideToggle();

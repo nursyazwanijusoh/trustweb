@@ -2,20 +2,20 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-@php
+    @php
 
-$styleCSS = 'welcome/css/style.css';
-$styleVersion = substr(md5(filemtime($styleCSS)), 0, 6);
+    $styleCSS = 'welcome/css/style.css';
+    $styleVersion = substr(md5(filemtime($styleCSS)), 0, 6);
 
 
-$enhanceCSS = 'welcome/css/enhancement.css';
-$enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
+    $enhanceCSS = 'welcome/css/enhancement.css';
+    $enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
 
-@endphp
+    @endphp
 
     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <!--meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--meta content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport"> -->
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -60,63 +60,73 @@ $enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
         <header id="header">
             <div class="container-fluid">
                 <div id="logo" class="pull-left">
-                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/trust_white.png" height="50" alt="" title="" /></a>
-                    <!-- <a href="{{ route('staff', [], false) }}"><img src="/images/trust-stayhome.png" height="50" alt="" title="" /></a> -->                </div>
+                    <a href="{{ route('staff', [], false) }}"><img src="/welcome/img/trust_white.png" height="50" alt=""
+                            title="" /></a>
+                    <!-- <a href="{{ route('staff', [], false) }}"><img src="/images/trust-stayhome.png" height="50" alt="" title="" /></a> -->
+                </div>
 
                 <nav id="nav-menu-container">
-                      <ul class="nav-menu">
-                        <li><a class="nav-link" href="{{ route('hofs', [], false) }}" title="Hall Of Fame"><i class="fa fa-trophy" style="color:red"></i></a></li>
-                        <li><a class="nav-link" href="{{ route('guides', [], false) }}" title="Hall Of Fame">Guides</i></a></li>
+                    <ul class="nav-menu">
+                        <li><a class="nav-link" href="{{ route('hofs', [], false) }}" title="Hall Of Fame"><i
+                                    class="fa fa-trophy" style="color:red"></i></a></li>
+                        <li><a class="nav-link" href="{{ route('guides', [], false) }}"
+                                title="Hall Of Fame">Guides</i></a></li>
                         @guest
                         @else
                         <!-- <li><a href="{{ route('staff', [], false) }}">Home</a></li> -->
-                        @if (Auth::user()->role <= 1)
-                        <li class="menu-has-children"><a href="#">Admin</a>
-                          <ul>
-                              <li><a class="dropdown-item" href="{{ route('admin', [], false) }}">Management</a></li>
+                        @if (Auth::user()->role <= 1) <li class="menu-has-children"><a href="#">Admin</a>
+                            <ul>
+                                <li><a class="dropdown-item" href="{{ route('admin', [], false) }}">Management</a></li>
 
-                          </ul>
-                        </li>
-                        @endif
-                        <li class="menu-has-children"><a href="#">Menu</a>
-                          <ul>
-                              <li><a class="dropdown-item" href="{{ route('staff', [], false) }}">Home</a></li>
-                              <!-- li class="menu-has-children"><a href="#">MCO Initiative</a>
+                            </ul>
+                            </li>
+                            @endif
+                            <li class="menu-has-children"><a href="#">Menu</a>
+                                <ul>
+                                    <li><a class="dropdown-item" href="{{ route('staff', [], false) }}">Home</a></li>
+                                    <!-- li class="menu-has-children"><a href="#">MCO Initiative</a>
                                 <ul>
                                     <li><a class="dropdown-item" href="{{ route('mco.reqform', [], false) }}">Request Travel Acknowledgement</a></li>
                                     <li><a class="dropdown-item" href="{{ route('mco.ackreqs', [], false) }}">Acknowledge Travel Request</a></li>
                                 </ul>
                               </li -->
-                              <li><a class="dropdown-item" href="{{ route('staff.find', [], false) }}">Staff Finder</a></li>
-                              <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li>
-                              <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
-                              <li><a class="dropdown-item" href="{{ route('poll.index', [], false) }}"><i class="fa fa-line-chart" style="color:green"></i> Polls <span class="badge badge-danger">&nbsp;beta!&nbsp;</span></a></li>
+                                    <li><a class="dropdown-item" href="{{ route('staff.find', [], false) }}">Staff
+                                            Finder</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting
+                                            Area</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ route('poll.index', [], false) }}"><i
+                                                class="fa fa-line-chart" style="color:green"></i> Polls <span
+                                                class="badge badge-danger">&nbsp;beta!&nbsp;</span></a></li>
 
-                          </ul>
-                        </li>
-                        <li class="menu-has-children"><a href="#">Help</a>
-                          <ul>
-                              <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
-                              <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-has-children"><a href="#">Help</a>
+                                <ul>
+                                    <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin
+                                            List</a></li>
 
-                          </ul>
-                        </li>
-                        @endif
-                        <li>
-                          @guest
-                          <a class="dropdown-item" href="{{ route('login', [], false) }}">Login</a>
-                          @else
-                          <a class="dropdown-item" href="#" onclick="event.preventDefault();
+                                </ul>
+                            </li>
+                            @endif
+                            <li>
+                                @guest
+                                <a class="dropdown-item" href="{{ route('login', [], false) }}">Login</a>
+                                @else
+                                <a class="dropdown-item" href="#" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                              {{ __('Logout') }}
-                          </a>
-                          @endguest
+                                    {{ __('Logout') }}
+                                </a>
+                                @endguest
 
-                        </li>
-                        <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST"
-                            style="display: none;">
-                            @csrf
-                        </form>
+                            </li>
+                            <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
                     </ul>
                 </nav><!-- #nav-menu-container -->
 
@@ -126,31 +136,44 @@ $enhanceVersion = substr(md5(filemtime($enhanceCSS)), 0, 6);
 
 
         <main class="py-4">
-          @if( $enonmen3->count() > 0)
-          <div class="alert alert-info alert-dismissible mx-3">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong><i class="fa fa-bullhorn"></i> Announcement!</strong>
-            <ul class="mb-0">
-              @foreach($enonmen3 as $ann)
-              <li>
-                {{ $ann->content }}
-                @if(isset($ann->url))
-                - <a href="{{ $ann->url }}" target="_blank">
-                  @if(isset($ann->url_text))
-                  {{ $ann->url_text }}
-                  @else
-                  Click here
-                  @endif
-                </a>
-                @endif
-              </li>
-              @endforeach
-            </ul>
-          </div>
-          @endif
+            @if( $enonmen3->count() > 0)
+            <div class="alert alert-info alert-dismissible mx-3">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong><i class="fa fa-bullhorn"></i> Announcement!</strong>
+                <ul class="mb-0">
+                    @foreach($enonmen3 as $ann)
+                    <li>
+                        {{ $ann->content }}
+                        @if(isset($ann->url))
+                        - <a href="{{ $ann->url }}" target="_blank">
+                            @if(isset($ann->url_text))
+                            {{ $ann->url_text }}
+                            @else
+                            Click here
+                            @endif
+                        </a>
+                        @endif
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             @yield('content')
         </main>
     </div>
+
+    <footer class="foot">
+
+        <div class="foot-text">Copyright © 2020 Telekom Malaysia Berhad. All rights reserved.
+</div>
+
+            <div class="float-right">
+                <img class="foot-img " src="/welcome/img/footer-logo.png">
+            </div>
+        </div>
+    </footer>
+
+
 </body>
 @yield('page-js')
 <script src="/welcome/lib/superfish/hoverIntent.js"></script>
