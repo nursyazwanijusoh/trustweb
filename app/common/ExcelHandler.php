@@ -13,7 +13,7 @@ class ExcelHandler {
   const BG_WEEKEND = 'adad99';
   const BG_LEAVE = 'f283f0';  // purple pink
   const BG_LEAVE0 = '66ff66'; // light green
-  const BG_PH = '34eb64';
+  const BG_PH = 'add836';
   const BG_HEADER = '000000';
   const BG_NORMAL = 'NA';
   const BG_INFO = 'NA';

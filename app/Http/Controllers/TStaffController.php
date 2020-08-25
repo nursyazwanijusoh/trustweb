@@ -238,7 +238,7 @@ class TStaffController extends Controller
     $todaydf = GDWActions::GetDailyPerfObj($s_staff_id, new Carbon());
     $todayperc = 0;
     if($todaydf->expected_hours == 0){
-      $todayperc = intval(100 + ($todaydf->actual_hours / (8 * 7) * 100));
+      $todayperc = intval(100 + ($todaydf->actual_hours / 8 * 100));
     } else {
       $calcperf = $todaydf->actual_hours / $todaydf->expected_hours * 100;
       $todayperc = intval($calcperf);
