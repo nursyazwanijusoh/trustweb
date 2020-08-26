@@ -68,6 +68,10 @@ jQuery(document).ready(function ($) {
       $('#downloadmodal').modal('show');
     });
 */
+
+$("#mobile-nav #contacta").on("click",function(){
+  $('#contact').modal('show');
+});
     $(document).on('click', '.menu-has-children i', function (e) {
       $(this).next().toggleClass('menu-item-active');
       $(this).nextAll('ul').eq(0).slideToggle();
@@ -102,14 +106,16 @@ jQuery(document).ready(function ($) {
   $("#logina").on("click",function(){
     $('#loginModal').modal('show');
   });
-
+/*
   $("#downloada").on("click",function(){
     $('#download').modal('show');
   });
+  */
 
   $("#contacta").on("click",function(){
     $('#contact').modal('show');
   });
+
   // Smooth scroll for the menu and links with .scrollto classes
   $('.nav-menu a,#mobile-nav a, .scrollto').on('click', function () {
 

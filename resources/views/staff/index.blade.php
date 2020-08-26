@@ -274,7 +274,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 
         <div class="row">
             @foreach($subords as $asub)
-            <div class="col-md-4 col-sm-6 " style="padding:0">
+            <div class="col-md-4 col-sm-6 " >
                 @if($asub['status'] != 0)
                 <div class="card mb-3 text-center" style="padding:0">
                     <a href="{{ route('staff', ['staff_id' => $asub['staff_id']], false) }}">
