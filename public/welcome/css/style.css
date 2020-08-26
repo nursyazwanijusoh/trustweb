@@ -252,13 +252,15 @@ h6 {
 
 .nav-menu ul {
   position: absolute;
-  display: none;
+  display: table;
   top: 100%;
   left: 0;
   z-index: 99;
+  
 }
 
 .nav-menu li {
+
   vertical-align: middle;
   position: relative;
   white-space: nowrap;
@@ -266,20 +268,26 @@ h6 {
 
 .nav-menu > li {
   float: left;
+  vertical-align: middle;
+
+
 }
 
 .nav-menu li:hover > ul,
 .nav-menu li.sfHover > ul {
-  display: block;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .nav-menu ul ul {
   top: 0;
   left: 100%;
+  vertical-align: middle;
 }
 
 .nav-menu ul li {
   min-width: 180px;
+  vertical-align: middle;
 }
 
 /* Nav Menu Arrows */

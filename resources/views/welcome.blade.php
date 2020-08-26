@@ -93,7 +93,7 @@
         <nav id="nav-menu-container">
             <ul class="nav-menu">
 
-                <li class="menu-has-children"><a href="#">Guide</a>
+                <li class="menu-has-children" style="display:table-cell"><a href="#">Guide</a>
                     <ul>
                         <li><a class="dropdown-item" href="{{ route('home', [], false) }}">trUSt General Guide</a>
                         </li>
@@ -396,16 +396,32 @@
                                         <label for="staff_id"
                                             class="col-md-12 col-form-label">{{ __('Staff ID') }}</label>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 input-group">
+
+                                            <span class="input-group-prepend">
+                                                <button class="btn btn-outline" type="button">
+                                                    <i class="fa fa-user fa-lg"></i>
+                                                </button>
+                                            </span>
+
                                             <input id="staff_id" type="text"
-                                                class="form-control{{ $errors->has('staff_id') ? ' is-invalid' : '' }}"
+                                                class="form-control{{ $errors->has('staff_id') ? ' is-invalid' : '' }} custom-input"
                                                 name="staff_id" value="{{ old('staff_id') }}" required autofocus>
+
                                         </div>
 
                                         <label for="password"
                                             class="col-md-12 col-form-label">{{ __('Password') }}</label>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 input-group">
+
+                                            <span class="input-group-prepend">
+                                                <button class="btn btn-outline" type="button">
+                                                    <i class="fa fa-unlock  fa-lg"></i>
+                                                </button>
+                                            </span>
+
+
                                             <input id="password" type="password"
                                                 class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                                 name="password" required>
@@ -418,7 +434,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
-                                        <div class="col-md-4">
+                                        <div class="col-md-9">
                                             <button type="submit" class="btn btn-primary">
                                                 {{ __('Login') }}
                                             </button>
@@ -427,6 +443,17 @@
 
                                         </div>
                                     </div>
+
+
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-12 p-3">
+                                            Dear Users, <br/>
+                                            If you have any queries, problems or have not received any ID
+                                            and password for FAST System, please log into IRIS Self Service System.
+
+                                        </div>
+                                    </div>
+
 
                                 </form>
                             </div>
