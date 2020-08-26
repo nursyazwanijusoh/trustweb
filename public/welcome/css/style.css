@@ -986,7 +986,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #contact .form input,
-#contact .form textarea {
+#contact .form textarea,
+#loginModal input {
   padding: 10px 14px;
   border-radius: 0;
   box-shadow: none;

@@ -51,12 +51,22 @@ padding-left: 0;
     /*border-radius: 25px;*/
     border: 2px;
     border-radius: 5px;
+    
+}
+
+.btn-link{
+  padding: 0.2em 1px;
+  color: azure;
+}
+
+.nav-menu .btn-link:hover{
+  color: #555;
 }
 
 .btn-primary{
-    padding: 0.3em 25px;
+    padding: 0.2em 20px;
     background: #E2455A 0% 0% no-repeat padding-box;   
-    border: 0.15em solid #ffffff;
+    /*border: 0.15em solid #ffffff;*/
     /*font-size: 0.75em;*/
     opacity: 1;
 
@@ -64,13 +74,21 @@ padding-left: 0;
 }
 
 
-
-
 .btn-primary:focus,
 .btn-primary:hover,
 .btn-primary:disabled:hover{
     background: #000000 !important;
-    border: 2px solid #ffffff !important;
+
+}
+
+.btn-secondary{
+  padding: 0.2em 20px;
+  background: #40314E ;   
+
+  /*font-size: 0.75em;*/
+  opacity: 1;
+
+
 }
 
 
@@ -79,7 +97,7 @@ padding-left: 0;
 .nav-menu a {
     font-size: 1.25em;
     display: block;
-    vertical-align: middle;
+
     
 }
 

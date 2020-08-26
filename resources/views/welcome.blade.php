@@ -102,7 +102,10 @@
                     </ul>
                 </li>
 
-                <li><a id="contacta" href="#contactM"><i class="fa fa-envelope-o" style="font-size:1.75em"></i></a>
+                <li><a id="contacta" href="#contact"><span class="btn btn-link">
+                            <i class="fa fa-envelope-o" style="font-size:1.5em"></i>
+                        </span>
+                    </a>
                 </li>
                 <li><a id="logina" href="#loginModal" role="button" data-toggle="modal"><span
                             class="btn btn-primary">Login</span></a></li>
@@ -289,8 +292,8 @@
       Contact Section
     ============================-->
 
-        <section id="contact" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
+        <div id="contact" class="modal fade" tabindex="1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="container">
                         <div class="section-header">
@@ -298,33 +301,7 @@
                             <p>Send us your feedback.</p>
                         </div>
 
-                        <!-- <div class="row contact-info">
 
-                    <div class="col-md-4">
-                        <div class="contact-address">
-                            <i class="ion-ios-location-outline"></i>
-                            <h3>Address</h3>
-                            <address>Level 8 North Menara Telekom Malaysia</address>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="contact-phone">
-                            <i class="ion-ios-telephone-outline"></i>
-                            <h3>Phone Number</h3>
-                            <p><a href="tel:+155895548855">+1 5589 55488 55</a></p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="contact-email">
-                            <i class="ion-ios-email-outline"></i>
-                            <h3>Email</h3>
-                            <p><a href="mailto:info@trust.tm.com.my">info@trust.tm.com.my</a></p>
-                        </div>
-                    </div>
-
-                </div> -->
                     </div>
 
 
@@ -361,7 +338,7 @@
                     </div>
                 </div>
             </div>
-        </section><!-- #contact -->
+        </div><!-- #contact -->
 
 
 
@@ -399,13 +376,13 @@
                                         <div class="col-md-12 input-group">
 
                                             <span class="input-group-prepend">
-                                                <button class="btn btn-outline" type="button">
-                                                    <i class="fa fa-user fa-lg"></i>
+                                                <button class="btn btn-secondary" type="button">
+                                                    <i class="fa fa-user"></i>
                                                 </button>
                                             </span>
 
                                             <input id="staff_id" type="text"
-                                                class="form-control{{ $errors->has('staff_id') ? ' is-invalid' : '' }} custom-input"
+                                                class="form-control{{ $errors->has('staff_id') ? ' is-invalid' : '' }}"
                                                 name="staff_id" value="{{ old('staff_id') }}" required autofocus>
 
                                         </div>
@@ -416,8 +393,8 @@
                                         <div class="col-md-12 input-group">
 
                                             <span class="input-group-prepend">
-                                                <button class="btn btn-outline" type="button">
-                                                    <i class="fa fa-unlock  fa-lg"></i>
+                                                <button class="btn btn-secondary" type="button">
+                                                    <i class="fa fa-unlock"></i>
                                                 </button>
                                             </span>
 
@@ -447,7 +424,7 @@
 
                                     <div class="form-group row mb-0">
                                         <div class="col-md-12 p-3">
-                                            Dear Users, <br/>
+                                            Dear Users, <br />
                                             If you have any queries, problems or have not received any ID
                                             and password for FAST System, please log into IRIS Self Service System.
 
@@ -540,7 +517,10 @@
 
 
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-
+    @php
+    $mainJS = 'welcome/js/main.js';
+    $mainJSVersion = substr(md5(filemtime($mainJS)), 0, 6);
+    @endphp
     <!-- JavaScript /welcome/libraries -->
     <script src="/welcome/lib/jquery/jquery.min.js"></script>
     <script src="/welcome/lib/jquery/jquery-migrate.min.js"></script>
@@ -557,7 +537,8 @@
     <script src="/welcome/contactform/contactform.js"></script>
 
     <!-- Template Main Javascript File -->
-    <script src="/welcome/js/main.js"></script>
+
+    <script src="/{{$mainJS}}?v={{$mainJSVersion}}"></script>
 
 </body>
 
