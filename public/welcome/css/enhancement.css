@@ -39,8 +39,29 @@ padding-left: 0;
 
 }
 
+.card-afdzal {
+
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
+  margin-top: auto;
+margin-bottom: auto;
+text-align: center;
+  
+
+}
+
+.card-afdzal h1 {
+
+margin-top: auto;
+margin-bottom: auto;
+color:  #40314E;
 
 
+  
+}
+.middle {
+  vertical-align: middle;
+}
 
 /* end of card custom enhancement*/
 

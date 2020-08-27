@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
     <!-- begin row 1 -->
-    <div class="row no-gutters">
+    <div class="row ">
 
         <div class="col-md-5  mb-1  ">
             <div class="box-zahid p-2 h-100 m-1">
@@ -17,17 +17,17 @@
                         WELCOME BACK
                     </h2>
                 </div>
-           
-
-                    <div class="col-12 text-justify h-100">
-                        We <b>trUst</b> you had a productive day today. Here at <b>trUst</b> update your tasks & manage
-                        your team’s overall productivity performance on a daily & weekly basis. We <b>trUst</b> you
-                        know your work better than others hence share them here!
-
-                    </div>
 
 
-              
+                <div class="col-12 text-justify h-100">
+                    We <b>trUst</b> you had a productive day today. Here at <b>trUst</b> update your tasks & manage
+                    your team’s overall productivity performance on a daily & weekly basis. We <b>trUst</b> you
+                    know your work better than others hence share them here!
+
+                </div>
+
+
+
 
             </div>
         </div> <!-- end welcome column -->
@@ -195,29 +195,33 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
             </h3>
         </div>
 
-        <div class="card-body">
-            <div class="row text-center">
-                <div class="col-6 border-right">
-                    <h1 class="card-title">{{ $todaydf->actual_hours }}</h1>
-                    <p class="card-text">
-                        ACTUAL HOURS
-                    </p>
+
+        <div class="row h-100 text-center">
+            <div class="col-6 ">
+                <div class="card box-zahid card-afdzal h-75">
+
+                    <div class="card-body  d-flex justify-content-center">
+                        <h1 class="align-self-center">{{ $todaydf->actual_hours }}</h1>
+                    </div>
+                    <div class="card-header">
+                        Total Actual Hours
+                    </div>
+
                 </div>
-                <!--
-                <div class="col-4 border-right">
-                    <h1 class="card-title">{{ $todaydf->expected_hours }}</h1>
-                    <p class="card-text">
-                        Expected Hours
-                    </p>
-                </div>-->
-                <div class="col-6">
-                    <h1 class="card-title">{{ $todayperc }}%</h1>
-                    <p class="card-text">
+            </div>
+            <div class="col-6">
+                <div class="card box-zahid card-afdzal h-75">
+                    <div class="card-body  d-flex justify-content-center">
+                        <h1 class="card-title">{{ $todayperc }}%</h1>
+                    </div>
+                    <div class="card-header">
                         Productivity
-                    </p>
+                    </div>
+
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="col-md-6">
@@ -274,7 +278,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 
         <div class="row">
             @foreach($subords as $asub)
-            <div class="col-md-4 col-sm-6 " >
+            <div class="col-md-4 col-sm-6 ">
                 @if($asub['status'] != 0)
                 <div class="card mb-3 text-center" style="padding:0">
                     <a href="{{ route('staff', ['staff_id' => $asub['staff_id']], false) }}">
