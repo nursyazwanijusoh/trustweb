@@ -354,8 +354,11 @@
                     <div class="modal-body">
 
                         <div class="row no-gutter">
-                            <div class="col-md-6" descr="login pic">
+                            <div class="col-md-6 d-sm-none d-md-block box-zahid" descr="login pic">
 
+                                <div class="card card-body  d-flex justify-content-center">
+                                    <img src="/welcome/img/trust_white.png" title="" class="img-fluid" />
+                                </div>
                             </div> <!-- login picture -->
 
                             <div class="col-md-6" descr="login form div">
