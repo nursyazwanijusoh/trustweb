@@ -33,6 +33,7 @@ deploy-dev:
     - kubectl config set-credentials gitlab --token="${USER_TOKEN}"
     - kubectl config set-context default --cluster=k8s --user=gitlab
     - kubectl config use-context default
+    - kubectl config set-context --current --namespace="${NAMESPACE}"
     - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustweb.yml
     - kubectl apply -f k8s/trustweb.yml
   environment:
