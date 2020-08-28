@@ -16,7 +16,7 @@ test:
 build:
   stage: build
   script:
-    - docker login harbor.dev.kubix.tm.com.my -u 'robot$gitlab' -p ${HARBOR_PASSWORD}
+    - docker login harbor.dev.kubix.tm.com.my -u 'robot$trust' -p ${HARBOR_PASSWORD}
     - docker build -t ${CONTAINER_IMAGE} .
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}
     - docker push ${CONTAINER_IMAGE}
