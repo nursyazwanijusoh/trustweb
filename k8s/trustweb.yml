@@ -1,0 +1,34 @@
+---
+#ClusterIP Service to expose Trust app
+apiVersion: v1
+kind: Service
+metadata:
+  name: trustweb
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: trustweb
+---
+#Trust App deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trustweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trustweb
+  template:
+    metadata:
+      labels:
+        app: trustweb
+    spec:
+      containers:
+      - name: trustweb
+        image: harbor.dev.kubix.tm.com.my/trust/trustweb:<VERSION>
+        ports:
+        - containerPort: 80

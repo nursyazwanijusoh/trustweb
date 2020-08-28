@@ -1,0 +1,63 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/trust/trustweb:${CI_COMMIT_SHORT_SHA}
+
+test:
+  stage: test
+  script:
+    - ./task_run_tests.sh
+  tags:
+    - kubix-runner
+
+build:
+  stage: build
+  script:
+    - docker login harbor.dev.kubix.tm.com.my -u 'robot$gitlab' -p ${HARBOR_PASSWORD}
+    - docker build -t ${CONTAINER_IMAGE} .
+    - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}
+    - docker push ${CONTAINER_IMAGE}
+  tags:
+    - kubix-runner
+  only:
+    - master
+
+deploy-dev:
+  stage: deploy
+  script:
+    - kubectl config set-cluster k8s --server="${SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${CA}
+    - kubectl config set-credentials gitlab --token="${USER_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustweb.yml
+    - kubectl apply -f k8s/trustweb.yml
+  environment:
+    name: development
+    url: https://trustweb.dev.kubix.tm/
+  tags:
+    - kubix-runner
+  only:
+    - master
+  #when: manual
+deploy-prod:
+  stage: deploy
+  script:
+    - kubectl config set-cluster k8s --server="${SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${CA}
+    - kubectl config set-credentials gitlab --token="${USER_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - kubectl apply -f k8s/trustweb.yml
+  environment:
+    name: production
+    url: https://trustweb.prod.kubix.tm/
+  tags:
+    - kubix-runner
+  only:
+    - master
+  when: manual
+
