@@ -150,7 +150,7 @@
                             delivery,
                             teamwork is crucial. We need to change the way we work.how we deal with each other. We need
                             to be more
-                            collaborative</span>
+                            collaborative. "REMOVE THIS: Jeffry wuz ere"</span>
 
                         <ul>
                             <li><i class="ion-android-checkmark-circle"></i>
