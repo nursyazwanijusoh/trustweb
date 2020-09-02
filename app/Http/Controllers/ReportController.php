@@ -118,9 +118,15 @@ class ReportController extends Controller
     return view('report.regstat', ['chart' => $schart, 'title' => 'Registered User By Division']);
   }
 
-  public function floorAvailability(){
+  public function floorAvailability(Request $req){
     $bookh = new BookingHelper;
-    $buildlist = building::all()->sortBy('building_name');
+
+    if($req->filled('tag')){
+      $buildlist = building::where('unit', $req->tag)->orderBy('building_name', 'ASC')->get();
+    } else {
+      $buildlist = building::all()->sortBy('building_name');
+    }
+
     $ret = [];
     foreach ($buildlist as $abuild) {
       array_push($ret, $bookh->getBuildingStat($abuild->id));
@@ -132,7 +138,7 @@ class ReportController extends Controller
     $occp = [];
 
     foreach($ret as $afloor){
-      array_push($label, $afloor['building_name']);
+      array_push($label, $afloor['building_name'] . ' - ' . $afloor['unit']);
       array_push($frees, $afloor['free_seat']);
       array_push($resv, $afloor['reserved_seat']);
       array_push($occp, $afloor['occupied_seat']);

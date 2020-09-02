@@ -256,6 +256,7 @@ class BookingHelper extends Controller
     return [
       'building_id' => $building_id,
       'building_name' => $loc_name,
+      'unit' => $thebuild->unit,
       'total_seat' => $totalcount,
       'free_seat' => $freecount,
       'reserved_seat' => $reservedcount,
