@@ -13,6 +13,7 @@ RUN apt-get install -y \
     libbz2-dev \
     libpng-dev \
     libjpeg-dev \
+    libldap2-dev \
     libmcrypt-dev \
     libreadline-dev \
     libfreetype6-dev \
@@ -40,8 +41,15 @@ RUN docker-php-ext-install \
     pdo_mysql \
     zip
 
+RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu
+RUN docker-php-ext-install ldap
+
+
 COPY . /var/www/html
 COPY .env.example /var/www/html/\.env
 RUN chown -R www-data:www-data /var/www/html/storage
+
 RUN cd /var/www/html &&  php artisan key:generate
 RUN cd /var/www/html &&  php artisan passport:keys
+ENTRYPOINT ["/var/www/html/entrypoint.sh"]
+
