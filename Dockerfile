@@ -52,5 +52,4 @@ RUN chown -R www-data:www-data /var/www/html/storage
 
 RUN cd /var/www/html &&  php artisan key:generate
 RUN cd /var/www/html &&  php artisan passport:keys
-ENTRYPOINT ["/var/www/html/entrypoint.sh"]
 
