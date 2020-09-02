@@ -142,7 +142,7 @@
 
                     <div class="col-lg-6 content text-justify">
                         <div class="section-header">
-                            <h2>AGILE OFFICE ..</h2>
+                            <h2>AGILE OFFICE.</h2>
                         </div>
 
                         <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
@@ -150,7 +150,7 @@
                             delivery,
                             teamwork is crucial. We need to change the way we work.how we deal with each other. We need
                             to be more
-                            collaborative</span>
+                            collaborative. "REMOVE THIS: Jeffry wuz ere"</span>
 
                         <ul>
                             <li><i class="ion-android-checkmark-circle"></i>

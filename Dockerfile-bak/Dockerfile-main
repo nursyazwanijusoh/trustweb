@@ -1,7 +1,6 @@
-FROM harbor.dev.kubix.tm.com.my/trust/trustwebbase:1 
-#php:7.2-apache
+FROM harbor.dev.kubix.tm.com.my/trust/trustwebbase:1
 
-RUN apt-get update
+#RUN apt-get update
 
 # 1. development packages
 #RUN apt-get install -y \
@@ -14,7 +13,6 @@ RUN apt-get update
 #    libbz2-dev \
 #    libpng-dev \
 #    libjpeg-dev \
-#    libldap2-dev \
 #    libmcrypt-dev \
 #    libreadline-dev \
 #    libfreetype6-dev \
@@ -42,14 +40,8 @@ RUN a2enmod rewrite headers
 #    pdo_mysql \
 #    zip
 
-#RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu
-#RUN docker-php-ext-install ldap
-
-
 COPY . /var/www/html
 COPY .env.example /var/www/html/\.env
 RUN chown -R www-data:www-data /var/www/html/storage
-
 RUN cd /var/www/html &&  php artisan key:generate
-RUN cd /var/www/html &&  php artisan passport:keys
-
+RUN cd /var/www/html &&  php artisan passport:keys --force
