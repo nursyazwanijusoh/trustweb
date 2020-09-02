@@ -142,7 +142,7 @@
 
                     <div class="col-lg-6 content text-justify">
                         <div class="section-header">
-                            <h2>AGILE OFFICE .</h2>
+                            <h2>AGILE OFFICE ..</h2>
                         </div>
 
                         <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
