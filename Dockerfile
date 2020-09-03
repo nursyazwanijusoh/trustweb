@@ -1,5 +1,5 @@
 #FROM harbor.dev.kubix.tm.com.my/trust/trustwebbase:1 
-php:7.2-apache
+FROM php:7.2-apache
 
 RUN apt-get update
 
