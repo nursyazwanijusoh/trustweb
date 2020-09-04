@@ -36,6 +36,8 @@ deploy-dev:
     - kubectl config set-context --current --namespace="${NAMESPACE}"
     - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustweb.yml
     - kubectl apply -f k8s/trustweb.yml
+    - kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan migrate --force
+    - kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan queue:work&
   environment:
     name: development
     url: https://trustweb.dev.kubix.tm/
