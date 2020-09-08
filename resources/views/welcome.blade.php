@@ -80,12 +80,7 @@
                     <li class="menu-active"><a href="#body">Home</a></li>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#services">Features</a></li>
-                    <li class="menu-has-children"><a href="#">Guide</a>
-                      <ul>
-                          <li><a class="dropdown-item" href="{{ route('home', [], false) }}">trUSt General Guide</a></li>
-                          <li><a class="dropdown-item" href="{{ route('booking_faq', [], false) }}">Space Booking FAQ</a></li>
-                      </ul>
-                    </li>
+                    <li><a href="{{ route('guides', [], false) }}" title="Collection of user guides">Guides</i></a></li>
                     <!-- <li class="menu-has-children"><a href="">Drop Down</a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>

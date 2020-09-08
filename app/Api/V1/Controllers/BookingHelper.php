@@ -9,6 +9,7 @@ use App\building;
 use App\Office;
 use App\place;
 use App\User;
+use App\LocationHistory;
 use \DateTime;
 use \DateTimeZone;
 use App\common\NotifyHelper;

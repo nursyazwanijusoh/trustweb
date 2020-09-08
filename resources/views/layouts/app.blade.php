@@ -46,8 +46,8 @@
 
                 <nav id="nav-menu-container">
                       <ul class="nav-menu">
-                        <li><a class="nav-link" href="{{ route('hofs', [], false) }}" title="Hall Of Fame"><i class="fa fa-trophy" style="color:red"></i></a></li>
-                        <li><a class="nav-link" href="{{ route('guides', [], false) }}" title="Hall Of Fame">Guides</i></a></li>
+                        <li><a class="nav-link" href="{{ route('hofs', [], false) }}" title="Hall Of Fame"><i class="fa fa-trophy" style="color:blue"></i></a></li>
+                        <li><a class="nav-link" href="{{ route('guides', [], false) }}" title="Collection of user guides">Guides</i></a></li>
                         @guest
                         @else
                         <!-- <li><a href="{{ route('staff', [], false) }}">Home</a></li> -->
