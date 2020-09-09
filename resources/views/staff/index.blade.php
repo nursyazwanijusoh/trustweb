@@ -75,7 +75,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-secondary">
                         <div class="card-body">
-                          <p class="card-text"><i class="fa fa-check-square-o"></i> Workspace History</p>
+                          <p class="card-text"><i class="fa fa-building-o"></i> Workspace History</p>
                         </div>
                       </div>
                     </a>
@@ -96,7 +96,16 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     <a href="{{ route('report.agm.recent', ['agm_id' => $user->id ], false) }}">
                       <div class="card text-center text-white bg-primary">
                         <div class="card-body">
-                          <p class="card-text"><i class="fa fa-people"></i> Team Productivity</p>
+                          <p class="card-text"><i class="fa fa-users"></i> Team Productivity</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-6 col-xl-4 mb-1 p-1">
+                    <a href="{{ route('report.team.locations', ['uid' => $user->id ], false) }}">
+                      <div class="card text-center text-black bg-light">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-map"></i> Team Whereabout</p>
                         </div>
                       </div>
                     </a>

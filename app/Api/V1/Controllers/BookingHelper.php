@@ -12,7 +12,9 @@ use App\User;
 use App\LocationHistory;
 use \DateTime;
 use \DateTimeZone;
+use \Carbon\Carbon;
 use App\common\NotifyHelper;
+use App\common\UserRegisterHandler;
 
 /**
  * class to manage all booking related activities
@@ -95,10 +97,18 @@ class BookingHelper extends Controller
   public function checkIn($staff, $seat_id, $lat = 0, $long = 0, $event_id = 0, $ev_att_id = 0){
     $time = new DateTime('NOW');
     $time->setTimezone(new DateTimeZone('+0800'));
+    $intime = Carbon::now();
+
+    $okaceinfo = $this->getPlaceInfo($seat_id);
 
     // clear the reservation
     // $this->clearReservation($staff);
     // check out from current, if exist
+    if(isset($staff->curr_attendance)){
+      // clock out that existing attendance
+      UserRegisterHandler::attClockOut($staff->id, $intime, $lat, $long, 'Seat check-in', $okaceinfo->loc_name);
+    }
+
     $this->checkOut($staff->id, 'checking in elsewhere');
 
     // set the seat status
@@ -126,8 +136,6 @@ class BookingHelper extends Controller
     }
 
     $cekin->save();
-
-    $okaceinfo = $this->getPlaceInfo($seat_id);
 
     $lochist = new LocationHistory;
     $lochist->user_id = $staff->id;

@@ -21,6 +21,7 @@ use App\common\HDReportHandler;
 use App\common\UserRegisterHandler;
 use App\common\GDWActions;
 use App\common\NotifyHelper;
+use App\common\TeamHelper;
 use App\Api\V1\Controllers\BookingHelper;
 
 class UserController extends Controller
@@ -55,6 +56,28 @@ class UserController extends Controller
       }
 
       return $this->respond_json(403, 'Missmatched token', []);
+
+    }
+
+    public function getTeamLocation(Request $req){
+      $input = app('request')->all();
+
+  		$rules = [
+  			'staff_id' => ['required'],
+        'idate' => ['required']
+  		];
+
+  		$validator = app('validator')->make($input, $rules);
+  		if($validator->fails()){
+  			return $this->respond_json(412, 'Invalid input', $input);
+  		}
+
+      $cuser = User::find($req->staff_id);
+      if($cuser){
+        return $this->respond_json(200, 'Team location', TeamHelper::GetTeamLocInfo($cuser, $req->idate));
+      }
+
+      return $this->respond_json(404, 'User not found', $input);
 
     }
 

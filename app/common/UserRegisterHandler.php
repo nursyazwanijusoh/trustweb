@@ -53,6 +53,7 @@ class UserRegisterHandler
     // first, check if this user exists
     $ldapherpel = new LdapHelper;
     $errormsg = "success";
+    $ecode = 200;
     $field = 'staff_no';
 
     if(strpos($username, '@') !== false){
@@ -93,6 +94,7 @@ class UserRegisterHandler
       if($ldapresp['code'] != 200){
         // bad ldap login
         $errormsg = $ldapresp['msg'];
+        $ecode = 500;
   		} else {
         // update the data back to the User
         $user = UserRegisterHandler::updateFromLdap($ldapresp);
@@ -105,6 +107,7 @@ class UserRegisterHandler
         $cconfig = CommonConfig::where('key', 'lock_division')->first();
         if($cconfig && $cconfig->value == 'true' && $user->role == 3 && $user->Division->allowed == false){
           $errormsg = "Div not allowed";
+          $ecode = 403;
         } else {
           // get the subords info
 
@@ -133,7 +136,8 @@ class UserRegisterHandler
 
     return [
       'user' => $user,
-      'msg' => $errormsg
+      'msg' => $errormsg,
+      'ecode' => $ecode
     ];
   }
 

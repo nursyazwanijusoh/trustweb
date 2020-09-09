@@ -13,6 +13,7 @@ use App\BatchJob;
 use \Carbon\Carbon;
 use App\common\GDWReports;
 use App\common\ExcelHandler;
+use App\common\TeamHelper;
 use App\common\GDWActions;
 use App\Jobs\DiaryGroupReportGen;
 
@@ -1280,6 +1281,29 @@ class GwdReportController extends Controller
       // then find this person's subs
       $this->getSubsInfo($ast->persno, $daterange, $sunitid, $cdate, $ldate);
     }
+  }
+
+  public function teamlocs(Request $req){
+
+    $cuser = User::find($req->uid);
+    $cccdate = new \Carbon\Carbon;
+    $idate = $cccdate->toDateString();
+    if($req->filled('sdate')){
+      $idate = $req->sdate;
+    }
+    if($cuser){
+
+      $tlocs = TeamHelper::GetTeamLocInfo($cuser, $idate);
+
+      return view('gwd.teamloc', [
+        's_date' => $idate,
+        'agm_id' => $cuser->id,
+        's_name' => $cuser->subunit,
+        'sdata' => $tlocs
+      ]);
+    }
+
+    abort(404);
   }
 
 }

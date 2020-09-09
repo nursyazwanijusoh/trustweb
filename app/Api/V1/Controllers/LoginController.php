@@ -33,8 +33,10 @@ class LoginController extends Controller
 
 		// dd($logresp);
 
-		if($logresp['msg'] == 'failed'){
+		if($logresp['msg'] == 'failed' || $logresp['msg'] == 'Invalid credentials'){
 			return $this->respond_json(403, 'Invalid Credential', []);
+		} elseif($logresp['ecode'] != 200){
+			return $this->respond_json($logresp['ecode'], $logresp['msg'], []);
 		} elseif ($logresp['msg'] == 'email') {
 			return $this->respond_json(403, 'Pending Email Validation', $logresp);
 		} elseif ($logresp['msg'] == 'pending') {

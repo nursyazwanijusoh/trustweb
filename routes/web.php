@@ -23,7 +23,7 @@ Route::get('/postreg', 'HomeController@postreg')->name('postreg');
 Route::get('/resend', 'HomeController@resend')->name('verification.resend');
 Route::get('/delete', 'HomeController@troll')->name('troll');
 Route::get('/info', 'HomeController@info')->name('info');
-Route::get('/hallofflame', 'HomeController@hallofshame')->name('hofs');
+Route::get('/hallofflame', 'HomeController@hallofshame')->name('hofs')->middleware('auth');
 Route::get('/guides', 'HomeController@guides')->name('guides');
 
 Route::get('/booking_faq', 'HomeController@booking_faq')->name('booking_faq');
@@ -158,7 +158,8 @@ Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gw
 // Route::post('/reports/gwd/detail', 'GwdReportController@detailres')->name('report.gwd.detailres');
 // Route::get('/reports/gwd/gsum', 'GwdReportController@grpSummary')->name('reports.gwd.gsum');
 // Route::post('/reports/gwd/gsum', 'GwdReportController@doGrpSummary')->name('reports.gwd.dogsum');
-Route::get('/reports/agmrecent', 'GwdReportController@agmrecent')->name('report.agm.recent');
+Route::get('/reports/teamproductivity', 'GwdReportController@agmrecent')->name('report.agm.recent');
+Route::get('/reports/teamlocations', 'GwdReportController@teamlocs')->name('report.team.locations');
 
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');
