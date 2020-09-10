@@ -8,6 +8,8 @@ use App\SkillType;
 use App\CommonSkillset;
 use App\common\IopHandler;
 use App\User;
+use App\Checkin;
+use \Carbon\Carbon;
 
 class WebApiController extends Controller
 {
@@ -86,6 +88,52 @@ class WebApiController extends Controller
     return $result;
 
   }
+
+  public function getPersonalLocApi(Request $req){
+    $user = User::find($req->user_id);
+    if($user){
+
+    } else {
+      abort(404);
+    }
+
+    $cdate = new Carbon($req->tdate);
+    $ldate = new Carbon($req->fdate);
+    $cdate->addSecond();
+    $data = [];
+
+    $data['name'] = $user->name;
+    $data['staff_no'] = $user->staff_no;
+    $data['division'] = $user->unit;
+    // $data['section'] = $user->Section();
+    // $data['email'] = $user->email;
+
+    $daterange = new \DatePeriod(
+      $ldate,
+      \DateInterval::createFromDateString('1 day'),
+      $cdate
+    );
+
+    foreach ($daterange as $value) {
+      // dapatkan 1st checkin untuk hari tu
+      $cekin = Checkin::where('user_id', $user->id)
+        ->whereDate('checkin_time', $value)->first();
+      $tloc = '';
+      if($cekin){
+        $bd = $cekin->place->building;
+        $tloc = $bd->floor_name . ' - ' . $bd->building_name;
+      }
+      $colid = 'd' . $value->format('md');
+      $data[$colid] = $tloc;
+
+    }
+
+    // $data['t'] = $user->Section();
+
+    return $data;
+
+  }
+
 
 
 

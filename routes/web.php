@@ -160,6 +160,7 @@ Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gw
 // Route::post('/reports/gwd/gsum', 'GwdReportController@doGrpSummary')->name('reports.gwd.dogsum');
 Route::get('/reports/teamproductivity', 'GwdReportController@agmrecent')->name('report.agm.recent');
 Route::get('/reports/teamlocations', 'GwdReportController@teamlocs')->name('report.team.locations');
+Route::get('/reports/loc/personal', 'WebApiController@getPersonalLocApi')->name('report.loc.api.person');
 
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');

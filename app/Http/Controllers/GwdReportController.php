@@ -595,6 +595,8 @@ class GwdReportController extends Controller
         return $this->doGrpTable($req);
       } elseif ($req->action == 'verticaldate') {
         return $this->doGrpVertExcel($req);
+      } elseif($req->action == 'gloc') {
+        return $this->doGrpLocTable($req);
       }
     }
 
@@ -695,6 +697,57 @@ class GwdReportController extends Controller
     $headers['productivity'] = $pdtivity;
 
     return $headers;
+  }
+
+  public function doGrpLocTable(Request $req){
+
+    // gid=1&fdate=2020-04-10&tdate=2020-04-17&action=datatable
+
+    $cgrp = CompGroup::find($req->gid);
+    if($cgrp){
+
+    } else {
+      return redirect()->back()->withInput()->with([
+        'alert' => 'Group 404',
+        'a_type' => 'danger'
+      ]);
+    }
+
+    $cdate = new Carbon($req->tdate);
+    $ldate = new Carbon($req->fdate);
+    $cdate->addSecond();
+    $headers = ['Name', 'Staff No', 'Division'];
+
+    $daterange = new \DatePeriod(
+          $ldate,
+          \DateInterval::createFromDateString('1 day'),
+          $cdate
+        );
+
+    // dd($daterange);
+    $contentrender = [];
+    foreach ($daterange as $key => $value) {
+      array_push($headers, $value->format('d (D)'));
+      $colid = 'd' . $value->format('md');
+      array_push($contentrender, $colid);
+
+    }
+
+    $users = [];
+    foreach ($cgrp->Members as $onemember) {
+      foreach ($onemember->Staffs as $value) {
+        array_push($users, $value->id);
+      }
+    }
+
+    return view('report.rptgrplocation', [
+      'header' => $headers,
+      'groupname' => $cgrp->name,
+      'startdate' => $req->fdate,
+      'enddate' => $req->tdate,
+      'idlist' => $users,
+      'dtablerender' => $contentrender
+    ]);
   }
 
   public function doGrpTable(Request $req){
