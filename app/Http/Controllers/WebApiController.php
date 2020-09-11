@@ -117,7 +117,7 @@ class WebApiController extends Controller
     foreach ($daterange as $value) {
       // dapatkan 1st checkin untuk hari tu
       $cekin = Checkin::where('user_id', $user->id)
-        ->latest()->first();
+        ->whereDate('checkin_time', $value)->first();
       $tloc = '';
       if($cekin){
         $bd = $cekin->place->building;
