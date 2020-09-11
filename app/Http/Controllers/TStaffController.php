@@ -289,6 +289,8 @@ class TStaffController extends Controller
       'iscaretaker' => $iscaretaker,
       'todaytitle' => $todaytitle,
       'weektitle' => $weektitle,
+      'cdate' => $cdate,
+      'ldate' => $ldate
     ];
     // dd($final);
 

@@ -195,7 +195,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </div>
                   </div>
                   <div class="card mb-3" title="{{ $weektitle }}">
-                    <div class="card-header bg-{{ $weekcol }} text-white">Past 7 Days</div>
+                    <div class="card-header bg-{{ $weekcol }} text-white">Past 7 Days ( {{ $cdate->toDateString() }} to {{ $ldate->subDay()->toDateString() }} )</div>
                     <div class="card-body">
                       <div class="row text-center">
                         <div class="col-4 border-right">
