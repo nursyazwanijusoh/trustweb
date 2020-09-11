@@ -14,7 +14,7 @@ class TeamHelper
 
       // memula dapatkan sendiri punya dulu
       $myloc = LocationHistory::where('user_id', $currentuser->id)
-        ->whereDate('created_at', $idate)->orderBy('created_at', 'DESC')->first();
+        ->whereDate('created_at', $idate)->latest()->first();
 
       $ltime = '';
       $lact = '';
