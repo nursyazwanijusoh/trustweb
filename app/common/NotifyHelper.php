@@ -9,6 +9,11 @@ class NotifyHelper
 {
 
     public static function SendPushNoti($noti_id, $title, $body, $data = []){
+
+      if(!isset($noti_id)){
+        return 'no noti id';
+      }
+
       $client = new Client();
       $param = [
         'to' => $noti_id,
