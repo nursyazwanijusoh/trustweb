@@ -830,8 +830,14 @@ class ReportController extends Controller
 
 
     // 2. dapatkan list of floor yg ada org
-    $dfloors = place::distinct()->where('status', 3)
-      ->get(['building_id'])->pluck('building_id');
+    $dfloors = DB::table('places')
+      ->join('checkins', 'places.id', '=', 'checkins.place_id')
+      ->join('users', 'checkins.id', '=', 'users.curr_checkin')
+      ->select('places.building_id')
+      ->where('users.status', 1)
+      ->whereNull('checkins.checkout_time')
+      ->distinct()
+      ->get(['places.building_id'])->pluck('building_id');
 
     $afloors = building::find($dfloors);
 
@@ -841,12 +847,11 @@ class ReportController extends Controller
 
       $cfloors = DB::table('places')
         ->join('checkins', 'places.id', '=', 'checkins.place_id')
-        ->join('users', 'checkins.user_id', '=', 'users.id')
+        ->join('users', 'checkins.id', '=', 'users.curr_checkin')
         ->join('units', 'users.unit_id', '=', 'units.id')
         ->select(DB::raw('count(*) as scount, units.pporgunitdesc'))
         ->where('places.building_id', $af->id)
         ->where('users.status', 1)
-        ->whereNotNull('users.curr_checkin')
         ->whereNull('checkins.checkout_time')
         ->groupBy('units.pporgunitdesc')
         ->get();
@@ -905,7 +910,6 @@ class ReportController extends Controller
 
     return view('report.rptgrpcurloc', [
       'sumchart' => $schart,
-      'title' => 'Check-in By Division',
       'floors' => $afloors
     ]);
 

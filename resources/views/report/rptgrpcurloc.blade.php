@@ -14,13 +14,13 @@
 
 
     <div class="col-lg-12">
-      <div class="card mb-3">
+      <div class="card mb-3 p-1">
         <div class="card-header">Floor Utilization Breakdown</div>
         <div class="card-body">
-          @foreach($floors as $af)
           <div class="row">
+          @foreach($floors as $af)
             <div class="col-lg-6">
-              <div class="card mb-3">
+              <div class="card mb-3 mx-1">
                 <div class="card-body">
                   {!! $af->chart->render() !!}
                 </div>
@@ -29,8 +29,8 @@
                 </div>
               </div>
             </div>
-          </div>
           @endforeach
+          </div>
         </div>
       </div>
     </div>
