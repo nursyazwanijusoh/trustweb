@@ -35,7 +35,8 @@
                   @endif
                   <br />
                   <h5 class="card-title">Misc</h5>
-                  <a href="{{ route('reports.floorutil', [], false) }}" class="list-group-item list-group-item-action">Current Floor Utilization</a>
+                  <a href="{{ route('reports.floorutil', [], false) }}" class="list-group-item list-group-item-action">Current Floor-Seat Utilization</a>
+                  <a href="{{ route('reports.c.overall', [], false) }}" class="list-group-item list-group-item-action">Current Floor-Division Utilization</a>
                   <a href="{{ route('staff.find', [], false) }}" class="list-group-item list-group-item-action">Find Staff</a>
                   <a href="{{ route('dash.index', [], false) }}" class="list-group-item list-group-item-action">Dashboard Data Fetch</a>
                 </div>

@@ -14,6 +14,7 @@ use App\building;
 use App\SubUnit;
 use App\ActivityType;
 use App\Partner;
+use App\place;
 use App\Api\V1\Controllers\BookingHelper;
 use App\GwdActivity;
 
@@ -760,6 +761,154 @@ class ReportController extends Controller
     // dd($schart);
 
     return view('report.regstat', ['chart' => $schart, 'title' => 'Check-in By Division']);
+  }
+
+  public function checkinByFloorDiv(Request $req){
+    $dlabel = [];
+    $dcincount = [];
+    $dstaffcount = [];
+
+    // 1. dapatkan overall division yg ada staff check-in
+    $divids = User::distinct()->where('status', 1)->whereNotNull('curr_checkin')
+      ->get(['unit_id'])->pluck('unit_id');
+
+    // untuk setiap div, dapatkan details
+    $divs = Unit::find($divids);
+    foreach($divs as $adiv){
+      $dlabel[] = $adiv->pporgunitdesc;
+      $dcincount[] = User::where('unit_id', $adiv->id)->where('status', 1)
+        ->whereNotNull('curr_checkin')->count();
+      $dstaffcount[] = User::where('unit_id', $adiv->id)->where('status', 1)->count();
+    }
+
+    $heighttt = 40 + (50 * count($dlabel));
+
+    $schart = app()->chartjs
+      ->name('barChartTest')
+      ->type('horizontalBar')
+      ->size(['width' => 800, 'height' => $heighttt])
+      ->labels($dlabel)
+      ->datasets([
+         [
+             "label" => "Staff Count",
+             'backgroundColor' => 'rgba(99, 255, 132, 0.9)',
+             'data' => $dstaffcount
+         ],
+         [
+             "label" => "Checked-in",
+             'backgroundColor' => 'rgba(77, 77, 155, 0.9)',
+             'data' => $dcincount
+         ]
+      ])
+      ->options([
+       'maintainAspectRatio' => false,
+       'responsive' => true,
+       'tooltips' => [
+         'mode' => 'index',
+         'intersect' => false,
+       ],
+       'hover' => [
+         'mode' => 'nearest',
+         'intersect' => true,
+       ],
+       'scales' => [
+         'xAxes' => [[
+           'scaleLabel' => [
+             'display' => true,
+             'LabelString' => 'Count',
+           ]
+         ]],
+         'yAxes' => [[
+           'scaleLabel' => [
+             'display' => true,
+             'LabelString' => 'Division',
+           ]
+         ]]
+       ]
+     ]);
+
+
+
+    // 2. dapatkan list of floor yg ada org
+    $dfloors = place::distinct()->where('status', 3)
+      ->get(['building_id'])->pluck('building_id');
+
+    $afloors = building::find($dfloors);
+
+    foreach($afloors as $af){
+      $labels = [];
+      $data = [];
+
+      $cfloors = DB::table('places')
+        ->join('checkins', 'places.id', '=', 'checkins.place_id')
+        ->join('users', 'checkins.user_id', '=', 'users.id')
+        ->join('units', 'users.unit_id', '=', 'units.id')
+        ->select(DB::raw('count(*) as scount, units.pporgunitdesc'))
+        ->where('places.building_id', $af->id)
+        ->where('users.status', 1)
+        ->whereNotNull('users.curr_checkin')
+        ->whereNull('checkins.checkout_time')
+        ->groupBy('units.pporgunitdesc')
+        ->get();
+
+
+      foreach($cfloors as $df){
+        $labels[] = $df->pporgunitdesc;
+        $data[] = $df->scount;
+      }
+
+      $heighd = 40 + (50 * count($labels));
+
+      $dchart = app()->chartjs
+        ->name('pc'.$af->id)
+        ->type('horizontalBar')
+        ->size(['width' => 400, 'height' => $heighd])
+        ->labels($labels)
+        ->datasets([
+           [
+               "label" => "Check-in Count",
+               'backgroundColor' => 'rgba(77, 77, 155, 0.9)',
+               'data' => $data
+           ]
+        ])
+        ->options([
+         'maintainAspectRatio' => false,
+         'responsive' => true,
+         'tooltips' => [
+           'mode' => 'index',
+           'intersect' => false,
+         ],
+         'hover' => [
+           'mode' => 'nearest',
+           'intersect' => true,
+         ],
+         'scales' => [
+           'xAxes' => [[
+             'scaleLabel' => [
+               'display' => true,
+               'LabelString' => 'Count',
+             ]
+           ]],
+           'yAxes' => [[
+             'scaleLabel' => [
+               'display' => true,
+               'LabelString' => 'Division',
+             ]
+           ]]
+         ]
+       ]);
+
+       $af->chart = $dchart;
+
+    }
+
+
+    return view('report.rptgrpcurloc', [
+      'sumchart' => $schart,
+      'title' => 'Check-in By Division',
+      'floors' => $afloors
+    ]);
+
   }
 
 

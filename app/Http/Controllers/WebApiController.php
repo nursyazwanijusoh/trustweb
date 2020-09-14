@@ -9,6 +9,8 @@ use App\CommonSkillset;
 use App\common\IopHandler;
 use App\User;
 use App\Checkin;
+use App\place;
+use \DB;
 use \Carbon\Carbon;
 
 class WebApiController extends Controller
@@ -131,6 +133,39 @@ class WebApiController extends Controller
     // $data['t'] = $user->Section();
 
     return $data;
+
+  }
+
+  public function getFloorCheckinSummary(Request $req){
+
+    if($req->filled('pid')){
+
+      $labels = [];
+      $data = [];
+
+      $cfloors = DB::table('places')
+        ->join('users', 'places.checkin_staff_id', '=', 'users.id')
+        ->join('units', 'users.unit_id', '=', 'units.id')
+        ->select(DB::raw('count(*) as scount, units.pporgunitdesc'))
+        ->where('places.building_id', $req->pid)
+        ->where('users.status', 1)
+        ->whereNotNull('users.curr_checkin')
+        ->groupBy('units.pporgunitdesc')
+        ->get();
+
+
+      foreach($cfloors as $af){
+        $labels[] = $af->pporgunitdesc;
+        $data[] = $af->scount;
+      }
+
+
+
+    } else {
+      abort(403);
+    }
+
+
 
   }
 
