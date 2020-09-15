@@ -83,7 +83,7 @@ class BookingHelper extends Controller
       $staff->curr_checkin = null;
       $staff->save();
 
-      if($remark != 'manual' && isset($staff->pushnoti_id)){
+      if($remark != 'manual' && isset($staff->pushnoti_id) && strlen($staff->pushnoti_id) > 10){
         $resp = NotifyHelper::SendPushNoti(
           $staff->pushnoti_id,
           'Checked out from seat ' . $place->label,

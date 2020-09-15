@@ -348,6 +348,12 @@ class UserRegisterHandler
       $address = '';
     }
 
+    // double check if there's existing clock in
+    if(isset($user->curr_attendance)){
+      // clock out that existing attendance
+      UserRegisterHandler::attClockOut($user->id, $intime, $lat, $long, $reasonco, $address);
+    }
+
     $lochist = new LocationHistory;
     $lochist->user_id = $user->id;
     $lochist->latitude = $lat;
@@ -363,12 +369,6 @@ class UserRegisterHandler
 
     $lochist->action = 'Check-in';
     $lochist->save();
-
-    // double check if there's existing clock in
-    if(isset($user->curr_attendance)){
-      // clock out that existing attendance
-      UserRegisterHandler::attClockOut($user->id, $intime, $lat, $long, $reasonco, $address);
-    }
 
     // create new attendance
     $att = new Attendance;
@@ -474,7 +474,7 @@ class UserRegisterHandler
 
   public static function attLocHistory($staff_id){
     $items = LocationHistory::where('user_id', $staff_id)
-      ->latest()->limit(10)->get();
+      ->latest('id')->limit(10)->get();
 
     return $items;
   }

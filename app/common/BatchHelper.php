@@ -161,22 +161,25 @@ class BatchHelper
         continue;
       }
 
+      $gp_no = isset($value->group_no) ? $value->group_no : '0';
+      $un_no = isset($value->unit_no) ? $value->unit_no : '0';
+
       // begin update the data
       $user->name = $value->name;
       $user->cost_center = $value->cost_center;
       $user->position = $value->postion_name;
-      $user->lob = $value->group_no;
+      $user->lob = $gp_no;
       $user->report_to = $value->reportingto_no;
       $user->status = 1;
 
       // find the division
-      $unit = Unit::where('pporgunit', $value->group_no)->first();
+      $unit = Unit::where('pporgunit', $gp_no)->first();
       if($unit){
 
       } else {
         $unit = new Unit;
         $unit->lob = 3000;
-        $unit->pporgunit = $value->group_no;
+        $unit->pporgunit = $gp_no;
       }
 
       $unit->pporgunitdesc = $value->group_name;
@@ -184,19 +187,19 @@ class BatchHelper
       $user->unit_id = $unit->id;
 
       // then the subdiv
-      $subu = SubUnit::where('ppsuborg', $value->unit_no)->first();
+      $subu = SubUnit::where('ppsuborg', $un_no)->first();
       if($subu){
       } else {
         $subu = new SubUnit;
         $subu->lob = 3000;
-        $subu->ppsuborg = $value->unit_no;
+        $subu->ppsuborg = $un_no;
       }
 
-      $unitname = isset($value->unit_name) ? $value->unit_name : $value->unit_no;
-      $grpname = isset($value->group_name) ? $value->group_name : $value->group_no;
+      $unitname = isset($value->unit_name) ? $value->unit_name : $un_no;
+      $grpname = isset($value->group_name) ? $value->group_name : $gp_no;
 
       $subu->ppsuborgunitdesc = $unitname;
-      $subu->pporgunit = $value->group_no;
+      $subu->pporgunit = $gp_no;
       $subu->pporgunitdesc = $grpname;
       $subu->save();
 

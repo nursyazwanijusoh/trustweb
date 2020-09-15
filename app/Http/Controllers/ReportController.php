@@ -774,6 +774,7 @@ class ReportController extends Controller
 
     // untuk setiap div, dapatkan details
     $divs = Unit::find($divids);
+    $gotdata = count($divs) > 0 ? true : false;
     foreach($divs as $adiv){
       $dlabel[] = $adiv->pporgunitdesc;
       $dcincount[] = User::where('unit_id', $adiv->id)->where('status', 1)
@@ -781,7 +782,7 @@ class ReportController extends Controller
       $dstaffcount[] = User::where('unit_id', $adiv->id)->where('status', 1)->count();
     }
 
-    $heighttt = 40 + (50 * count($dlabel));
+    $heighttt = 60 + (50 * count($dlabel));
 
     $schart = app()->chartjs
       ->name('barChartTest')
@@ -862,7 +863,7 @@ class ReportController extends Controller
         $data[] = $df->scount;
       }
 
-      $heighd = 40 + (50 * count($labels));
+      $heighd = 60 + (40 * count($labels));
 
       $dchart = app()->chartjs
         ->name('pc'.$af->id)
@@ -872,7 +873,7 @@ class ReportController extends Controller
         ->datasets([
            [
                "label" => "Check-in Count",
-               'backgroundColor' => 'rgba(77, 77, 155, 0.9)',
+               'backgroundColor' => 'rgba(177, 77, 155, 0.9)',
                'data' => $data
            ]
         ])
@@ -910,7 +911,8 @@ class ReportController extends Controller
 
     return view('report.rptgrpcurloc', [
       'sumchart' => $schart,
-      'floors' => $afloors
+      'floors' => $afloors,
+      'gotdata' => $gotdata
     ]);
 
   }
