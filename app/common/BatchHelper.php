@@ -48,13 +48,29 @@ class BatchHelper
             // reverse the cuti
             $curcuti->reverseCuti();
             // then delete the cuti
-            $curcuti->delete();
+            // $curcuti->delete();
+
+            // delete semua cuti untuk tarikh tu. cater cases multi lines
+            $curcuti2 = StaffLeave::where('leave_type_id', $leavetype->id)
+              ->whereDate('start_date', $c->date_start)
+              ->whereDate('end_date', $c->date_end)
+              ->where('user_id', $user->id)
+              ->delete();
+
             $c->load_status = 'S';
           } elseif($c->operation == 'DEL' && $c->status == 'POSTED'){
             // reverse the cuti
             $curcuti->reverseCuti();
             // then delete the cuti
-            $curcuti->delete();
+            // $curcuti->delete();
+
+            // delete semua cuti untuk tarikh tu. cater cases multi lines
+            $curcuti2 = StaffLeave::where('leave_type_id', $leavetype->id)
+              ->whereDate('start_date', $c->date_start)
+              ->whereDate('end_date', $c->date_end)
+              ->where('user_id', $user->id)
+              ->delete();
+
             $c->load_status = 'S';
           } else {
             // most likely duplicate. ignore
