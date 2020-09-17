@@ -103,9 +103,18 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                   </div>
                   <div class="col-6 col-xl-4 mb-1 p-1">
                     <a href="{{ route('report.team.locations', ['uid' => $user->id ], false) }}">
-                      <div class="card text-center text-black bg-light">
+                      <div class="card text-center text-dark bg-light">
                         <div class="card-body">
                           <p class="card-text"><i class="fa fa-map"></i> Team Whereabout</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-6 col-xl-4 mb-1 p-1" title="Since you asked for it">
+                    <a href="{{ route('reports.c.detail', ['uid' => $user->id ], false) }}">
+                      <div class="card text-center text-dark bg-secondary">
+                        <div class="card-body">
+                          <p class="card-text"><i class="fa fa-calendar-check-o"></i> Team Check-in Details</p>
                         </div>
                       </div>
                     </a>

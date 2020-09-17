@@ -9,6 +9,19 @@ use App\LocationHistory;
 class TeamHelper
 {
 
+  public static function getStaffSubIDList($currentpersno){
+    $stafflist = [];
+
+    $ulist = User::where('report_to', $currentpersno)->where('status', 1)->get();
+    foreach($ulist as $user){
+      array_push($stafflist, $user->id);
+      $thesubs = TeamHelper::getStaffSubIDList($user->persno);
+      $stafflist = array_merge($stafflist, $thesubs);
+    }
+
+    return $stafflist;
+  }
+
     public static function GetTeamLocInfo($currentuser, $idate){
       $resp = [];
 

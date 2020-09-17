@@ -161,7 +161,9 @@ Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gw
 Route::get('/reports/teamproductivity', 'GwdReportController@agmrecent')->name('report.agm.recent');
 Route::get('/reports/teamlocations', 'GwdReportController@teamlocs')->name('report.team.locations');
 Route::get('/reports/loc/personal', 'WebApiController@getPersonalLocApi')->name('report.loc.api.person');
+Route::get('/reports/cekin/personal', 'WebApiController@getPersonalCheckApi')->name('report.cekin.api.person');
 Route::get('/reports/checkin/overall', 'ReportController@checkinByFloorDiv')->name('reports.c.overall');
+Route::get('/reports/checkin/detail', 'ReportController@checkinByTeamDetail')->name('reports.c.detail');
 Route::get('/reports/webapi/floorsum', 'WebApiController@getFloorCheckinSummary')->name('reports.api.floorsum');
 
 // bosses?

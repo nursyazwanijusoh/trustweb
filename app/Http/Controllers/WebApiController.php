@@ -8,6 +8,7 @@ use App\SkillType;
 use App\CommonSkillset;
 use App\common\IopHandler;
 use App\User;
+use App\Attendance;
 use App\Checkin;
 use App\place;
 use \DB;
@@ -89,6 +90,86 @@ class WebApiController extends Controller
 
     return $result;
 
+  }
+
+  public function getPersonalCheckApi(Request $req){
+    $user = User::find($req->user_id);
+    if($user){
+
+    } else {
+      abort(404);
+    }
+
+    $cdate = new Carbon($req->tdate);
+    $ldate = new Carbon($req->fdate);
+    $cdate->addSecond();
+    $data = [];
+
+    $data['name'] = $user->name;
+    $data['staff_no'] = $user->staff_no;
+    $data['unit'] = $user->unit;
+    // $data['section'] = $user->Section();
+    // $data['email'] = $user->email;
+
+    $daterange = new \DatePeriod(
+      $ldate,
+      \DateInterval::createFromDateString('1 day'),
+      $cdate
+    );
+
+    foreach ($daterange as $value) {
+      $chin = '';
+      $chout = '';
+      $clin = '';
+      $clout = '';
+
+      // dapatkan 1st checkin untuk hari tu
+      $cekin = Checkin::where('user_id', $user->id)
+        ->whereDate('checkin_time', $value)->orderBy('checkin_time', 'asc')->first();
+
+      if($cekin){
+        $chin = (new Carbon($cekin->checkin_time))->toTimeString();
+      }
+
+      // dapatkan last checkout untuk hari tu
+      $cekin = Checkin::where('user_id', $user->id)
+        ->whereDate('checkout_time', $value)->orderBy('checkout_time', 'desc')->first();
+
+      if($cekin){
+        $chout = (new Carbon($cekin->checkout_time))->toTimeString();
+      }
+
+      // dapatkan 1st clock in untuk hari tu
+      $cekin = Attendance::where('user_id', $user->id)
+        ->whereDate('clockin_time', $value)->orderBy('clockin_time', 'asc')->first();
+
+      if($cekin){
+        $clin = (new Carbon($cekin->clockin_time))->toTimeString();
+      }
+
+      // dapatkan last checkout untuk hari tu
+      $cekin = Attendance::where('user_id', $user->id)
+        ->whereDate('clockout_time', $value)->orderBy('clockout_time', 'desc')->first();
+
+      if($cekin){
+        $clout = (new Carbon($cekin->clockout_time))->toTimeString();
+      }
+
+      $colid = 'd' . $value->format('md');
+      $data[$colid.'_chin'] = $chin;
+      $data[$colid.'_chout'] = $chout;
+      $data[$colid.'_clin'] = $clin;
+      $data[$colid.'_clout'] = $clout;
+      // $data[$colid] = [
+      //   'chin' => $chin,
+      //   'chout' => $chout,
+      //   'clin' => $clin,
+      //   'clout' => $clout
+      // ];
+
+    }
+
+    return $data;
   }
 
   public function getPersonalLocApi(Request $req){

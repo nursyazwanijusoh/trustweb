@@ -17,6 +17,8 @@ use App\Partner;
 use App\place;
 use App\Api\V1\Controllers\BookingHelper;
 use App\GwdActivity;
+use App\common\TeamHelper;
+use \Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -915,6 +917,75 @@ class ReportController extends Controller
       'gotdata' => $gotdata
     ]);
 
+  }
+
+  public function checkinByTeamDetail(Request $req){
+
+    $ruser = $req->user()->id;
+    if($req->filled('uid')){
+      $ruser = $req->uid;
+    }
+
+    if($req->filled('fdate') && $req->filled('tdate')){
+      $cdate = new Carbon($req->tdate);
+      $ldate = new Carbon($req->fdate);
+    } else {
+      // no date input. show search screen
+      $tdate = new Carbon();
+      $fdate = new Carbon();
+      $fdate->subDays(6);
+
+      return view('report.teamcheckinout', [
+        'uid' => $ruser,
+        'sdate' => $fdate->toDateString(),
+        'edate' => $tdate->toDateString(),
+        'gotrpt' => false
+      ]);
+
+    }
+
+    $cuser = User::find($ruser);
+    if($cuser){
+
+    } else {
+      abort(404);
+    }
+
+    $cdate->addSecond();
+    $headers = ['Name', 'Staff No', 'Division'];
+
+    $daterange = new \DatePeriod(
+      $ldate,
+      \DateInterval::createFromDateString('1 day'),
+      $cdate
+    );
+
+    // dd($daterange);
+    $contentrender = [];
+    foreach ($daterange as $key => $value) {
+      array_push($headers, $value->format('d-M') . ' Seat-In');
+      array_push($headers, $value->format('d-M') . ' Seat-Out');
+      array_push($headers, $value->format('d-M') . ' Loc-In');
+      array_push($headers, $value->format('d-M') . ' Loc-Out');
+      $colid = 'd' . $value->format('md');
+      array_push($contentrender, $colid);
+
+    }
+
+    $users = [];
+    array_push($users, $cuser->id);
+    $users = array_merge($users, TeamHelper::getStaffSubIDList($cuser->persno));
+
+    return view('report.teamcheckinout', [
+      'uid' => $ruser,
+      'header' => $headers,
+      'groupname' => $cuser->subunit,
+      'sdate' => $req->fdate,
+      'edate' => $req->tdate,
+      'idlist' => $users,
+      'dtablerender' => $contentrender,
+      'gotrpt' => true
+    ]);
   }
 
 
