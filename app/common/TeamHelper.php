@@ -34,6 +34,9 @@ class TeamHelper
       $laddr = '';
       $llat = '';
       $llong = '';
+      $bgclass = '';
+      $iscuti = false;
+      $cutitype = '';
       $gotr = false;
 
       if($myloc){
@@ -43,6 +46,17 @@ class TeamHelper
         $llat = $myloc->latitude;
         $llong = $myloc->longitude;
         $gotr = true;
+      }
+
+      // check cuti ke tak
+      $nudp = GDWActions::GetDailyPerfObj($currentuser->id, $idate);
+      if(isset($nudp->leave_type_id)){
+        $bgclass = 'bg-info';
+        $iscuti = true;
+        $cutitype = $nudp->LeaveType->descr;
+        if($lact == ''){
+          $lact = $cutitype;
+        }
       }
 
       $sendiri = [
@@ -55,7 +69,10 @@ class TeamHelper
         'lact' => $lact,
         'laddr' => $laddr,
         'llat' => $llat,
-        'llong' => $llong
+        'llong' => $llong,
+        'bg' => $bgclass,
+        'iscuti' => $iscuti,
+        'cutitype' => $cutitype
       ];
 
       array_push($resp, $sendiri);

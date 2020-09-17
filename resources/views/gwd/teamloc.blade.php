@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="card mb-3">
-        <div class="card-header">{{ $s_name }} team member - last known location</div>
+        <div class="card-header">{{ $s_name }} team member - <b>Last known location</b></div>
         <div class="card-body">
           <div class="table-responsive">
             <table id="taskdetailtable" class="table table-sm table-bordered table-hover">
@@ -54,7 +54,7 @@
                   <td>{{ $acts['subunit'] }}</td>
                   <td><a href="{{ route('staff', ['staff_id' => $acts['id']], false) }}">{{ $acts['name'] }}</a></td>
                   <td>{{ $acts['ltime'] }}</td>
-                  <td>{{ $acts['lact'] }}</td>
+                  <td class="{{ $acts['bg'] }}">{{ $acts['lact'] }}</td>
                   <td>{{ $acts['laddr'] }}</td>
                   <td>
                     @if($acts['g'] == true)
