@@ -105,7 +105,7 @@ class WebApiController extends Controller
     $cdate->addSecond();
     $data = [];
 
-    $data['name'] = $user->name;
+    $data['staff'] = ['name' => $user->name, 'id' => $user->id];
     $data['staff_no'] = $user->staff_no;
     $data['unit'] = $user->unit;
     // $data['section'] = $user->Section();

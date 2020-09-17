@@ -86,6 +86,7 @@
       @endif
     </div>
 </div>
+<a href="{{ route('staff', ['user_id' => ''])}}"></a>
 @endsection
 
 @if($gotrpt == true)
@@ -108,7 +109,12 @@ $(document).ready(function() {
           'csv', 'excel'
       ],
       columns : [
-        {data: 'name'},
+        {
+          data: 'staff',
+          render: function(data, type, row){
+            return '<a href="{{ route('staff', ['staff_id' => ''])}}'+data.id+'">'+data.name+'</a>';
+          }
+        },
         {data: 'staff_no'},
         {data: 'unit'},
         @foreach($dtablerender as $one)
