@@ -38,9 +38,9 @@ class AppServiceProvider extends ServiceProvider
         $view->with('enonmen3',$anlist);
       });
 
-      // if(config('APP_ENV') === 'production') {
+      if(config('APP_ENV') === 'production') {
           \URL::forceScheme('https');
-      // }
+      }
 
       \Response::macro('attachment', function ($content, $fname) {
           $headers = [

@@ -22,6 +22,7 @@
     <!-- Bootstrap CSS File -->
     <!-- <link href="/css/app.css" rel="stylesheet"> -->
     <link href="/welcome/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="/css/theme/lumen.bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- /welcome/libraries CSS Files -->
     <link href="/welcome/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
