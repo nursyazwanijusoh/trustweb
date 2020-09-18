@@ -3,6 +3,7 @@
 namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class LdapHelper extends Controller
 {
@@ -104,6 +105,7 @@ class LdapHelper extends Controller
           } else {
             $costcenter = $ldapdata['0']['ppcostcenter']['0'];
             $stid = $ldapdata['0']['cn']['0'];
+            $sppersno = 0;
             // $bcname = $this->findBC($costcenter);
             // $role = $this->getRole($stid);
 
@@ -111,6 +113,13 @@ class LdapHelper extends Controller
               $unit = $ldapdata['0']['ppdivision']['0'];
               $subunit = 'Vendors';
               $dept = 'Vendors';
+
+              $rpttosno = $ldapdata['0']['ppreportto']['0'];
+              $boss = User::where('staff_no', $rpttosno)->first();
+              if($boss){
+                $sppersno = $boss->persno;
+              }
+
               $eprsno = '';
             } else {
               $unit = $ldapdata['0']['pporgunitdesc']['0'];
@@ -121,7 +130,7 @@ class LdapHelper extends Controller
                 $eprsno = substr($eprsno, -6) + 0;
               }
 
-
+              $sppersno = $ldapdata['0']['ppreportto']['0'] + 0;
             }
 
 
@@ -141,7 +150,7 @@ class LdapHelper extends Controller
               'EMAIL' => $ldapdata['0']['mail']['0'],
               'MOBILE_NO' => $ldapdata['0']['mobile']['0'],
               'SUPERIOR' => $ldapdata['0']['ppreporttoname']['0'],
-              'SP_PERSNO' => $ldapdata['0']['ppreportto']['0'] + 0,
+              'SP_PERSNO' => $sppersno,
               'PERSNO' => $eprsno,
               'ORI_PERSNO' => $ldapdata['0']['employeenumber']['0']
 
