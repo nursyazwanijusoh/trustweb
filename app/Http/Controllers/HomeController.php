@@ -33,6 +33,10 @@ class HomeController extends Controller
         return view('guide');
     }
 
+    public function policy(){
+      return view('policy');
+    }
+
     public function guides(){
       $gs = Guide::all()->sortBy('title');
       return view('guides', [

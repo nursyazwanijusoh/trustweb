@@ -81,6 +81,7 @@
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#services">Features</a></li>
                     <li><a href="{{ route('guides', [], false) }}" title="Collection of user guides">Guides</i></a></li>
+                    <li><a href="{{ route('policy', [], false) }}" >Privacy Policy</i></a></li>
                     <!-- <li class="menu-has-children"><a href="">Drop Down</a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>

@@ -15,6 +15,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/policy', 'HomeController@policy')->name('policy');
 Route::get('/pg', 'HomeController@playground')->name('pg');
 Route::get('/getaddress', 'WebApiController@reverseGeo')->name('reversegeo');
 Route::get('/staff/image', 'WebApiController@getImage')->name('staff.image');

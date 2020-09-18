@@ -78,6 +78,7 @@
                         </li>
                         <li class="menu-has-children"><a href="#">Help</a>
                           <ul>
+                              <li><a class="dropdown-item" href="{{ route('policy', [], false) }}">Privacy Policy</a></li>
                               <li><a class="dropdown-item" href="{{ route('feedback', [], false) }}">Feedback</a></li>
                               <li><a class="dropdown-item" href="{{ route('adminlist', [], false) }}">Admin List</a></li>
 
