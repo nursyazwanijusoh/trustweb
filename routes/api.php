@@ -92,6 +92,7 @@ $api->version('v1', function ($api) {
   $api->post('/gwd/monthsummary',  ['as' => 'api.gwd.msum', 'uses' => 'App\Api\V1\Controllers\MiscController@GwdGetMonthSummary']);
   $api->post('/gwd/monthcaldot',  ['as' => 'api.gwd.mcaldot', 'uses' => 'App\Api\V1\Controllers\UserController@getMonthlyCalDots']);
   $api->post('/team/locations',  ['as' => 'api.rpt.getteamloc', 'uses' => 'App\Api\V1\Controllers\UserController@getTeamLocation']);
+  $api->post('/team/performance',  ['as' => 'api.rpt.getteamperf', 'uses' => 'App\Api\V1\Controllers\TeamController@GetTeamAvgPerf']);
 
 
 

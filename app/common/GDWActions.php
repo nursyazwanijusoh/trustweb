@@ -696,6 +696,7 @@ class GDWActions
 
   public static function GetStaffAvgPerf($user_id, $fromdate, $todate){
 
+    $daydiff = $todate->diff($fromdate)->days + 1;
 
     $dfobjs = DailyPerformance::where('user_id', $user_id)
       ->whereDate('record_date', '>=', $fromdate)
@@ -705,7 +706,7 @@ class GDWActions
     $actotal = $dfobjs->sum('actual_hours');
     $expotal = $dfobjs->sum('expected_hours');
     if($expotal == 0){
-      $perc = $actotal > 0 ? 120 : 100;
+      $perc = $actotal > 0 ? 100 + ($actotal / (8 * $daydiff) * 100) : 100;
     } else {
       $perc = $actotal / $expotal * 100;
     }

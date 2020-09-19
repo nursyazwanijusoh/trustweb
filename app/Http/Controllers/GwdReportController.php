@@ -1189,67 +1189,16 @@ class GwdReportController extends Controller
     }
 
 
+    $rptdata = TeamHelper::GetTeamPerfInfo($user, $cdate, $ldate);
 
-    $sunitid = 0;
-    if($user->job_grade == '3'){
-      // find my section id
-      $subunit = SubUnit::where('ppsuborgunitdesc', $user->subunit)->first();
-      if($subunit){
-        $sunitid = $subunit->id;
-      }
-      // update my section id
-      $user->section_id = $sunitid;
-      $user->save();
-    }
-
-
-    // reset
-    $this->team_member = [];
-
-    $daterange = new \DatePeriod(
-      $cdate,
-      \DateInterval::createFromDateString('1 day'),
-      (new Carbon($ldate))->addDay()
-    );
-
-
-
-    $perfarr = GDWActions::GetStaffRecentPerf($user->id, $daterange);
-    $perfavg = GDWActions::GetStaffAvgPerf($user->id, $cdate, $ldate);
-
-    array_push($this->team_member, [
-      'id' => $user->id,
-      'name' => $user->name,
-      'unit' => $user->subunit,
-      'recent_perf' => $perfarr,
-      'avg' => $perfavg
-    ]);
-
-    if(isset($user->persno)){
-      $this->getSubsInfo($user->persno, $daterange, $sunitid, $cdate, $ldate);
-    }
-
-    // get average perf for alll
-    $scount = 0;
-    $tact = 0;
-    $texp = 0;
     $lbl = [];
     $val = [];
     $targ = [];
 
-    foreach($this->team_member as $apers){
-      $scount++;
-      $tact += $apers['avg']['actual'];
-      $texp += $apers['avg']['expected'];
+    foreach($rptdata['sdata'] as $apers){
       array_push($lbl, $apers['name']);
       array_push($val, $apers['avg']['perc']);
       array_push($targ, 85);
-    }
-
-    if($texp == 0){
-      $avgperf = $tact > 0 ? 120 : 100;
-    } else {
-      $avgperf = $tact / $texp * 100;
     }
 
 
@@ -1297,44 +1246,15 @@ class GwdReportController extends Controller
            ]
          ]);
 
+    $rptdata['chart'] = $schart;
+    $rptdata['agm_id'] = $user->id;
+    $rptdata['s_date'] = $cdate->toDateString();
+    $rptdata['e_date'] = $ldate->toDateString();
 
-    return view('gwd.agmrecent', [
-      's_name' => $user->subunit,
-      'daterange' => $daterange,
-      'sdata' => $this->team_member,
-      'tavg' => $avgperf,
-      'chart' => $schart,
-      'agm_id' => $user->id,
-      's_date' => $cdate->toDateString(),
-      'e_date' => $ldate->toDateString()
-    ]);
+    return view('gwd.agmrecent', $rptdata);
   }
 
-  private function getSubsInfo($persno, $daterange, $sunitid, $cdate, $ldate){
-    $staffs = User::where('report_to', $persno)->where('status', 1)->get();
 
-    foreach($staffs as $ast){
-      if($sunitid != 0){
-        $ast->section_id = $sunitid;
-        $ast->save();
-      }
-
-      // add this staff info
-
-      $perfarr = GDWActions::GetStaffRecentPerf($ast->id, $daterange);
-      $perfavg = GDWActions::GetStaffAvgPerf($ast->id, $cdate, $ldate);
-      array_push($this->team_member, [
-        'id' => $ast->id,
-        'name' => $ast->name,
-        'unit' => $ast->subunit,
-        'recent_perf' => $perfarr,
-        'avg' => $perfavg
-      ]);
-
-      // then find this person's subs
-      $this->getSubsInfo($ast->persno, $daterange, $sunitid, $cdate, $ldate);
-    }
-  }
 
   public function teamlocs(Request $req){
 

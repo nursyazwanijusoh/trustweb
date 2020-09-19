@@ -45,15 +45,14 @@ class HomeController extends Controller
     }
 
     function playground(Request $req){
-
-      $user = User::find($req->id);
+      // $user = User::find($req->id);
 
       // $repot = \App\common\McoActions::FindAtLeastGm($user, $user);
       // dd($repot->name);
       //
       $ddas = new \App\Api\V1\Controllers\LdapHelper;
       // // // dd($user->persno);
-      return $ddas->fetchUser($user->staff_no);
+      return $ddas->fetchUser($req->staff_no);
     }
 
     function welcome(){
