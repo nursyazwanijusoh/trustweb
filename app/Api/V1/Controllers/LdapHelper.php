@@ -110,9 +110,9 @@ class LdapHelper extends Controller
             // $role = $this->getRole($stid);
 
             if($ldapdata['0']['employeetype']['0'] == 'Vendors'){
-              $unit = $ldapdata['0']['ppdivision']['0'];
-              $subunit = 'Vendors';
-              $dept = 'Vendors';
+              $unit = 'Vendors';
+              $subunit = $ldapdata['0']['ppdivision']['0'];
+              $dept = '732002';
 
               $rpttosno = $ldapdata['0']['ppreportto']['0'];
               $boss = User::where('staff_no', $rpttosno)->first();
@@ -120,7 +120,7 @@ class LdapHelper extends Controller
                 $sppersno = $boss->persno;
               }
 
-              $eprsno = '';
+              $eprsno = null;
             } else {
               $unit = $ldapdata['0']['pporgunitdesc']['0'];
               $subunit = $ldapdata['0']['ppsuborgunitdesc']['0'];

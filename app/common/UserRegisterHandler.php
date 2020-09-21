@@ -62,7 +62,7 @@ class UserRegisterHandler
 
     $user = User::where($field, $username)->first();
 
-    if($user && $user->isvendor == 1){
+    if($user && $user->isvendor == 1 && isset($user->partner_id)){
       // is vendor. do normal login
 
       if($user->verified == 0){
@@ -85,7 +85,7 @@ class UserRegisterHandler
 
     } else {
 
-      if($field == 'email'){
+      if($user && $field == 'email'){
         $username = $user->staff_no;
       }
 
@@ -180,6 +180,12 @@ class UserRegisterHandler
     }
 
 		if($staffdata){
+      // just in case, if vendor
+      if($staffdata->lob = 'Vendors'){
+        $staffdata->lob = 732002;
+    		$staffdata->unit = $ldapresp['data']['UNIT'];
+    		$staffdata->subunit = $ldapresp['data']['SUBUNIT'];
+      }
 		} else {
 			// new data. create it
 			$staffdata = new User;
@@ -191,7 +197,7 @@ class UserRegisterHandler
   		$staffdata->unit = $ldapresp['data']['UNIT'];
   		$staffdata->subunit = $ldapresp['data']['SUBUNIT'];
 
-      if($ldapresp['data']['SUBUNIT'] == 'Vendors'){
+      if($ldapresp['data']['DEPARTMENT'] == 732002){
         $staffdata->isvendor = 1;
       } else {
         $staffdata->isvendor = 0;
