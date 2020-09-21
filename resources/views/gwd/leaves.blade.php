@@ -127,6 +127,9 @@
                       <th scope="col">Status</th>
                       <th scope="col">Operation</th>
                       <th scope="col">Load Status</th>
+                      @if(Auth::user()->role  < 2)
+                      <th scope="col">Flag N</th>
+                      @endif
                     </tr>
                   </thead>
                   <tbody>
@@ -138,6 +141,17 @@
                       <td>{{ $acts->status }}</td>
                       <td>{{ $acts->operation }}</td>
                       <td>{{ $acts->load_status }}</td>
+                      @if(Auth::user()->role  < 2)
+                      <td>
+                        @if($acts->load_status != 'N')
+                        <form method="post" action="{{ route('mleave.reflag')}}">
+                          <input type="hidden" name="lid" value="{{ $acts->id }}" />
+                          @csrf
+                          <button class="btn btn-sm btn-warning" type="submit"><i class="fa fa-flag"></i></button>
+                        </form>
+                        @endif
+                      </td>
+                      @endif
                     </tr>
                     @endforeach
                   </tbody>

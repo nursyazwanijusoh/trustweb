@@ -38,7 +38,16 @@ class User extends Authenticatable
     }
 
     public function Division(){
-      return $this->belongsTo('App\Unit', 'unit_id');
+      if(isset($this->unit_id)){
+        return $this->belongsTo('App\Unit', 'unit_id');
+      } else {
+        if($this->isvendor == 1){
+          return Unit::where('pporgunit', 123)->first();
+        } else {
+          return Unit::where('pporgunit', 0)->first();
+        }
+      }
+
     }
 
     public function Boss(){

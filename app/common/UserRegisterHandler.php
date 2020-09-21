@@ -180,12 +180,7 @@ class UserRegisterHandler
     }
 
 		if($staffdata){
-      // just in case, if vendor
-      if($staffdata->lob = 'Vendors'){
-        $staffdata->lob = 732002;
-    		$staffdata->unit = $ldapresp['data']['UNIT'];
-    		$staffdata->subunit = $ldapresp['data']['SUBUNIT'];
-      }
+
 		} else {
 			// new data. create it
 			$staffdata = new User;
@@ -197,13 +192,21 @@ class UserRegisterHandler
   		$staffdata->unit = $ldapresp['data']['UNIT'];
   		$staffdata->subunit = $ldapresp['data']['SUBUNIT'];
 
-      if($ldapresp['data']['DEPARTMENT'] == 732002){
+      if($ldapresp['data']['DEPARTMENT'] == 123){
         $staffdata->isvendor = 1;
       } else {
         $staffdata->isvendor = 0;
         $staffdata->persno = $ldappersno;
       }
 		}
+
+    // just in case, if vendor
+    if($staffdata->isvendor == 1){
+      $staffdata->lob = 123;
+      $staffdata->unit = $ldapresp['data']['UNIT'];
+      $staffdata->subunit = $ldapresp['data']['SUBUNIT'];
+      $staffdata->report_to = $ldapresp['data']['SP_PERSNO'];
+    }
 
 		$tmobile = strlen($ldapresp['data']['MOBILE_NO']) > 13 ? substr($ldapresp['data']['MOBILE_NO'], 0, 13) : $ldapresp['data']['MOBILE_NO'];
 		if(substr($tmobile, 0, 1) === '0'){

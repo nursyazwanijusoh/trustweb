@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\McoTravelReq;
+use App\SapLeaveInfo;
 use \Carbon\Carbon;
 
 class TAdminTwoController extends Controller
@@ -12,6 +13,16 @@ class TAdminTwoController extends Controller
   {
       $this->middleware('auth');
       $this->middleware('AdminGate');
+  }
+
+  public function leaveFlag(Request $req){
+    $leave = SapLeaveInfo::find($req->lid);
+    if($leave){
+      $leave->load_status = 'N';
+      $leave->save();
+    }
+
+    return redirect()->back();
   }
 
   public function McoReport(Request $req){

@@ -112,7 +112,7 @@ class LdapHelper extends Controller
             if($ldapdata['0']['employeetype']['0'] == 'Vendors'){
               $unit = 'Vendors';
               $subunit = $ldapdata['0']['ppdivision']['0'];
-              $dept = '732002';
+              $dept = 123;
 
               $rpttosno = $ldapdata['0']['ppreportto']['0'];
               $boss = User::where('staff_no', $rpttosno)->first();

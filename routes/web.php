@@ -184,6 +184,7 @@ Route::get('/reports/divcheckin', 'ReportController@checkinByDiv')->name('report
 Route::get('/manualleave', 'StaffLeaveController@list')->name('mleave.list');
 Route::post('/manualleave/add', 'StaffLeaveController@add')->name('mleave.add');
 Route::post('/manualleave/del', 'StaffLeaveController@del')->name('mleave.del');
+Route::post('/manualleave/reflag', 'TAdminTwoController@leaveFlag')->name('mleave.reflag');
 
 
 
