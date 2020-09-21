@@ -108,8 +108,8 @@ class TeamHelper
           $sunitid = $subunit->id;
         }
         // update my section id
-        $user->section_id = $sunitid;
-        $user->save();
+        $ast->section_id = $sunitid;
+        $ast->save();
       }
 
       $daterange = new \DatePeriod(
