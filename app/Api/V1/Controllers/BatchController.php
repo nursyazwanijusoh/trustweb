@@ -41,16 +41,16 @@ class BatchController extends Controller
 			$ddate = date('Y-m-d');
 		}
 
-		$curjob = BatchJob::where('job_type', 'Create daily performance')
+		$curjob = BatchJob::where('job_type', 'Daily SAP Job')
 			->whereDate('from_date', $ddate)
-			->whereIn('status', ['New', 'Processing', 'Completed'])
+			->whereIn('status', ['New', 'Processing'])
 			->first();
 
 		if($curjob){
 			// already got the job
 			return $this->respond_json(200, 'Job already exist', []);
 		} else {
-			// CreateDailyPerformance::dispatch($ddate);
+			CreateDailyPerformance::dispatch($ddate);
 		}
 
 		return $this->respond_json(200, 'Job Scheduled', []);

@@ -12,6 +12,7 @@ use App\User;
 use App\DailyPerformance;
 use App\BatchJob;
 use App\common\GDWActions;
+use App\common\BatchHelper;
 
 class CreateDailyPerformance implements ShouldQueue
 {
@@ -32,7 +33,7 @@ class CreateDailyPerformance implements ShouldQueue
       $this->input_date = $idate;
 
       $bjob = new BatchJob;
-      $bjob->job_type = 'Create daily performance';
+      $bjob->job_type = 'Daily SAP Job';
       $bjob->status = 'New';
       $bjob->from_date = $idate;
       $bjob->save();
@@ -56,13 +57,28 @@ class CreateDailyPerformance implements ShouldQueue
         $bjob->processed_at = now();
         $bjob->save();
 
-        $ret = $this->doTheProcessHere();
+        $ret = $this->loadSapData();
 
-        $bjob->status = $ret['status'];
-        $bjob->extra_info = 'record count ' . $ret['rec_count'];
+        $bjob->status = 'Completed';
+        $bjob->extra_info = json_encode($ret);
         $bjob->completed_at = now();
         $bjob->save();
       }
+    }
+
+    public function loadSapData(){
+      set_time_limit(0);
+      $starttime = now();
+      BatchHelper::loadOMData();
+      $omloadtime = now();
+      BatchHelper::loadCutiData();
+      $cutiloadtime = now();
+
+      return [
+        'start' => $starttime->toDateTimeString(),
+        'done_om' => $omloadtime->toDateTimeString(),
+        'done_cuti' => $cutiloadtime->toDateTimeString()
+      ];
     }
 
     public function doTheProcessHere(){

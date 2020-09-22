@@ -97,6 +97,7 @@ class TeamHelper
 
     public static function GetTeamPerfInfo($ast, $start_date, $end_date){
       $dataarr = [];
+      $tarikharr = [];
       $daydiff = $end_date->diff($start_date)->days + 1;
 
       // update section ID, kalau band 3
@@ -117,6 +118,10 @@ class TeamHelper
         \DateInterval::createFromDateString('1 day'),
         (new Carbon($end_date))->addDay()
       );
+
+      foreach($daterange as $addate){
+        $tarikharr[] = $addate->toDateString();
+      }
 
       // dapatkan sendiri punya dulu
       $perfarr = GDWActions::GetStaffRecentPerf($ast->id, $daterange);
@@ -156,6 +161,7 @@ class TeamHelper
       return [
         's_name' => $ast->subunit,
         'daterange' => $daterange,
+        'date_list' => $tarikharr,
         'sdata' => $dataarr,
         'tavg' => $avgperf
       ];

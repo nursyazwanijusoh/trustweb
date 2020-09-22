@@ -684,6 +684,7 @@ class GDWActions
       }
 
       array_push($retarr, [
+        'date' => $indate->toDateString(),
         'actual' => $tdf->actual_hours,
         'expected' => $tdf->expected_hours,
         'perc' => $perc,
