@@ -42,6 +42,7 @@
                 <tr>
                   <th scope="col">Unit</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Team Ind</th>
                   <th scope="col">Time</th>
                   <th scope="col">Activity</th>
                   <th scope="col">Address</th>
@@ -53,6 +54,7 @@
                 <tr>
                   <td>{{ $acts['subunit'] }}</td>
                   <td><a href="{{ route('staff', ['staff_id' => $acts['id']], false) }}">{{ $acts['name'] }}</a></td>
+                  <td>{{ $acts['teamab'] }}</td>
                   <td>{{ $acts['ltime'] }}</td>
                   <td class="{{ $acts['bg'] }}">{{ $acts['lact'] }}</td>
                   <td>{{ $acts['laddr'] }}</td>

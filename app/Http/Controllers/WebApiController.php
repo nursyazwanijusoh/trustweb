@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\SkillType;
 use App\CommonSkillset;
 use App\common\IopHandler;
+use App\common\GDWActions;
 use App\User;
 use App\Attendance;
 use App\Checkin;
@@ -108,6 +109,7 @@ class WebApiController extends Controller
     $data['staff'] = ['name' => $user->name, 'id' => $user->id];
     $data['staff_no'] = $user->staff_no;
     $data['unit'] = $user->unit;
+    $data['teamab'] = $user->teamab;
     // $data['section'] = $user->Section();
     // $data['email'] = $user->email;
 
@@ -155,7 +157,10 @@ class WebApiController extends Controller
         $clout = (new Carbon($cekin->clockout_time))->toTimeString();
       }
 
+      $df = GDWActions::GetDailyPerfObj($user->id, $value);
+
       $colid = 'd' . $value->format('md');
+      $data[$colid.'_cuti'] = $df->getCutiInfo();
       $data[$colid.'_chin'] = $chin;
       $data[$colid.'_chout'] = $chout;
       $data[$colid.'_clin'] = $clin;
@@ -188,6 +193,7 @@ class WebApiController extends Controller
     $data['name'] = $user->name;
     $data['staff_no'] = $user->staff_no;
     $data['division'] = $user->unit;
+    $data['teamab'] = $user->teamab;
     // $data['section'] = $user->Section();
     // $data['email'] = $user->email;
 
@@ -205,6 +211,9 @@ class WebApiController extends Controller
       if($cekin){
         $bd = $cekin->place->building;
         $tloc = $bd->floor_name . ' - ' . $bd->building_name;
+      } else {
+        $df = GDWActions::GetDailyPerfObj($user->id, $value);
+        $tloc = $df->getCutiInfo();
       }
       $colid = 'd' . $value->format('md');
       $data[$colid] = $tloc;

@@ -22,6 +22,20 @@ class DailyPerformance extends Model
     return $this->belongsTo(User::class, 'user_id');
   }
 
+  public function PublicHoliday(){
+    return $this->belongsTo(PublicHoliday::class);
+  }
+
+  public function getCutiInfo(){
+    if($this->is_public_holiday){
+      return $this->PublicHoliday->name;
+    } elseif($this->is_off_day){
+      return $this->LeaveType->descr;
+    } else {
+      return '';
+    }
+  }
+
   public function addHours($hours){
     $this->actual_hours +=  $hours;
 

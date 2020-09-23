@@ -117,7 +117,9 @@ $(document).ready(function() {
         },
         {data: 'staff_no'},
         {data: 'unit'},
+        {data: 'teamab'},
         @foreach($dtablerender as $one)
+        {data: '{{ $one }}_cuti'},
         {data: '{{ $one }}_chin'},
         {data: '{{ $one }}_chout'},
         {data: '{{ $one }}_clin'},

@@ -952,7 +952,7 @@ class ReportController extends Controller
     }
 
     $cdate->addSecond();
-    $headers = ['Name', 'Staff No', 'Division'];
+    $headers = ['Name', 'Staff No', 'Division', 'Team Ind'];
 
     $daterange = new \DatePeriod(
       $ldate,
@@ -963,6 +963,7 @@ class ReportController extends Controller
     // dd($daterange);
     $contentrender = [];
     foreach ($daterange as $key => $value) {
+      array_push($headers, $value->format('d-M') . ' Remark');
       array_push($headers, $value->format('d-M') . ' Seat-In');
       array_push($headers, $value->format('d-M') . ' Seat-Out');
       array_push($headers, $value->format('d-M') . ' Loc-In');

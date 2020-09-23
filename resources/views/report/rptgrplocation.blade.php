@@ -68,6 +68,7 @@ $(document).ready(function() {
         {data: 'name'},
         {data: 'staff_no'},
         {data: 'division'},
+        {data: 'teamab'},
         @foreach($dtablerender as $one)
         {data: '{{ $one }}'},
         @endforeach

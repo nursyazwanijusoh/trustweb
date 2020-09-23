@@ -66,6 +66,7 @@ class TeamHelper
         'staffno' => $currentuser->staff_no,
         'name' => $currentuser->name,
         'subunit' => $currentuser->subunit,
+        'teamab' => $currentuser->teamab,
         'g' => $gotr,
         'ltime' => $ltime,
         'lact' => $lact,
@@ -130,6 +131,7 @@ class TeamHelper
         'id' => $ast->id,
         'name' => $ast->name,
         'unit' => $ast->subunit,
+        'teamab' => $ast->teamab,
         'recent_perf' => $perfarr,
         'avg' => $perfavg
       ]);
@@ -185,6 +187,7 @@ class TeamHelper
           'id' => $ast->id,
           'name' => $ast->name,
           'unit' => $ast->subunit,
+          'teamab' => $ast->teamab,
           'recent_perf' => $perfarr,
           'avg' => $perfavg
         ]);

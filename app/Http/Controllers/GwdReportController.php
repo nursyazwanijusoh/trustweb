@@ -716,7 +716,7 @@ class GwdReportController extends Controller
     $cdate = new Carbon($req->tdate);
     $ldate = new Carbon($req->fdate);
     $cdate->addSecond();
-    $headers = ['Name', 'Staff No', 'Division'];
+    $headers = ['Name', 'Staff No', 'Division', 'Team Ind'];
 
     $daterange = new \DatePeriod(
           $ldate,
