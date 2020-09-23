@@ -36,6 +36,60 @@ class SapLoadController extends Controller
     ]);
   }
 
+  public function uploadTeamAB(Request $req){
+
+    $totc = 0;
+    $toterr = 0;
+    $totsc = 0;
+
+
+    $ifule = $req->file('infile');
+
+    $ufile = fopen($ifule->getRealPath(), 'r');
+
+    while(! feof($ufile))
+    {
+      $line = fgets($ufile);
+      if(strlen(trim($line)) == 0){
+        continue;
+      }
+      $totc++;
+
+      $data = explode(';', $line);
+      if(sizeof($data) < 2){
+        $toterr++;
+        continue;
+      }
+
+      // find the user
+      $us = User::where('staff_no', $data[0])->first();
+      if($us){
+        $us->teamab = $data[1];
+        $us->save();
+        $totsc++;
+      } else {
+        $toterr++;
+      }
+
+    }
+
+    fclose($ufile);
+
+    $emp = SapEmpProfile::where('load_status', 'N')->count();
+    $cuti = SapLeaveInfo::where('load_status', 'N')->count();
+    $skill = BulkSkillsetAdd::where('load_status', 'N')->count();
+
+    return view('admin.sapdash', [
+      'eplist' => $emp,
+      'skillcount' => $skill,
+      'cuticount' => $cuti,
+      'dataloaded' => true,
+      'totcount' => $totc,
+      'totsuccess' => $totsc,
+      'toterr' => $toterr
+    ]);
+  }
+
   public function loadBulkSkillset(Request $req){
     set_time_limit(0);
     $list = BulkSkillsetAdd::where('load_status', 'N')->get();

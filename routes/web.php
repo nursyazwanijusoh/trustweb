@@ -55,6 +55,7 @@ Route::get('/admin/buildetail', 'TAdminController@buildetail')->name('admin.buil
 Route::get('/admin/getallqr', 'TAdminController@getallqr')->name('admin.getallqr');
 Route::get('/admin/seatToggle', 'TAdminController@seatToggle')->name('admin.seat.toggle');
 Route::get('/admin/loadsap', 'SapLoadController@showSummaryPage')->name('admin.loadsapform');
+Route::post('/admin/loadsap', 'SapLoadController@uploadTeamAB')->name('admin.uploadTeamAB');
 Route::get('/admin/loadsapom', 'SapLoadController@processOM')->name('admin.processOM');
 Route::get('/admin/loadkemahiran', 'SapLoadController@loadBulkSkillset')->name('admin.loadDataSkill');
 Route::get('/admin/loadsapcuti', 'SapLoadController@loadDataCuti')->name('admin.loadDataCuti');

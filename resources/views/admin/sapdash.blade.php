@@ -15,6 +15,40 @@
           </div>
         </div>
       </div>
+      <div class="card mb-3">
+        <div class="card-header">Load Team Indicator Data</div>
+        <div class="card-body">
+          @if(isset($dataloaded))
+          <p class="card-text">
+            <b>Upload result:</b> <br />
+            Total record: {{ $totcount }}<br />
+            Total success: {{ $totsuccess }}<br />
+            Total failure: {{ $toterr }}<br />
+          </p>
+          @endif
+          <p class="card-text">
+            <b>input text file format:</b> <br />
+            staff_no;team_label
+          </p>
+          <form method="post" action="{{route('admin.uploadTeamAB')}}" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group row">
+                <label for="infile" class="col-md-3 col-form-label text-md-right">Select input file </label>
+                <div class="col-md-5">
+                  <input type="file" class="form-control{{ $errors->has('infile') ? ' is-invalid' : '' }}" name="infile" id="infile"  required/>
+                  @if ($errors->has('infile'))
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $errors->first('infile') }}</strong>
+                      </span>
+                  @endif
+                </div>
+                <div class="col-md-2">
+                  <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>
