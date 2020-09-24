@@ -352,11 +352,18 @@ class HomeController extends Controller
             ]);
 
       // type vs tag
+      $tvt_height = 250;
+      $tvt_type = 'bar';
+      if(count($tagtypedataset) > 3){
+        $tvt_height = 100 + count($tagtypedataset) * count($typelbl) * 10;
+        $tvt_type = 'horizontalBar';
+      }
+
       $tvt_graph = app()->chartjs
            ->name('tvt_graph')
-           ->type('bar')
-           ->size(['width' => 800, 'height' => 200])
-           ->labels($typelbl)
+           ->type($tvt_type)
+           ->size(['width' => 700, 'height' => $tvt_height])
+           ->labels($taglbl)
            ->datasets($tagtypedataset)
            ->options([
              'responsive' => true,
