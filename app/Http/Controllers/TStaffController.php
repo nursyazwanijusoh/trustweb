@@ -122,7 +122,7 @@ class TStaffController extends Controller
                  'backgroundColor' => 'rgba(0, 255, 132, 0.5)',
                  'borderColor' => '#000',
                  'data' => $pgdata,
-                 'lineTension' => 0
+                 'lineTension' => 0.2
              ]
          ])
          ->options([

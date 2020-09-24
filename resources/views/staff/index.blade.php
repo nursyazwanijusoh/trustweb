@@ -27,7 +27,7 @@ Position : {{ $user['position'] }}
 Email    : {{ $user['email'] }}
 Mobile   : {{ $user['mobile_no'] }}
 @if(isset($superior))
-Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}">{{ $superior->name }}</a><br />
+Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}">{{ $superior->name }}</a>
 @endif
 </pre>
                   </div>
@@ -208,13 +208,13 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     <div class="card-body">
                       <div class="row text-center">
                         <div class="col-4 border-right">
-                          <h1 class="card-title">{{ number_format($weekact, 2) }}</h1>
+                          <h1 class="card-title">{{ number_format($weekact, 1) }}</h1>
                           <p class="card-text">
                             Total Actual Hours
                           </p>
                         </div>
                         <div class="col-4 border-right">
-                          <h1 class="card-title">{{ number_format($weekexp, 2) }}</h1>
+                          <h1 class="card-title">{{ number_format($weekexp, 1) }}</h1>
                           <p class="card-text">
                             Expected Hours
                           </p>

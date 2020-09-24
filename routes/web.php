@@ -25,6 +25,7 @@ Route::get('/resend', 'HomeController@resend')->name('verification.resend');
 Route::get('/delete', 'HomeController@troll')->name('troll');
 Route::get('/info', 'HomeController@info')->name('info');
 Route::get('/hallofflame', 'HomeController@hallofshame')->name('hofs')->middleware('auth');
+Route::get('/hallofflame/staff', 'HomeController@staffFancyReport')->name('phofs')->middleware('auth');
 Route::get('/guides', 'HomeController@guides')->name('guides');
 
 Route::get('/booking_faq', 'HomeController@booking_faq')->name('booking_faq');

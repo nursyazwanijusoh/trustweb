@@ -38,7 +38,7 @@
     <div class="row justify-content-center">
         <div class="col">
             <div class="card mb-3">
-                <div class="card-header">Top Productivity for past 30 days</div>
+                <div class="card-header">Top Productivity Since Last 7 Days</div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="montop" class="table table-striped table-bordered table-hover">
@@ -56,7 +56,7 @@
                           <td><a href="{{ route('staff', ['staff_id' => $acts['id']], false) }}">{{ $acts['name'] }}</a></td>
                           <td>{{ $acts['div'] }}</td>
                           <td>{{ $acts['exp'] }}</td>
-                          <td>{{ $acts['act'] }}</td>
+                          <td><a href="{{ route('phofs', ['staff_no' => $acts['staff_no']], false) }}">{{ $acts['act'] }}</a></td>
                         </tr>
                         @endforeach
                       </tbody>
