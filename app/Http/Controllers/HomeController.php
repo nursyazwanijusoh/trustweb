@@ -367,6 +367,7 @@ class HomeController extends Controller
            ->datasets($tagtypedataset)
            ->options([
              'responsive' => true,
+             'maintainAspectRatio' => false,
              'tooltips' => [
                'mode' => 'index',
                'intersect' => false,
