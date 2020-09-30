@@ -3,7 +3,7 @@
 
 Refer attachment
 
-@component('mail::button', ['url' => {{ route('report.gwd.summary')}}])
+@component('mail::button', ['url' => $url])
 Go to report page
 @endcomponent
 

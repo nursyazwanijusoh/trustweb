@@ -29,7 +29,10 @@ class SendDiaryRpt extends Mailable
     public function build()
     {
 
-        return $this->subject('Your trUSt Diary report is ready')->markdown('email.sendreport')
+        return $this->subject('Your trUSt Diary report is ready')
+          ->markdown('email.sendreport', [
+            'url' => route('report.gwd.summary')
+          ])
           ->attach(storage_path("app/reports/".$this->cgrp->extra_info));
     }
 }

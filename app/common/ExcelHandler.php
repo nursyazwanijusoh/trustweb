@@ -19,12 +19,12 @@ class ExcelHandler {
   const BG_INFO = 'NA';
 
   // productivity group colors
-  const PD_G0 = '808080';  // > 100
-  const PD_GA = 'ede907';  // < 50
-  const PD_GB = '47539e';  // 50-80
-  const PD_GC = '3e8f36';  // 80-100
-  const PD_GD = 'e051cd';  // > 100
-  const PD_NA = 'c34bfa';  // zeroed
+  const PD_G0 = 'ff1a1a';  // = 0 #ff1a1a
+  const PD_GA = 'ff944d';  // < 50 #ff944d
+  const PD_GB = 'ffff00';  // 50-80 #ffff00
+  const PD_GC = '00ff00';  // 80-100 #00ff00
+  const PD_GD = '0066ff';  // > 100 #0066ff
+  const PD_NA = 'c34bfa';  // zeroed #c34bfa
 
 
   private $filename = "";
@@ -56,7 +56,7 @@ class ExcelHandler {
     foreach ($content as $value) {
       $colcount = 1;
       foreach ($value as $oncel) {
-        $cursheet->setCellValueByColumnAndRow($colcount, $rowcount, $oncel['v']);
+        $cursheet->setCellValueByColumnAndRow($colcount, $rowcount, $oncel['v'].'');
 
         if($oncel['t'] != self::BG_NORMAL){
           $cstyle = $cursheet->getStyleByColumnAndRow($colcount, $rowcount);
