@@ -44,4 +44,41 @@ class NotifyHelper
       return $resp;
 
     }
+
+    public static function SendBulkPushNoti($noti_ids, $title, $body, $data = []){
+
+      if(sizeof($noti_ids) == 0){
+        return 'no noti id';
+      }
+
+      $client = new Client();
+      $param = [
+        'to' => $noti_ids,
+        'title' => $title,
+        'body' => $body,
+        // 'icon' => 'https://trust.tm.com.my/welcome/img/TrustNew.png',
+        'badge' => 1,
+        'data' => $data
+      ];
+      $head = [
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'accept-encoding' => 'gzip, deflate',
+        'host' => 'exp.host'
+      ];
+
+      // return $param;
+
+      $resp = $client->request(
+        'POST',
+        'https://exp.host/--/api/v2/push/send', [
+          // 'headers' => $head,
+          'form_params' => $param
+        ]
+
+      );
+
+      return $resp;
+
+    }
 }

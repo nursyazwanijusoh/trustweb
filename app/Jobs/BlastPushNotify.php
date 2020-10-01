@@ -66,6 +66,8 @@ class BlastPushNotify implements ShouldQueue
 
           if($pn->status == 'N'){
 
+            $pnids = [];
+
             $pn->status = 'P';
             $pn->save();
 
@@ -73,7 +75,104 @@ class BlastPushNotify implements ShouldQueue
               // send for everyone
               $stafflist = User::whereNotNull('pushnoti_id')->where('status', 1)->get();
               foreach($stafflist as $onestaff){
-                if(strlen(trim($onestaff->pushnoti_id)) > 8){
+                if(strlen(trim($onestaff->pushnoti_id)) > 8 && $onestaff->status == 1){
+                  $count++;
+                  $pnids[] = $onestaff->pushnoti_id;
+
+                  if($count % 50 == 0){
+                    $aaa = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
+
+                    $pn->rec_count = $count;
+                    $pn->save();
+                    $pnids = [];
+                  }
+                } else {
+                  $onestaff->pushnoti_id = null;
+                  $onestaff->save();
+                }
+              }
+            } else {
+              foreach ($pn->Groups as $grp) {
+                // dd($grp->TheGroup);
+                foreach($grp->Divisions() as $ondiv){
+                  $stafflist = $ondiv->StaffWithNotiID;
+
+                  foreach($stafflist->all() as $onestaff){
+                    if(strlen(trim($onestaff->pushnoti_id)) > 8 && $onestaff->status == 1){
+                      $count++;
+                      $pnids[] = $onestaff->pushnoti_id;
+
+                      if($count % 50 == 0){
+                        $aaa = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
+                        $pn->rec_count = $count;
+                        $pn->save();
+                        $pnids = [];
+                      }
+                    } else {
+                      $onestaff->pushnoti_id = null;
+                      $onestaff->save();
+                    }
+                  }
+                }
+              }
+            }
+
+            if(count($pnids) > 0){
+              $aaa = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
+              $pnids = [];
+            }
+
+            $status = 'Completed';
+            $msg = 'Notification sent';
+
+            $pn->status = 'C';
+            $pn->rec_count = $count;
+            $pn->save();
+          } else {
+            $msg = 'Notification already sent';
+          }
+
+      } else {
+        $msg = 'pn_id 404';
+      }
+
+
+
+      $bjob->status = $status;
+      $bjob->extra_info = $msg;
+      $bjob->completed_at = now();
+      $bjob->save();
+
+    }
+
+    /**
+    *  original code
+    */
+    public function handle2()
+    {
+      $bjob = BatchJob::find($this->bjobid);
+      $bjob->status = 'Processing';
+      $bjob->processed_at = now();
+      $bjob->save();
+
+      $status = 'Failed';
+      $count = 0;
+      $msg = '';
+
+      $pn = PushAnnouncement::find($this->pn_id);
+
+      if($pn){
+
+          if($pn->status == 'N'){
+
+            $pn->status = 'P';
+            $pn->save();
+
+            if($pn->is_global){
+              // send for everyone
+              $stafflist = User::whereNotNull('pushnoti_id')->where('status', 1)->get();
+              foreach($stafflist as $onestaff){
+                if(strlen(trim($onestaff->pushnoti_id)) > 8 && $onestaff->status == 1){
                   $count++;
                   $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
                   $respp = json_decode($aaa->getBody()->getContents());
@@ -96,7 +195,7 @@ class BlastPushNotify implements ShouldQueue
                   $stafflist = $ondiv->StaffWithNotiID;
 
                   foreach($stafflist->all() as $onestaff){
-                    if(strlen(trim($onestaff->pushnoti_id)) > 8 && $onestaff->status = 1){
+                    if(strlen(trim($onestaff->pushnoti_id)) > 8 && $onestaff->status == 1){
                       $count++;
 
                       $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
