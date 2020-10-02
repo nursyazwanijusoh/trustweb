@@ -261,7 +261,7 @@ class DiaryGroupReportGen implements ShouldQueue
                 $pbg = ExcelHandler::PD_G0;
               } elseif($pdtivity < 50){
                 $pdgrp = '1% - 49%';
-                $pbg = ExcelHandler::PD_GB;
+                $pbg = ExcelHandler::PD_GA;
               } elseif($pdtivity < 80){
                 $pdgrp = '50% - 79%';
                 $pbg = ExcelHandler::PD_GB;
