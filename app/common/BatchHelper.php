@@ -197,8 +197,9 @@ class BatchHelper
         $unit->lob = 3000;
         $unit->pporgunit = $gp_no;
       }
+      $grpname = isset($value->group_name) ? $value->group_name : $gp_no;
 
-      $unit->pporgunitdesc = $value->group_name;
+      $unit->pporgunitdesc = $grpname;
       $unit->save();
       $user->unit_id = $unit->id;
 
@@ -212,7 +213,7 @@ class BatchHelper
       }
 
       $unitname = isset($value->unit_name) ? $value->unit_name : $un_no;
-      $grpname = isset($value->group_name) ? $value->group_name : $gp_no;
+
 
       $subu->ppsuborgunitdesc = $unitname;
       $subu->pporgunit = $gp_no;
