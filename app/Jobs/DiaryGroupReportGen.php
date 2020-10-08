@@ -15,6 +15,7 @@ use \Carbon\Carbon;
 use App\CompGroup;
 use App\common\GDWActions;
 use App\DailyPerformance;
+use App\Mail\SendDiaryRpt;
 
 class DiaryGroupReportGen implements ShouldQueue
 {
@@ -98,7 +99,7 @@ class DiaryGroupReportGen implements ShouldQueue
 
 
         foreach ($daterange as $key => $value) {
-          Log::info('process date ' . $value->format('Y-m-d'));
+          // Log::info('process date ' . $value->format('Y-m-d'));
           array_push($headers, $value->format('d (D)'));
 
           $dtype = GDWActions::GetDayType($value->format('Y-m-d'));
@@ -246,11 +247,11 @@ class DiaryGroupReportGen implements ShouldQueue
             } elseif($expectedhrs == 0){
               if($sumhrs > 0){
                 $pdtivity = 100 + ($sumhrs / (8 * $pdaycount) * 100);
-                $pdgrp = '101% +';
+                $pdgrp = '> 100%';
                 $pbg = ExcelHandler::PD_GD;
               } else {
                 $pdtivity = 100;
-                $pdgrp = '70% - 100%';
+                $pdgrp = '80% - 100%';
                 $pbg = ExcelHandler::PD_GC;
               }
             } else {
@@ -260,22 +261,22 @@ class DiaryGroupReportGen implements ShouldQueue
                 $pbg = ExcelHandler::PD_G0;
               } elseif($pdtivity < 50){
                 $pdgrp = '1% - 49%';
-                $pbg = ExcelHandler::PD_GB;
-              } elseif($pdtivity < 70){
-                $pdgrp = '50% - 69%';
+                $pbg = ExcelHandler::PD_GA;
+              } elseif($pdtivity < 80){
+                $pdgrp = '50% - 79%';
                 $pbg = ExcelHandler::PD_GB;
               } elseif($pdtivity <= 100){
-                $pdgrp = '70% - 100%';
+                $pdgrp = '80% - 100%';
                 $pbg = ExcelHandler::PD_GC;
               } else {
-                $pdgrp = '101% +';
+                $pdgrp = '> 100%';
                 $pbg = ExcelHandler::PD_GD;
               }
             }
 
 
             array_push($dathrs, ['v' => ($pdtivity == 'N/A' ? $pdtivity : number_format($pdtivity, 2)), 't' => $pbg]);
-            array_push($dathrs, ['v' => $pdgrp, 't' => ExcelHandler::BG_NORMAL]);
+            array_push($dathrs, ['v' => $pdgrp, 't' => $pbg]);
 
             // push hours to main array
             array_push($hrsdata, $dathrs);
@@ -305,7 +306,12 @@ class DiaryGroupReportGen implements ShouldQueue
 
         // email to rep
         $recps = $cgrp->Users()->pluck('email');
-        \Mail::to(implode(',', $recps))->send(new SendDiaryRpt($bjob));
+
+        Log::info('Recipients: ' . json_encode($recps));
+
+        foreach($recps as $oemail){
+          \Mail::to($oemail)->send(new SendDiaryRpt($bjob));
+        }
       }
     }
 }

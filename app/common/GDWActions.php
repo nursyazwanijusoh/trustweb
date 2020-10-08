@@ -619,7 +619,11 @@ class GDWActions
       ->first();
 
     if($dp){
-
+      // remote possible duplicates
+      $dbd = DailyPerformance::where('user_id', $user_id)
+        ->whereDate('record_date', $date)
+        ->where('id', '!=', $dp->id)
+        ->delete();
     } else {
       // no record. create new
       $user = User::find($user_id);

@@ -54,7 +54,7 @@ class PollController extends Controller
     if($req->filled('actdate')){
       $po->end_time = $req->actdate;
     }
-    
+
     if($req->has('privatepoll')){
       $po->public = false;
     } else {
@@ -288,6 +288,7 @@ class PollController extends Controller
          ])
          ->options([
            'responsive' => true,
+           'maintainAspectRatio' => false,
            'title' => [
              'display' => true,
              'text' => $poll->title,

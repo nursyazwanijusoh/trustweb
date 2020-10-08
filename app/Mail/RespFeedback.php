@@ -31,9 +31,13 @@ class RespFeedback extends Mailable
     public function build()
     {
 
+      $name = 'Anonymous';
+      if($this->fb->staff_id != 0){
+        $name = $this->fb->Sender->name;
+      }
 
       return $this->subject('Your trUSt Feedback')->markdown('email.feedback', [
-        'name' => $this->fb->Sender->name,
+        'name' => $name,
         'thef' => $this->fb
       ]);
     }
