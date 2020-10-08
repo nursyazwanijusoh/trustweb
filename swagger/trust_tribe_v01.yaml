@@ -1,0 +1,93 @@
+swagger: '2.0'
+info:
+  title: TRIBE to TRUST API call
+  version: '1.0'
+host: trust.tm.com.my
+basePath: /
+schemes:
+  - https
+paths:
+  /api/tribe/staffno:
+    get:
+      parameters:
+      - in: "query"
+        name: "staffToken"
+        type: "string"
+      responses:
+        '200':
+          description: OK
+          schema:
+            title: returnObject
+            type: object
+            properties:
+              staffno:
+                type: string
+              persno:
+                type: number
+              status:
+                type: string
+            example:
+              staffno: S52311
+              persno: 19562
+              status: OK
+        '400':
+          description: Bad Response
+
+
+  /api/tribe/skillset:
+    get:
+      description: TRUST shall provide list of skillset
+      parameters:
+      - in: "query"
+        name: "staffToken"
+        type: "string"
+      responses:
+        '200':
+          description: OK
+          schema:
+            title: returnObject
+            type: array
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+            example:
+              id: 55555
+              name: NODE-RED
+        '400':
+          description: Bad Response
+
+  /api/tribe/userbyskillset:
+    get:
+      description: TRUST shall provide list of users who have certsin skillset
+      parameters:
+      - in: "query"
+        name: "staffToken"
+        type: "string"
+      - in: "query"
+        name: "skillset"
+        type: "string"
+      responses:
+        '200':
+          description: OK
+          schema:
+            title: returnObject
+            type: array
+            properties:
+              staffno:
+                type: string
+              persno:
+                type: string
+              skillset:
+                type: string
+            example:
+              [{staffno: S52311,
+              skillset: JAVA
+            },
+            {staffno: TM31777,
+              skillset: JAVA SERVER PAGE
+            }]
+        '400':
+          description: Bad Response
+
