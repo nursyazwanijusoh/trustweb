@@ -165,3 +165,11 @@ $api->version('v1', [
   $api->post('/mco/takeactionall',  ['as' => 'api.mco.takeactionall', 'uses' => 'App\Api\V1\Controllers\McoController@takeactionall']);
 
 });
+
+
+$api->version('v1', [
+  'prefix' => 'api/tribe'
+], function ($api) {
+  
+  $api->get('/staffno',  ['as' => 'tribe.validtoken', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@validateToken']);
+});

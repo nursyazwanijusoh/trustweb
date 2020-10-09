@@ -1,0 +1,1 @@
+this is just to get the user before sending the session to tribe
