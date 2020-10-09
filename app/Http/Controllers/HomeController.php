@@ -112,7 +112,7 @@ class HomeController extends Controller
       $mtop10 = \DB::table('daily_performances')
         ->select('user_id', \DB::raw('sum(actual_hours) as tot_hrs'), \DB::raw('sum(expected_hours) as exp_hrs'))
         ->whereDate('record_date', '>', $lastmon)
-        ->where('actual_hours', '>', 0)
+        // ->where('actual_hours', '>', 0)
         ->groupBy('user_id')
         ->orderBy('tot_hrs', 'DESC')
         ->limit(10)->get();
