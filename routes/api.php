@@ -168,8 +168,14 @@ $api->version('v1', [
 
 
 $api->version('v1', [
+  'middleware' => 'auth:api',
   'prefix' => 'api/tribe'
-], function ($api) {
+], function ($api) {  
+  $api->post('/staffno',  ['as' => 'api.tribe.getDetails', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@getDetail']);
   
-  $api->get('/staffno',  ['as' => 'tribe.validtoken', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@validateToken']);
+});
+
+
+$api->version('v1', ['prefix' => 'api/tribe',], function ($api) {
+  $api->get('/vt',  ['as' => 'api.tribe.vt', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@validateToken']);
 });

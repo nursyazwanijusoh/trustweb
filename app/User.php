@@ -26,8 +26,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
+
+    public function accessTokens()
+    {
+        return $this->hasMany('App\OauthAccessToken');
+    }
 
     public function verifyUser(){
       return $this->hasOne('App\VerifyUser');
