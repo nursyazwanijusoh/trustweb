@@ -165,3 +165,17 @@ $api->version('v1', [
   $api->post('/mco/takeactionall',  ['as' => 'api.mco.takeactionall', 'uses' => 'App\Api\V1\Controllers\McoController@takeactionall']);
 
 });
+
+
+$api->version('v1', [
+  'middleware' => 'auth:api',
+  'prefix' => 'api/tribe'
+], function ($api) {  
+  $api->post('/staffno',  ['as' => 'api.tribe.getDetails', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@getDetail']);
+  
+});
+
+
+$api->version('v1', ['prefix' => 'api/tribe',], function ($api) {
+  $api->get('/vt',  ['as' => 'api.tribe.vt', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@validateToken']);
+});
