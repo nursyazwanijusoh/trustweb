@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use \Carbon\Carbon;
 use App\common\McoActions;
 use App\McoTravelReq;
+use App\User;
 use App\LocationHistory;
 use PDF;
 
@@ -18,6 +19,13 @@ class McoTravelReqController extends Controller
   }
 
   public function reqform(Request $req){
+    $tuser = $req->user();
+    if($req->filled('uid')){
+      $suser = User::find($req->uid);
+      if($suser){
+        $tuser = $suser;
+      }
+    }
     // set min and max date
     $mindate = new Carbon;
     $maxdate = new Carbon;
@@ -28,13 +36,14 @@ class McoTravelReqController extends Controller
     // $gm = McoActions::GetApprovers($contoh);
     $gm = McoActions::GetApprovers($req->user());
 
-    $reqhist = McoTravelReq::where('requestor_id', $req->user()->id)->get();
+    $reqhist = McoTravelReq::where('requestor_id', $tuser->id)->get();
 
     return view('mco.req_ack', [
       'mindate' => $mindate->toDateString(),
       'maxdate' => $maxdate->toDateString(),
       'gm' => $gm,
-      'hist' => $reqhist
+      'hist' => $reqhist,
+      'tuser' => $tuser
     ]);
   }
 
