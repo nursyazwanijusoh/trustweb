@@ -40,7 +40,11 @@
                       @foreach($users as $atask)
                       <tr>
                         <td>{{ $atask->name }}</td>
+                        @if(isset($atask->partner_id))
                         <td>{{ $atask->Partner->comp_name }}</td>
+                        @else
+                        <td>LDAP: {{ $atask->subunit }}</td>
+                        @endif
                         <td>{{ $atask->staff_no }}</td>
                         <td>{{ $atask->email }}</td>
                         @if($type == 'pending')

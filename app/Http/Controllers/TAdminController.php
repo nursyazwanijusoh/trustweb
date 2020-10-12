@@ -802,16 +802,19 @@ class TAdminController extends Controller
     }
 
     // reduce the user count
-    $pner = $user->Partner;
-    $pner->decrement('staff_count');
-    $pner->save();
+    if(isset($user->partner_id)){
+      $pner = $user->Partner;
+      $pner->decrement('staff_count');
+      $pner->save();
+    }
+
 
     $rj = new RejectedUser;
     $rj->staff_no = $user->staff_no;
     $rj->name = $user->name;
     $rj->email = $user->email;
     $rj->mobile_no = $user->mobile_no;
-    $rj->partner_id = $user->partner_id;
+    $rj->partner_id = isset($user->partner_id) ? $user->partner_id : 0;
     $rj->remark = $req->remark;
     $rj->action = $req->act;
     $rj->rejected_by = Session::get('staffdata')['id'];
