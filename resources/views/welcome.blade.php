@@ -138,7 +138,7 @@
                     <div class="col-lg-6 content text-justify">
 
                     <!------START of DEMO ------>
-                    <!---
+                   
 
                     <h2>Welcome to DevOps Enterprise Platform</h2>
 
@@ -178,7 +178,7 @@
                         </div>
 
                         <br/>
---->
+                        
 <!--- end of demo -->
 
 
