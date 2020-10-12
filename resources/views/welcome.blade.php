@@ -139,7 +139,13 @@
                     <div class="col-lg-6 content text-justify">
                         <div class="section-header">
                             <h2>AGILE OFFICE.</h2>
-                        </div>
+
+<div class="card">                        </div>
+<form>
+<input type="text">
+</form>
+</div>
+
 
                         <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
                         <span>In order for GIT to be more effective in delivering high quality solution with faster
