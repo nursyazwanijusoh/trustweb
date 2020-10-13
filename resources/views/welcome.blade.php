@@ -81,7 +81,7 @@
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#services">Features</a></li>
                     <li><a href="{{ route('guides', [], false) }}" title="Collection of user guides">Guides</i></a></li>
-                    <li><a href="{{ route('policy', [], false) }}" >Privacy Policy</i></a></li>
+                    <li><a href="{{ route('policy', [], false) }}">Privacy Policy</i></a></li>
                     <!-- <li class="menu-has-children"><a href="">Drop Down</a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -106,18 +106,14 @@
     <section id="intro">
 
         <div id="intro-carousel" class="owl-carousel">
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/b1t.jpg');"></div>
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/b2r.jpg');">
+            <div class="item" style="background-image: url('/welcome/img/intro-carousel/b1t.jpg');"></div>
+            <div class="item" style="background-image: url('/welcome/img/intro-carousel/b2r.jpg');">
             </div>
             <div class="item" style="background-image: url('/welcome/img/intro-carousel/b3u.jpg');">
             </div>
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/b4s.jpg');">
+            <div class="item" style="background-image: url('/welcome/img/intro-carousel/b4s.jpg');">
             </div>
-            <div class="item"
-                style="background-image: url('/welcome/img/intro-carousel/b5t.jpg');">
+            <div class="item" style="background-image: url('/welcome/img/intro-carousel/b5t.jpg');">
             </div>
 
         </div>
@@ -136,46 +132,98 @@
                         <img src="/welcome/img/agile.jpg" alt="">
                     </div>
 
+
+
+
                     <div class="col-lg-6 content text-justify">
-                        <div class="section-header">
-                            <h2>AGILE OFFICE.</h2>
+
+                    <!------START of DEMO ------>
+                   <!--
+
+                    <h2>Welcome to DevOps Enterprise Platform</h2>
+
+                        <div class="card">
+                            <div class="card-header">
+                                DevOps Login
+                            </div>
+                            <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Username
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" />
+                                    </div>
+                                </div>
+                                <br/>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Password
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="password" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6">
+                                <input type="button" value="Submit" class="btn btn-primary"/>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            </div>
                         </div>
 
-                        <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
-                        <span>In order for GIT to be more effective in delivering high quality solution with faster
-                            delivery,
-                            teamwork is crucial. We need to change the way we work.how we deal with each other. We need
-                            to be more
-                            collaborative. "REMOVE THIS: Jeffry wuz ere"</span>
+                        <br/>
+                -->        
+<!--- end of demo -->
 
-                        <ul>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>SPACE OPTIMIZATION:</b>
-                                Less square footage required to host the employees. Bring your laptop only will be
-                                adhered! (staff will
-                                be provided drawer to keep their belonging but it is not dedicated)
-                                .</li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>PROMOTE 5S:</b>
-                                Safety and good housekeeping practices in all office space. A must criteria for
-                                Hot-Desking
-                            </li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b> FLEXIBILITY:</b>
-                                Don’t have to commit to a single layout – will come in handy during structure
-                                re-organization.
-                            </li>
-                            <li><i class="ion-android-checkmark-circle"></i>
-                                <b>FREE & EASY:</b>
-                                We determine the floor, you determine your place. Get to know your new neighbor
-                                everyday!
 
-                            </li>
-                        </ul>
+                        <div class="section-header">
+                            <h2>AGILE OFFICE.</h2>
+
+
+
+                            <h3>A GIT AGILE DEVELOPMENT CENTRE.</h3>
+                            <span>In order for GIT to be more effective in delivering high quality solution with faster
+                                delivery,
+                                teamwork is crucial. We need to change the way we work.how we deal with each other. We
+                                need
+                                to be more
+                                collaborative. "REMOVE THIS: Jeffry wuz ere"</span>
+
+                            <ul>
+                                <li><i class="ion-android-checkmark-circle"></i>
+                                    <b>SPACE OPTIMIZATION:</b>
+                                    Less square footage required to host the employees. Bring your laptop only will be
+                                    adhered! (staff will
+                                    be provided drawer to keep their belonging but it is not dedicated)
+                                    .
+                                </li>
+                                <li><i class="ion-android-checkmark-circle"></i>
+                                    <b>PROMOTE 5S:</b>
+                                    Safety and good housekeeping practices in all office space. A must criteria for
+                                    Hot-Desking
+                                </li>
+                                <li><i class="ion-android-checkmark-circle"></i>
+                                    <b> FLEXIBILITY:</b>
+                                    Don’t have to commit to a single layout – will come in handy during structure
+                                    re-organization.
+                                </li>
+                                <li><i class="ion-android-checkmark-circle"></i>
+                                    <b>FREE & EASY:</b>
+                                    We determine the floor, you determine your place. Get to know your new neighbor
+                                    everyday!
+
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
         </section><!-- #about -->
 
         <!--==========================
