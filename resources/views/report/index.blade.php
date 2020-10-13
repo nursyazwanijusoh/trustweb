@@ -21,6 +21,7 @@
                     <a href="{{ route('report.gwd.summary', [], false) }}" class="list-group-item list-group-item-action">Group Summary</a>
                     <a href="{{ route('report.gwd.divsum', [], false) }}" class="list-group-item list-group-item-action">Division Summary</a>
                     <a href="{{ route('report.gwd.detail', [], false) }}" class="list-group-item list-group-item-action">Details by Division</a>
+                    <a href="{{ route('report.gwd.detailexport', [], false) }}" class="list-group-item list-group-item-action">Individual Details</a>
                   </div>
 
                   @if($role <= 2)

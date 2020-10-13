@@ -35,6 +35,13 @@ class GwdReportController extends Controller
 
   }
 
+  public function detailexport(Request $req){
+
+    // $userlist = User::where('status', 1)->whereNotNull('new_ic')->get();
+
+    return view('report.personaldetails');
+  }
+
   public function divsum(Request $req){
 
     if($req->filled('action')){
