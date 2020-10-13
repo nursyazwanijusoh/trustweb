@@ -2,6 +2,7 @@
 
 @section('page-css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+
 @endsection
 
 @section('content')
@@ -48,7 +49,7 @@
         <div class="col-lg-12">
           <div class="card mb-3">
             <div class="card-header" id="headc">Report Data</div>
-            <div class="card-body text-center">
+            <div class="card-body">
               <div class="table-responsive">
                 <table id="repothist" class="table table-bordered table-hover" style="white-space: nowrap;">
                   <thead>
@@ -139,7 +140,7 @@ $(document).ready(function() {
       paging: true,
       dom: 'Bfrtip',
       buttons: [
-          'csv', 'excel'
+          'excelHtml5', 'csvHtml5'
       ],
       columns : [
         {data: 'name'},
