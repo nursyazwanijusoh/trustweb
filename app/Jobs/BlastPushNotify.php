@@ -64,8 +64,8 @@ class BlastPushNotify implements ShouldQueue
 
       if($pn){
 
-          if($pn->status == 'N'){
-
+        if($pn->status == 'N'){
+          try {
             $pnids = [];
 
             $pn->status = 'P';
@@ -128,15 +128,17 @@ class BlastPushNotify implements ShouldQueue
             $pn->status = 'C';
             $pn->rec_count = $count;
             $pn->save();
-          } else {
-            $msg = 'Notification already sent';
+          } catch(\Throwable $te){
+            $status = 'Failed';
+            $msg = $te->getMessage();
           }
+        } else {
+          $msg = 'Notification already sent';
+        }
 
       } else {
         $msg = 'pn_id 404';
       }
-
-
 
       $bjob->status = $status;
       $bjob->extra_info = $msg;
