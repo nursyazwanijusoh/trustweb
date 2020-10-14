@@ -77,6 +77,7 @@ function loadOneStaff(id){
 
   $.ajax({
     url: search_url,
+    async: false,
     data: {
       'uid' : id,
       'startdate' : "{{ $startdate }}",

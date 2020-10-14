@@ -9,43 +9,39 @@
 
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-8">
             <div class="card mb-3">
-                <div class="card-header">Staff Diary Details - Search Parameters</div>
+                <div class="card-header">Group Analysis - Search Parameters</div>
                 <div class="card-body">
-                  <form onsubmit="fetch(); return false;">
+                  <form action="{{ route('report.gwd.grpanalysis')}}" method="get">
                     <div class="form-group row">
-                        <label for="fdate" class="col-md-3 col-form-label text-md-right">From</label>
+                        <label for="fdate" class="col-md-3 col-form-label text-md-right">Record Month</label>
                         <div class="col-md-6">
-                          <input type="date" name="fdate" id="fdate" required />
+                          <input type="date" name="fdate" id="fdate" value="{{ $indate }}" required />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="todate" class="col-md-3 col-form-label text-md-right">To</label>
-                        <div class="col-md-6">
-                          <input type="date" name="todate" id="todate" required />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="userlist" class="col-md-3 col-form-label text-md-right">Staff List</label>
-                        <div class="col-md-9">
-                          <select class="form-control" id="userlist" name="userlist" multiple required >
-                            {{-- @foreach ($ulist as $act)
-                            <option value="{{ $act->id }}" title="{{ $act->unit }}" >{{ $act->staff_no }} - {{ $act->name }}</option>
-                            @endforeach --}}
+                        <label for="userlist" class="col-md-3 col-form-label text-md-right">Group</label>
+                        <div class="col-md-7">
+                          <select class="form-control" id="userlist" name="gid" required >
+                            @foreach ($gplist as $act)
+                            <option value="{{ $act->id }}" @if($act->id == $gid) selected @endif >{{ $act->name }}</option>
+                            @endforeach
                           </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">Get Diary Details</button>
-                            <!-- <button type="submit" class="btn btn-primary" name="subtype" value="gwd">Get GWD Activities Data</button> -->
+                          <div id="baten">
+                            <button type="submit" class="btn btn-primary">Generate Analysis</button>
+                          </div>
                         </div>
                     </div>
                   </form>
                 </div>
             </div>
         </div>
+        @if($gotdata == true)
         <div class="col-lg-12">
           <div class="card mb-3">
             <div class="card-header" id="headc">Report Data</div>
@@ -58,12 +54,14 @@
                       <th scope="col">Name</th>
                       <th scope="col">Band</th>
                       <th scope="col">Division</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Act Tag</th>
-                      <th scope="col">Act Type</th>
-                      <th scope="col">ID/Title</th>
-                      <th scope="col">Details</th>
-                      <th scope="col">Hours</th>
+                      <th scope="col">Report Month</th>
+                      <th scope="col">Working &gt; 12 hrs</th>
+                      <th scope="col">Work during AL/MC</th>
+                      <th scope="col">Work on Sat/Sun</th>
+                      <th scope="col">Total entries</th>
+                      <th scope="col">Days with entries</th>
+                      <th scope="col">Days with single entries</th>
+                      <th scope="col">Single entry &gt; 4 hrs</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -73,12 +71,14 @@
             </div>
           </div>
         </div>
+        @endif
     </div>
 </div>
 @endsection
 
 @section('page-js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+@if($gotdata == true)
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js "></script>
@@ -89,31 +89,30 @@
 <script type="text/javascript">
 
 function fetch(){
-  dtable.clear().draw();
-  var values = $('#userlist').val();
+  // dtable.clear().draw();
+  $("#baten").attr('class', 'd-none');
+  var values = @json($users) ;
   recsize = values.length;
-  fdate = $('#fdate').val();
-  tdate = $('#tdate').val();
   counter = 0;
   errcount = 0;
   $('#headc').html("Report Data : " + counter + " / " + recsize + ". Error count: " + errcount);
   values.forEach(loadOneStaff);
+  $("#baten").attr('class', '');
 }
 
 function loadOneStaff(id){
   counter++;
-  var search_url = "{{ route('reports.api.indiarept') }}";
+  var search_url = "{{ route('reports.api.indianal') }}";
 
   $.ajax({
     url: search_url,
     async: false,
     data: {
       'uid' : id,
-      'startdate' : fdate,
-      'enddate' : tdate
+      'mon' : "{{ $indate }}"
     },
     success: function(result) {
-      dtable.rows.add(result).draw();
+      dtable.row.add(result).draw();
     },
     error: function(xhr){
       errcount++;
@@ -127,20 +126,7 @@ function loadOneStaff(id){
 
 $(document).ready(function() {
 
-  $('#userlist').select2({
-    minimumInputLength: 4,
-    ajax: {
-      url: "{{ route('webapi.s2findstaff') }}",
-      data: function (params) {
-        var query = {
-          input: params.term
-        }
-
-        // Query parameters will be ?search=[term]&type=public
-        return query;
-      }
-    }
-  });
+  $('#userlist').select2();
 
   dtable = $('#repothist').DataTable({
       paging: true,
@@ -153,19 +139,30 @@ $(document).ready(function() {
         {data: 'name'},
         {data: 'band'},
         {data: 'division'},
-        {data: 'date'},
-        {data: 'tag'},
-        {data: 'type'},
-        {data: 'title'},
-        {data: 'detail'},
-        {data: 'hours'}
+        {data: 'rptmon'},
+        {data: 'w12h'},
+        {data: 'walmc'},
+        {data: 'wwend'},
+        {data: 'ecount'},
+        {data: 'dwentries'},
+        {data: 'd1entry'},
+        {data: 'em4h'}
       ]
   });
 
 
+  fetch();
 });
 
 </script>
+@else
+<script type="text/javascript">
+$(document).ready(function() {
 
+  $('#userlist').select2();
+
+});
+</script>
+@endif
 
 @endsection

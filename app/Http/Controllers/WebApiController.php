@@ -328,5 +328,101 @@ class WebApiController extends Controller
     }
   }
 
+  public function indivDiaryAnalysis(Request $req){
+    if($req->filled('uid')){
+      $user = User::find($req->uid);
+
+      if($user){
+
+        $cdate = Carbon::parse($req->mon);
+        $monmon = $cdate->format('F Y');
+        $sdate = $cdate->startOfMonth()->toDateString();
+        $edate = $cdate->addMonths(1)->toDateString();
+
+        // counters
+        $w12h = 0;
+        $walmc = 0;
+        $wwend = 0;
+        $ecount = 0;
+        $dwentries = 0;
+        $d1e = 0;
+        $em4h = 0;
+
+        $daterange = new \DatePeriod(
+            new Carbon($sdate),
+            \DateInterval::createFromDateString('1 day'),
+            new Carbon($edate)
+          );
+
+        foreach ($daterange as $key => $value) {
+          $cdf = GDWActions::GetDailyPerfObj($user->id, $value);
+
+          // work more than 12 hrs
+          if($cdf->actual_hours >= 12){
+            $w12h++;
+          }
+
+          // work during AL / MC
+          if($cdf->actual_hours > 0 && $cdf->is_off_day == true){
+            $walmc++;
+          }
+
+          // work during weekend
+          $carbond = new Carbon($value);
+          $dow = $carbond->dayOfWeekIso;
+
+          if($cdf->actual_hours > 0 && $dow > 5){
+            $wwend++;
+          }
+
+
+          // entries related
+          $entrycount = $cdf->Activities->count();
+
+          // total entries
+          $ecount += $entrycount;
+
+          // days with entry
+          if($entrycount > 0){
+            $dwentries++;
+          }
+
+          // days with single entry
+          if($entrycount == 1){
+            $d1e++;
+          }
+        }
+
+        // single entry more than 4 hrs
+        $em4h = GwdActivity::where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<', $edate)
+          ->where('hours_spent', '>=', 4)
+          ->count();
+
+
+        return [
+          'staff_no' => $user->staff_no,
+          'name' => $user->name,
+          'band' => $user->job_grade,
+          'division' => $user->unit,
+          'rptmon' => $monmon,
+          'w12h' => $w12h,
+          'walmc' => $walmc,
+          'wwend' => $wwend,
+          'ecount' => $ecount,
+          'dwentries' => $dwentries,
+          'd1entry' => $d1e,
+          'em4h' => $em4h
+        ];
+
+      } else {
+        abort(404);
+      }
+    } else {
+      abort(403);
+    }
+  }
+
 
 }

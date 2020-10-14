@@ -159,6 +159,7 @@ Route::get('/reports/gwd/divsummary', 'GwdReportController@divsum')->name('repor
 Route::post('/reports/gwd/entrystat', 'GwdReportController@entrystatres')->name('report.gwd.entrystatres');
 Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gwd.detail');
 Route::get('/reports/gwd/detailexport', 'GwdReportController@detailexport')->name('report.gwd.detailexport')->middleware('AdminGate');
+Route::get('/reports/gwd/grpanalysis', 'GwdReportController@grpanalysis')->name('report.gwd.grpanalysis')->middleware('AdminGate');
 // Route::post('/reports/gwd/detail', 'GwdReportController@detailres')->name('report.gwd.detailres');
 // Route::get('/reports/gwd/gsum', 'GwdReportController@grpSummary')->name('reports.gwd.gsum');
 // Route::post('/reports/gwd/gsum', 'GwdReportController@doGrpSummary')->name('reports.gwd.dogsum');
@@ -170,6 +171,7 @@ Route::get('/reports/checkin/overall', 'ReportController@checkinByFloorDiv')->na
 Route::get('/reports/checkin/detail', 'ReportController@checkinByTeamDetail')->name('reports.c.detail');
 Route::get('/reports/webapi/floorsum', 'WebApiController@getFloorCheckinSummary')->name('reports.api.floorsum');
 Route::get('/reports/webapi/indiarept', 'WebApiController@indivDetailRept')->name('reports.api.indiarept');
+Route::get('/reports/webapi/indianal', 'WebApiController@indivDiaryAnalysis')->name('reports.api.indianal');
 
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');

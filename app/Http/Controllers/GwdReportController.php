@@ -42,6 +42,41 @@ class GwdReportController extends Controller
     return view('report.personaldetails');
   }
 
+  public function grpanalysis(Request $req){
+    $grplist = CompGroup::all();
+    $today = new Carbon;
+    $gid = 0;
+    $gotdata = false;
+    $users = [];
+
+    if($req->filled('gid')){
+      if($req->filled('fdate')){
+        $today = new Carbon($req->fdate);
+      }
+
+      $cgrp = CompGroup::find($req->gid);
+      if($cgrp){
+
+        foreach ($cgrp->Members as $onemember) {
+          foreach ($onemember->Staffs as $value) {
+            array_push($users, $value->id);
+          }
+        }
+
+        $gotdata = true;
+      }
+    }
+
+
+    return view('report.groupanalysis', [
+      'gplist' => $grplist,
+      'indate' => $today->toDateString(),
+      'gid' => $gid,
+      'gotdata' => $gotdata,
+      'users' => $users
+    ]);
+  }
+
   public function divsum(Request $req){
 
     if($req->filled('action')){
