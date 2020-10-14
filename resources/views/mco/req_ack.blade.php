@@ -67,7 +67,7 @@
           </div>
           <div class="col-lg-7">
             <div class="card m-1">
-              <div class="card-header">Request History</div>
+              <div class="card-header">Request History for <a href="{{ route('staff', ['staff_id' => $tuser->id])}}">{{ $tuser->name }}</a></div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table id="taskdetailtable" class="table table-striped table-bordered table-hover">

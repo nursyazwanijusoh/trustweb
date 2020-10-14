@@ -35,6 +35,13 @@ class GwdReportController extends Controller
 
   }
 
+  public function detailexport(Request $req){
+
+    // $userlist = User::where('status', 1)->whereNotNull('new_ic')->get();
+
+    return view('report.personaldetails');
+  }
+
   public function divsum(Request $req){
 
     if($req->filled('action')){
@@ -597,6 +604,8 @@ class GwdReportController extends Controller
         return $this->doGrpVertExcel($req);
       } elseif($req->action == 'gloc') {
         return $this->doGrpLocTable($req);
+      } elseif($req->action == 'pncdiary') {
+        return $this->doGrpInDiaRpt($req);
       }
     }
 
@@ -801,6 +810,33 @@ class GwdReportController extends Controller
       'enddate' => $req->tdate,
       'idlist' => $users,
       'dtablerender' => $contentrender
+    ]);
+  }
+
+  public function doGrpInDiaRpt(Request $req){
+
+    $cgrp = CompGroup::find($req->gid);
+    if($cgrp){
+
+    } else {
+      return redirect()->back()->withInput()->with([
+        'alert' => 'Group 404',
+        'a_type' => 'danger'
+      ]);
+    }
+
+    $users = [];
+    foreach ($cgrp->Members as $onemember) {
+      foreach ($onemember->Staffs as $value) {
+        array_push($users, $value->id);
+      }
+    }
+
+    return view('report.grpdiarydetails', [
+      'groupname' => $cgrp->name,
+      'startdate' => $req->fdate,
+      'enddate' => $req->tdate,
+      'idlist' => $users
     ]);
   }
 

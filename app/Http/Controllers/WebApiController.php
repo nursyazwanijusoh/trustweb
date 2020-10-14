@@ -12,6 +12,7 @@ use App\User;
 use App\Attendance;
 use App\Checkin;
 use App\place;
+use App\GwdActivity;
 use \DB;
 use \Carbon\Carbon;
 
@@ -56,6 +57,39 @@ class WebApiController extends Controller
     }
   }
 
+  public function select2FindStaff(Request $req){
+    if($req->filled('input')){
+
+    } else {
+      return [];
+    }
+
+    $result = [];
+    // first search by exact staff no
+    $user = User::where('staff_no', $req->input)->first();
+
+    if($user){
+      array_push($result, [
+        'id' => $user->id,
+        'text' => $user->staff_no . ' - ' . $user->name,
+        'title' => $user->unit
+      ]);
+    } else {
+      // find by name
+      $users = User::where('name', 'LIKE', "%".$req->input."%")->get();
+      foreach($users as $user){
+        array_push($result, [
+          'id' => $user->id,
+          'text' => $user->staff_no . ' - ' . $user->name,
+          'title' => $user->unit
+        ]);
+      }
+    }
+
+
+    return ['results' => $result];
+  }
+
   public function findstaff(Request $req){
 
     if($req->filled('input')){
@@ -73,6 +107,7 @@ class WebApiController extends Controller
         'id' => $user->id,
         'staff_no' => $user->staff_no,
         'name' => $user->name,
+        'text' => $user->name,
         'div' => $user->unit
       ]);
     } else {
@@ -83,6 +118,7 @@ class WebApiController extends Controller
           'id' => $user->id,
           'staff_no' => $user->staff_no,
           'name' => $user->name,
+          'text' => $user->name,
           'div' => $user->unit
         ]);
       }
@@ -248,18 +284,49 @@ class WebApiController extends Controller
         $labels[] = $af->pporgunitdesc;
         $data[] = $af->scount;
       }
-
-
-
     } else {
       abort(403);
     }
-
-
-
   }
 
+  public function indivDetailRept(Request $req){
+    if($req->filled('uid')){
+      $user = User::find($req->uid);
 
+      if($user){
+        $sdate = new Carbon($req->startdate);
+        $edate = new Carbon($req->enddate);
+
+        $actlist = GwdActivity::where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<=', $edate)
+          ->get();
+        $retdata = [];
+
+        foreach($actlist as $ac){
+          $retdata[] = [
+            'staff_no' => $user->staff_no,
+            'name' => $user->name,
+            'band' => $user->job_grade,
+            'division' => $user->unit,
+            'date' => $ac->activity_date,
+            'tag' => $ac->ActCat->descr,
+            'type' => $ac->ActType->descr,
+            'title' => $ac->parent_number,
+            'detail' => $ac->details,
+            'hours' => $ac->hours_spent
+          ];
+        }
+
+        return $retdata;
+
+      } else {
+        abort(404);
+      }
+    } else {
+      abort(403);
+    }
+  }
 
 
 }

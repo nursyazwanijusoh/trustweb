@@ -34,6 +34,7 @@
     <!-- Main Stylesheet File -->
     <link href="/welcome/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css" rel="stylesheet" />
     @yield('page-css')
 </head>
 
@@ -48,7 +49,7 @@
                 <nav id="nav-menu-container">
                       <ul class="nav-menu">
                         <li><a class="nav-link" href="{{ route('hofs', [], false) }}" title="Hall Of Fame"><i class="fa fa-trophy" style="color:blue"></i></a></li>
-                        <li><a class="nav-link" href="{{ route('guides', [], false) }}" title="Collection of user guides">Guides</i></a></li>
+
                         @guest
                         @else
                         <!-- <li><a href="{{ route('staff', [], false) }}">Home</a></li> -->
@@ -63,12 +64,12 @@
                         <li class="menu-has-children"><a href="#">Menu</a>
                           <ul>
                               <li><a class="dropdown-item" href="{{ route('staff', [], false) }}">Home</a></li>
-                              <!-- li class="menu-has-children"><a href="#">MCO Initiative</a>
+                              <li class="menu-has-children"><a href="#">MCO Initiative</a>
                                 <ul>
                                     <li><a class="dropdown-item" href="{{ route('mco.reqform', [], false) }}">Request Travel Acknowledgement</a></li>
                                     <li><a class="dropdown-item" href="{{ route('mco.ackreqs', [], false) }}">Acknowledge Travel Request</a></li>
                                 </ul>
-                              </li -->
+                              </li>
                               <li><a class="dropdown-item" href="{{ route('staff.find', [], false) }}">Staff Finder</a></li>
                               <li><a class="dropdown-item" href="{{ route('area.list', [], false) }}">Meeting Area</a></li>
                               <li><a class="dropdown-item" href="{{ route('reports', [], false) }}">Reports</a></li>
@@ -85,6 +86,7 @@
                           </ul>
                         </li>
                         @endif
+                        <li><a class="nav-link" href="{{ route('guides', [], false) }}" title="Collection of user guides">Guides</i></a></li>
                         <li>
                           @guest
                           <a class="dropdown-item" href="{{ route('login', [], false) }}">Login</a>
