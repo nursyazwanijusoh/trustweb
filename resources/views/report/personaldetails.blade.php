@@ -54,7 +54,10 @@
                 <table id="repothist" class="table table-bordered table-hover" style="white-space: nowrap;">
                   <thead>
                     <tr>
+                      <th scope="col">Staff No</th>
                       <th scope="col">Name</th>
+                      <th scope="col">Band</th>
+                      <th scope="col">Division</th>
                       <th scope="col">Date</th>
                       <th scope="col">Act Tag</th>
                       <th scope="col">Act Type</th>
@@ -92,14 +95,13 @@ function fetch(){
   fdate = $('#fdate').val();
   tdate = $('#tdate').val();
   counter = 0;
-  $('#headc').html("Report Data : " + counter + " / " + recsize);
+  errcount = 0;
+  $('#headc').html("Report Data : " + counter + " / " + recsize + ". Error count: " + errcount);
   values.forEach(loadOneStaff);
 }
 
 function loadOneStaff(id){
   counter++;
-  $('#headc').html("Report Data : " + counter + " / " + recsize);
-
   var search_url = "{{ route('reports.api.indiarept') }}";
 
   $.ajax({
@@ -113,9 +115,12 @@ function loadOneStaff(id){
       dtable.rows.add(result).draw();
     },
     error: function(xhr){
+      errcount++;
       // alert("An error occured: " + xhr.status + " " + xhr.statusText);
     }
   });
+
+  $('#headc').html("Report Data : " + counter + " / " + recsize + ". Error count: " + errcount);
 }
 
 
@@ -143,7 +148,10 @@ $(document).ready(function() {
           'excelHtml5', 'csvHtml5'
       ],
       columns : [
+        {data: 'staff_no'},
         {data: 'name'},
+        {data: 'band'},
+        {data: 'division'},
         {data: 'date'},
         {data: 'tag'},
         {data: 'type'},

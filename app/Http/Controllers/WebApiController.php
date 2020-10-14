@@ -305,7 +305,10 @@ class WebApiController extends Controller
 
         foreach($actlist as $ac){
           $retdata[] = [
+            'staff_no' => $user->staff_no,
             'name' => $user->name,
+            'band' => $user->job_grade,
+            'division' => $user->unit,
             'date' => $ac->activity_date,
             'tag' => $ac->ActCat->descr,
             'type' => $ac->ActType->descr,
