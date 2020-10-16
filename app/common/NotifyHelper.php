@@ -51,13 +51,27 @@ class NotifyHelper
       }
 
       $client = new Client();
-      $param = [
-        'to' => $noti_ids,
-        'title' => $title,
-        'body' => $body,
-        // 'icon' => 'https://trust.tm.com.my/welcome/img/TrustNew.png',
-        'badge' => 1
-      ];
+
+      $param = [];
+
+      foreach ($noti_ids as $key => $value) {
+        $param[] = [
+          'to' => $value,
+          'title' => $title,
+          'body' => $body,
+          // 'icon' => 'https://trust.tm.com.my/welcome/img/TrustNew.png',
+          'badge' => 1
+        ];
+      }
+
+      // $param = [
+      //   'to' => $noti_ids,
+      //   'title' => $title,
+      //   'body' => $body,
+      //   // 'icon' => 'https://trust.tm.com.my/welcome/img/TrustNew.png',
+      //   'badge' => 1
+      // ];
+
       $head = [
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
