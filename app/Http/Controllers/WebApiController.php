@@ -13,6 +13,7 @@ use App\Attendance;
 use App\Checkin;
 use App\place;
 use App\GwdActivity;
+use App\DailyPerformance;
 use \DB;
 use \Carbon\Carbon;
 
@@ -333,12 +334,15 @@ class WebApiController extends Controller
       $user = User::find($req->uid);
 
       if($user){
+        $time0 = new Carbon;
 
         $cdate = Carbon::parse($req->mon);
         $monmon = $cdate->format('F Y');
         $sdate = $cdate->startOfMonth()->toDateString();
         $edate = $cdate->addMonths(1)->toDateString();
 
+        // method 1
+        /*
         // counters
         $w12h = 0;
         $walmc = 0;
@@ -400,8 +404,7 @@ class WebApiController extends Controller
           ->where('hours_spent', '>=', 4)
           ->count();
 
-
-        return [
+        $m1return = [
           'staff_no' => $user->staff_no,
           'name' => $user->name,
           'band' => $user->job_grade,
@@ -415,6 +418,99 @@ class WebApiController extends Controller
           'd1entry' => $d1e,
           'em4h' => $em4h
         ];
+
+        */
+
+        $time1 = new Carbon;
+        // method 2
+        // counters
+        $w12h = 0;
+        $walmc = 0;
+        $wwend = 0;
+        $ecount = 0;
+        $dwentries = 0;
+        $d1e = 0;
+        $em4h = 0;
+
+        // > 12 hrs
+        $w12h = DailyPerformance::where('user_id', $user->id)
+          ->whereDate('record_date', '>=', $sdate)
+          ->whereDate('record_date', '<', $edate)
+          ->where('actual_hours', '>=', 12)
+          ->count();
+
+        // cuti
+        $walmc = DailyPerformance::where('user_id', $user->id)
+          ->whereDate('record_date', '>=', $sdate)
+          ->whereDate('record_date', '<', $edate)
+          ->where('actual_hours', '>', 0)
+          ->where('is_off_day', true)
+          ->count();
+
+        // weekend
+        $wwend = DailyPerformance::where('user_id', $user->id)
+          ->whereDate('record_date', '>=', $sdate)
+          ->whereDate('record_date', '<', $edate)
+          ->where('actual_hours', '>', 0)
+          ->whereIn(DB::raw("DAYOFWEEK(record_date)"), [1,7])
+          ->count();
+
+        // entry count
+        $ecount = GwdActivity::where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<', $edate)
+          ->count();
+
+        // days with entry.
+        $dwentries = DailyPerformance::where('user_id', $user->id)
+          ->whereDate('record_date', '>=', $sdate)
+          ->whereDate('record_date', '<', $edate)
+          ->where('actual_hours', '>', 0)
+          ->count();
+
+        $d1e_temp = DB::table('gwd_activities')
+          ->where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<', $edate)
+          ->select('activity_date')
+          ->groupBy('activity_date')
+          ->having(DB::raw('count(id)'), '=', 1)
+          ->get();
+
+        $d1e = sizeof($d1e_temp);
+
+        $em4h = GwdActivity::where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<', $edate)
+          ->where('hours_spent', '>=', 4)
+          ->count();
+
+        $m2return = [
+          'staff_no' => $user->staff_no,
+          'name' => $user->name,
+          'band' => $user->job_grade,
+          'division' => $user->unit,
+          'rptmon' => $monmon,
+          'w12h' => $w12h,
+          'walmc' => $walmc,
+          'wwend' => $wwend,
+          'ecount' => $ecount,
+          'dwentries' => $dwentries,
+          'd1entry' => $d1e,
+          'em4h' => $em4h
+        ];
+
+        $time2 = new Carbon;
+
+        // return [
+        //   'm1' => $m1return,
+        //   'm2' => $m2return,
+        //   't0' => $time0->toDatetimeString(),
+        //   't1' => $time1->toDatetimeString(),
+        //   't2' => $time2->toDatetimeString()
+        // ];
+
+        return $m2return;
 
       } else {
         abort(404);
