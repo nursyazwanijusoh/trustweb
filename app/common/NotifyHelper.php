@@ -20,8 +20,7 @@ class NotifyHelper
         'title' => $title,
         'body' => $body,
         // 'icon' => 'https://trust.tm.com.my/welcome/img/TrustNew.png',
-        'badge' => 1,
-        'data' => $data
+        'badge' => 1
       ];
       $head = [
         'Content-Type' => 'application/json',
@@ -57,8 +56,7 @@ class NotifyHelper
         'title' => $title,
         'body' => $body,
         // 'icon' => 'https://trust.tm.com.my/welcome/img/TrustNew.png',
-        'badge' => 1,
-        'data' => $data
+        'badge' => 1
       ];
       $head = [
         'Content-Type' => 'application/json',
@@ -72,8 +70,8 @@ class NotifyHelper
       $resp = $client->request(
         'POST',
         'https://exp.host/--/api/v2/push/send', [
-          // 'headers' => $head,
-          'form_params' => $param
+          'headers' => $head,
+          'json' => $param
         ]
 
       );
