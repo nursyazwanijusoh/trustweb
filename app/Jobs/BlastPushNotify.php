@@ -49,7 +49,7 @@ class BlastPushNotify implements ShouldQueue
      *
      * @return void
      */
-    public function handle2()
+    public function handle()
     {
       $bjob = BatchJob::find($this->bjobid);
       $bjob->status = 'Processing';
@@ -155,7 +155,7 @@ class BlastPushNotify implements ShouldQueue
     /**
     *  original code
     */
-    public function handle()
+    public function handle2()
     {
       $bjob = BatchJob::find($this->bjobid);
       $bjob->status = 'Processing';
