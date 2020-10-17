@@ -501,17 +501,17 @@ class GDWActions
 
   public static function getBgColor($i){
     $bgcolors = [
-      'rgba(255, 99, 132, 0.8)',
+      'rgba(255, 99, 132, 0.5)',
       'rgba(255, 150, 5, 0.5)',
       'rgba(0, 255, 132, 0.5)',
       'rgba(0, 0, 255, 0.5)',
-      'rgba(255, 0, 0, 0.5)',
+      'rgba(255, 0, 0, 0.7)',
       'rgba(0, 0, 0, 0.2)',
       'rgba(14, 170, 132, 0.5)',
       'rgba(108, 68, 229, 0.7)',
       'rgba(215, 215, 44, 0.8)',
       'rgba(255, 0, 255, 0.8)',
-      'rgba(94, 38, 6, 0.2)',
+      'rgba(94, 38, 6, 0.7)',
     ];
 
     return $bgcolors[$i % count($bgcolors)];

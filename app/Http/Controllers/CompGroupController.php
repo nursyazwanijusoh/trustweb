@@ -64,7 +64,10 @@ class CompGroupController extends Controller
     if($grp){
 
       // unassign divs
-      $grp->Members->update(['comp_group_id' => null]);
+      if($grp->Members->count() > 0){
+        Unit::whereIn('id', $grp->Members->pluck('id'))->update(['comp_group_id' => null]);
+      }
+
       $grp->deleted_by = $req->user()->id;
       $grp->save();
       $grp->delete();

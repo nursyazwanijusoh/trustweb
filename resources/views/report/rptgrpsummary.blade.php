@@ -57,6 +57,7 @@
                             <button type="submit" name="action" value="excel" class="btn btn-primary m-1">Generate Report</button>
                             <button type="submit" name="action" value="datatable" class="btn btn-primary m-1">View Details (beta)</button>
                             <button type="submit" name="action" value="gloc" class="btn btn-primary m-1">Seat Check-in</button>
+                            <button type="submit" name="action" value="pncdiary" class="btn btn-primary m-1">Individual Diary Details</button>
                             <!-- <button type="submit" name="action" value="verticaldate" class="btn btn-primary m-1">Vertical Detail</button> -->
                         </div>
                     </div>
