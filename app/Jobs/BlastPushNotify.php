@@ -59,13 +59,14 @@ class BlastPushNotify implements ShouldQueue
       $status = 'Failed';
       $count = 0;
       $msg = '';
+      $processed_data = [];
 
       $pn = PushAnnouncement::find($this->pn_id);
 
       if($pn){
 
-          if($pn->status == 'N'){
-
+        if($pn->status == 'N'){
+          try {
             $pnids = [];
 
             $pn->status = 'P';
@@ -79,8 +80,8 @@ class BlastPushNotify implements ShouldQueue
                   $count++;
                   $pnids[] = $onestaff->pushnoti_id;
 
-                  if($count % 50 == 0){
-                    $aaa = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
+                  if(count($pnids) == 50){
+                    $processed_data[] = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
 
                     $pn->rec_count = $count;
                     $pn->save();
@@ -102,8 +103,8 @@ class BlastPushNotify implements ShouldQueue
                       $count++;
                       $pnids[] = $onestaff->pushnoti_id;
 
-                      if($count % 50 == 0){
-                        $aaa = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
+                      if(count($pnids) == 50){
+                        $processed_data[] = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
                         $pn->rec_count = $count;
                         $pn->save();
                         $pnids = [];
@@ -118,7 +119,7 @@ class BlastPushNotify implements ShouldQueue
             }
 
             if(count($pnids) > 0){
-              $aaa = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
+              $processed_data[] = NotifyHelper::SendBulkPushNoti($pnids, $pn->title, $pn->body);
               $pnids = [];
             }
 
@@ -128,18 +129,24 @@ class BlastPushNotify implements ShouldQueue
             $pn->status = 'C';
             $pn->rec_count = $count;
             $pn->save();
-          } else {
-            $msg = 'Notification already sent';
+          } catch(\Throwable $te){
+            $status = 'Failed';
+            $msg = $te->getMessage();
+            $processed_data = $pnids;
           }
+        } else {
+          $msg = 'Notification already sent';
+        }
 
       } else {
         $msg = 'pn_id 404';
       }
 
-
-
       $bjob->status = $status;
-      $bjob->extra_info = $msg;
+      $bjob->extra_info = json_encode([
+        'msg' => $msg,
+        'data' => $processed_data
+      ]);
       $bjob->completed_at = now();
       $bjob->save();
 

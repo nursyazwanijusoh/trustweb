@@ -12,6 +12,8 @@ use App\User;
 use App\Attendance;
 use App\Checkin;
 use App\place;
+use App\GwdActivity;
+use App\DailyPerformance;
 use \DB;
 use \Carbon\Carbon;
 
@@ -56,6 +58,39 @@ class WebApiController extends Controller
     }
   }
 
+  public function select2FindStaff(Request $req){
+    if($req->filled('input')){
+
+    } else {
+      return [];
+    }
+
+    $result = [];
+    // first search by exact staff no
+    $user = User::where('staff_no', $req->input)->first();
+
+    if($user){
+      array_push($result, [
+        'id' => $user->id,
+        'text' => $user->staff_no . ' - ' . $user->name,
+        'title' => $user->unit
+      ]);
+    } else {
+      // find by name
+      $users = User::where('name', 'LIKE', "%".$req->input."%")->get();
+      foreach($users as $user){
+        array_push($result, [
+          'id' => $user->id,
+          'text' => $user->staff_no . ' - ' . $user->name,
+          'title' => $user->unit
+        ]);
+      }
+    }
+
+
+    return ['results' => $result];
+  }
+
   public function findstaff(Request $req){
 
     if($req->filled('input')){
@@ -73,6 +108,7 @@ class WebApiController extends Controller
         'id' => $user->id,
         'staff_no' => $user->staff_no,
         'name' => $user->name,
+        'text' => $user->name,
         'div' => $user->unit
       ]);
     } else {
@@ -83,6 +119,7 @@ class WebApiController extends Controller
           'id' => $user->id,
           'staff_no' => $user->staff_no,
           'name' => $user->name,
+          'text' => $user->name,
           'div' => $user->unit
         ]);
       }
@@ -248,18 +285,240 @@ class WebApiController extends Controller
         $labels[] = $af->pporgunitdesc;
         $data[] = $af->scount;
       }
-
-
-
     } else {
       abort(403);
     }
-
-
-
   }
 
+  public function indivDetailRept(Request $req){
+    if($req->filled('uid')){
+      $user = User::find($req->uid);
 
+      if($user){
+        $sdate = new Carbon($req->startdate);
+        $edate = new Carbon($req->enddate);
+
+        $actlist = GwdActivity::where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<=', $edate)
+          ->get();
+        $retdata = [];
+
+        foreach($actlist as $ac){
+          $retdata[] = [
+            'staff_no' => $user->staff_no,
+            'name' => $user->name,
+            'band' => $user->job_grade,
+            'division' => $user->unit,
+            'date' => $ac->activity_date,
+            'tag' => $ac->ActCat->descr,
+            'type' => $ac->ActType->descr,
+            'title' => $ac->parent_number,
+            'detail' => $ac->details,
+            'hours' => $ac->hours_spent
+          ];
+        }
+
+        return $retdata;
+
+      } else {
+        abort(404);
+      }
+    } else {
+      abort(403);
+    }
+  }
+
+  public function indivDiaryAnalysis(Request $req){
+    if($req->filled('uid')){
+      $user = User::find($req->uid);
+
+      if($user){
+        $time0 = new Carbon;
+
+        $cdate = Carbon::parse($req->mon);
+        $monmon = $cdate->format('F Y');
+        $sdate = $cdate->startOfMonth()->toDateString();
+        $edate = $cdate->addMonths(1)->toDateString();
+
+        // method 1
+        /*
+        // counters
+        $w12h = 0;
+        $walmc = 0;
+        $wwend = 0;
+        $ecount = 0;
+        $dwentries = 0;
+        $d1e = 0;
+        $em4h = 0;
+
+        $daterange = new \DatePeriod(
+            new Carbon($sdate),
+            \DateInterval::createFromDateString('1 day'),
+            new Carbon($edate)
+          );
+
+        foreach ($daterange as $key => $value) {
+          $cdf = GDWActions::GetDailyPerfObj($user->id, $value);
+
+          // work more than 12 hrs
+          if($cdf->actual_hours >= 12){
+            $w12h++;
+          }
+
+          // work during AL / MC
+          if($cdf->actual_hours > 0 && $cdf->is_off_day == true){
+            $walmc++;
+          }
+
+          // work during weekend
+          $carbond = new Carbon($value);
+          $dow = $carbond->dayOfWeekIso;
+
+          if($cdf->actual_hours > 0 && $dow > 5){
+            $wwend++;
+          }
+
+
+          // entries related
+          $entrycount = $cdf->Activities->count();
+
+          // total entries
+          $ecount += $entrycount;
+
+          // days with entry
+          if($entrycount > 0){
+            $dwentries++;
+          }
+
+          // days with single entry
+          if($entrycount == 1){
+            $d1e++;
+          }
+        }
+
+        // single entry more than 4 hrs
+        $em4h = GwdActivity::where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<', $edate)
+          ->where('hours_spent', '>=', 4)
+          ->count();
+
+        $m1return = [
+          'staff_no' => $user->staff_no,
+          'name' => $user->name,
+          'band' => $user->job_grade,
+          'division' => $user->unit,
+          'rptmon' => $monmon,
+          'w12h' => $w12h,
+          'walmc' => $walmc,
+          'wwend' => $wwend,
+          'ecount' => $ecount,
+          'dwentries' => $dwentries,
+          'd1entry' => $d1e,
+          'em4h' => $em4h
+        ];
+
+        */
+
+        $time1 = new Carbon;
+        // method 2
+        // counters
+        $w12h = 0;
+        $walmc = 0;
+        $wwend = 0;
+        $ecount = 0;
+        $dwentries = 0;
+        $d1e = 0;
+        $em4h = 0;
+
+        // > 12 hrs
+        $w12h = DailyPerformance::where('user_id', $user->id)
+          ->whereDate('record_date', '>=', $sdate)
+          ->whereDate('record_date', '<', $edate)
+          ->where('actual_hours', '>=', 12)
+          ->count();
+
+        // cuti
+        $walmc = DailyPerformance::where('user_id', $user->id)
+          ->whereDate('record_date', '>=', $sdate)
+          ->whereDate('record_date', '<', $edate)
+          ->where('actual_hours', '>', 0)
+          ->where('is_off_day', true)
+          ->count();
+
+        // weekend
+        $wwend = DailyPerformance::where('user_id', $user->id)
+          ->whereDate('record_date', '>=', $sdate)
+          ->whereDate('record_date', '<', $edate)
+          ->where('actual_hours', '>', 0)
+          ->whereIn(DB::raw("DAYOFWEEK(record_date)"), [1,7])
+          ->count();
+
+        // entry count
+        $ecount = GwdActivity::where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<', $edate)
+          ->count();
+
+        // days with entry.
+        $dwentries = DailyPerformance::where('user_id', $user->id)
+          ->whereDate('record_date', '>=', $sdate)
+          ->whereDate('record_date', '<', $edate)
+          ->where('actual_hours', '>', 0)
+          ->count();
+
+        $d1e_temp = DB::table('gwd_activities')
+          ->where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<', $edate)
+          ->select('activity_date')
+          ->groupBy('activity_date')
+          ->having(DB::raw('count(id)'), '=', 1)
+          ->get();
+
+        $d1e = sizeof($d1e_temp);
+
+        $em4h = GwdActivity::where('user_id', $user->id)
+          ->whereDate('activity_date', '>=', $sdate)
+          ->whereDate('activity_date', '<', $edate)
+          ->where('hours_spent', '>=', 4)
+          ->count();
+
+        $m2return = [
+          'staff_no' => $user->staff_no,
+          'name' => $user->name,
+          'band' => $user->job_grade,
+          'division' => $user->unit,
+          'rptmon' => $monmon,
+          'w12h' => $w12h,
+          'walmc' => $walmc,
+          'wwend' => $wwend,
+          'ecount' => $ecount,
+          'dwentries' => $dwentries,
+          'd1entry' => $d1e,
+          'em4h' => $em4h
+        ];
+
+        $time2 = new Carbon;
+
+        // return [
+        //   'm1' => $m1return,
+        //   'm2' => $m2return,
+        //   't0' => $time0->toDatetimeString(),
+        //   't1' => $time1->toDatetimeString(),
+        //   't2' => $time2->toDatetimeString()
+        // ];
+
+        return $m2return;
+
+      } else {
+        abort(404);
+      }
+    } else {
+      abort(403);
+    }
+  }
 
 
 }

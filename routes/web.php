@@ -158,6 +158,8 @@ Route::post('/reports/gwd/gsummdl', 'GwdReportController@dlgsummary')->name('rep
 Route::get('/reports/gwd/divsummary', 'GwdReportController@divsum')->name('report.gwd.divsum');
 Route::post('/reports/gwd/entrystat', 'GwdReportController@entrystatres')->name('report.gwd.entrystatres');
 Route::get('/reports/gwd/detail', 'GwdReportController@detail')->name('report.gwd.detail');
+Route::get('/reports/gwd/detailexport', 'GwdReportController@detailexport')->name('report.gwd.detailexport')->middleware('AdminGate');
+Route::get('/reports/gwd/grpanalysis', 'GwdReportController@grpanalysis')->name('report.gwd.grpanalysis')->middleware('AdminGate');
 // Route::post('/reports/gwd/detail', 'GwdReportController@detailres')->name('report.gwd.detailres');
 // Route::get('/reports/gwd/gsum', 'GwdReportController@grpSummary')->name('reports.gwd.gsum');
 // Route::post('/reports/gwd/gsum', 'GwdReportController@doGrpSummary')->name('reports.gwd.dogsum');
@@ -168,6 +170,8 @@ Route::get('/reports/cekin/personal', 'WebApiController@getPersonalCheckApi')->n
 Route::get('/reports/checkin/overall', 'ReportController@checkinByFloorDiv')->name('reports.c.overall');
 Route::get('/reports/checkin/detail', 'ReportController@checkinByTeamDetail')->name('reports.c.detail');
 Route::get('/reports/webapi/floorsum', 'WebApiController@getFloorCheckinSummary')->name('reports.api.floorsum');
+Route::get('/reports/webapi/indiarept', 'WebApiController@indivDetailRept')->name('reports.api.indiarept');
+Route::get('/reports/webapi/indianal', 'WebApiController@indivDiaryAnalysis')->name('reports.api.indianal');
 
 // bosses?
 Route::get('/reports', 'ReportController@index')->name('reports');
@@ -286,6 +290,7 @@ Route::get('/ss/api/gettype', 'WebApiController@SSApiGetType')->name('ss.api.get
 Route::get('/ss/api/getskill', 'WebApiController@SSApiGetSkill')->name('ss.api.getskill');
 
 Route::get('/webapi/findstaff', 'WebApiController@findstaff')->name('webapi.findstaff');
+Route::get('/webapi/s2findstaff', 'WebApiController@select2FindStaff')->name('webapi.s2findstaff');
 
 // mobile app installers
 Route::get('/download', 'AppDownloadController@list')->name('app.list');
@@ -345,8 +350,7 @@ Route::get('/art', 'AgileResourceTeamController@list')->name('art.list');
 Route::post('/art/add', 'AgileResourceTeamController@add')->name('art.add');
 Route::post('/art/del', 'AgileResourceTeamController@del')->name('art.del');
 
-
-//tribe
-//Route::get('/tribe/home', 'TribeController@home')->name('tribe.home');
-Route::get('/tribe/home', 'TribeController@validateToken')->name('tribe.validateToken');
-Route::get('/tribe/vt', 'TribeController@vt')->name('tribe.vt');
+//smile
+Route::get('/smile', 'SmileController@index')->name('smile');
+Route::get('/smile/form', 'SmileController@form')->name('smile.form');
+Route::post('/smile/submit', 'SmileController@submit')->name('smile.submit');
