@@ -87,7 +87,7 @@ class SmileController extends Controller
             $alert= 'Uh oh!. You did something and our partner at ERA are angry !!!.. They said ' .$response;
             } else {
 
-                $err = $e->getHandlerContext()['error'];
+                $err = $e->getMessage();
                 $response = json_encode((string) $err );
                 $alert= "Uh oh!. Something went wrong. Contact trUSt admin and tell this to them.  " .$response.
                 "</br>In the meantime you can go <a href='https://era.tm.com.my'> https://era.tm.com.my </a> to tell how you feels.";
