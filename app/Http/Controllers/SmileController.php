@@ -19,11 +19,11 @@ use Laravel\Passport\TokenRepository;
 
 class SmileController extends Controller
 {
-   
-    
+
+
     public function __construct()
     {
-        
+
         $this->middleware('auth');
 
     }
@@ -48,14 +48,14 @@ class SmileController extends Controller
         //dd($req);
         $options = [
              'json' =>[
-                 
+
                  'type' => $req->type,
                 'reason' => $req->reason,
                 'remark' => $req->remark,
                 'staffno'=>$req->user()->staff_no,
                 'source'=>"trUSt"
             ] ,
-            'query'=>['api_key'=> $api_key]       
+            'query'=>['api_key'=> $api_key]
         ];
         //dd($options);
 
@@ -65,15 +65,15 @@ class SmileController extends Controller
         $alert= 'Hi. Thanks for contributing. Your input have been sent to ERA.';
         try {
             $reclient = new \GuzzleHttp\Client(["base_uri" => $api_uri]);
-           // $reclient = new Client(["base_uri" => $api_uri]);        
+           // $reclient = new Client(["base_uri" => $api_uri]);
             $request = $reclient->request('POST', '/api/happy/meter/external', $options);
             //->getBody()->getContents();
             $status = $request->getStatusCode();
             if($status == 200){
                 $response = $request->getBody()->getContents();
-                $alert = "Yay... We receive your input. 
-                Come back here if your feelings change or you can go to <a href='https://era.tm.com.my'> https://era.tm.com.my </a>." ;
-      
+                $alert = "Yay... We received your input. <br />
+                Come back here if your feeling has changed or you can go to <a href='https://era.tm.com.my'> https://era.tm.com.my </a>." ;
+
             }else{
             // The server responded with some error. You can throw back your exception
             // to the calling function or decide to handle it here
@@ -93,24 +93,24 @@ class SmileController extends Controller
                 $response = json_decode($response);
                 $alert= "Uh oh!. Something went wrong. Contact trUSt admin and tell this to them: ". $api_uri."  ".$response.
                 "</br>In the meantime you can go <a href='https://era.tm.com.my'> https://era.tm.com.my </a> to tell how you feels.";
-                 
+
             }
         }
             catch (\Exception $e2) {
                 $alert = $e2->getMessage();
             }
-          
-            
+
+
             $alert_class = 'danger';
-    
-          
+
+
         }
-        
-      
-       
+
+
+
         //return $request;
         return view('smile.index', [ 'alert' => $alert, 'alert_class'=>$alert_class]);
-     
+
     }
 
 
