@@ -355,3 +355,10 @@ Route::post('/art/del', 'AgileResourceTeamController@del')->name('art.del');
 //Route::get('/tribe/home', 'TribeController@home')->name('tribe.home');
 Route::get('/tribe/home', 'TribeController@validateToken')->name('tribe.validateToken');
 Route::get('/tribe/vt', 'TribeController@vt')->name('tribe.vt');
+
+
+
+//smile
+Route::get('/smile', 'SmileController@index')->name('smile');
+Route::get('/smile/form', 'SmileController@form')->name('smile.form');
+Route::post('/smile/submit', 'SmileController@submit')->name('smile.submit');
