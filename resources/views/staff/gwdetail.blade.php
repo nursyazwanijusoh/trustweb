@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Diary Entry List : ' . $damon)
+
 @section('page-css')
 <link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" />
 @endsection

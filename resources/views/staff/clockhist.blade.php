@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Location History : ' . $user->staff_no)
+
 @section('page-css')
 <style>
 ul.timeline {
