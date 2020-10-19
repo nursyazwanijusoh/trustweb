@@ -48,13 +48,14 @@ class SmileController extends Controller
         //dd($req);
         $options = [
              'json' =>[
-                 'api_key'=> $api_key,
-               // 'type' => $req->type,
+                 
+                 'type' => $req->type,
                 'reason' => $req->reason,
                 'remark' => $req->remark,
                 'staffno'=>$req->user()->staff_no,
                 'source'=>"trUSt"
-            ]        
+            ] ,
+            'query'=>['api_key'=> $api_key]       
         ];
         //dd($options);
 
@@ -90,7 +91,7 @@ class SmileController extends Controller
                 $err = $e->getMessage();
                 $response = json_encode((string) $err );
                 $response = json_decode($response);
-                $alert= "Uh oh!. Something went wrong. Contact trUSt admin and tell this to them.  " .$response.
+                $alert= "Uh oh!. Something went wrong. Contact trUSt admin and tell this to them: ". $api_uri."  ".$response.
                 "</br>In the meantime you can go <a href='https://era.tm.com.my'> https://era.tm.com.my </a> to tell how you feels.";
                  
             }
