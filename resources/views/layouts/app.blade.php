@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} : @yield('title', Route::current()->uri()) </title>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
