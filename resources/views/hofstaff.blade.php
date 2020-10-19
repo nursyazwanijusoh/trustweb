@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Weekly Infographic : ' . $user['staff_no'] . ' : ' . $edate)
+
 @section('page-css')
 <link href="/css/custom.css" rel="stylesheet">
 @endsection
