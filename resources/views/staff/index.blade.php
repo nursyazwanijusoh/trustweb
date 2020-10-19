@@ -174,7 +174,6 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
             </div></div>
             @endif
           </div>
-          @if($canseepnc == true)
           <div class="card mb-3">
             <div class="card-header">Summary</div>
             <div class="card-body">
@@ -206,7 +205,9 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </div>
                   </div>
                   <div class="card mb-3" title="{{ $weektitle }}">
-                    <div class="card-header bg-{{ $weekcol }} text-white">Past 7 Days ( {{ $cdate->toDateString() }} to {{ $ldate->subDay()->toDateString() }} )</div>
+                    <a title="Click for infographic" href="{{ route('phofs', ['staff_no' => $user['staff_no'], 'date' => $ldate->subDay()->toDateString()], false) }}">
+                      <div class="card-header bg-{{ $weekcol }} text-white">Past 7 Days ( {{ $cdate->toDateString() }} to {{ $ldate->toDateString() }} )</div>
+                    </a>
                     <div class="card-body">
                       <div class="row text-center">
                         <div class="col-4 border-right">
@@ -244,6 +245,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
 
             </div>
           </div>
+          @if($canseepnc == true)
           <div class="card mb-3">
             <div class="card-header">My Diary Calendar</div>
             <div class="card-body">
