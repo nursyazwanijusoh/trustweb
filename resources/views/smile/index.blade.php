@@ -1,6 +1,7 @@
 @extends('layouts.app')
-
+@section('title', 'SMILES by ERA')
 @section('content')
+
 <style>
 .col20 {
     width: 20%;
