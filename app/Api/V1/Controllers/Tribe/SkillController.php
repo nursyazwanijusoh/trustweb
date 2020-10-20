@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
 use App\CommonSkillset;
+use App\PersonalSkillset;
 
 
 class SkillController extends Controller
@@ -28,7 +29,23 @@ class SkillController extends Controller
 
       return $result;
     }
+    public function getUsersBySkills(Request $req){
+      $users = User::query();
+      $pss = PersonalSkillset::query();
 
+      $skills = $req->skills;
+      foreach ($skills as $key => $value) {
+         $users->whereIn('id', PersonalSkillset::where('common_skill_id', $value['skill'])->where('level', '=', $value['lvl'])->pluck('staff_id'));
+      }
+      //dd($value['skill']);
+     
+      //$users->whereIn('id', PersonalSkillset::where('common_skill_id', $value)->where('level', '!=', 0)->pluck('staff_id'));
+
+      $result = $users->get();
+      //dd($users->toSql());
+    
+      return $result;
+    }
 
 
 
