@@ -13,7 +13,7 @@ class SkillController extends Controller
 {
    public function getSkills(Request $req){
 
-      $cfgs = CommonSkillset::all();
+      $cfgs = CommonSkillset::all('id','name');
       return $cfgs;
     }
 
