@@ -45,6 +45,9 @@
                 <div id="logo" class="pull-left">
                     <a href="{{ route('staff', [], false) }}"><img src="/images/trust-stayhome.png" height="50" alt="" title="" /></a>
                 </div>
+                <div id="logo" class="pull-left" style="padding-left: 20px;">
+                    <a href="{{ route('smile', [], false) }}"><img src="/images/smile/floaticon.png" height="50" alt="" title="" /></a>
+                </div>
 
                 <nav id="nav-menu-container">
                       <ul class="nav-menu">

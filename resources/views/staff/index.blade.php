@@ -161,7 +161,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </a>
                   </div>
                   @endif
-                  <div class="col-6 col-xl-4 mb-1 p-1">
+                  <!-- <div class="col-6 col-xl-4 mb-1 p-1">
                     <a href="{{ route('smile', [], false) }}">
                       <div class="card text-center text-white bg-primary">
                         <div class="card-body">
@@ -169,7 +169,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                         </div>
                       </div>
                     </a>
-                  </div>
+                  </div> -->
 
                   <!-- <div class="col-sm-4 mb-3">
                     <a href="{{ route('area.myevents', ['id' => $staff_id], false) }}">
