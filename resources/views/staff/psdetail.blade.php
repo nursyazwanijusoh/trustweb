@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Skill Competency : ' . $owner->staff_no . ' : ' . $ps->CommonSkill->name)
+
 @section('page-css')
 <style>
 ul.timeline {
@@ -68,7 +70,7 @@ li.tlbg {
       @if($isvisitor == false || $isboss == true)
       <div class="col-12">
         <div class="card mb-3">
-            <div class="card-header">Update skill competency</div>
+            <div class="card-header">Update skill competency - {{ $ps->CommonSkill->name }}</div>
             <div class="card-body">
               @if (session()->has('alert'))
               <div class="alert alert-{{ session()->get('a_type') }} alert-dismissible">

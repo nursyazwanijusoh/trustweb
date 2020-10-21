@@ -1,6 +1,7 @@
 @extends('layouts.app')
-
+@section('title', 'SMILES by ERA')
 @section('content')
+
 <style>
 .col20 {
     width: 20%;
@@ -92,9 +93,9 @@
 
 <div class="container">
     @if(isset($alert))
-    <div class="alert alert-info alert-dismissible">
+    <div class="alert alert-{{$alert_class}} alert-dismissible">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>{{ $alert }}</strong>
+        <strong>{!! $alert !!}</strong>
     </div>
     @endif
     <div class="row justify-content-center">

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Seat History : ' . $username)
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

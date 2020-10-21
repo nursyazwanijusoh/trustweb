@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Skill Competency : ' . $user->staff_no )
+
 @section('page-css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 @endsection

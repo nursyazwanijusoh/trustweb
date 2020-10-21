@@ -49,7 +49,7 @@ class BlastPushNotify implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle2()
     {
       $bjob = BatchJob::find($this->bjobid);
       $bjob->status = 'Processing';
@@ -155,7 +155,7 @@ class BlastPushNotify implements ShouldQueue
     /**
     *  original code
     */
-    public function handle2()
+    public function handle()
     {
       $bjob = BatchJob::find($this->bjobid);
       $bjob->status = 'Processing';
@@ -165,6 +165,7 @@ class BlastPushNotify implements ShouldQueue
       $status = 'Failed';
       $count = 0;
       $msg = '';
+      $errlist = [];
 
       $pn = PushAnnouncement::find($this->pn_id);
 
@@ -181,12 +182,16 @@ class BlastPushNotify implements ShouldQueue
               foreach($stafflist as $onestaff){
                 if(strlen(trim($onestaff->pushnoti_id)) > 8 && $onestaff->status == 1){
                   $count++;
-                  $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
-                  $respp = json_decode($aaa->getBody()->getContents());
-                  if($respp->data->status == 'error'){
-                    // remove the pushnoti_id if from this staff
-                    $onestaff->pushnoti_id = null;
-                    $onestaff->save();
+                  try {
+                    $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
+                    $respp = json_decode($aaa->getBody()->getContents());
+                    if($respp->data->status == 'error'){
+                      // remove the pushnoti_id if from this staff
+                      $onestaff->pushnoti_id = null;
+                      $onestaff->save();
+                    }
+                  } catch(\Throwable $te){
+                    $errlist[] = [$onestaff->id => $te->getMessage()];
                   }
 
                   if($count % 50 == 0){
@@ -205,13 +210,19 @@ class BlastPushNotify implements ShouldQueue
                     if(strlen(trim($onestaff->pushnoti_id)) > 8 && $onestaff->status == 1){
                       $count++;
 
-                      $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
-                      $respp = json_decode($aaa->getBody()->getContents());
-                      if($respp->data->status == 'error'){
-                        // remove the pushnoti_id if from this staff
-                        $onestaff->pushnoti_id = null;
-                        $onestaff->save();
+                      try {
+                        $aaa = NotifyHelper::SendPushNoti($onestaff->pushnoti_id, $pn->title, $pn->body);
+                        $respp = json_decode($aaa->getBody()->getContents());
+                        if($respp->data->status == 'error'){
+                          // remove the pushnoti_id if from this staff
+                          // $onestaff->pushnoti_id = null;
+                          // $onestaff->save();
+                          $errlist[] = [$onestaff->id => $respp->data];
+                        }
+                      } catch(\Throwable $te){
+                        $errlist[] = [$onestaff->id => $te->getMessage()];
                       }
+
 
                       if($count % 50 == 0){
                         $pn->rec_count = $count;
@@ -224,7 +235,7 @@ class BlastPushNotify implements ShouldQueue
             }
 
             $status = 'Completed';
-            $msg = 'Notification sent';
+            $msg = 'Notification sent. Errors: ' . json_encode($errlist);
 
             $pn->status = 'C';
             $pn->rec_count = $count;
