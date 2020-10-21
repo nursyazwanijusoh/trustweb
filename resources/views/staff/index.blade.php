@@ -71,6 +71,7 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                       </div>
                     </a>
                   </div>
+
                   <div class="col-6 col-xl-4 mb-1 p-1">
                     <a href="{{ route('staff.lochist', ['staff_id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-secondary">
@@ -158,6 +159,16 @@ Report To : <a href="{{ route('staff', ['staff_id' => $superior->id], false) }}"
                     </a>
                   </div>
                   @endif
+                  <div class="col-6 col-xl-4 mb-1 p-1">
+                    <a href="{{ route('smile', [], false) }}">
+                      <div class="card text-center text-white bg-primary">
+                        <div class="card-body">
+                          <p class="card-text"><img src="/images/smile/floaticon.png"  height="23em" width="23em" alt="" title="" /> Smile</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+
                   <!-- <div class="col-sm-4 mb-3">
                     <a href="{{ route('area.myevents', ['id' => $staff_id], false) }}">
                       <div class="card text-center text-white bg-secondary">
