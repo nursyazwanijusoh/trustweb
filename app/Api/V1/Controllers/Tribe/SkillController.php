@@ -32,7 +32,7 @@ class SkillController extends Controller
     public function getUsersBySkills(Request $req)
     {
         $users = User::query();
-        $pss = PersonalSkillset::query();
+  
 
         $skills = $req->skills;
         /*
@@ -65,17 +65,24 @@ class SkillController extends Controller
             }
         }
 
+        $usr = $users->get(['id','persno']);
 
+        $content = [];
+
+
+        $result = "";
+        //  dd($users->get());
+        foreach ($users->get() as $key => $value) {
+
+            $isi = ['user_id'=> $value->id,'persno'=>$value->persno, 
+            'skills'=>$value->getPersonalSkillset()
+        ];
+            array_push($content, $isi);
+        }
+        
+        $result= ["users"=>$content];
   
-
-
-        //dd($value['skill']);
-     
-        //$users->whereIn('id', PersonalSkillset::where('common_skill_id', $value)->where('level', '!=', 0)->pluck('staff_id'));
-
-        $result = $users->get(['id']);
-        //dd($users->toSql());
     
-        return $result;
+        return $content;
     }
 }
