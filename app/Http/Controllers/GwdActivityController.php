@@ -198,6 +198,7 @@ class GwdActivityController extends Controller
     if($req->filled('dfid')){
       $seldf = DailyPerformance::find($req->dfid);
       if($seldf){
+        $seldf->recalcHours();
         $indate = $seldf->record_date;
 
         if($seldf->user_id != $cuserid){
