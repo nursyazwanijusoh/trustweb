@@ -67,5 +67,17 @@ class LoginController extends Controller
 
     }
 
+    public function logout(Request $req){
+      $staffno = $req->user()->staff_no;
+      Auth::guard()->logout();
+
+      $req->session()->invalidate();
+
+      // call tribe logout
+      \App\common\TribeApiCallHandler::LogOut($staffno);
+
+      return redirect(route('staff'));
+    }
+
 
 }
