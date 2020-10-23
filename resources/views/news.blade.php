@@ -13,7 +13,7 @@
                       <div class="card mb-3">
                         <div class="card-header text-center">{{ $asub->title }}</div>
                         <div class="card-body">
-                          {!! nl2br($asub->content) !!}
+                          {!! $asub->content !!}
                         </div>
                         <div class="card-footer">Posted at {{ $asub->created_at }}</div>
                       </div>
