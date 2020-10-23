@@ -34,6 +34,7 @@ $api->version('v1', function ($api) {
   $api->get('/massKickOut',  ['as' => 'check.kick.all', 'uses' => 'App\Api\V1\Controllers\InfraController@massKickOut']);
   $api->get('/reserveExpired',  ['as' => 'reserve.expired', 'uses' => 'App\Api\V1\Controllers\InfraController@reserveExpired']);
   $api->get('/GwdCreateDaily',  ['as' => 'gwd.create.daily.perf', 'uses' => 'App\Api\V1\Controllers\BatchController@GwdCreateDayPerf']);
+  $api->get('/SendDiaryReminder',  ['as' => 'gwd.send.diary.reminder', 'uses' => 'App\Api\V1\Controllers\BatchController@SendDiaryReminder']);
   $api->get('/loadEmplProfile',  ['as' => 'sap.load.prof', 'uses' => 'App\Api\V1\Controllers\BatchController@loadEmplProfile']);
   $api->get('/loadEmplLeave',  ['as' => 'sap.load.cuti', 'uses' => 'App\Api\V1\Controllers\BatchController@loadEmplLeave']);
 
@@ -170,10 +171,10 @@ $api->version('v1', [
 $api->version('v1', [
   'middleware' => 'auth:api',
   'prefix' => 'api/tribe'
-], function ($api) {  
+], function ($api) {
   $api->post('/staffno',  ['as' => 'api.tribe.getDetails', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@getDetail']);
- 
-  
+
+
 });
 
 
