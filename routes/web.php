@@ -273,6 +273,13 @@ Route::post('/bauexp/role/add', 'JobscopeController@add')->name('bauexp.role.add
 Route::post('/bauexp/role/edit', 'JobscopeController@edit')->name('bauexp.role.edit');
 Route::get('/bauexp/role/del', 'JobscopeController@del')->name('bauexp.role.del');
 
+// news
+Route::get('/admin/news', 'NewsController@list')->name('admin.news.list');
+Route::post('/admin/news/add', 'NewsController@add')->name('admin.news.add');
+Route::post('/admin/news/del', 'NewsController@del')->name('admin.news.del');
+Route::get('/admin/news/api/detail', 'NewsController@detail')->name('admin.news.api.detail');
+Route::get('/news', 'HomeController@news')->name('news');
+
 
 // personal skillset and experience
 Route::get('/user/skillset', 'PersonalSSController@listv2')->name('ps.list');

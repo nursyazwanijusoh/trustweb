@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Feedback;
 use App\ActivityType;
 use App\TaskCategory;
+use App\Announcement;
+use App\News;
 use App\User;
 use App\DailyPerformance;
 use App\common\GDWActions;
@@ -188,6 +190,23 @@ class MiscController extends Controller
 			$value->value = $value->descr;
 		}
 		return $this->respond_json(200, 'Success', $redata);
+	}
+
+	function GetNews(){
+		// announcement
+		$today = date('Y-m-d');
+
+		$anlist = Announcement::whereDate('start_date', '<=', $today)
+			->whereDate('end_date', '>=', $today)
+			->get(['start_date', 'content', 'url', 'url_text']);
+
+		$newlist = News::orderBy('created_at', 'DESC')->limit(10)->get(['created_at', 'title', 'content']);
+
+		return $this->respond_json(200, 'Success', [
+			'announcement' => $anlist,
+			'news' => $newlist
+		]);
+
 	}
 
 }

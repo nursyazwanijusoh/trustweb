@@ -72,6 +72,7 @@
             <a href="{{ route('admin.lov', [], false) }}" class="list-group-item list-group-item-action">Department LOVs</a>
             <a href="{{ route('admin.guides', [], false) }}" class="list-group-item list-group-item-action">Guides</a>
             <a href="{{ route('mco.rpt', [], false) }}" class="list-group-item list-group-item-action">MCO Permit Requests</a>
+            <a href="{{ route('admin.news.list', [], false) }}" class="list-group-item list-group-item-action">News</a>
             <a href="{{ route('partner.list', [], false) }}" class="list-group-item list-group-item-action">Partner / Vendor List</a>
           </div>
         </div>

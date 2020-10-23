@@ -25,6 +25,7 @@ $api->version('v1', function ($api) {
   $api->get('/',            ['as' => 'api.home',   'uses' => 'App\Api\V1\Controllers\Controller@home']);
   $api->get('/pg',            ['as' => 'api.pg',   'uses' => 'App\Api\V1\Controllers\Controller@playground']);
   $api->get('/alert',            ['as' => 'api.alert',   'uses' => 'App\Api\V1\Controllers\UserController@testNotify']);
+  $api->get('/news',            ['as' => 'api.alert',   'uses' => 'App\Api\V1\Controllers\MiscController@GetNews']);
 
 
   // actually used

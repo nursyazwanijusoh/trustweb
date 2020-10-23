@@ -49,6 +49,7 @@
                 <nav id="nav-menu-container">
                       <ul class="nav-menu">
                         <li><a class="nav-link" href="{{ route('hofs', [], false) }}" title="Hall Of Fame"><i class="fa fa-trophy" style="color:blue"></i></a></li>
+                        <li><a class="nav-link" href="{{ route('news', [], false) }}" title="Latest broadcast from the management">News <i class="fa fa-newspaper-o" style="color:orange"></i></a></li>
 
                         @guest
                         @else
