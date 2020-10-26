@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\common\UserRegisterHandler;
 
@@ -74,7 +75,12 @@ class LoginController extends Controller
       $req->session()->invalidate();
 
       // call tribe logout
-      \App\common\TribeApiCallHandler::LogOut($staffno);
+      try{
+        \App\common\TribeApiCallHandler::LogOut($staffno);
+      } catch(\Throwable $te){
+        Log::error('tribe logout: ' . $te->getMessage());
+      }
+
 
       return redirect(route('staff'));
     }
