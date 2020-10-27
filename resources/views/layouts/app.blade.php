@@ -52,6 +52,7 @@
                 <nav id="nav-menu-container">
                       <ul class="nav-menu">
                         <li><a class="nav-link" href="{{ route('hofs', [], false) }}" title="Hall Of Fame"><i class="fa fa-trophy" style="color:blue"></i></a></li>
+                        <li><a class="nav-link" href="{{ route('news', [], false) }}" title="Latest broadcast from the management">News <i class="fa fa-newspaper-o" style="color:orange"></i></a></li>
 
                         @guest
                         @else
@@ -152,5 +153,13 @@
 
 <!-- Template Main Javascript File -->
 <script src="/welcome/js/main.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.ga_key') }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', "{{ config('app.ga_key') }}");
+</script>
 
 </html>

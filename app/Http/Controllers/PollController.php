@@ -266,10 +266,10 @@ class PollController extends Controller
     }
 
     if(count($value) < 4){
-      $heighttt = 100;
+      $heighttt = 200;
       $typec = 'bar';
     } else {
-      $heighttt = 40 + (20 * count($value));
+      $heighttt = 140 + (30 * count($value));
       $typec = 'horizontalBar';
     }
 

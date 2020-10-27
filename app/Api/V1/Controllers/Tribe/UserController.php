@@ -11,7 +11,9 @@ use App\User;
 class UserController extends Controller
 {
    public function getDetail(Request $req){
-      return $req->user();
+    $usr= User::where('id',$req->user()->id)->get(['name','email','staff_no','persno']);
+    //return $req->user()
+    return $usr;
     }
 
     public function validateToken(Request $req){    

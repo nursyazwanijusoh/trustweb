@@ -636,6 +636,8 @@ class GDWActions
       $dp->save();
     }
 
+    $dp->recalcHours();
+
     return $dp;
   }
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\VerifyMail;
 use App\User;
 use App\Partner;
+use App\News;
 use App\Guide;
 use App\DailyPerformance;
 use App\GwdActivity;
@@ -406,6 +407,13 @@ class HomeController extends Controller
         'tvtgraph' => $tvt_graph
       ]);
 
+    }
+
+    public function news(){
+
+      $newlist = News::orderBy('created_at', 'DESC')->limit(10)->get();
+
+      return view('news', ['news' => $newlist]);
     }
 
 
