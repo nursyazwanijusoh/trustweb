@@ -58,7 +58,7 @@ class BatchHelper
               ->delete();
 
             $c->load_status = 'S';
-          } elseif($c->operation == 'DEL' && $c->status == 'POSTED'){
+          } elseif($c->operation == 'DEL' && ($c->status == 'POSTED' || $c->status == 'WITHDRAWN')){
             // reverse the cuti
             $curcuti->reverseCuti();
             // then delete the cuti
