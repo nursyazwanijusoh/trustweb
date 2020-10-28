@@ -5,6 +5,7 @@ stages:
 
 variables:
   CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/trust/trustweb:${CI_COMMIT_SHORT_SHA}
+  CONTAINER_IMAGE_PRD: harbor.prod.kubix.tm.com.my/trustprd/trustweb:${CI_COMMIT_SHORT_SHA}
 
 test:
   stage: test
@@ -20,6 +21,9 @@ build:
     - docker build -t ${CONTAINER_IMAGE} .
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}
     - docker push ${CONTAINER_IMAGE}
+    - docker login harbor.prod.kubix.tm.com.my -u 'robot$trust' -p ${HARBOR_PASSWORD_PRD}
+    - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE_PRD}
+    - docker push ${CONTAINER_IMAGE_PRD}
   tags:
     - kubix-runner
   only:
