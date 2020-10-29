@@ -43,8 +43,8 @@ deploy-dev:
     - kubectl get pod
     - kubectl get pod | tail -1 | awk '{print $1}'
     - sleep 10
-    - kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan migrate --force
-    - kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan queue:work&&
+      #- kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan migrate --force
+      #- kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan queue:work&&
   environment:
     name: development
     url: https://trustweb.dev.kubix.tm/

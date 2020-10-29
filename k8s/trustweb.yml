@@ -32,7 +32,6 @@ spec:
         image: harbor.dev.kubix.tm.com.my/trust/trustweb:<VERSION>
         ports:
         - containerPort: 80
-        env:
-        - name: APP_NAME
-          value: Trust <VERSION>
-
+        envFrom:
+          - configMapRef:
+              name:trustenv
