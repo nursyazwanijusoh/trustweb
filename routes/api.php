@@ -175,6 +175,7 @@ $api->version('v1', [
 ], function ($api) {
   $api->post('/staffno',  ['as' => 'api.tribe.getDetails', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@getDetail']);
   $api->post('/userbyskillset',  ['as' => 'api.tribe.userbyskillset', 'uses' => 'App\Api\V1\Controllers\Tribe\SkillController@getUsersBySkills']);
+  $api->post('/userbyskillset2',  ['as' => 'api.tribe.userbyskillset2', 'uses' => 'App\Api\V1\Controllers\Tribe\SkillController@getUsersBySkills2']);
 
 
 });
