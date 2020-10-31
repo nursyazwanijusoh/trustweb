@@ -53,10 +53,29 @@ deploy-dev:
   only:
     - master
   #when: manual
+deploy-olddev:
+  stage: deploy
+  script:
+    - kubectl config set-cluster k8s --server="${OD_SERVER}" # OD = OLD DEV
+    - kubectl config set clusters.k8s.certificate-authority-data ${OD_CA}
+    - kubectl config set-credentials gitlab --token="${OD_USER_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - kubectl get all
+    - kubectl apply -f k8s/trustwebprd.yml
+    - kubectl get all
+  environment:
+    name: production
+    url: https://devtrust2.tm.com.my/
+  tags:
+    - kubix-runner
+  only:
+    - master
+  when: manual
 deploy-prod:
   stage: deploy
   script:
-    - kubectl config set-cluster k8s --server="${SERVER}"
+    - kubectl config set-cluster k8s --server="${SERVER_PRD}"
     - kubectl config set clusters.k8s.certificate-authority-data ${CA}
     - kubectl config set-credentials gitlab --token="${USER_TOKEN}"
     - kubectl config set-context default --cluster=k8s --user=gitlab
