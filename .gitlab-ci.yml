@@ -63,6 +63,7 @@ deploy-olddev:
     - kubectl config use-context default
     - kubectl config set-context --current --namespace=default
     - kubectl get all
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustwebprd.yml
     - kubectl apply -f k8s/trustwebprd.yml
     - kubectl get all
   environment:
