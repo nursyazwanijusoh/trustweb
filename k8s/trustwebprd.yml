@@ -40,6 +40,6 @@ spec:
               name: trustenv
       volumes:
       - name: nfs
-          nfs:
-            server: 172.20.94.11
-            path: /NFS_DEVTRUSTQ
+        nfs:
+          server: 172.20.94.11
+          path: /NFS_DEVTRUSTQ
