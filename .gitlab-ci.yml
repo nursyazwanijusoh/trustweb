@@ -47,7 +47,7 @@ deploy-dev:
       #- kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan queue:work&&
   environment:
     name: development
-    url: https://trustweb.dev.kubix.tm/
+    url: https://devtrust.kubix.tm/
   tags:
     - kubix-runner
   only:
@@ -63,13 +63,13 @@ deploy-olddev:
     - kubectl config use-context default
     - kubectl config set-context --current --namespace=default
     - kubectl get all
-    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustwebprd.yml
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustwebod.yml
     - kubectl apply -f k8s/configmap.yml
-    - kubectl apply -f k8s/trustwebprd.yml
+    - kubectl apply -f k8s/trustwebod.yml
     - kubectl get all
   environment:
     name: production
-    url: https://devtrust2.tm.com.my/
+    url: https://devtrust.tm.com.my/
   tags:
     - kubix-runner
   only:
