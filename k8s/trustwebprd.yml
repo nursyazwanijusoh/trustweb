@@ -32,7 +32,7 @@ spec:
         image: harbor.prod.kubix.tm.com.my/trustprd/trustweb:<VERSION>
         volumeMounts:
         - name: nfs
-            mountPath: /var/www/html/storage/app/reports
+          mountPath: /var/www/html/storage/app/reports
         ports:
         - containerPort: 80
         envFrom:
