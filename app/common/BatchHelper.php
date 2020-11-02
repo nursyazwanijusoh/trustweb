@@ -78,7 +78,10 @@ class BatchHelper
           }
         } else {
           // not exist. create new
-          if($c->status == 'REJECTED' || $c->status == 'WITHDRAWN'){
+          if($c->operation == 'INS' && $c->status == 'APPROVED'){
+            // ignore this
+            $c->load_status = 'I';
+          } elseif($c->status == 'REJECTED' || $c->status == 'WITHDRAWN'){
             // no need to create new for this one lol
             $c->load_status = 'I';
 

@@ -61,6 +61,10 @@ class Controller extends BaseController
     return 'Rumah Api';
   }
 
+  function omph(){
+    return $this->respond_json(403, 'nom', $_ENV);
+  }
+
   function playground(Request $req){
 
     $nom = new LdapHelper;
