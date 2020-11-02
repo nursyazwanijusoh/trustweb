@@ -74,7 +74,7 @@ deploy-olddev:
     - kubix-runner
   only:
     - master
-  when: manual
+      #when: manual
 deploy-prod:
   stage: deploy
   script:
