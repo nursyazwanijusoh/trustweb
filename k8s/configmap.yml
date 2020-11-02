@@ -1,0 +1,49 @@
+apiVersion: v1
+data:
+  myenv: |
+    APP_NAME="Dev trUSt"
+    APP_ENV=production
+    APP_KEY=
+    APP_DEBUG=true
+    APP_URL=https://devtrust.tm.com.my
+
+    LOG_CHANNEL=stack
+
+    DB_CONNECTION=mysql
+    DB_HOST=172.20.17.181
+    DB_PORT=3306
+    DB_DATABASE=TRUSTDEV
+    DB_USERNAME=trust_app
+    DB_PASSWORD=Pswd2018
+
+    BROADCAST_DRIVER=log
+    CACHE_DRIVER=file
+    QUEUE_CONNECTION=sync
+    SESSION_DRIVER=database
+    SESSION_LIFETIME=120
+
+    MAIL_DRIVER=smtp
+    MAIL_HOST=smtp.tm.com.my
+    MAIL_PORT=25
+    MAIL_USERNAME=null
+    MAIL_PASSWORD=null
+    MAIL_ENCRYPTION=null
+
+    API_PREFIX=api
+    API_DEBUG=true
+    API_VERSION=v1
+    API_DEFAULT_FORMAT=json
+    API_NAME="trUSt"
+    API_AUTHOR="D"
+    API_STANDARDS_TREE=vnd
+    API_SUBTYPE=trust
+
+    TMLDAP_HOSTNAME=ldaps://idssldap.tm.com.my:636
+    TMLDAP_ADMINUSER=novabillviewerldapadmin
+    TMLDAP_ADMINPASS=nHQUbG9Z
+    TMOIP_TOKEN="Bearer 31b8600e-1e25-3c11-ae96-3b5e7ac5ba43"
+
+    TRUST_RESERVE_DUR=5
+kind: ConfigMap
+metadata:
+  name: trustenv

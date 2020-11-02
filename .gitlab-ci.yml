@@ -5,6 +5,7 @@ stages:
 
 variables:
   CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/trust/trustweb:${CI_COMMIT_SHORT_SHA}
+  CONTAINER_IMAGE_PRD: harbor.prod.kubix.tm.com.my/trustprd/trustweb:${CI_COMMIT_SHORT_SHA}
 
 test:
   stage: test
@@ -20,6 +21,9 @@ build:
     - docker build -t ${CONTAINER_IMAGE} .
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}
     - docker push ${CONTAINER_IMAGE}
+    - docker login harbor.prod.kubix.tm.com.my -u 'robot$trust' -p ${HARBOR_PASSWORD_PRD}
+    - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE_PRD}
+    - docker push ${CONTAINER_IMAGE_PRD}
   tags:
     - kubix-runner
   only:
@@ -38,20 +42,43 @@ deploy-dev:
     - kubectl apply -f k8s/trustweb.yml
     - kubectl get pod
     - kubectl get pod | tail -1 | awk '{print $1}'
-    - kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan migrate --force
-    - kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan queue:work&
+    - sleep 10
+      #- kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan migrate --force
+      #- kubectl exec $(kubectl get pod | tail -1 | awk '{print $1}') -- php artisan queue:work&&
   environment:
     name: development
-    url: https://trustweb.dev.kubix.tm/
+    url: https://devtrust.kubix.tm/
   tags:
     - kubix-runner
   only:
     - master
   #when: manual
+deploy-olddev:
+  stage: deploy
+  script:
+    - kubectl config set-cluster k8s --server="${OD_SERVER}" # OD = OLD DEV
+    - kubectl config set clusters.k8s.certificate-authority-data ${OD_CA}
+    - kubectl config set-credentials gitlab --token="${OD_USER_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - kubectl config set-context --current --namespace=default
+    - kubectl get all
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustwebod.yml
+    - kubectl apply -f k8s/configmap.yml
+    - kubectl apply -f k8s/trustwebod.yml
+    - kubectl get all
+  environment:
+    name: production
+    url: https://devtrust.tm.com.my/
+  tags:
+    - kubix-runner
+  only:
+    - master
+      #when: manual
 deploy-prod:
   stage: deploy
   script:
-    - kubectl config set-cluster k8s --server="${SERVER}"
+    - kubectl config set-cluster k8s --server="${SERVER_PRD}"
     - kubectl config set clusters.k8s.certificate-authority-data ${CA}
     - kubectl config set-credentials gitlab --token="${USER_TOKEN}"
     - kubectl config set-context default --cluster=k8s --user=gitlab
