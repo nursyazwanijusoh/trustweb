@@ -1,14 +1,14 @@
 apiVersion: v1
 data:
-  APP_NAME: "Dev trUSt"
+  APP_NAME: "trUSt"
   APP_ENV: "production"
-  APP_DEBUG: "true"
-  APP_URL: "https://devtrust.tm.com.my"
+  APP_DEBUG: "false"
+  APP_URL: "https://trust.tm.com.my"
   LOG_CHANNEL: stack
   DB_CONNECTION: mysql
   DB_HOST: "172.20.17.181"
   DB_PORT: "3306"
-  DB_DATABASE: TRUSTDEV
+  DB_DATABASE: trust
   DB_USERNAME: trust_app
   DB_PASSWORD: Pswd2018
   BROADCAST_DRIVER: log
@@ -20,7 +20,7 @@ data:
   MAIL_HOST: "smtp.tm.com.my"
   MAIL_PORT: "25"
   API_PREFIX: api
-  API_DEBUG: "true"
+  API_DEBUG: "false"
   API_VERSION: "v1"
   API_DEFAULT_FORMAT: json
   API_NAME: "trUSt"
@@ -34,7 +34,7 @@ data:
   TRUST_RESERVE_DUR: "5"
   ERA_API_KEY: "84vlgG7MJO8jHGycAoXl4IFbpvpE6G5YBWAhu4ub"
   ERA_API_URI: "https://g1.iot.tmrnd.com.my"
-  GA_KEY: "G-54DJTT19N5"
+  GA_KEY: "G-F7SZ6P7TBT"
 kind: ConfigMap
 metadata:
-  name: trustenv
+  name: trustenvprd
