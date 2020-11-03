@@ -39,6 +39,7 @@ deploy-dev:
     - kubectl config use-context default
     - kubectl config set-context --current --namespace="${NAMESPACE}"
     - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustweb.yml
+    - kubectl apply -f k8s/configmap.yml
     - kubectl apply -f k8s/trustweb.yml
     - kubectl get pod
     - kubectl get pod | tail -1 | awk '{print $1}'
@@ -92,4 +93,3 @@ deploy-prod:
   only:
     - master
   when: manual
-
