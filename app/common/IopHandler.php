@@ -13,7 +13,7 @@ class IopHandler {
   public static function GetStaffImage($staffno){
     $reclient = new Client(["base_uri" => self::$baseuri]);
     $options = [
-      'headers' => ['Authorization' => env('TMOIP_TOKEN')]
+      'headers' => ['Authorization' => config('custom.tmoip_token')]
     ];
 
 
@@ -28,7 +28,7 @@ class IopHandler {
     $reclient = new Client(["base_uri" => self::$baseuri]);
     $options = [
       'query' => ['lat' => $lat, 'lon' => $long],
-      'headers' => ['Custom' => env('TMOIP_TOKEN')]
+      'headers' => ['Custom' => config('custom.tmoip_token')]
     ];
 
 

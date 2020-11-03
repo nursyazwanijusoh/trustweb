@@ -41,8 +41,8 @@ class SmileController extends Controller
     }
     public function submit(Request $req)
     {
-        $api_uri = env('ERA_API_URI');
-        $api_key = env('ERA_API_KEY');
+        $api_uri = config('custom.era.api_uri');
+        $api_key = config('custom.era.api_key');
         $error_source = "none";
 
         //dd($req);

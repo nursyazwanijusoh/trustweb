@@ -62,7 +62,11 @@ class Controller extends BaseController
   }
 
   function omph(){
-    return $this->respond_json(403, 'nom', $_ENV);
+    return $this->respond_json(403, 'nom', [
+      'APP_NAME' => config('app.name'),
+      'DB' => config('database.connections.mysql'),
+      'ldap' => config('custom.ldap'),
+    ]);
   }
 
   function playground(Request $req){

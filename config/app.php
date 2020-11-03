@@ -123,8 +123,6 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'ga_key' => env('GA_KEY', 'G-F7SZ6P7TBT'),
-
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

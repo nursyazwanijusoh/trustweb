@@ -150,13 +150,13 @@
 
 <!-- Template Main Javascript File -->
 <script src="/welcome/js/main.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.ga_key') }}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config('custom.ga_key') }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', "{{ config('app.ga_key') }}");
+  gtag('config', "{{ config('custom.ga_key') }}");
 </script>
 
 </html>
