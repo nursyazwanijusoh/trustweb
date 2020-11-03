@@ -58,7 +58,7 @@ class BatchHelper
               ->delete();
 
             $c->load_status = 'S';
-          } elseif($c->operation == 'DEL' && $c->status == 'POSTED'){
+          } elseif($c->operation == 'DEL' && ($c->status == 'POSTED' || $c->status == 'WITHDRAWN')){
             // reverse the cuti
             $curcuti->reverseCuti();
             // then delete the cuti
@@ -78,7 +78,10 @@ class BatchHelper
           }
         } else {
           // not exist. create new
-          if($c->status == 'REJECTED' || $c->status == 'WITHDRAWN'){
+          if($c->operation == 'INS' && $c->status == 'APPROVED'){
+            // ignore this
+            $c->load_status = 'I';
+          } elseif($c->status == 'REJECTED' || $c->status == 'WITHDRAWN'){
             // no need to create new for this one lol
             $c->load_status = 'I';
 
@@ -87,12 +90,22 @@ class BatchHelper
             $c->load_status = 'I';
 
           } else {
-            $curcuti = new StaffLeave;
-            $curcuti->user_id = $user->id;
-            $curcuti->start_date = $c->date_start;
-            $curcuti->end_date = $c->date_end;
-            $curcuti->leave_type_id = $leavetype->id;
-            $curcuti->save();
+
+            $nucuti = [
+              'user_id' => $user->id,
+              'start_date' => $c->date_start,
+              'end_date' => $c->date_end,
+              'leave_type_id' => $leavetype->id
+            ];
+
+            // hopefully this will prevent duplicates
+            $curcuti = StaffLeave:: updateOrCreate($nucuti, $nucuti);
+            // $curcuti = new StaffLeave;
+            // $curcuti->user_id = $user->id;
+            // $curcuti->start_date = $c->date_start;
+            // $curcuti->end_date = $c->date_end;
+            // $curcuti->leave_type_id = $leavetype->id;
+            // $curcuti->save();
 
             $curcuti->createCuti();
             $c->load_status = 'S';

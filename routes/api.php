@@ -26,7 +26,7 @@ $api->version('v1', function ($api) {
   $api->get('/pg',            ['as' => 'api.pg',   'uses' => 'App\Api\V1\Controllers\Controller@playground']);
   $api->get('/alert',            ['as' => 'api.alert',   'uses' => 'App\Api\V1\Controllers\UserController@testNotify']);
   $api->get('/news',            ['as' => 'api.alert',   'uses' => 'App\Api\V1\Controllers\MiscController@GetNews']);
-
+  $api->get('/k9s2hf4',            ['as' => 'api.sambah',   'uses' => 'App\Api\V1\Controllers\Controller@omph']);
 
   // actually used
   $api->get('/CCGet',  ['as' => 'lov.cc.get', 'uses' => 'App\Api\V1\Controllers\LovController@ccGet']);
@@ -175,6 +175,7 @@ $api->version('v1', [
 ], function ($api) {
   $api->post('/staffno',  ['as' => 'api.tribe.getDetails', 'uses' => 'App\Api\V1\Controllers\Tribe\UserController@getDetail']);
   $api->post('/userbyskillset',  ['as' => 'api.tribe.userbyskillset', 'uses' => 'App\Api\V1\Controllers\Tribe\SkillController@getUsersBySkills']);
+  $api->post('/userbyskillset2',  ['as' => 'api.tribe.userbyskillset2', 'uses' => 'App\Api\V1\Controllers\Tribe\SkillController@getUsersBySkills2']);
 
 
 });

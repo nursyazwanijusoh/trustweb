@@ -3,33 +3,33 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: trustweb
+  name: trustwebod
 spec:
   type: ClusterIP
   ports:
   - port: 80
     targetPort: 80
   selector:
-    app: trustweb
+    app: trustwebod
 ---
 #Trust App deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trustweb
+  name: trustwebod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: trustweb
+      app: trustwebod
   template:
     metadata:
       labels:
-        app: trustweb
+        app: trustwebod
     spec:
       containers:
-      - name: trustweb
-        image: harbor.dev.kubix.tm.com.my/trust/trustweb:<VERSION>
+      - name: trustwebod
+        image: harbor.prod.kubix.tm.com.my/trustprd/trustweb:<VERSION>
         volumeMounts:
         - name: nfs
           mountPath: /var/www/html/storage/app/reports

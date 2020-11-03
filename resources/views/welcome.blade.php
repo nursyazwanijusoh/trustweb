@@ -178,7 +178,7 @@
                         </div>
 
                         <br/>
-                -->        
+                -->
 <!--- end of demo -->
 
 
@@ -191,9 +191,7 @@
                             <span>In order for GIT to be more effective in delivering high quality solution with faster
                                 delivery,
                                 teamwork is crucial. We need to change the way we work.how we deal with each other. We
-                                need
-                                to be more
-                                collaborative. "REMOVE THIS: Jeffry wuz ere"</span>
+                                need to be more collaborative. </span>
 
                             <ul>
                                 <li><i class="ion-android-checkmark-circle"></i>

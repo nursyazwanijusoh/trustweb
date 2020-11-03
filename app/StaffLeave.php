@@ -8,6 +8,9 @@ use App\common\GDWActions;
 
 class StaffLeave extends Model
 {
+
+  protected $fillable = ['user_id', 'start_date', 'end_date', 'leave_type_id'];
+
   public function LeaveType(){
     return $this->belongsTo(LeaveType::class, 'leave_type_id');
   }

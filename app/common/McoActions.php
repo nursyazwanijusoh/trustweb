@@ -188,10 +188,11 @@ class McoActions {
   }
 
   public static function GetJobGrade($staff_no){
-    $adminuser = env('TMLDAP_ADMINUSER');
+
+    $adminuser = config('custom.ldap.adminuser');
+    $password = config('custom.ldap.adminpass');
+    $hostnameSSL = config('custom.ldap.hostname');
     $udn= "cn=$adminuser, ou=serviceAccount, o=Telekom";
-    $password = env('TMLDAP_ADMINPASS');
-    $hostnameSSL = env('TMLDAP_HOSTNAME');
     $retdata = 1;
     //	ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
     putenv('LDAPTLS_REQCERT=never');

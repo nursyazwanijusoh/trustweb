@@ -219,7 +219,7 @@ class UserController extends Controller
 
       $time = new DateTime('NOW');
       $time->setTimezone(new DateTimeZone('+0800'));
-      $minutes_to_add = env('TRUST_RESERVE_DUR', 15);
+      $minutes_to_add = config('custom.trust_reserve_dur');
       $time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
 
       // proceed to reserve the seat
